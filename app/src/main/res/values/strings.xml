@@ -293,4 +293,34 @@
     <string name="resend_in">Resend in</string>
     <string name="sec">seconds</string>
     <string name="invalid_otp">Please enter valid OTP.</string>
+
+
+
+
+    <string name="update_profile">update profile</string>
+    <string name="name">Name</string>
+    <string name="personal_detail">PERSONAL DETAIL</string>
+    <string name="your_favourite_teams">Your Favourite Teams</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="allow_sms_notifications">Allow SMS notifications</string>
+    <string name="address">Address</string>
+    <string name="city">City</string>
+    <string name="pincode">Pin code</string>
+    <string name="country">Country</string>
+    <string name="change">Change</string>
+    <string name="set">Set</string>
+    <string name="state">State</string>
+    <string name="select_state">Select State</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="new_password">New password</string>
+    <string name="old_password">Old password</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="mobile_verified">Mobile Verified</string>
+    <string name="transaction_id">Transection Id:</string>
+    <string name="transaction_date">Transaction Date:</string>
+    <string name="team_name">Team Name:</string>
+    <string name="recent_transections">Recent Transactions</string>
 </resources>
