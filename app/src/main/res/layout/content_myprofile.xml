@@ -708,6 +708,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_Ranking"
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
@@ -900,6 +901,7 @@
                             android:textColor="@color/textColorBlack"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_fullProfile"
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
@@ -945,6 +947,7 @@
                         android:textColor="@color/textColorLightBlack"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_changePassword"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"

@@ -147,5 +147,4 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
     fun setTitleText(title: String) {
         toolbarTitle.text = title
     }
-
 }
