@@ -663,11 +663,7 @@ object AppDelegate {
         }
     }
 
-    @JvmOverloads
-    fun showProgressDialog(
-        mContext: Activity, mTitle: String = "",
-        mMessage: String = "Loading..."
-    ) {
+    fun showProgressDialog(  mContext: Activity) {
         hideKeyBoard(mContext)
         try {
             FantasySportProgressDialog.getProgressDialog(mContext)!!.showDialog()

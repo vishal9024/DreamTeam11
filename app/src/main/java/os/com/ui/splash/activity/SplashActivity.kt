@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.ui.dashboard.DashBoardActivity
+import os.com.utils.AppDelegate
 
 
 class SplashActivity : BaseActivity() {
@@ -15,28 +17,15 @@ class SplashActivity : BaseActivity() {
 
         Handler().postDelayed({
             try {
-                startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
+                when {
+                    !pref!!.isLogin  -> startActivity(Intent(this, WelcomeActivity::class.java))
+                    else -> startActivity(Intent(this, DashBoardActivity::class.java))
+                }
                 finish()
-            } catch (e: Exception) {
-            }
-        }, 2000)
-//        if (BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-//            Handler().postDelayed({
-//                try {
-//                    startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
-//                    finish()
-//                } catch (e: Exception) {
-//                }
-//            }, 1000)
-//        } else if (BuildConfig.APPLICATION_ID == "os.crickset") {
-//            Handler().postDelayed({
-//                try {
-//                    startActivity(Intent(this@SplashActivity, WelcomeActivity::class.java))
-//                    finish()
-//                } catch (e: Exception) {
-//                }
-//            }, 1000)
-//        }
 
+            } catch (e: Exception) {
+                AppDelegate.showToast(this,e.printStackTrace().toString())
+            }
+        }, 1000)
     }
 }

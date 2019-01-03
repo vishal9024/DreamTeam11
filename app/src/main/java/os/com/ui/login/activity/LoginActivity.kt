@@ -2,17 +2,18 @@ package os.com.ui.login.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.facebook.*
-import com.facebook.appevents.AppEventsLogger
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
@@ -31,6 +32,7 @@ import os.com.data.Prefs
 import os.com.model.FbDetails
 import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
+import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.signup.activity.OTPActivity
 import os.com.ui.signup.activity.SignUpActivity
 import os.com.utils.AppDelegate
@@ -42,13 +44,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Next -> {
-                if (et_email.text.toString().isEmpty())
-                    AppDelegate.showToast(this, getString(R.string.enter_phone_number))
-                else if (et_email.text.toString().contains("@") && ValidationUtil.isEmailValid(et_email.text.toString())) {
-                    AppDelegate.showToast(this, getString(R.string.valid_email))
-                } else if (ValidationUtil.isPhoneValid(et_email.text.toString())) {
-                    AppDelegate.showToast(this, getString(R.string.valid_phone_number))
-                } else
+                if (validation())
                     if (NetworkUtils.isConnected()) {
                         callLoginApi()
                     } else
@@ -61,11 +57,29 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 faceBookLogin()
             }
             R.id.googleLoginButton -> {
-               googlePlusLogin()
+                googlePlusLogin()
             }
         }
     }
 
+    fun validation(): Boolean {
+        if (et_email.text.toString().isEmpty()) {
+            AppDelegate.showToast(this, getString(R.string.enter_phone_number))
+            return false
+        }
+        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
+            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
+                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+                return false
+            }
+        } else
+            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
+                AppDelegate.showToast(this, getString(R.string.valid_email))
+                return false
+            }
+
+        return true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +101,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     private fun callLoginApi() {
         val loginRequest = HashMap<String, String>()
-        loginRequest["mobile_number"] = et_email.text.toString()
+        loginRequest["user_name"] = et_email.text.toString()
         loginRequest["language"] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@LoginActivity)
@@ -124,6 +138,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         }
         if (mAuth != null)
             mAuth = null
+        signOut()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -143,10 +158,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     internal var request_code = 102
 
     fun faceBookLogin() {
-        FacebookSdk.sdkInitialize(this, 1200)
-        AppEventsLogger.activateApp(this)
         callbackManager = CallbackManager.Factory.create()
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "user_birthday", "email"))
+        LoginManager.getInstance()
+            .logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "user_birthday", "email"))
         LoginManager.getInstance().registerCallback(callbackManager,
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
@@ -170,7 +184,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                             }
                         })
                     val parameters = Bundle()
-                    parameters.putString("fields", "first_name,last_name,email,id,name,gender,birthday,picture.type(large)")
+                    parameters.putString(
+                        "fields",
+                        "first_name,last_name,email,id,name,gender,birthday,picture.type(large)"
+                    )
                     request.parameters = parameters
                     request.executeAsync()
                 }
@@ -217,7 +234,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     val user = mAuth!!.currentUser
                     socialModel = SocialModel()
                     socialModel.email_address = user?.email!!
-//                    socialModel.socialType = "google"
+//                  socialModel.socialType = "google"
                     socialModel.google_id = user.uid
                     socialModel.first_name = user.displayName!!
                     socialModel.image = user.photoUrl.toString()
@@ -225,22 +242,23 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
-                    Toast.makeText(this@LoginActivity, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@LoginActivity, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-
             }
     }
 
     private fun checkUserVerify(socialModel: SocialModel) {
-//        {"fb_id":"124587","google_id":"","language":"en","mobile_number":"9955214155","name":"Nidhi","email":"nidhimittal@m_mailinator.com"}
         val loginRequest = HashMap<String, String>()
         loginRequest["fb_id"] = socialModel.fb_id
-        loginRequest["google_id"] =socialModel.google_id
-        loginRequest["name"] = socialModel.first_name
-        loginRequest["email"] = socialModel.email_address
-
-        loginRequest["mobile_number"] = ""
+        loginRequest["google_id"] = socialModel.google_id
+        loginRequest["device_id"]= pref!!.fcMtokeninTemp
+        loginRequest["device_type"] = Tags.device_type
+//        loginRequest["name"] = socialModel.first_name
+//        loginRequest["email"] = socialModel.email_address
+//        loginRequest["mobile_number"] = ""
         loginRequest["language"] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@LoginActivity)
@@ -253,15 +271,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 AppDelegate.hideProgressDialog(this@LoginActivity)
                 if (response.response!!.status) {
                     AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+                    pref!!.userdata = response.response!!.data
+                    pref!!.isLogin = true
                     startActivity(
-                        Intent(this@LoginActivity, SignUpActivity::class.java)
+                        Intent(this@LoginActivity, DashBoardActivity::class.java)
                             .putExtra(IntentConstant.DATA, response.response!!.data!!)
-//                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-//                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                     )
 
                 } else {
-                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+                    startActivity(
+                        Intent(this@LoginActivity, SignUpActivity::class.java)
+                            .putExtra(IntentConstant.DATA, socialModel)
+                    )
+
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LoginActivity)
@@ -306,7 +328,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     }
 
     private fun signOut() {
-        if (mGoogleApiClient != null || !mGoogleApiClient!!.isConnected) {
+        if (mGoogleApiClient != null || mGoogleApiClient!!.isConnected) {
             mAuth!!.signOut()
             Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback {
             }
@@ -321,13 +343,24 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
         if (requestCode == RC_SIGN_IN) {
             AppDelegate.LogT("resultCode==>" + resultCode)
+            AppDelegate.LogT("data==>" + data)
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
-            if (result.isSuccess) {
-                val account = result.signInAccount
-                firebaseAuthWithGoogle(account)
-            } else {
+            try {
+                AppDelegate.LogE("Error is: " + result.status)
+                if (result.isSuccess) {
+                    val account = result.signInAccount
+                    firebaseAuthWithGoogle(account)
+//                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//                try {
+//                    val account = task.getResult(ApiException::class.java)
+//                    firebaseAuthWithGoogle(account!!)
+
+                } else {
+                }
+            } catch (e: ApiException) {
+                AppDelegate.LogE(e.printStackTrace().toString())
             }
-        } else if (requestCode == 1200) {
+        } else {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }
 

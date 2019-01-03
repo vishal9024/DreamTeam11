@@ -1,6 +1,7 @@
 package os.com.networkCall
 
 import kotlinx.coroutines.Deferred
+import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -36,4 +37,11 @@ interface ApiInterface {
 
     @POST(ApiConstant.social_signup)
     fun social_signup(@Body signupRequest: SignUpRequest): Deferred<SignUpResponse>
+
+    @POST(ApiConstant.getMatchList)
+    fun getMatchList(@Body request: Map<String, String>): Deferred<GetMatchResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.profile)
+    fun profile(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
 }

@@ -145,6 +145,18 @@ class Prefs(internal var mContext: Context?) {
         }
 
 
+    var isLogin: Boolean
+        get() {
+            val isLogin = mSharedPreferences.getBoolean(Tags.isLogin, false)
+            AppDelegate.LogP("isLogin = " + isLogin)
+            return isLogin
+        }
+        set(isLogin) {
+            mSharedPreferences.edit()
+                .putBoolean(Tags.isLogin, isLogin)
+                .apply()
+            AppDelegate.LogP("isLogin = " + isLogin)
+        }
 
     var fcMtoken: String
         get() {

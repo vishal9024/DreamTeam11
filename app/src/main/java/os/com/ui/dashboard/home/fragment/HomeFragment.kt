@@ -10,12 +10,20 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.home_fragment.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import os.com.AppBase.BaseFragment
 import os.com.R
+import os.com.application.FantasyApplication
+import os.com.constant.Tags
+import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.home.adapter.MatchCompletedAdapter
 import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
 import os.com.ui.dashboard.home.adapter.MatchLiveAdapter
 import os.com.ui.dashboard.home.adapter.SlidingImageAdapterHomeBanner
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.utils.AppDelegate
 
 
 /**
@@ -31,6 +39,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     }
 
+    var fixturesMatchList: MutableList<Match> = ArrayList()
+    var completedMatchList: MutableList<Match> = ArrayList()
+    var liveMatchList: MutableList<Match> = ArrayList()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         return inflater.inflate(R.layout.home_fragment, container, false)
@@ -42,13 +54,18 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initViews() {
+        if (!pref!!.isLogin) {
+            toolbar.visibility = View.GONE
+        }
         matchSelector(FIXTURES)
+        callGetMatchListApi()
         Handler().postDelayed(Runnable {
             setHomeBannerAdapter()
         }, 100)
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
+
     }
 
     private fun setHomeBannerAdapter() {
@@ -57,8 +74,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!)
         viewPager_Banner.setClipToPadding(false);
         viewPager_Banner.setPadding(50, 0, 50, 0)
-        viewPager_Banner.setPageMargin(10);
-//        pageIndicatorView.setViewPager(viewPager_Banner)
+        viewPager_Banner.setPageMargin(10)
         viewPager_Banner.startAutoScroll()
         viewPager_Banner.isCycle = true
     }
@@ -96,7 +112,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 setCompletedAdapter()
             }
         }
-
     }
 
     @SuppressLint("WrongConstant")
@@ -104,7 +119,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchFixturesAdapter(context!!)
+        recyclerView_Match!!.setHasFixedSize(false)
+        recyclerView_Match!!.adapter = MatchFixturesAdapter(context!!, fixturesMatchList)
     }
 
     @SuppressLint("WrongConstant")
@@ -112,7 +128,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchLiveAdapter(context!!)
+        recyclerView_Match!!.setHasFixedSize(false)
+        recyclerView_Match!!.adapter = MatchLiveAdapter(context!!, liveMatchList)
     }
 
     @SuppressLint("WrongConstant")
@@ -120,6 +137,36 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MatchCompletedAdapter(context!!)
+        recyclerView_Match!!.setHasFixedSize(false)
+        recyclerView_Match!!.adapter = MatchCompletedAdapter(context!!, completedMatchList)
+    }
+
+    private fun callGetMatchListApi() {
+        val loginRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(activity!!)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .getMatchList(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(activity)
+                if (response.response!!.status) {
+//                    AppDelegate.showToast(activity, response.response!!.message)
+                    fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
+                    liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
+                    completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
+                    setFixturesAdapter()
+                } else {
+//                    AppDelegate.showToast(activity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(activity)
+            }
+        }
     }
 }
