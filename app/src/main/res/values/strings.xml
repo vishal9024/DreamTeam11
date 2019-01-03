@@ -294,15 +294,9 @@
     <string name="resend_in">Resend in</string>
     <string name="sec">seconds</string>
     <string name="invalid_otp">Please enter valid OTP.</string>
-<<<<<<< HEAD
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="want_to_logout">Are you sure you want to logout?</string>
-=======
-
-
-
-
     <string name="update_profile">update profile</string>
     <string name="name">Name</string>
     <string name="personal_detail">PERSONAL DETAIL</string>
@@ -329,5 +323,4 @@
     <string name="transaction_date">Transaction Date:</string>
     <string name="team_name">Team Name:</string>
     <string name="recent_transections">Recent Transactions</string>
->>>>>>> 7f494b1b8a05a52ff60eadf697bbe7171a76d5d4
 </resources>
