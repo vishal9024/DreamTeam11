@@ -11,7 +11,7 @@ class UserData() : Parcelable {
     var gender: String = ""
     var email: String = ""
     var phone: String = ""
-    var password: String = ""
+//    var password: String = ""
     var status: String = ""
     var address: String = ""
     var date_of_bith: String = ""
@@ -40,7 +40,7 @@ class UserData() : Parcelable {
         gender = parcel.readString()
         email = parcel.readString()
         phone = parcel.readString()
-        password = parcel.readString()
+//        password = parcel.readString()
         status = parcel.readString()
         address = parcel.readString()
         date_of_bith = parcel.readString()
@@ -70,7 +70,7 @@ class UserData() : Parcelable {
         parcel.writeString(gender)
         parcel.writeString(email)
         parcel.writeString(phone)
-        parcel.writeString(password)
+//        parcel.writeString(password)
         parcel.writeString(status)
         parcel.writeString(address)
         parcel.writeString(date_of_bith)

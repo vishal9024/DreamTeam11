@@ -2,17 +2,18 @@ package os.com.AppBase
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import os.com.data.Prefs
 
 /**
  * Created by heenas on 2/21/2018.
  */
 open class BaseFragment : Fragment() {
 
-//    var pref: Prefs?=null
+    var pref: Prefs?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        pref=Prefs.getInstance(context)
+        pref=Prefs(context)
 //        updateMenuTitles()
     }
 

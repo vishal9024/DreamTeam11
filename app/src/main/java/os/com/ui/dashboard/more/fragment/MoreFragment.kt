@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_more.*
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.R
 import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.ui.invite.activity.InviteCodeActivity
 import os.com.ui.invite.activity.InviteFriendsActivity
-import os.com.ui.login.activity.LoginActivity
 
 
 /**
@@ -54,15 +54,17 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
                 )
             )
             R.id.tv_logout -> {
-                val intent = Intent(activity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-                activity!!.finish()
+                (activity as BaseActivity).showLogoutDialog()
+//                val intent = Intent(activity, LoginActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                startActivity(intent)
+//                activity!!.finish()
             }
 
         }
 
     }
+    /* show logout confirmation popup to user*/
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 

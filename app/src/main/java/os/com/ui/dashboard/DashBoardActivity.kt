@@ -105,6 +105,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
         setTitleVisibility(false, true)
         setMenu(true, false, false, false)
+
         bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         removeShiftMode(bottomNavigationView)
@@ -139,6 +140,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
 
     override fun onResume() {
         super.onResume()
+        if (!pref!!.isLogin)
+            bottomNavigationView.visibility = View.GONE
 //        addressTv.text = pref!!.getStringValue(PrefConstant.KEY_SELECTED_STORE_NAME, getString(R.string.home))
 //        updateNavigationView()
     }

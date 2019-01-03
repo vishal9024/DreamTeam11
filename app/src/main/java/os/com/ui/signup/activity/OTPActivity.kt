@@ -98,6 +98,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 if (response.response!!.status) {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
+                    pref!!.isLogin = true
                     startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
                     finish()
                 } else {
@@ -140,10 +141,10 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
     private suspend fun setTimerForOTP() {
         for (i in 60 downTo 0) {
             val remainingTime = i
-            if (i==0){
+            if (i == 0) {
                 resendOTPTv.text = getString(R.string.resend_otp)
                 resendOTPLayout.isEnabled = true
-            }else {
+            } else {
                 val resendTxt =
                     getString(R.string.resend_in) + " " + remainingTime.toString() + " " + getString(R.string.sec)
                 resendOTPTv.text = resendTxt

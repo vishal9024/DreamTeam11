@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.dialogue_wallet.view.*
 import os.com.R
 import os.com.data.Prefs
 import os.com.ui.createTeam.activity.ChooseTeamActivity
+import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
 
 
@@ -204,7 +206,30 @@ open class BaseActivity : AppCompatActivity() {
             dialogue.dismiss()
         dialogue.show()
     }
-
+    public fun showLogoutDialog() {
+        val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
+        logoutAlertDialog.setTitle(getString(R.string.app_name))
+        logoutAlertDialog.setMessage(getString(R.string.want_to_logout))
+        logoutAlertDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE,
+            getString(R.string.yes)
+        ) { dialog, id ->
+            logoutAlertDialog.dismiss()
+            // callLogoutAPI()
+            Prefs(this).clearSharedPreference()
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            finish()
+        }
+        logoutAlertDialog.setButton(
+            AlertDialog.BUTTON_NEGATIVE,
+            getString(R.string.no)
+        ) { dialog, id ->
+            logoutAlertDialog.dismiss()
+        }
+        logoutAlertDialog.show()
+    }
 }
 
 

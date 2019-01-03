@@ -42,6 +42,10 @@ class SocialModel() : Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "SocialModel(image='$image', first_name='$first_name', last_name='$last_name', username='$username', fb_id='$fb_id', google_id='$google_id', email_address='$email_address', birthday='$birthday')"
+    }
+
     companion object CREATOR : Parcelable.Creator<SocialModel> {
         override fun createFromParcel(parcel: Parcel): SocialModel {
             return SocialModel(parcel)

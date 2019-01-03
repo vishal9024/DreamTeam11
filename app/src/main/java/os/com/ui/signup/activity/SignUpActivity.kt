@@ -13,10 +13,10 @@ import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
+import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.signup.apiRequest.SignUpRequest
-import os.com.ui.signup.apiResponse.otpVerify.UserData
 import os.com.utils.AppDelegate
 import os.com.utils.ValidationUtil
 import os.com.utils.networkUtils.NetworkUtils
@@ -45,7 +45,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-    var userData: UserData? = null
+    var userData: SocialModel? = null
 
     private fun initViews() {
         toolbarTitleTv.setText(R.string.sign_up)
@@ -55,9 +55,14 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         btn_Register.setOnClickListener(this)
         txt_Login.setOnClickListener(this)
+        try {
+            userData = intent.getParcelableExtra(IntentConstant.DATA)
+        } catch (e: Exception) {
+
+        }
+
         if (userData != null) {
-            et_Email.setText(userData!!.email)
-            et_Mobile.setText(userData!!.phone)
+            et_Email.setText(userData!!.email_address)
             et_Password.visibility = View.GONE
         }
     }

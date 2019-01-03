@@ -20,7 +20,17 @@ object ValidationUtil {
     fun isPhoneValid(phone: String): Boolean {
         val pattern: Pattern
         val matcher: Matcher
-        val PHONE_PATTERN = "^[0-9]{7,12}$"
+        val PHONE_PATTERN = "^[0-9]{10,12}$"
+        pattern = Pattern.compile(PHONE_PATTERN)
+        matcher = pattern.matcher(phone)
+        return matcher.matches()
+    }
+    fun isPhone(phone: String): Boolean {
+//        TextUtils.isDigitsOnly(phone)
+
+        val pattern: Pattern
+        val matcher: Matcher
+        val PHONE_PATTERN = "[0-9]"
         pattern = Pattern.compile(PHONE_PATTERN)
         matcher = pattern.matcher(phone)
         return matcher.matches()

@@ -41,6 +41,7 @@ class FantasyApplication : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         fantasyApplication = this
+
         Fabric.with(this, Crashlytics())
         /* initialize joda Time*/
         JodaTimeAndroid.init(this)

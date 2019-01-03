@@ -51,6 +51,8 @@ object Tags {
     const val email = "email"
     const val id = "id"
     const val name = "name"
-
+   const val isLogin="isLogin"
+    const val user_id="user_id"
+    const val language="language"
 }
 

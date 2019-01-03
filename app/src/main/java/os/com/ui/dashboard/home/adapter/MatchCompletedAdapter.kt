@@ -7,12 +7,16 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.item_match.view.*
 import os.com.R
+import os.com.application.FantasyApplication
 import os.com.ui.contest.activity.ContestActivity
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
 
-class MatchCompletedAdapter(val mContext: Context) : RecyclerView.Adapter<MatchCompletedAdapter.AppliedCouponCodeHolder>() {
+class MatchCompletedAdapter(val mContext: Context, var matchList: List<Match>) :
+    RecyclerView.Adapter<MatchCompletedAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_my_contest, parent, false)
@@ -20,19 +24,26 @@ class MatchCompletedAdapter(val mContext: Context) : RecyclerView.Adapter<MatchC
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
-
-        holder.itemView. view2.visibility=GONE
-        holder.itemView. txt_contestJoined.visibility=GONE
+        holder.itemView.view2.visibility = GONE
+        holder.itemView.txt_contestJoined.visibility = GONE
         holder.itemView.txt_Countdown.setText(mContext.getString(R.string.completed))
         holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.colorSecondary))
         holder.itemView.card_view.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestActivity::class.java))
         }
+        holder.itemView.txt_Title.text=matchList.get(position).series_name
+        holder.itemView.txt_Team1.text=matchList.get(position).local_team_name
+        holder.itemView.txt_Team2.text=matchList.get(position).visitor_team_name
+
+        ImageLoader.getInstance().displayImage(matchList[position].local_team_flag, holder.itemView.cimg_Match1, FantasyApplication.getInstance().options)
+        ImageLoader.getInstance().displayImage(matchList[position].visitor_team_flag, holder.itemView.cimg_Match2, FantasyApplication.getInstance().options)
+
+
     }
 
 
     override fun getItemCount(): Int {
-        return 15;
+        return matchList.size;
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

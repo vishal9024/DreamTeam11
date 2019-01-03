@@ -9,13 +9,13 @@ import os.com.BuildConfig
 object ApiConstant {
     /*Base Url*/
 //    https://72.octallabs.com/real11/WebServices/
-    const  val cashFantasyBaseURL = "http://192.168.1.67/real_11/WebServices/"
-    const  val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
+    const val cashFantasyBaseURL = "http://192.168.1.67/real_11/WebServices/"
+    const val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val fSLBaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val playing11BaseURL = "http://192.168.1.67/real_11/WebServices/"
-//    const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
-    const  val real11BaseURL = "https://72.octallabs.com/real11/WebServices/"
-    const  val realBashBaseURL = "http://192.168.1.67/real_11/WebServices/"
+    //    const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
+    const val real11BaseURL = "https://72.octallabs.com/real11/WebServices/"
+    const val realBashBaseURL = "http://192.168.1.67/real_11/WebServices/"
     fun getBaseUrl(): String {
         when {
             BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL
@@ -29,10 +29,12 @@ object ApiConstant {
 
     }
 
-   const val signup = "signup"
+    const val signup = "signup"
     const val verify_otp = "verify-otp"
     const val resend_otp = "resend-otp"
-    const val login="login"
-    const val social_login="social-login"
-    const val social_signup="social-signup"
+    const val login = "login"
+    const val social_login = "social-login"
+    const val social_signup = "social-signup"
+    const val getMatchList = "getMatchList"
+    const val profile = "profile"
 }

@@ -14,7 +14,6 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
@@ -28,7 +27,6 @@
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_9sdp"
                     android:paddingEnd="@dimen/_9sdp"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView

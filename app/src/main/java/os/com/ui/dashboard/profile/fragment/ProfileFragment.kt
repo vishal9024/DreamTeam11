@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import com.google.android.material.appbar.AppBarLayout
@@ -17,7 +16,6 @@ import os.com.ui.dashboard.profile.activity.ChangePasswordActivity
 import os.com.ui.dashboard.profile.activity.FullProfileActivity
 import os.com.ui.dashboard.profile.activity.MyAccountActivity
 import os.com.ui.dashboard.profile.activity.RankingActivity
-
 
 /**
  * Created by heenas on 3/5/2018.
