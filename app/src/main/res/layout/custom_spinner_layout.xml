@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/_2sdp"
-        android:layout_gravity="end">
+        android:layout_gravity="start">
 
     <TextView
             style="@style/TextStyleNormal"
@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_5sdp"
             android:text="Select"
-            android:textSize="@dimen/_12ssp"/>
+            android:textSize="@dimen/_13sdp"/>
 
 
 </RelativeLayout>

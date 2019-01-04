@@ -54,5 +54,17 @@ object Tags {
    const val isLogin="isLogin"
     const val user_id="user_id"
     const val language="language"
+    const val password="password"
+    const val old_password="old_password"
+    const val date_of_birth="date_of_birth"
+    const val mobile="mobile"
+    const val address="address"
+    const val city="city"
+    const val state="state"
+    const val pincode="pincode"
+    const val gender="gender"
+
+
+
 }
 

@@ -34,6 +34,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/name"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -50,6 +52,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/email"
+                            android:enabled="false"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:inputType="textEmailAddress"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -57,6 +64,7 @@
                 <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:orientation="horizontal">
                     <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginTop="@dimen/_10sdp"
@@ -69,9 +77,12 @@
                                 android:id="@+id/et_Password"
                                 android:editable="false"
                                 android:focusable="false"
+                                android:enabled="false"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/password"
+                                android:singleLine="true"
+                                android:maxLines="1"
                                 android:inputType="textPassword"
                                 android:textSize="@dimen/_13sdp"/>
 
@@ -86,7 +97,7 @@
                             android:paddingBottom="@dimen/_8sdp"
                             android:layout_alignParentRight="true"
                             android:text="@string/change"
-                            android:textColor="@color/colorASPrimary"
+                            android:textColor="@color/colorSecondary"
                             android:layout_height="wrap_content"/>
 
                 </RelativeLayout>
@@ -136,6 +147,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/date_of_birth"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:editable="false"
                             android:focusable="false"
                             android:textSize="@dimen/_13sdp"/>
@@ -143,29 +156,32 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleNormal"
                         android:gravity="center_vertical"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:layout_width="wrap_content"
                         android:text="@string/gender"
-                        android:textColor="@color/textColorLightBlack"
+                        android:textColor="@color/textColorGray"
                         android:layout_height="wrap_content"/>
                 <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_marginRight="@dimen/_5sdp">
                     <LinearLayout
                             android:id="@+id/ll_male"
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
                             android:background="@drawable/button_rounded_background_gender_selected"
-                            android:padding="@dimen/_5sdp"
+                            android:padding="@dimen/_4sdp"
                             android:gravity="center_vertical"
                             android:layout_marginRight="@dimen/_5sdp">
                         <ImageView
                                 android:id="@+id/imv_male"
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
-                                android:src="@mipmap/logout"/>
+                                android:padding="@dimen/_3sdp"
+                                android:src="@mipmap/maleselect"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
                                 android:gravity="center_vertical"
@@ -181,7 +197,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_5sdp"
+                            android:padding="@dimen/_4sdp"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:background="@drawable/button_rounded_background_gender_white"
                             android:gravity="center_vertical">
@@ -189,7 +205,8 @@
                                 android:id="@+id/imv_female"
                                 android:layout_width="@dimen/_20sdp"
                                 android:layout_height="@dimen/_20sdp"
-                                android:src="@mipmap/logout"/>
+                                android:padding="@dimen/_3sdp"
+                                android:src="@mipmap/female"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/TextStyleNormal"
                                 android:gravity="center_vertical"
@@ -214,6 +231,11 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/mobile_number"
                             android:inputType="number"
+                            android:enabled="false"
+                            android:editable="false"
+                            android:focusable="false"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -221,11 +243,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/allow_sms_notifications"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_15sdp"
                         android:textColor="@color/textColorGray"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_13sdp"
                         android:checked="true"
+                        android:visibility="gone"
                         style="@style/TextStyleNormal">
 
                 </androidx.appcompat.widget.SwitchCompat>
@@ -242,6 +265,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/address"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -253,10 +278,12 @@
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
                             style="@style/EditTextStyle"
-                            android:id="@+id/et_Citty"
+                            android:id="@+id/et_City"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/city"
+                            android:singleLine="true"
+                            android:maxLines="1"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -272,12 +299,15 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/pincode"
-                            android:imeOptions="actionNext"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:imeOptions="actionDone"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spn_state"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_3sdp"
                         android:layout_height="wrap_content">
 
                 </androidx.appcompat.widget.AppCompatSpinner>
@@ -293,11 +323,18 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/country"
-                            android:imeOptions="actionNext"
+                            android:text="@string/india"
+                            android:editable="false"
+                            android:enabled="false"
+                            android:focusable="false"
+                            android:singleLine="true"
+                            android:maxLines="1"
+                            android:imeOptions="actionDone"
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
+                    android:id="@+id/llUpdateProfile"
                     app:layout_constraintTop_toBottomOf="@+id/llContent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -305,14 +342,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:background="@color/colorASPrimary">
+                    android:background="@color/colorSecondary">
                 <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btnUpdateProfile"
                         style="@style/ButtonStyle"
                         android:paddingLeft="@dimen/_10sdp"
                         android:paddingRight="@dimen/_10sdp"
                         android:backgroundTint="@color/white"
-                        android:textColor="@color/colorASPrimary"
+                        android:textColor="@color/colorSecondary"
                         android:textAllCaps="true"
                         android:text="@string/update_profile"
                         android:layout_width="wrap_content"

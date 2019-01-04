@@ -57,6 +57,12 @@ class FantasyApplication : MultiDexApplication() {
             .considerExifParams(true)
             .build()
         Utils.init(this)
+
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            throwable.printStackTrace()
+            System.exit(1)
+        }
+
     }
 
     private fun initImageLoader(context: Context) {

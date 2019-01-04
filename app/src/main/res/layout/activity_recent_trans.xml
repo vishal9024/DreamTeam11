@@ -20,30 +20,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
 
-            <LinearLayout
-                    android:id="@+id/ll_AllContest"
-                    android:paddingTop="@dimen/_6sdp"
-                    android:paddingBottom="@dimen/_6sdp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view1"
-                    android:orientation="horizontal"
-                    android:background="@color/colorItemBackgroundGray"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_team"
-                        style="@style/TextStyleSemiBold"
-                        android:gravity="start"
-                        android:textSize="@dimen/_10sdp"
-                        android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:paddingStart="@dimen/_8sdp"
-                        android:textColor="@color/textColorLightBlack"
-                        android:text="28 December, 2018"
-                        android:layout_height="wrap_content"/>
-
-            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_Contest"
                     app:layout_constraintStart_toStartOf="parent"

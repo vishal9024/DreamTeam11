@@ -37,4 +37,7 @@ object ApiConstant {
     const val social_signup = "social-signup"
     const val getMatchList = "getMatchList"
     const val profile = "profile"
+    const val personal_details = "personal_details"
+    const val update_personal_details = "update_personal_details"
+    const val change_pasword = "change_pasword"
 }
