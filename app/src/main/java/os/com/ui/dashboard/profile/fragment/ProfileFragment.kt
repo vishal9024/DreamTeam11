@@ -148,7 +148,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     if (response.response!!.status) {
                         if (response.response.data != null)
                             initData(response.response.data)
-                        AppDelegate.showToast(context, response.response!!.message)
+//                        AppDelegate.showToast(context, response.response!!.message)
                     } else {
                         AppDelegate.showToast(context, response.response!!.message)
                     }
@@ -172,11 +172,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     main_textview_title.setText(mData!!.team_name)
                 }
                 if (mData!!.total_cash_amount != null && mData!!.total_cash_amount != "")
-                    txtCashDeposited.setText("\\u20B9 "+mData!!.total_cash_amount)
+                    txtCashDeposited.setText("\u20B9 "+mData!!.total_cash_amount)
                 if (mData!!.total_winning_amount != null && mData!!.total_winning_amount != "")
-                    txtCashWinnings.setText("\\u20B9 "+mData!!.total_winning_amount)
+                    txtCashWinnings.setText("\u20B9 "+mData!!.total_winning_amount)
                 if (mData!!.cash_bonus_amount != null && mData!!.cash_bonus_amount != "")
-                    txtCashBonus.setText("\\u20B9 "+mData!!.cash_bonus_amount)
+                    txtCashBonus.setText("\u20B9 "+mData!!.cash_bonus_amount)
                 if (mData!!.series_wins != null && mData!!.series_wins != "")
                     txtSeries.setText(mData!!.series_wins)
             }
@@ -242,7 +242,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
     }
 
     companion object {
-
         private val PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.6f
         private val PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f
         private val ALPHA_ANIMATIONS_DURATION = 200

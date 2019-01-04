@@ -170,7 +170,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                     if (response.response!!.status) {
                         if (response.response.data != null)
                             initData(response.response.data)
-                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
+//                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                     } else {
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                     }
@@ -211,9 +211,9 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@FullProfileActivity)
                     if (response.response!!.status) {
-                        if (response.response.data != null)
+//                        if (response.response.data != null)
 //                            initData(response.response.data)
-                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
+//                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                         finish()
                     } else {
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
