@@ -2,12 +2,20 @@ package os.com.ui.dashboard.more.activity
 
 
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_webview.*
 import os.com.AppBase.BaseActivity
 import os.com.R
+import android.webkit.WebViewClient
+import os.com.utils.AppDelegate
+import android.widget.Toast
+import os.com.ui.contest.activity.ContestActivity
+
+
+
 
 class WebViewActivity : BaseActivity() {
 
@@ -27,20 +35,54 @@ class WebViewActivity : BaseActivity() {
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
-        toolbarTitleTv.setText(slug);
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        try {
+            setSupportActionBar(toolbar)
+            toolbarTitleTv.setText(slug);
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val webSettings = webView.getSettings()
-        webSettings.setJavaScriptEnabled(true)
-        webSettings.setDomStorageEnabled(true)
-        webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE)
-        WebView.setWebContentsDebuggingEnabled(true)
 
-        // Initialize Link by loading the Link initiaization URL in the Webview
-        webView.loadUrl("https://www.octalsoftware.com/")
+//            // Initialize Link by loading the Link initiaization URL in the Webview
+//            if (url != "")
+//                webView.loadUrl(url)
 
+            webView.setWebViewClient(object : WebViewClient() {
+
+                //If you will not use this method url links are opeen in new brower not in webview
+                override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                    view.loadUrl(url)
+                    return true
+                }
+
+                //Show loader on url load
+                override fun onLoadResource(view: WebView, url: String) {
+//                    progress_bar.visibility= View.VISIBLE
+                    AppDelegate.showProgressDialog(this@WebViewActivity)
+
+                }
+
+                override fun onPageFinished(view: WebView, url: String) {
+                    try {
+//                        progress_bar.visibility= View.GONE
+                        AppDelegate.hideProgressDialog(this@WebViewActivity)
+                    } catch (exception: Exception) {
+                        exception.printStackTrace()
+                    }
+                }
+
+                override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
+                    AppDelegate.hideProgressDialog(this@WebViewActivity)
+                }
+            })
+            val webSettings = webView.getSettings()
+            webSettings.setJavaScriptEnabled(true)
+            webSettings.setDomStorageEnabled(true)
+            webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE)
+            WebView.setWebContentsDebuggingEnabled(true)
+            webView.loadUrl(url)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

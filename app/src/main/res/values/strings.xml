@@ -327,6 +327,7 @@
     <string name="india">India</string>
     <string name="empty_password">please enter password</string>
     <string name="not_same_password">password and confirm password does not match</string>
+    <string name="work_with_us">Work with Us</string>
 
     <string-array name="state">
         <item>Select State</item>
