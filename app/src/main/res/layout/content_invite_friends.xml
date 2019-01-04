@@ -124,6 +124,7 @@
                     android:paddingEnd="@dimen/_10sdp"
                     android:textSize="@dimen/_15sdp"
                     android:layout_width="match_parent"
+                    android:textAllCaps="true"
                     android:textColor="@color/textColorLightBlack"
                     android:text="USER1234DXZ"
                     android:layout_height="wrap_content"/>

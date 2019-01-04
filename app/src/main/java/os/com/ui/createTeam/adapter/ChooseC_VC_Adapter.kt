@@ -34,6 +34,11 @@ class ChooseC_VC_Adapter(val mContext: Context, val onClickCVC: OnClickCVC, val 
             holder.itemView.txt_playerType.visibility = View.VISIBLE
             holder.itemView.txt_playerType.text = "Wicket-Keeper"
         } else if (playerList[position].player_role.contains("Batsman", true)) {
+//            for (i in playerList.indices){
+//                if (playerList[position].player_role.contains("Batsman", true)){
+//
+//                }
+//            }
             holder.itemView.txt_playerType.visibility = View.VISIBLE
             holder.itemView.txt_playerType.text = "Batsmen"
         } else if (playerList[position].player_role.contains("Allrounder", true)) {

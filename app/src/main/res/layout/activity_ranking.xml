@@ -14,6 +14,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
     >
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="match_parent"
@@ -27,6 +28,7 @@
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/_9sdp"
                     android:paddingEnd="@dimen/_9sdp"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
@@ -37,22 +39,33 @@
                         android:textSize="@dimen/_12sdp"
                         android:layout_width="wrap_content"
                         android:textColor="@color/textColorLightBlack"
-                        android:text="Select Match"
+                        android:text="@string/select_match"
                         android:layout_height="wrap_content"/>
-                <androidx.appcompat.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spn_match"
+                        android:layout_width="wrap_content"
+                        android:layout_marginLeft="@dimen/_15sdp"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:id="@+id/txt_CountDownTimer"
-                        android:drawableEnd="@mipmap/arrowdown"
-                        style="@style/TextStyleNormal"
                         android:gravity="end"
                         android:layout_weight="1"
-                        android:padding="@dimen/_9sdp"
-                        android:drawablePadding="@dimen/_5sdp"
-                        android:textSize="@dimen/_11sdp"
-                        android:layout_width="wrap_content"
-                        android:textColor="@color/textColorBlack"
-                        android:text="Averest Premier League"
-                        android:layout_height="wrap_content"/>
+                        android:padding="@dimen/_9sdp">
+
+                </androidx.appcompat.widget.AppCompatSpinner>
+                <!--<androidx.appcompat.widget.AppCompatTextView-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:id="@+id/txt_CountDownTimer"-->
+                        <!--android:drawableEnd="@mipmap/arrowdown"-->
+                        <!--style="@style/TextStyleNormal"-->
+                        <!--android:gravity="end"-->
+                        <!--android:layout_weight="1"-->
+                        <!--android:padding="@dimen/_9sdp"-->
+                        <!--android:drawablePadding="@dimen/_5sdp"-->
+                        <!--android:textSize="@dimen/_11sdp"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:textColor="@color/textColorBlack"-->
+                        <!--android:text="Averest Premier League"-->
+                        <!--android:layout_height="wrap_content"/>-->
             </LinearLayout>
             <View
                     android:id="@+id/view1"

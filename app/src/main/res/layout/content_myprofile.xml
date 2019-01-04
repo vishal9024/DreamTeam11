@@ -78,7 +78,7 @@
                                 android:gravity="center_vertical"
                                 android:textSize="@dimen/_13sdp"
                                 android:layout_width="wrap_content"
-                                android:text="@string/Rs20"
+                                android:text="@string/Rs_0"
                                 android:textColor="@color/colorSecondary"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
@@ -142,7 +142,7 @@
                                 android:gravity="center_vertical"
                                 android:textSize="@dimen/_13sdp"
                                 android:layout_width="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:textColor="@color/colorSecondary"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
@@ -390,12 +390,13 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                                 <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txtCashDeposited"
                                         android:layout_gravity="center_horizontal"
                                         style="@style/TextStyleMedium"
                                         android:gravity="center_vertical"
                                         android:textSize="@dimen/_11sdp"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text="@string/Rs_0"
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -410,6 +411,7 @@
                                         android:textColor="@color/textColorLightBlack"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txtCashWinnings"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:layout_gravity="center_horizontal"
                                         style="@style/TextStyleMedium"
@@ -418,7 +420,7 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text="@string/Rs_0"
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -433,6 +435,7 @@
                                         android:textColor="@color/textColorLightBlack"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txtCashBonus"
                                         android:layout_marginTop="@dimen/_10sdp"
                                         android:layout_gravity="center_horizontal"
                                         style="@style/TextStyleMedium"
@@ -441,7 +444,7 @@
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text="@string/Rs_0"
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -551,12 +554,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtContest"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleSemiBold"
                                     android:gravity="center_vertical"
                                     android:textSize="@dimen/_13sdp"
                                     android:layout_width="wrap_content"
-                                    android:text="5"
+                                    android:text="0"
                                     android:textColor="@color/colorSecondary"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
@@ -583,12 +587,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtMatch"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleSemiBold"
                                     android:gravity="center_vertical"
                                     android:textSize="@dimen/_13sdp"
                                     android:layout_width="wrap_content"
-                                    android:text="11"
+                                    android:text="0"
                                     android:textColor="@color/colorSecondary"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
@@ -625,12 +630,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtSeries"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleSemiBold"
                                     android:gravity="center_vertical"
                                     android:textSize="@dimen/_13sdp"
                                     android:layout_width="wrap_content"
-                                    android:text="7"
+                                    android:text="0"
                                     android:textColor="@color/colorSecondary"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
@@ -656,12 +662,13 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtWins"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleSemiBold"
                                     android:gravity="center_vertical"
                                     android:textSize="@dimen/_13sdp"
                                     android:layout_width="wrap_content"
-                                    android:text="9"
+                                    android:text="0"
                                     android:textColor="@color/colorSecondary"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
@@ -903,7 +910,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/txt_fullProfile"
                             android:layout_gravity="center_vertical"
-                            style="@style/TextStyleMedium"
+                            style="@style/TextStyleSemiBold"
                             android:gravity="start"
                             android:padding="@dimen/_7sdp"
                             android:textSize="@dimen/_10sdp"
@@ -919,6 +926,7 @@
                       android:background="@color/GrayColorOTP"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtEmail"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
@@ -933,6 +941,7 @@
                         android:textColor="@color/textColorLightBlack"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtMobile"
                         android:paddingTop="@dimen/_10sdp"
                         android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_10sdp"
@@ -962,6 +971,7 @@
                         android:textColor="@color/colorSecondary"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtLogout"
                         android:padding="@dimen/_10sdp"
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleSemiBold"

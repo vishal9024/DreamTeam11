@@ -5,6 +5,8 @@ import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
+import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
+import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -46,7 +48,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.profile)
-    fun profile(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
+    fun profile(@Body request: Map<String, String>): Deferred<ProfileResponse>
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_list)
@@ -59,4 +61,17 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.create_team)
     fun create_team(@Body request: Map<String, String>): Deferred<BaseResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.personal_details)
+    fun personal_details(@Body request: Map<String, String>): Deferred<PersonalDetailResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.update_personal_details)
+    fun update_personal_details(@Body request: Map<String, String>): Deferred<PersonalDetailResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.change_pasword)
+    fun change_pasword(@Body request: Map<String, String>): Deferred<ProfileResponse>
 }

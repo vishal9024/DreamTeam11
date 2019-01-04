@@ -60,5 +60,15 @@ object Tags {
     const val local_team_id="local_team_id"
     const val visitor_team_id="visitor_team_id"
     const val JoinContestDialog="JoinContestDialog"
+    const val password="password"
+    const val old_password="old_password"
+    const val date_of_birth="date_of_birth"
+    const val mobile="mobile"
+    const val address="address"
+    const val city="city"
+    const val state="state"
+    const val pincode="pincode"
+    const val gender="gender"
+
 }
 

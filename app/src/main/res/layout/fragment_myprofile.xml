@@ -67,15 +67,14 @@
                                 android:id="@+id/crs_Progress"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_24sdp"
-
                                 app:bar_color="@color/textColorGray"
                                 app:bar_highlight_color="@color/colorASPrimary"
                                 app:left_thumb_color="@color/colorTransparent"
                                 app:left_thumb_color_pressed="@color/colorTransparent"
-                                app:max_value="100"
-                                android:progress="87"
+                                app:max_value="10"
+                                android:progress="3"
                                 app:min_value="1"
-                                app:steps="87"
+                                app:steps="10"
                                 app:corner_radius="5"
                                 app:right_thumb_color="@color/colorTransparent"
                                 app:right_thumb_color_pressed="@color/colorTransparent"/>
@@ -104,7 +103,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="4"
+                                android:text="1"
                         />
                         <androidx.appcompat.widget.AppCompatTextView
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -124,7 +123,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 android:id="@+id/txt_EndValue"
                                 android:gravity="end"
-                                android:text="5"
+                                android:text="10"
                                 android:paddingEnd="@dimen/_8sdp"
                                 android:layout_gravity="center_vertical"
                                 android:layout_width="match_parent"
@@ -184,7 +183,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:text="level 4"
+                        android:text="level 1"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_14ssp"
                 />
