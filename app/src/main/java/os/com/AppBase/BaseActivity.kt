@@ -16,8 +16,10 @@ import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
 import os.com.R
+import os.com.constant.IntentConstant
 import os.com.data.Prefs
 import os.com.ui.createTeam.activity.ChooseTeamActivity
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
 
@@ -184,7 +186,12 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    public fun showJoinContestDialogue(activity: AppCompatActivity) {
+    public fun showJoinContestDialogue(
+        activity: AppCompatActivity,
+        match: Match?,
+        contest_id: String,
+        matchType: Int
+    ) {
         var dialogue = Dialog(this)
         dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogue.setContentView(R.layout.dialogue_join_contest)
@@ -197,7 +204,7 @@ open class BaseActivity : AppCompatActivity() {
             dialogue.dismiss()
         }
         dialogue.btn_Join.setOnClickListener {
-            startActivity(Intent(this, ChooseTeamActivity::class.java))
+            startActivity(Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH,match).putExtra(IntentConstant.CONTEST_ID,contest_id).putExtra(IntentConstant.CONTEST_TYPE,matchType))
             dialogue.dismiss()
         }
 
@@ -206,6 +213,7 @@ open class BaseActivity : AppCompatActivity() {
             dialogue.dismiss()
         dialogue.show()
     }
+
     public fun showLogoutDialog() {
         val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
         logoutAlertDialog.setTitle(getString(R.string.app_name))

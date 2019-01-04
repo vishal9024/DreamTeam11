@@ -323,4 +323,11 @@
     <string name="transaction_date">Transaction Date:</string>
     <string name="team_name">Team Name:</string>
     <string name="recent_transections">Recent Transactions</string>
+    <string name="timeFormat">dd MMM, yyyy</string>
+    <string name="only">Only</string>
+    <string name="spots_left">spots left</string>
+    <string name="view_all">View All</string>
+    <string name="vs"> VS </string>
+    <string name="select_captain">Please select Captain.</string>
+    <string name="select_vc">Please select Vice Captain.</string>
 </resources>

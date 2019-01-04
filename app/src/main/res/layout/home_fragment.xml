@@ -127,6 +127,21 @@
                                 android:layout_height="match_parent"/>
 
                     </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:visibility="gone"
+                            android:paddingTop="@dimen/_5sdp"
+                            android:id="@+id/txt_toolbartitle"
+                            style="@style/TextStyleSemiBold"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorBlack"
+                            android:text="@string/select_a_match"
+                            android:layout_height="wrap_content"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>

@@ -66,6 +66,7 @@
                         android:minWidth="@dimen/_10sdp"
                         android:padding="@dimen/_2sdp"
                         android:text=" C "
+                        android:visibility="gone"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_8sdp"/>
                 <androidx.appcompat.widget.AppCompatImageView
@@ -220,10 +221,12 @@
                         android:gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="0dp"
+                        android:visibility="gone"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
                 >
-                    <RelativeLayout android:layout_width="wrap_content"
+                    <RelativeLayout
+                             android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
                         <TextView
                                 android:visibility="gone"
@@ -290,6 +293,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                         android:id="@+id/rl_bat3"
+                        android:visibility="gone"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_10sdp"
@@ -364,6 +368,7 @@
                 </RelativeLayout>
                 <RelativeLayout
                         android:id="@+id/rl_bat4"
+                        android:visibility="gone"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="@dimen/_10sdp"
@@ -382,6 +387,7 @@
                                 android:minWidth="@dimen/_10sdp"
                                 android:padding="@dimen/_2sdp"
                                 android:text="VC"
+                                android:visibility="gone"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_7sdp"/>
                         <androidx.appcompat.widget.AppCompatImageView
@@ -435,6 +441,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_bat5"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -541,6 +548,7 @@
 
                 </RelativeLayout>
                 <RelativeLayout
+
                         android:id="@+id/rl_ar1"
                         android:visibility="gone"
                         android:layout_gravity="center_horizontal"
@@ -618,6 +626,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_ar2"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -691,6 +700,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_ar3"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -872,6 +882,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_bowler2"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -945,6 +956,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_bowler3"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -1018,6 +1030,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_bowler4"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
@@ -1091,6 +1104,7 @@
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
+                        android:visibility="gone"
                         android:id="@+id/rl_bowler5"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"

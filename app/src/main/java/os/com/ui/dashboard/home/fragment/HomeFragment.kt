@@ -44,7 +44,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     var liveMatchList: MutableList<Match> = ArrayList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
         return inflater.inflate(R.layout.home_fragment, container, false)
     }
 
@@ -55,7 +54,13 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews() {
         if (!pref!!.isLogin) {
-            toolbar.visibility = View.GONE
+            txt_toolbartitle.visibility = View.VISIBLE
+            cl_main.visibility = View.GONE
+            txt_title.visibility = View.GONE
+        } else {
+            txt_toolbartitle.visibility = View.GONE
+            cl_main.visibility = View.VISIBLE
+            txt_title.visibility = View.VISIBLE
         }
         matchSelector(FIXTURES)
         callGetMatchListApi()
@@ -98,7 +103,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 setLiveAdapter()
             }
             FIXTURES -> {
-                txt_title.visibility = VISIBLE
+                if (!pref!!.isLogin)
+                    txt_title.visibility = GONE
+                else
+                    txt_title.visibility = VISIBLE
                 txt_title.setText(R.string.select_a_match)
                 txt_Fixtures.isSelected = true
                 view1.visibility = View.GONE
@@ -114,13 +122,15 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         }
     }
 
+    var fixturesAdapter: MatchFixturesAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_Match!!.layoutManager = llm
         recyclerView_Match!!.setHasFixedSize(false)
-        recyclerView_Match!!.adapter = MatchFixturesAdapter(context!!, fixturesMatchList)
+        fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList)
+        recyclerView_Match!!.adapter = fixturesAdapter
     }
 
     @SuppressLint("WrongConstant")
@@ -168,5 +178,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(activity)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        fixturesAdapter!!.stopUpdateTimer()
     }
 }

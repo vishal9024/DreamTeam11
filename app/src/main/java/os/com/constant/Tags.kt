@@ -54,5 +54,11 @@ object Tags {
    const val isLogin="isLogin"
     const val user_id="user_id"
     const val language="language"
+    const val match_id="match_id"
+    const val contest_id="contest_id"
+    const val series_id="series_id"
+    const val local_team_id="local_team_id"
+    const val visitor_team_id="visitor_team_id"
+    const val JoinContestDialog="JoinContestDialog"
 }
 

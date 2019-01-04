@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.amar.library.ui.StickyScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        card_view:stickyHeader="@id/ll_label">
+<!--<com.amar.library.ui.StickyScrollView-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--&gt;-->
     <androidx.cardview.widget.CardView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -21,12 +24,14 @@
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:padding="@dimen/_5sdp"
                     android:id="@+id/ll_label"
+                    card_view:layout_constraintTop_toTopOf="parent"
                     android:orientation="horizontal"
                     android:layout_width="match_parent" android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/img_category"
+                        android:layout_width="@dimen/_25sdp"
                         android:paddingStart="@dimen/_5sdp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/hotcontest"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -39,16 +44,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_categoryTitle"
                             style="@style/TextStyleSemiBold"
                             android:gravity="start"
                             android:textSize="@dimen/_11sdp"
+                            android:singleLine="true"
+                            android:ellipsize="end"
                             android:layout_width="match_parent"
                             android:textColor="@color/textColorBlack"
                             android:text="@string/hot_contest"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_categoryDesc"
                             style="@style/TextStyleNormal"
                             android:gravity="start"
+                            android:singleLine="true"
+                            android:ellipsize="end"
                             android:textSize="@dimen/_9sdp"
                             android:layout_width="match_parent"
                             android:textColor="@color/textColorLightBlack"
@@ -72,10 +83,41 @@
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/item_contest"
                     android:nestedScrollingEnabled="false"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintTop_toBottomOf="@+id/view"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                    card_view:layout_constraintTop_toBottomOf="@+id/rv_subContest"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    android:id="@+id/ll_view_all"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    android:paddingStart="@dimen/_9sdp"
+                    android:paddingEnd="@dimen/_9sdp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <View
+                        card_view:layout_constraintTop_toBottomOf="@+id/ll_label"
+                        card_view:layout_constraintStart_toStartOf="parent"
+                        card_view:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="match_parent" android:layout_height="0.5dp"
+                        android:background="@color/GrayColorOTP"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingBottom="@dimen/_5sdp"
+                        android:paddingTop="@dimen/_5sdp"
+                        android:id="@+id/txt_view_all"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="start"
+                        android:drawableEnd="@mipmap/arrow_setting"
+                        android:textSize="@dimen/_13sdp"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorBlack"
+                        android:text="@string/view_all"
+                        android:layout_height="wrap_content"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-</com.amar.library.ui.StickyScrollView>
+<!--</com.amar.library.ui.StickyScrollView>-->

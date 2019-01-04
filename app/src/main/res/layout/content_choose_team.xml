@@ -326,6 +326,18 @@
             android:layout_height="0dp">
 
     </androidx.recyclerview.widget.RecyclerView>
+    <View
+            android:visibility="gone"
+            android:id="@+id/view"
+            android:background="@color/colorTransparentGray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
+            app:layout_constraintBottom_toTopOf="@+id/rl_CreateTeam"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+    </View>
     <RelativeLayout
             android:id="@+id/rl_CreateTeam"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -338,7 +350,7 @@
                 android:id="@+id/ll_joz" android:layout_width="wrap_content"
                 android:orientation="vertical" android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_joz"
+                    android:id="@+id/txt_local_count"
                     style="@style/TextStyleSemiBold"
                     android:paddingEnd="@dimen/_8sdp"
                     android:gravity="center"
@@ -346,9 +358,9 @@
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="@string/dot_value"
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_local"
                     style="@style/TextStyleNormal"
                     android:paddingEnd="@dimen/_8sdp"
                     android:gravity="center"
@@ -357,7 +369,7 @@
                     android:textSize="@dimen/_7sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="JOZ"
+                    android:maxLength="3"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
@@ -366,7 +378,7 @@
                 android:layout_width="wrap_content"
                 android:orientation="vertical" android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_pr"
+                    android:id="@+id/txt_visitor_count"
                     style="@style/TextStyleSemiBold"
                     android:paddingEnd="@dimen/_8sdp"
                     android:gravity="center"
@@ -374,18 +386,19 @@
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="@string/dot_value"
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_visitor"
                     style="@style/TextStyleNormal"
                     android:paddingEnd="@dimen/_8sdp"
                     android:gravity="center"
                     android:layout_weight="1"
                     android:paddingTop="@dimen/_2sdp"
+                    android:maxLength="3"
                     android:textSize="@dimen/_7sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="PR"
+
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
@@ -402,7 +415,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="10/11"
+
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"
@@ -435,7 +448,7 @@
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorOffWhite"
-                    android:text="10.5/100"
+
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"
@@ -463,9 +476,8 @@
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:textColor="@color/textColorWhite"
-                android:backgroundTint="@color/colorSecondary"
-
-                android:background="@drawable/button_background_white_black"
+                android:enabled="false"
+                android:background="@drawable/botton_backgroundteam_selector"
                 android:layout_height="wrap_content"/>
 
     </RelativeLayout>

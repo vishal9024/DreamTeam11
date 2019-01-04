@@ -3,6 +3,7 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="colorTransparent">#00000000</color>
+    <color name="colorTransparentGray">#11000000</color>
     <color name="colorTransparentBlack">#33000000</color>
     <color name="createTeamColor">#343434</color>
     <color name="GrayColorMain">#f4f4f4</color>

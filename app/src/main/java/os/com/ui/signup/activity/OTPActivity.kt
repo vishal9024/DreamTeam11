@@ -77,8 +77,9 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         phone = intent.getStringExtra(IntentConstant.MOBILE)
         user_id = intent.getStringExtra(IntentConstant.USER_ID)
         resendOTPLayout.setOnClickListener(this)
+        otp_view.setText(otp)
         resendOTPLayout.isEnabled = false
-        showOTPDialog(otp)
+//      showOTPDialog(otp)
 //      setTimerForOTP()
         GlobalScope.launch(Dispatchers.Main) {
             setTimerForOTP()
@@ -100,6 +101,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
                     startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     finish()
                 } else {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)

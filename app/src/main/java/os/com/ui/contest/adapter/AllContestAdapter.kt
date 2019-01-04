@@ -9,10 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_all_contest.view.*
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.constant.Tags
+import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.activity.ContestDetailActivity
+import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
-class AllContestAdapter(val mContext: AppCompatActivity) :
+class AllContestAdapter(
+    val mContext: AppCompatActivity,
+    val contest: MutableList<Contest>?
+,val onClickRecyclerView: OnClickRecyclerView
+) :
     RecyclerView.Adapter<AllContestAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -21,6 +28,27 @@ class AllContestAdapter(val mContext: AppCompatActivity) :
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
+
+        holder.itemView.txt_TotalWinnings.text = mContext.getString(R.string.Rs) + " " +
+                contest!!.get(holder.adapterPosition).prize_money
+        holder.itemView.txt_Winners.text = contest.get(holder.adapterPosition).total_winners
+        holder.itemView.txt_EntryFee.text = mContext.getString(R.string.Rs) + " " +
+                contest.get(holder.adapterPosition).entry_fee
+        holder.itemView.txt_EndValue.text = contest.get(holder.adapterPosition).total_teams + " " +
+                mContext.getString(R.string.teams)
+
+        if (!contest.get(holder.adapterPosition).total_teams.isEmpty() && !contest.get(holder.adapterPosition).teams_joined.isEmpty()) {
+            val strtValue =
+                contest.get(holder.adapterPosition).total_teams.toInt() - contest.get(holder.adapterPosition).teams_joined.toInt()
+            holder.itemView.txt_StartValue.text = mContext.getString(R.string.only) + " " + strtValue.toString() + " " +
+                    mContext.getString(R.string.spots_left)
+            holder.itemView.crs_Progress.setMinValue(0f)
+            holder.itemView.crs_Progress.setMaxValue(contest.get(holder.adapterPosition).total_teams.toFloat())
+            holder.itemView.crs_Progress.setMinStartValue(0f);
+            holder.itemView.crs_Progress.setMaxStartValue(contest.get(holder.adapterPosition).teams_joined.toFloat());
+            holder.itemView.crs_Progress.apply();
+        }
+
         holder.itemView.ll_entryFee.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
@@ -28,19 +56,18 @@ class AllContestAdapter(val mContext: AppCompatActivity) :
         holder.itemView.ll_totalWinners.setOnClickListener {
             val bottomSheetDialogFragment = BottomSheetWinningListFragment()
             bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
-            //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.txt_Join.setOnClickListener {
-            (mContext as BaseActivity).showJoinContestDialogue(mContext)
-//            mContext.startActivity(Intent(mContext, ChooseTeamActivity::class.java))
+            onClickRecyclerView.onClickItem(Tags.JoinContestDialog,holder.adapterPosition)
+
         }
     }
 
     override fun getItemCount(): Int {
-        return 15;
+        return contest!!.size
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

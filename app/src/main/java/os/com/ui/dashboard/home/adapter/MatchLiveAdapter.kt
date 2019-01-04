@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.item_match.view.*
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
 import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
@@ -28,7 +29,9 @@ class MatchLiveAdapter(val mContext: Context, var matchList: List<Match>) :
         holder.itemView.txt_Countdown.text = mContext.getString(R.string.in_progress)
         holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.textColorPrimarylight))
         holder.itemView.card_view.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestActivity::class.java))
+            mContext.startActivity(Intent(mContext, ContestActivity::class.java).putExtra(IntentConstant.DATA,matchList.get(position)).putExtra(
+                IntentConstant.CONTEST_TYPE,
+                IntentConstant.LIVE))
         }
         holder.itemView.txt_Title.text=matchList.get(position).series_name
         holder.itemView.txt_Team1.text=matchList.get(position).local_team_name

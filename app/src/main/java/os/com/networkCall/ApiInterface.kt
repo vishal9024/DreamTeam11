@@ -1,6 +1,9 @@
 package os.com.networkCall
 
 import kotlinx.coroutines.Deferred
+import os.com.networkCall.responseModel.BaseResponse
+import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
+import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
@@ -44,4 +47,16 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.profile)
     fun profile(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.contest_list)
+    fun getContestlist(@Body request: Map<String, String>): Deferred<GetContestResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.player_list)
+    fun getPlayerList(@Body request: Map<String, String>): Deferred<GetPlayerListResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.create_team)
+    fun create_team(@Body request: Map<String, String>): Deferred<BaseResponse>
 }

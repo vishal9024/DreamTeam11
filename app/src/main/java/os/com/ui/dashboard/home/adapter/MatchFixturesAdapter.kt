@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +14,31 @@ import kotlinx.android.synthetic.main.item_match.view.*
 import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
 import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
+import java.util.*
 
 
 class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
     RecyclerView.Adapter<MatchFixturesAdapter.AppliedCouponCodeHolder>() {
+    internal var tmr: Timer? = null
+    private val mHandler = Handler()
+    private var lstHolders: MutableList<AppliedCouponCodeHolder>? = null
+    private val updateRemainingTimeRunnable = Runnable {
+        synchronized(lstHolders!!) {
+            val currentTime = System.currentTimeMillis()
+            for (holder in lstHolders!!) {
+                holder.updateTimeRemaining(currentTime)
+            }
+        }
+    }
+
+    init {
+        lstHolders = ArrayList<AppliedCouponCodeHolder>()
+        startUpdateTimer()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_match, parent, false)
@@ -27,6 +46,10 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
+        synchronized(lstHolders!!) {
+            lstHolders!!.add(holder)
+        }
+
         try {
             if (BuildConfig.APPLICATION_ID == "os.real11") {
                 holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.colorRed))
@@ -41,7 +64,7 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
             holder.itemView.view2.visibility = View.GONE
             holder.itemView.txt_contestJoined.visibility = View.GONE
             holder.itemView.card_view.setOnClickListener {
-                mContext.startActivity(Intent(mContext, ContestActivity::class.java))
+                mContext.startActivity(Intent(mContext, ContestActivity::class.java).putExtra(IntentConstant.DATA,matchList.get(position)).putExtra(IntentConstant.CONTEST_TYPE,IntentConstant.FIXTURE))
             }
             holder.itemView.txt_Title.text = matchList.get(position).series_name
             holder.itemView.txt_Team1.text = matchList.get(position).local_team_name
@@ -57,12 +80,9 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
                 holder.itemView.cimg_Match2,
                 FantasyApplication.getInstance().options
             )
-
         } catch (e: Exception) {
             AppDelegate.LogE(e.printStackTrace().toString())
         }
-
-
     }
 
 
@@ -70,8 +90,55 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
         return matchList.size
     }
 
+
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        fun updateTimeRemaining(currentTime: Long) {
+            try {
+                if (adapterPosition != -1) {
+                    val contestsModel = matchList.get(getAdapterPosition())
+                    if (!contestsModel.star_date.isEmpty()) {
+                        val strt_date = contestsModel.star_date.split("T")
+                        val dateTime = strt_date.get(0) + " " + contestsModel.star_time
+                        val timeDiff = AppDelegate.getTimeStampFromDate(dateTime)!! - currentTime
+                        if (timeDiff > 0) {
+                            val seconds = (timeDiff / 1000).toInt() % 60
+                            val minutes = (timeDiff / (1000 * 60) % 60).toInt()
+                            val hours = (timeDiff / (1000 * 60 * 60)).toInt()
+                            if (hours > 72) {
+                                itemView.txt_Countdown.text = AppDelegate.convertTimestampToDate(
+                                    AppDelegate.getTimeStampFromDate(
+                                        dateTime
+                                    )!!
+                                )
+                            } else {
+                                itemView.txt_Countdown.setText(hours.toString() + "h " + minutes + "m " + seconds + "s")
+                            }
+                        } else {
+                            itemView.txt_Countdown.setText("Expired!!")
+                        }
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun startUpdateTimer() {
+        tmr = Timer()
+        tmr!!.schedule(object : TimerTask() {
+            override fun run() {
+                mHandler.post(updateRemainingTimeRunnable)
+            }
+        }, 1000, 1000)
+    }
+
+    fun stopUpdateTimer() {
+        if (tmr != null) {
+            tmr!!.cancel()
+        }
 
     }
 

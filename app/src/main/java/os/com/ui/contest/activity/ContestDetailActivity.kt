@@ -1,7 +1,6 @@
 package os.com.ui.contest.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
 import os.com.AppBase.BaseActivity
 import os.com.R
-import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.contest.adapter.TeamsAdapter
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
@@ -20,14 +18,14 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_CreateTeam -> {
-                startActivity(Intent(this, ChooseTeamActivity::class.java))
+//                startActivity(Intent(this, ChooseTeamActivity::class.java))
             }
             R.id.ll_winners -> {
                 val bottomSheetDialogFragment = BottomSheetWinningListFragment()
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.txt_Join -> {
-                showJoinContestDialogue(this)
+//                showJoinContestDialogue(this, match)
             }
         }
     }

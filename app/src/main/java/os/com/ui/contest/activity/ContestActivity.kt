@@ -10,13 +10,26 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_contest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_contest.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
+import os.com.constant.Tags
+import os.com.networkCall.ApiClient
 import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
+import os.com.ui.contest.apiResponse.getContestList.Contest
+import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.contest.dialogues.BottomSheetFilterFragment
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.invite.activity.InviteCodeActivity
 import os.com.ui.joinedContest.activity.FixtureJoinedContestActivity
+import os.com.utils.AppDelegate
+import os.com.utils.CountTimer
+import java.util.*
 
 
 class ContestActivity : BaseActivity(), View.OnClickListener {
@@ -35,11 +48,17 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, FixtureJoinedContestActivity::class.java))
             }
             R.id.ll_AllContest -> {
-                startActivity(Intent(this, AllContestActivity::class.java))
+                startActivity(
+                    Intent(
+                        this,
+                        AllContestActivity::class.java
+                    ).putParcelableArrayListExtra(IntentConstant.DATA, contests!!)
+                        .putExtra(IntentConstant.MATCH, match)
+                        .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                )
             }
         }
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +66,12 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
+    var countTimer: CountTimer? = CountTimer()
+    var match: Match? = null
+    var matchType = IntentConstant.FIXTURE
     private fun initViews() {
+        match = intent.getParcelableExtra(IntentConstant.DATA)
+        matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -55,6 +79,18 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         toolbarTitleTv.setText(R.string.contest)
         setMenu(false, true, true, false)
         setAdapter()
+        txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+        if (matchType == IntentConstant.FIXTURE) {
+            if (!match!!.star_date.isEmpty()) {
+                val strt_date = match!!.star_date.split("T")
+                val dateTime = strt_date.get(0) + " " + match!!.star_time
+                countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+            }
+        } else if (matchType == IntentConstant.FIXTURE) {
+            txt_CountDownTimer.setText(getString(R.string.completed))
+        } else
+            txt_CountDownTimer.setText(getString(R.string.in_progress))
+        callGetContestListApi()
         rl_enterContestCode.setOnClickListener(this)
         rl_createContest.setOnClickListener(this)
         btn_CreateTeam.setOnClickListener(this)
@@ -69,20 +105,14 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
-//                    BottomSheetBehavior.STATE_COLLAPSED -> Log.d(FragmentActivity.TAG, "State Collapsed")
-//                    BottomSheetBehavior.STATE_DRAGGING -> Log.d(FragmentActivity.TAG, "State Dragging")
-//                    BottomSheetBehavior.STATE_EXPANDED -> Log.d(FragmentActivity.TAG, "State Expanded")
-//                    BottomSheetBehavior.STATE_HIDDEN -> Log.d(FragmentActivity.TAG, "State Hidden")
-//                    BottomSheetBehavior.STATE_SETTLING -> Log.d(FragmentActivity.TAG, "State Settling")
                 }
             }
-
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
         filterBootomSheet()
     }
 
-     fun filterBootomSheet() {
+    fun filterBootomSheet() {
         val mBottomSheetBehaviorfilter = BottomSheetBehavior.from(bottom_sheet_filter)
         mBottomSheetBehaviorfilter.state = BottomSheetBehavior.STATE_COLLAPSED
         mBottomSheetBehaviorfilter.peekHeight = 0
@@ -92,6 +122,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 when (newState) {
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
     }
@@ -109,12 +140,57 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
+    var contests: ArrayList<Contest>? = ArrayList()
+    var contestList: ArrayList<ContestCategory> = ArrayList()
+    private fun callGetContestListApi() {
+        val loginRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.match_id] = /*match!!.match_id*/"13071965317"
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@ContestActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .getContestlist(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@ContestActivity)
+                if (response.response!!.status) {
+                    contestList = response.response!!.data!!.match_contest!!
+                    setAdapter()
+                    if (!pref!!.isLogin)
+                        ll_bottom.visibility = View.GONE
+                    else {
+                        txt_joined_contest.text = response.response!!.data!!.my_contests
+                        txt_MyTeams.text = response.response!!.data!!.my_teams
+                    }
+                    for (contest in contestList) {
+                        contests!!.addAll(contest.contests!!)
+                        txt_AllContestCount.setText(contests!!.size.toString() + " " + getString(R.string.contest))
+                    }
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@ContestActivity)
+            }
+        }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (countTimer != null)
+            countTimer!!.stopUpdateTimer()
+    }
+
+    var contestMainAdapter: ContestMainAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = ContestMainAdapter(this)
+        contestMainAdapter = ContestMainAdapter(this, contestList, match, matchType)
+        rv_Contest!!.adapter = contestMainAdapter
     }
 }

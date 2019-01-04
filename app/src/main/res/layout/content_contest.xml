@@ -208,7 +208,6 @@
                     android:textSize="@dimen/_10sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorBlack"
-                    android:text="1"
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextStyleNormal"

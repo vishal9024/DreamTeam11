@@ -41,6 +41,7 @@ import os.com.utils.networkUtils.NetworkUtils
 import java.io.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.sql.Timestamp
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -117,7 +118,7 @@ object AppDelegate {
 
     fun setLocale(lang: String?, mContext: Context) {
 
-        val locale = Locale(lang, "US")
+        val locale = Locale(lang, "IND")
         Locale.setDefault(locale)
         val config = Configuration()
         config.locale = locale
@@ -126,19 +127,33 @@ object AppDelegate {
             mContext.resources.displayMetrics
         )
     }
-
-    fun getTimeStampFromDate(str_date: String): Long {
-        var timestamp: Long = 0
+    fun getTimeStampFromDate(date1: String): Long? {
+        var date: Date? = null
         try {
-            val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-            val date = formatter.parse(str_date) as Date
-            timestamp = date.time
-        } catch (e: ParseException) {
+            // 2018-12-22 07:00:00
+            val utcFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            // DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SS'Z'");
+            utcFormat.timeZone = TimeZone.getTimeZone("IST")
+            date = utcFormat.parse(date1)
+        } catch (e: Exception) {
             e.printStackTrace()
         }
 
-        return timestamp
+        return date!!.time
+
     }
+//    fun getTimeStampFromDate(str_date: String): Long {
+//        var timestamp: Long = 0
+//        try {
+//            val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+//            val date = formatter.parse(str_date) as Date
+//            timestamp = date.time
+//        } catch (e: ParseException) {
+//            e.printStackTrace()
+//        }
+//
+//        return timestamp
+//    }
 
 
     fun saveBitmapToExternalStorage(bitmap: Bitmap?, name: String): String {
@@ -648,7 +663,12 @@ object AppDelegate {
         }
 
     }
-
+    fun convertTimestampToDate(time: Long): String {
+        val stamp = Timestamp(time)
+        val date = Date(stamp.getTime())
+        val dateFormat = SimpleDateFormat("dd MMM, yyyy")
+        return dateFormat.format(date)
+    }
     fun showToast(mContext: Context?, Message: String, type: Int) {
         try {
             if (mContext != null)

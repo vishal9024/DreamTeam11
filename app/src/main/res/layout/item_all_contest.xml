@@ -138,6 +138,7 @@
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintEnd_toEndOf="parent"
                         android:id="@+id/crs_Progress"
+                        android:clickable="false"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_26sdp"
                         card_view:bar_color="@color/textColorGray"
@@ -145,9 +146,7 @@
                         card_view:left_thumb_color="@color/colorTransparent"
                         card_view:left_thumb_color_pressed="@color/colorTransparent"
                         card_view:max_value="100"
-                        app:progress="87"
                         card_view:min_value="1"
-                        card_view:steps="87"
                         card_view:corner_radius="5"
                         card_view:right_thumb_color="@color/colorTransparent"
                         card_view:right_thumb_color_pressed="@color/colorTransparent"/>
