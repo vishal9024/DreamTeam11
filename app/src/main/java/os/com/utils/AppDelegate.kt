@@ -711,7 +711,7 @@ object AppDelegate {
                 Log.d("tag", "showProgressDialog instense is null")
             }
         } catch (e: Exception) {
-            LogE(e)
+//            LogE(e)
         }
 
     }
@@ -721,7 +721,7 @@ object AppDelegate {
 
             FantasySportProgressDialog.getProgressDialog(mContext!!)!!.dismissDialog()
         } catch (e: Exception) {
-            AppDelegate.LogE(e)
+//            AppDelegate.LogE(e)
         }
 
     }

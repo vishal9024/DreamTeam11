@@ -28,7 +28,10 @@ import os.com.utils.networkUtils.NetworkUtils
 
 
 class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
-
+    public var isShowingWk = false
+    public var isShowingbat = false
+    public var isShowingbowl = false
+    public var isShowingAr = false
     var bowlerList: MutableList<Data>? = ArrayList()
     var arList: MutableList<Data>? = ArrayList()
     var wkList: MutableList<Data>? = ArrayList()
@@ -49,6 +52,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             }
             playerList[position].isCaptain = true
             captain = playerList[position].player_id
+            isShowingWk = false
+            isShowingbat = false
+            isShowingbowl = false
+            isShowingAr = false
             adapter!!.notifyDataSetChanged()
         } else if (tag == "vc") {
             for (i in playerList.indices) {
@@ -60,6 +67,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             }
             playerList[position].isViceCaptain = true
             vicecaptain = playerList[position].player_id
+            isShowingWk = false
+            isShowingbat = false
+            isShowingbowl = false
+            isShowingAr = false
             adapter!!.notifyDataSetChanged()
         }
     }
@@ -79,8 +90,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     callCreateTeamApi(player_ids)
                 } else
                     AppDelegate.showToast(this, getString(R.string.error_network_connection))
-
-
             }
         }
     }
@@ -104,11 +113,13 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         btn_CreateTeam.setOnClickListener(this)
 //        txt_Signup.setOnClickListener(this)
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
+
     var countTimer: CountTimer? = CountTimer()
     var matchType = IntentConstant.FIXTURE
     private fun getData() {
@@ -191,7 +202,15 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
                 if (response.response!!.status!!) {
-                    startActivity(Intent(this@Choose_C_VC_Activity, TeamPreviewActivity::class.java).putParcelableArrayListExtra(IntentConstant.DATA,playerList as java.util.ArrayList<out Parcelable> ))
+                    startActivity(
+                        Intent(
+                            this@Choose_C_VC_Activity,
+                            TeamPreviewActivity::class.java
+                        ).putParcelableArrayListExtra(
+                            IntentConstant.DATA,
+                            playerList as java.util.ArrayList<out Parcelable>
+                        )
+                    )
                     finish()
                 } else {
                 }

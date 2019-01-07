@@ -55,7 +55,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
     private fun initViews() {
         if (!pref!!.isLogin) {
             txt_toolbartitle.visibility = View.VISIBLE
-            cl_main.visibility = View.GONE
+            ll_matchSelector.visibility = View.GONE
             txt_title.visibility = View.GONE
         } else {
             txt_toolbartitle.visibility = View.GONE
@@ -103,9 +103,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 setLiveAdapter()
             }
             FIXTURES -> {
-                if (!pref!!.isLogin)
+                if (!pref!!.isLogin) {
+                    ll_matchSelector.visibility = GONE
                     txt_title.visibility = GONE
-                else
+                    txt_toolbartitle.visibility = VISIBLE
+                } else
                     txt_title.visibility = VISIBLE
                 txt_title.setText(R.string.select_a_match)
                 txt_Fixtures.isSelected = true

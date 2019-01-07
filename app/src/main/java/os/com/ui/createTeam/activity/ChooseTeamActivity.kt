@@ -362,11 +362,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         setContentView(R.layout.activity_choose_team)
         initViews()
     }
+
     override fun onDestroy() {
         super.onDestroy()
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
+
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var contest_id: String = ""
@@ -541,7 +543,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         txt_BATCount.text = selectPlayer!!.bat_selected.toString()
         btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11
         txt_player.text = selectPlayer!!.selectedPlayer.toString() + "/11"
-        txt_credits.text = String.format("%.2f",100- selectPlayer!!.total_credit) + "/100"
+        txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"
         txt_local.text = match!!.local_team_name
         txt_local_count.text = selectPlayer!!.localTeamplayerCount.toString()
         txt_visitor_count.text = selectPlayer!!.visitorTeamPlayerCount.toString()

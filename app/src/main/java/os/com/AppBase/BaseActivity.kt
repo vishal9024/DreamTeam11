@@ -204,10 +204,14 @@ open class BaseActivity : AppCompatActivity() {
             dialogue.dismiss()
         }
         dialogue.btn_Join.setOnClickListener {
-            startActivity(Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH,match).putExtra(IntentConstant.CONTEST_ID,contest_id).putExtra(IntentConstant.CONTEST_TYPE,matchType))
+            startActivity(
+                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_ID,
+                    contest_id
+                ).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+            )
             dialogue.dismiss()
         }
-
 
         if (dialogue.isShowing)
             dialogue.dismiss()

@@ -63,6 +63,8 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
 
         if (userData != null) {
             et_Email.setText(userData!!.email_address)
+            if (userData!!.email_address.isEmpty())
+                et_Email.isEnabled = false
             et_Password.visibility = View.GONE
         }
     }

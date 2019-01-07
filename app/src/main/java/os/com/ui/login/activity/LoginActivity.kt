@@ -138,7 +138,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         }
         if (mAuth != null)
             mAuth = null
-        signOut()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -254,7 +253,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         val loginRequest = HashMap<String, String>()
         loginRequest["fb_id"] = socialModel.fb_id
         loginRequest["google_id"] = socialModel.google_id
-        loginRequest["device_id"]= pref!!.fcMtokeninTemp
+        loginRequest["device_id"] = pref!!.fcMtokeninTemp
         loginRequest["device_type"] = Tags.device_type
 //        loginRequest["name"] = socialModel.first_name
 //        loginRequest["email"] = socialModel.email_address
@@ -275,15 +274,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     pref!!.isLogin = true
                     startActivity(
                         Intent(this@LoginActivity, DashBoardActivity::class.java)
-                            .putExtra(IntentConstant.DATA, response.response!!.data!!)
                     )
-
                 } else {
                     startActivity(
                         Intent(this@LoginActivity, SignUpActivity::class.java)
                             .putExtra(IntentConstant.DATA, socialModel)
                     )
-
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LoginActivity)

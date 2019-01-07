@@ -5,12 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import com.google.android.material.appbar.AppBarLayout
-import kotlinx.android.synthetic.main.content_full_profile.*
 import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
 import kotlinx.coroutines.Dispatchers
@@ -22,15 +21,12 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
-import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.dashboard.profile.activity.ChangePasswordActivity
 import os.com.ui.dashboard.profile.activity.FullProfileActivity
 import os.com.ui.dashboard.profile.activity.MyAccountActivity
 import os.com.ui.dashboard.profile.activity.RankingActivity
-import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 import os.com.ui.invite.activity.InviteFriendsActivity
-import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 
@@ -107,6 +103,9 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             txtLogout.setOnClickListener(this)
             setData()
             if (pref!!.isLogin) {
+               if(! pref!!.userdata!!.fb_id.isEmpty() ||! pref!!.userdata!!.google_id.isEmpty()  ){
+                   txt_changePassword.visibility=GONE
+               }
                 if (NetworkUtils.isConnected()) {
                     getProfileData()
 

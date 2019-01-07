@@ -11,13 +11,11 @@ class Response() : Parcelable {
     constructor(parcel: Parcel) : this() {
         status = parcel.readByte() != 0.toByte()
         message = parcel.readString()
-        data = parcel.readParcelable(UserData::class.java.classLoader)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeByte(if (status) 1 else 0)
         parcel.writeString(message)
-        parcel.writeParcelable(data, flags)
     }
 
     override fun describeContents(): Int {
@@ -33,5 +31,6 @@ class Response() : Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 
 }
