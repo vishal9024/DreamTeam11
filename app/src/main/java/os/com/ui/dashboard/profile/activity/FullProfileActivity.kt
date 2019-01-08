@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -68,22 +69,9 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                 R.id.txt_change -> {
                     startActivity(Intent(this, ChangePasswordActivity::class.java))
                 }
-                R.id.llUpdateProfile -> {
+                R.id.btn_UpdateProfile -> {
                     AppDelegate.hideKeyBoard(this)
-                    if (NetworkUtils.isConnected()) {
-                        updatePersonalDetail()
-                    } else
-                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
-
-                }
-                R.id.btnUpdateProfile -> {
-                    AppDelegate.hideKeyBoard(this)
-                    if (NetworkUtils.isConnected()) {
-                        updatePersonalDetail()
-                    } else
-                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
+                    updatePersonalDetail()
                 }
                 R.id.et_dob -> {
                     val fromDateDialog = DatePickerDialog(
@@ -148,8 +136,8 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             et_Password.setOnClickListener(this)
             et_dob.setOnClickListener(this)
 //            txt_change.setOnClickListener(this)
-            llUpdateProfile.setOnClickListener(this)
-            btnUpdateProfile.setOnClickListener(this)
+
+            btn_UpdateProfile.setOnClickListener(this)
             if (pref!!.isLogin) {
                 if (NetworkUtils.isConnected()) {
                     getPersonalDetail()

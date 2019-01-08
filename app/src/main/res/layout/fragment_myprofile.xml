@@ -89,8 +89,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Level"
-                        />
+                                android:text="Level"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 app:layout_constraintTop_toBottomOf="@+id/txt_StartValuelabel"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -103,8 +102,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="1"
-                        />
+                                android:text="1"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 app:layout_constraintEnd_toEndOf="parent"
                                 android:id="@+id/txt_EndValuelabel"
@@ -116,8 +114,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:text="Level"
-                        />
+                                android:text="Level"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 app:layout_constraintTop_toBottomOf="@+id/txt_EndValuelabel"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -130,10 +127,8 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
                                 style="@style/TextStyleSemiBold"
-                                android:textSize="@dimen/_15sdp"
-                        />
+                                android:textSize="@dimen/_15sdp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
                 </LinearLayout>
             </FrameLayout>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
