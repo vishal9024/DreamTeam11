@@ -100,7 +100,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
 
-
         rl_enterContestCode.setOnClickListener(this)
         rl_createContest.setOnClickListener(this)
         btn_CreateTeam.setOnClickListener(this)

@@ -14,6 +14,7 @@ import os.com.constant.Tags
 import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.adapter.AllContestAdapter
 import os.com.ui.contest.apiResponse.getContestList.Contest
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.activity.FixtureJoinedContestActivity
@@ -23,7 +24,10 @@ import os.com.utils.CountTimer
 class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals(Tags.JoinContestDialog)){
-            showJoinContestDialogue(this, match!!, matchType)
+           startActivity(
+                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+            )
+//            showJoinContestDialogue(this, match!!, matchType)
         }
     }
 
