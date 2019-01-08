@@ -189,7 +189,6 @@ open class BaseActivity : AppCompatActivity() {
     public fun showJoinContestDialogue(
         activity: AppCompatActivity,
         match: Match?,
-        contest_id: String,
         matchType: Int
     ) {
         var dialogue = Dialog(this)
@@ -205,10 +204,7 @@ open class BaseActivity : AppCompatActivity() {
         }
         dialogue.btn_Join.setOnClickListener {
             startActivity(
-                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                    IntentConstant.CONTEST_ID,
-                    contest_id
-                ).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
             )
             dialogue.dismiss()
         }

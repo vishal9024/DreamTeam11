@@ -7,7 +7,6 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager.VERTICAL
 import kotlinx.android.synthetic.main.home_fragment.*
 import os.com.AppBase.BaseFragment
 import os.com.R
@@ -40,7 +39,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
     }
 
     private fun initViews() {
-        rl_banner.visibility= GONE
+        viewPager_Banner.visibility= GONE
         matchSelector(FIXTURES)
 //        setHomeBannerAdapter()
         txt_Fixtures.setOnClickListener(this)
@@ -59,12 +58,16 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         txt_Results.isSelected = false
         view1.visibility = View.VISIBLE
         view2.visibility = View.VISIBLE
+        recyclerView_fixMatch.visibility = GONE
+        recyclerView_liveMatch.visibility = GONE
+        recyclerView_CompleteMatch.visibility = GONE
         when (value) {
             LIVE -> {
                 txt_title.visibility = GONE
                 txt_Live.isSelected = true
                 view1.visibility = View.GONE
                 view2.visibility = View.GONE
+                recyclerView_liveMatch.visibility = View.VISIBLE
                 setLiveAdapter()
             }
             FIXTURES -> {
@@ -72,6 +75,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 txt_title.setText(R.string.select_a_match)
                 txt_Fixtures.isSelected = true
                 view1.visibility = View.GONE
+                recyclerView_fixMatch.visibility = View.VISIBLE
                 setFixturesAdapter()
             }
             RESULTS -> {
@@ -79,30 +83,51 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                 txt_title.setText(R.string.results)
                 txt_Results.isSelected = true
                 view2.visibility = View.GONE
+                recyclerView_CompleteMatch.visibility = View.VISIBLE
                 setCompletedAdapter()
             }
         }
     }
+    var fixturesAdapter: MyContestFixturesAdapter? = null
+    var liveAdapter: MyContestLiveAdapter? = null
+    var completedAdapter: MyContestCompletedAdapter? = null
 
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MyContestFixturesAdapter(context!!)
+        if (fixturesAdapter == null) {
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_fixMatch!!.layoutManager = llm
+            recyclerView_fixMatch!!.setHasFixedSize(true)
+            fixturesAdapter = MyContestFixturesAdapter(context!!)
+            recyclerView_fixMatch!!.adapter = fixturesAdapter
+        } else
+            recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
     }
+
     @SuppressLint("WrongConstant")
     private fun setLiveAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MyContestLiveAdapter(context!!)
+        if (liveAdapter == null) {
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_liveMatch!!.layoutManager = llm
+            recyclerView_liveMatch!!.setHasFixedSize(true)
+            liveAdapter = MyContestLiveAdapter(context!!)
+            recyclerView_liveMatch!!.adapter = liveAdapter
+        } else
+            recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
     }
+
     @SuppressLint("WrongConstant")
     private fun setCompletedAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.adapter = MyContestCompletedAdapter(context!!)
+        if (completedAdapter == null) {
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_CompleteMatch!!.layoutManager = llm
+            recyclerView_CompleteMatch!!.setHasFixedSize(true)
+            completedAdapter = MyContestCompletedAdapter(context!!)
+            recyclerView_CompleteMatch!!.adapter = completedAdapter
+        } else
+            recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
     }
 }

@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_contest.view.*
-import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.ui.contest.activity.ContestDetailActivity
 import os.com.ui.contest.apiResponse.getContestList.Contest
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
@@ -47,7 +47,7 @@ class ContestAdapter(val mContext: AppCompatActivity) : RecyclerView.Adapter<Con
         }
 
         holder.itemView.ll_entryFee.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
+            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType))
         }
         holder.itemView.ll_totalWinners.setOnClickListener {
             val bottomSheetDialogFragment = BottomSheetWinningListFragment()
@@ -57,7 +57,10 @@ class ContestAdapter(val mContext: AppCompatActivity) : RecyclerView.Adapter<Con
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.txt_Join.setOnClickListener {
-            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,contest.get(holder.adapterPosition).contest_id,matchType)
+           mContext. startActivity(
+                Intent(mContext, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+            )
+//            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,matchType)
         }
     }
 

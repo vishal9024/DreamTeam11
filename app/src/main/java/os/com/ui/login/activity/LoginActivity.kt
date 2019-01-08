@@ -178,7 +178,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                                     AppDelegate.LogT("Facebook details==" + socialModel + "")
                                     AppDelegate.hideProgressDialog(this@LoginActivity)
                                     Prefs(this@LoginActivity).putStringValueinTemp(Tags.social_id, socialModel.fb_id)
-                                    checkUserVerify(socialModel)
+                                    if (NetworkUtils.isConnected()) {
+                                        checkUserVerify(socialModel)
+                                    } else
+                                        Toast.makeText(this@LoginActivity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
                                 }
                             }
                         })
@@ -237,7 +242,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     socialModel.google_id = user.uid
                     socialModel.first_name = user.displayName!!
                     socialModel.image = user.photoUrl.toString()
-                    checkUserVerify(socialModel)
+                    if (NetworkUtils.isConnected()) {
+                        checkUserVerify(socialModel)
+                    } else
+                        Toast.makeText(this@LoginActivity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
@@ -269,7 +277,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LoginActivity)
                 if (response.response!!.status) {
-                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+//                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
                     startActivity(

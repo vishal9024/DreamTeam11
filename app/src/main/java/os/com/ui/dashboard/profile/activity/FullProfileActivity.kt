@@ -69,11 +69,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                 R.id.txt_change -> {
                     startActivity(Intent(this, ChangePasswordActivity::class.java))
                 }
-                R.id.llUpdateProfile -> {
-                    AppDelegate.hideKeyBoard(this)
-                    updatePersonalDetail()
-                }
-                R.id.btnUpdateProfile -> {
+                R.id.btn_UpdateProfile -> {
                     AppDelegate.hideKeyBoard(this)
                     updatePersonalDetail()
                 }
@@ -140,8 +136,8 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             et_Password.setOnClickListener(this)
             et_dob.setOnClickListener(this)
 //            txt_change.setOnClickListener(this)
-            llUpdateProfile.setOnClickListener(this)
-            btnUpdateProfile.setOnClickListener(this)
+
+            btn_UpdateProfile.setOnClickListener(this)
             if (pref!!.isLogin) {
                 if (NetworkUtils.isConnected()) {
                     getPersonalDetail()

@@ -11,7 +11,7 @@
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true">
     <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
-                                         android:layout_height="wrap_content">
+                                                       android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
                 card_view:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/txt_team"
@@ -64,6 +64,7 @@
                             android:textColor="@color/colorChooseCaptain"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_captain"
                             android:layout_gravity="center_horizontal"
                             style="@style/TextStyleMedium"
                             android:gravity="center_vertical"
@@ -97,6 +98,7 @@
                             android:textColor="@color/colorChooseViceCaptain"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_vicecaptain"
                             android:layout_gravity="center_horizontal"
                             style="@style/TextStyleMedium"
                             android:gravity="center_vertical"
@@ -273,7 +275,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1" android:layout_height="wrap_content">
+
+                            android:id="@+id/rl_edit"
+                            android:layout_weight="1" android:layout_height="match_parent">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
                         android:drawablePadding="@dimen/_10sdp"
@@ -289,14 +293,15 @@
                         android:drawableStart="@mipmap/edit"
                 />
             </RelativeLayout>
-            <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1" android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:id="@+id/rl_preview"
+                    android:layout_width="0dp"
+                    android:layout_weight="1" android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
                         android:drawablePadding="@dimen/_10sdp"
                         android:gravity="center"
                         style="@style/TextStyleMedium"
-
                         android:textSize="@dimen/_10sdp"
                         android:layout_gravity="center_vertical"
                         android:layout_width="wrap_content"
@@ -306,8 +311,10 @@
                         android:drawableStart="@mipmap/preview"
                 />
             </RelativeLayout>
-            <RelativeLayout android:layout_width="0dp"
-                            android:layout_weight="1" android:layout_height="wrap_content">
+            <RelativeLayout
+                    android:id="@+id/rl_clone"
+                    android:layout_width="0dp"
+                    android:layout_weight="1" android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_centerInParent="true"
                         android:drawablePadding="@dimen/_10sdp"

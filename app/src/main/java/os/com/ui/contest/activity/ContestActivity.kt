@@ -5,6 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_contest.*
@@ -29,6 +32,7 @@ import os.com.ui.invite.activity.InviteCodeActivity
 import os.com.ui.joinedContest.activity.FixtureJoinedContestActivity
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
+import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
 
@@ -36,7 +40,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.ll_myteam -> {
-                startActivity(Intent(this, MyTeamActivity::class.java))
+                startActivity(Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType))
             }
             R.id.rl_enterContestCode -> {
                 startActivity(Intent(this, InviteCodeActivity::class.java))
@@ -90,7 +94,12 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             txt_CountDownTimer.setText(getString(R.string.completed))
         } else
             txt_CountDownTimer.setText(getString(R.string.in_progress))
-        callGetContestListApi()
+        if (NetworkUtils.isConnected()) {
+            callGetContestListApi()
+        } else
+            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
         rl_enterContestCode.setOnClickListener(this)
         rl_createContest.setOnClickListener(this)
         btn_CreateTeam.setOnClickListener(this)
@@ -107,6 +116,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 when (newState) {
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
         filterBootomSheet()
@@ -147,7 +157,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.match_id] = /*match!!.match_id*/"13071965317"
+        loginRequest[Tags.match_id] = match!!.match_id/*"13071965317"*/
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@ContestActivity)
             try {
@@ -160,15 +170,25 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 if (response.response!!.status) {
                     contestList = response.response!!.data!!.match_contest!!
                     setAdapter()
-                    if (!pref!!.isLogin)
-                        ll_bottom.visibility = View.GONE
-                    else {
+                    if (!pref!!.isLogin) {
+                        ll_viewTeam.visibility = View.GONE
+                        btn_CreateTeam.visibility = VISIBLE
+                    } else {
                         txt_joined_contest.text = response.response!!.data!!.my_contests
                         txt_MyTeams.text = response.response!!.data!!.my_teams
+                        if (response.response!!.data!!.my_teams != null) {
+                            if (response.response!!.data!!.my_teams.toInt() == 0) {
+                                ll_viewTeam.visibility = View.GONE
+                                btn_CreateTeam.visibility = VISIBLE
+                            } else {
+                                ll_viewTeam.visibility = View.VISIBLE
+                                btn_CreateTeam.visibility = GONE
+                            }
+                        }
                     }
                     for (contest in contestList) {
                         contests!!.addAll(contest.contests!!)
-                        txt_AllContestCount.setText(contests!!.size.toString() + " " + getString(R.string.contest))
+                        txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
                     }
                 } else {
                 }

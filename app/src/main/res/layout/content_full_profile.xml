@@ -8,9 +8,10 @@
         tools:showIn="@layout/activity_full_profile"
         android:layout_height="match_parent">
     <ScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+    android:fillViewport="true">
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -18,7 +19,7 @@
             <LinearLayout
                     android:id="@+id/llContent"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="518dp"
                     android:padding="@dimen/_8sdp"
                     android:orientation="vertical">
 
@@ -105,7 +106,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                android:visibility="gone">
+                        android:visibility="gone">
                     <com.google.android.material.textfield.TextInputLayout
                             android:layout_marginTop="@dimen/_10sdp"
                             android:id="@+id/til_fav_team"
@@ -165,8 +166,8 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_5sdp"
-                android:layout_marginRight="@dimen/_5sdp">
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginRight="@dimen/_5sdp">
                     <LinearLayout
                             android:id="@+id/ll_male"
                             android:layout_width="0dp"
@@ -333,28 +334,36 @@
                             android:textSize="@dimen/_13sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
-            <LinearLayout
-                    android:id="@+id/llUpdateProfile"
-                    app:layout_constraintTop_toBottomOf="@+id/llContent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/_10sdp"
+            <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_UpdateProfile"
                     android:layout_width="match_parent"
+                    style="@style/ButtonStyle"
+                    android:text="@string/save_team"
+                    android:background="@color/colorASPrimary"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="@color/colorSecondary">
-                <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnUpdateProfile"
-                        style="@style/ButtonStyle"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:backgroundTint="@color/white"
-                        android:textColor="@color/colorSecondary"
-                        android:textAllCaps="true"
-                        android:text="@string/update_profile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_45sdp"/>
-            </LinearLayout>
+                    app:layout_constraintBottom_toBottomOf="@+id/scrollView"/>
+            <!--<LinearLayout-->
+                    <!--android:id="@+id/llUpdateProfile"-->
+                    <!--app:layout_constraintTop_toBottomOf="@+id/llContent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--android:layout_marginTop="@dimen/_10sdp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center"-->
+                    <!--android:background="@color/colorSecondary">-->
+                <!--<androidx.appcompat.widget.AppCompatButton-->
+                        <!--android:id="@+id/btnUpdateProfile"-->
+                        <!--style="@style/ButtonStyle"-->
+                        <!--android:paddingLeft="@dimen/_10sdp"-->
+                        <!--android:paddingRight="@dimen/_10sdp"-->
+                        <!--android:backgroundTint="@color/white"-->
+                        <!--android:textColor="@color/colorSecondary"-->
+                        <!--android:textAllCaps="true"-->
+                        <!--android:text="@string/update_profile"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="@dimen/_45sdp"/>-->
+            <!--</LinearLayout>-->
         </LinearLayout>
 
 

@@ -37,6 +37,7 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
 
     init {
         lstHolders = ArrayList<AppliedCouponCodeHolder>()
+//        Handler().postDelayed({ startUpdateTimer() }, 2000)
         startUpdateTimer()
     }
 
@@ -64,7 +65,12 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
             holder.itemView.view2.visibility = View.GONE
             holder.itemView.txt_contestJoined.visibility = View.GONE
             holder.itemView.card_view.setOnClickListener {
-                mContext.startActivity(Intent(mContext, ContestActivity::class.java).putExtra(IntentConstant.DATA,matchList.get(position)).putExtra(IntentConstant.CONTEST_TYPE,IntentConstant.FIXTURE))
+                mContext.startActivity(
+                    Intent(mContext, ContestActivity::class.java).putExtra(
+                        IntentConstant.DATA,
+                        matchList.get(position)
+                    ).putExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
+                )
             }
             holder.itemView.txt_Title.text = matchList.get(position).series_name
             holder.itemView.txt_Team1.text = matchList.get(position).local_team_name
@@ -119,7 +125,6 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
                         }
                     }
                 }
-
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -141,6 +146,5 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
         }
 
     }
-
 
 }
