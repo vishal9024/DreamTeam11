@@ -335,6 +335,7 @@
     <string name="empty_password">please enter password</string>
     <string name="not_same_password">password and confirm password does not match</string>
     <string name="work_with_us">Work with Us</string>
+    <string name="team">Team</string>
 
     <string-array name="state">
         <item>Select State</item>

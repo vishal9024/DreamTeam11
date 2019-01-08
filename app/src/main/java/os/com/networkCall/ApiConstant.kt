@@ -103,4 +103,5 @@ object ApiConstant {
     const val personal_details = "personal_details"
     const val update_personal_details = "update_personal_details"
     const val change_pasword = "change_pasword"
+    const val player_team_list="player-team-list"
 }

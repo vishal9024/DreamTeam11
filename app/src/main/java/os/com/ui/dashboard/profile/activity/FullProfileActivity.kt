@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -71,11 +70,20 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.llUpdateProfile -> {
                     AppDelegate.hideKeyBoard(this)
-                    updatePersonalDetail()
+                    if (NetworkUtils.isConnected()) {
+                        updatePersonalDetail()
+                    } else
+                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
                 }
                 R.id.btnUpdateProfile -> {
                     AppDelegate.hideKeyBoard(this)
-                    updatePersonalDetail()
+                    if (NetworkUtils.isConnected()) {
+                        updatePersonalDetail()
+                    } else
+                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
                 }
                 R.id.et_dob -> {
                     val fromDateDialog = DatePickerDialog(

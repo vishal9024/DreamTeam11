@@ -57,7 +57,7 @@ class ContestAdapter(val mContext: AppCompatActivity) : RecyclerView.Adapter<Con
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.txt_Join.setOnClickListener {
-            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,contest.get(holder.adapterPosition).contest_id,matchType)
+            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,matchType)
         }
     }
 

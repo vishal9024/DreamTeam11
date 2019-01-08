@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_team.*
@@ -28,6 +29,7 @@ import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
+import os.com.utils.networkUtils.NetworkUtils
 import java.util.HashMap
 import kotlin.collections.ArrayList
 import kotlin.collections.set
@@ -339,7 +341,6 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             R.id.btn_Next -> {
                 startActivity(
                     Intent(this, Choose_C_VC_Activity::class.java)
-                        .putExtra(IntentConstant.CONTEST_ID, contest_id)
                         .putExtra(IntentConstant.MATCH, match)
                         .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
                         .putParcelableArrayListExtra(IntentConstant.WK, wkList as java.util.ArrayList<out Parcelable>)
@@ -371,12 +372,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
-    var contest_id: String = ""
     var matchType = IntentConstant.FIXTURE
     private fun initViews() {
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
-            contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
             if (matchType == IntentConstant.FIXTURE) {
@@ -397,8 +396,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         toolbarTitleTv.setText(R.string.choose_team)
         setMenu(false, false, false, false)
         createTeamData()
-        if (match != null)
-            callGetContestListApi()
+        if (NetworkUtils.isConnected()) {
+            if (match != null)
+                callGetContestListApi()
+        } else
+            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
         img_wk.setOnClickListener(this)
         img_ar.setOnClickListener(this)
         img_bat.setOnClickListener(this)

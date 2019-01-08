@@ -23,7 +23,7 @@ import os.com.utils.CountTimer
 class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals(Tags.JoinContestDialog)){
-            showJoinContestDialogue(this, match!!, contests!![position].contest_id, matchType)
+            showJoinContestDialogue(this, match!!, matchType)
         }
     }
 

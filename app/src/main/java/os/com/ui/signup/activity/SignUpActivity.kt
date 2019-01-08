@@ -15,7 +15,6 @@ import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
-import os.com.ui.login.activity.LoginActivity
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.utils.AppDelegate
 import os.com.utils.ValidationUtil
@@ -33,7 +32,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
 
             }
             R.id.txt_Login -> {
-                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         }
@@ -63,7 +61,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
 
         if (userData != null) {
             et_Email.setText(userData!!.email_address)
-            if (userData!!.email_address.isEmpty())
+            if (!userData!!.email_address.isEmpty())
                 et_Email.isEnabled = false
             et_Password.visibility = View.GONE
         }

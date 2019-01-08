@@ -8,7 +8,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.appbar.AppBarLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -18,18 +21,31 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
-import os.com.ui.dashboard.home.adapter.MatchCompletedAdapter
-import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
-import os.com.ui.dashboard.home.adapter.MatchLiveAdapter
-import os.com.ui.dashboard.home.adapter.SlidingImageAdapterHomeBanner
+import os.com.ui.dashboard.home.adapter.*
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
-
+import os.com.utils.networkUtils.NetworkUtils
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by heenas on 3/5/2018.
  */
-class HomeFragment : BaseFragment(), View.OnClickListener {
+class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
+    override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+        if (verticalOffset == 0) {
+            if (txt_Fixtures.isSelected)
+                if (!pref!!.isLogin) {
+                    ll_matchSelector.visibility = GONE
+                    txt_title.visibility = GONE
+                    txt_toolbartitle.visibility = VISIBLE
+                } else
+                    txt_title.visibility = VISIBLE
+        } else {
+            txt_title.visibility = GONE
+        }
+    }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_Fixtures -> matchSelector(FIXTURES)
@@ -62,16 +78,54 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
             cl_main.visibility = View.VISIBLE
             txt_title.visibility = View.VISIBLE
         }
+        app_bar.addOnOffsetChangedListener(this);
         matchSelector(FIXTURES)
-        callGetMatchListApi()
+        setFixturesAdapter()
+        setCompletedAdapter()
+        setLiveAdapter()
+        if (NetworkUtils.isConnected()) {
+            callGetMatchListApi()
+        } else
+            Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
         Handler().postDelayed(Runnable {
-            setHomeBannerAdapter()
+            setBanner()
         }, 100)
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
 
     }
+
+    private val bannerFragment: ArrayList<Fragment> = ArrayList()
+    private var bannerPagerAdapter: PagerAdapter? = null
+    var currentPage = 0
+    var timer: Timer? = null
+    val DELAY_MS: Long = 500//delay in milliseconds before task is to be executed
+    val PERIOD_MS: Long = 3000 // time in milliseconds between successive task executions.
+    internal fun setBanner() {
+        if (!isAdded)
+            return
+//        if (newsModelArrayList != null) {
+        for (i in 0..11) {
+            val fragment = BannerFragment()
+            val bundle = Bundle()
+//                bundle.putParcelable(Tags.DATA, newsModelArrayList.get(i))
+            fragment.arguments = bundle
+            bannerFragment.add(fragment)
+        }
+        AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
+        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
+        viewPager_Banner.setAdapter(bannerPagerAdapter)
+        viewPager_Banner.setClipToPadding(false);
+        viewPager_Banner.setPadding(50, 0, 50, 0)
+        viewPager_Banner.setPageMargin(10)
+        viewPager_Banner.setCurrentItem(0)
+        viewPager_Banner.startAutoScroll()
+        viewPager_Banner.isCycle = true
+    }
+
 
     private fun setHomeBannerAdapter() {
         if (!isAdded)
@@ -80,8 +134,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         viewPager_Banner.setClipToPadding(false);
         viewPager_Banner.setPadding(50, 0, 50, 0)
         viewPager_Banner.setPageMargin(10)
-        viewPager_Banner.startAutoScroll()
-        viewPager_Banner.isCycle = true
+
+//        val handler = Handler()
+//        val Update = Runnable {
+//            if (currentPage == 4) {
+//                currentPage = 0
+//            }
+//            viewPager_Banner.setCurrentItem(currentPage++, true)
+//        }
+//        timer = Timer() // This will create a new Thread
+//        timer!!.schedule(object : TimerTask() { // task to be scheduled
+//            override  fun run() {
+//                handler.post(Update)
+//            }
+//        }, DELAY_MS, PERIOD_MS)
+
+//        viewPager_Banner.startAutoScroll()
+//        viewPager_Banner.isCycle = true
     }
 
     private var LIVE = 1
@@ -94,13 +163,16 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
         txt_Results.isSelected = false
         view1.visibility = View.VISIBLE
         view2.visibility = View.VISIBLE
+        recyclerView_fixMatch.visibility = GONE
+        recyclerView_liveMatch.visibility = GONE
+        recyclerView_CompleteMatch.visibility = GONE
         when (value) {
             LIVE -> {
                 txt_title.visibility = GONE
                 txt_Live.isSelected = true
                 view1.visibility = View.GONE
                 view2.visibility = View.GONE
-                setLiveAdapter()
+                recyclerView_liveMatch.visibility = VISIBLE
             }
             FIXTURES -> {
                 if (!pref!!.isLogin) {
@@ -112,45 +184,49 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                 txt_title.setText(R.string.select_a_match)
                 txt_Fixtures.isSelected = true
                 view1.visibility = View.GONE
-                setFixturesAdapter()
+                recyclerView_fixMatch.visibility = VISIBLE
             }
             RESULTS -> {
                 txt_title.visibility = GONE
                 txt_title.setText(R.string.results)
                 txt_Results.isSelected = true
                 view2.visibility = View.GONE
-                setCompletedAdapter()
+                recyclerView_CompleteMatch.visibility = VISIBLE
             }
         }
     }
 
     var fixturesAdapter: MatchFixturesAdapter? = null
+    var liveAdapter: MatchLiveAdapter? = null
+    var completedAdapter: MatchCompletedAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.setHasFixedSize(false)
+        recyclerView_fixMatch!!.layoutManager = llm
+        recyclerView_fixMatch!!.setHasFixedSize(true)
         fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList)
-        recyclerView_Match!!.adapter = fixturesAdapter
+        recyclerView_fixMatch!!.adapter = fixturesAdapter
     }
 
     @SuppressLint("WrongConstant")
     private fun setLiveAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.setHasFixedSize(false)
-        recyclerView_Match!!.adapter = MatchLiveAdapter(context!!, liveMatchList)
+        recyclerView_liveMatch!!.layoutManager = llm
+        recyclerView_liveMatch!!.setHasFixedSize(true)
+        liveAdapter = MatchLiveAdapter(context!!, liveMatchList)
+        recyclerView_liveMatch!!.adapter = liveAdapter
     }
 
     @SuppressLint("WrongConstant")
     private fun setCompletedAdapter() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_Match!!.layoutManager = llm
-        recyclerView_Match!!.setHasFixedSize(false)
-        recyclerView_Match!!.adapter = MatchCompletedAdapter(context!!, completedMatchList)
+        recyclerView_CompleteMatch!!.layoutManager = llm
+        recyclerView_CompleteMatch!!.setHasFixedSize(true)
+        completedAdapter = MatchCompletedAdapter(context!!, completedMatchList)
+        recyclerView_CompleteMatch!!.adapter = completedAdapter
     }
 
     private fun callGetMatchListApi() {
@@ -173,6 +249,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener {
                     liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
                     completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
                     setFixturesAdapter()
+                    setCompletedAdapter()
+                    setLiveAdapter()
+                    recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
+                    recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
+                    recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
+
                 } else {
 //                    AppDelegate.showToast(activity, response.response!!.message)
                 }

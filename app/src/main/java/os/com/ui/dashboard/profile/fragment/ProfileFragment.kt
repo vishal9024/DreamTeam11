@@ -108,7 +108,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                }
                 if (NetworkUtils.isConnected()) {
                     getProfileData()
-
                 } else
                     Toast.makeText(context!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }

@@ -9,7 +9,8 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager.widget.PagerAdapter
 import os.com.R
 
-class SlidingImageAdapterHomeBanner(private val context: FragmentActivity/*, private val IMAGES: List<Home>*/) : PagerAdapter() {
+class SlidingImageAdapterHomeBanner(private val context: FragmentActivity/*, private val IMAGES: List<Home>*/) :
+    PagerAdapter() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 

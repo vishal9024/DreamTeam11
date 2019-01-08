@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_c_vc.*
@@ -40,7 +41,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     private var captain = ""
     private var vicecaptain = ""
     var selectPlayer: SelectPlayer? = null
-    var contest_id = ""
+    //    var contest_id = ""
     override fun onClick(tag: String, position: Int) {
         if (tag == "c") {
             for (i in playerList.indices) {
@@ -87,7 +88,12 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     for (i in playerList) {
                         player_ids.add(i.player_id)
                     }
-                    callCreateTeamApi(player_ids)
+                    if (NetworkUtils.isConnected()) {
+                        callCreateTeamApi(player_ids)
+                    } else
+                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
                 } else
                     AppDelegate.showToast(this, getString(R.string.error_network_connection))
             }
@@ -123,7 +129,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     var countTimer: CountTimer? = CountTimer()
     var matchType = IntentConstant.FIXTURE
     private fun getData() {
-        contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+//        contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
@@ -188,7 +194,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
-        loginRequest[Tags.contest_id] = contest_id
+//      loginRequest[Tags.contest_id] = contest_id
         loginRequest["captain"] = captain
         loginRequest["vice_captain"] = vicecaptain
         loginRequest["player_id"] = player_id.toString()

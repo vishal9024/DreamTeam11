@@ -3,6 +3,7 @@ package os.com.networkCall
 import kotlinx.coroutines.Deferred
 import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
+import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
 import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
@@ -74,4 +75,9 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.change_pasword)
     fun change_pasword(@Body request: Map<String, String>): Deferred<ProfileResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.player_team_list)
+    fun player_team_list(@Body request: Map<String, String>): Deferred<GetTeamListResponse>
+
 }
