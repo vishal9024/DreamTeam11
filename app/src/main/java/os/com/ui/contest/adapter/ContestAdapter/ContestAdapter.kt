@@ -47,7 +47,7 @@ class ContestAdapter(val mContext: AppCompatActivity) : RecyclerView.Adapter<Con
         }
 
         holder.itemView.ll_entryFee.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
+            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType))
         }
         holder.itemView.ll_totalWinners.setOnClickListener {
             val bottomSheetDialogFragment = BottomSheetWinningListFragment()

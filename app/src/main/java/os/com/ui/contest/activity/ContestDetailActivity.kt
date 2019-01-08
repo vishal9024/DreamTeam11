@@ -10,8 +10,11 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.constant.IntentConstant
 import os.com.ui.contest.adapter.TeamsAdapter
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
+import os.com.utils.CountTimer
 
 
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
@@ -29,7 +32,9 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-
+    var countTimer: CountTimer? = CountTimer()
+    var match: Match? = null
+    var matchType = IntentConstant.FIXTURE
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_megacontest)
@@ -38,6 +43,21 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
 
     private fun initViews() {
+        if (intent != null) {
+            match = intent.getParcelableExtra(IntentConstant.MATCH)
+            matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
+            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            if (matchType == IntentConstant.FIXTURE) {
+                if (!match!!.star_date.isEmpty()) {
+                    val strt_date = match!!.star_date.split("T")
+                    val dateTime = strt_date.get(0) + " " + match!!.star_time
+                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                }
+            } else if (matchType == IntentConstant.FIXTURE) {
+                txt_CountDownTimer.setText(getString(R.string.completed))
+            } else
+                txt_CountDownTimer.setText(getString(R.string.in_progress))
+        }
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
