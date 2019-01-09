@@ -4,8 +4,10 @@ package os.com.constant
  * Created by monikab on 2/21/2018.
  */
 object IntentConstant {
+    const val TEAM_ID = "TEAM_ID"
     const val DATA = "DATA"
     const val OTP = "OTP"
+    const val ISEDIT = "OTP"
     const val MATCH = "MATCH"
     const val USER_ID = "USER_ID"
     const val MOBILE = "MOBILE"

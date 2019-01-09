@@ -12,6 +12,7 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.interfaces.SelectPlayerInterface
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.PlayerDetailActivity
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
@@ -21,7 +22,7 @@ class PlayerListAdapter(
     var playerList: MutableList<Data>?,
     var type: Int,
     var onClickRecyclerView: SelectPlayerInterface,
-    selectPlayer: SelectPlayer?
+    var selectPlayer: SelectPlayer?
 ) : RecyclerView.Adapter<PlayerListAdapter.AppliedCouponCodeHolder>() {
     private var WK = 1
     private var BAT = 2
@@ -60,7 +61,7 @@ class PlayerListAdapter(
         } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
-        if (playerList!![position].player_record!=null) {
+        if (playerList!![position].player_record != null) {
             ImageLoader.getInstance().displayImage(
                 playerList!![position].player_record!!.image,
                 holder.itemView.cimg_player,
@@ -73,14 +74,80 @@ class PlayerListAdapter(
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
         holder.itemView.img_add.isSelected = playerList!![position]!!.isSelected
+
         holder.itemView.img_add.setOnClickListener {
-            if (playerList!![position]!!.isSelected)
+            if (playerList!![position].isSelected)
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)
             else
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
         }
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+        }
+        holder.itemView.ll_main.alpha = 1.0f
+        if (type == WK) {
+            if (selectPlayer!!.wk_selected == selectPlayer!!.wk_count) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            }
+        } else if (type == AR) {
+            if (selectPlayer!!.ar_selected == selectPlayer!!.ar_maxcount) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if (selectPlayer!!.ar_selected >= selectPlayer!!.ar_mincount && selectPlayer!!.extra_player == 0) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            }
+        } else if (type == BAT) {
+            if (selectPlayer!!.bat_selected == selectPlayer!!.bat_maxcount) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if (selectPlayer!!.bat_selected >= selectPlayer!!.bat_mincount && selectPlayer!!.extra_player == 0) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            }
+        } else if (type == BOWLER) {
+            if (selectPlayer!!.bowl_selected == selectPlayer!!.bowl_maxcount) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if (selectPlayer!!.bowl_selected >= selectPlayer!!.bowl_mincount && selectPlayer!!.extra_player == 0) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+                if (!playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha = 0.5f
+                else
+                    holder.itemView.ll_main.alpha = 1.0f
+            }
         }
     }
 

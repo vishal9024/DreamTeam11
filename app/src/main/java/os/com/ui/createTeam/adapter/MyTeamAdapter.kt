@@ -31,14 +31,14 @@ class MyTeamAdapter(val mContext: Context, var data: ArrayList<Data>,var onClick
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.rl_preview.setOnClickListener {
-            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]))
+            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details))
 //                        mContext.startActivity(Intent(mContext, ::class.java))
         }
         holder.itemView.rl_edit.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.edit,holder.adapterPosition)
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
-        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + position.toString()
+        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + position+1.toString()
         for (player in data[holder.adapterPosition].player_details!!) {
             if (player.player_id.equals(data[holder.adapterPosition].captain_player_id))
                 holder.itemView.txt_captain.text = player.name

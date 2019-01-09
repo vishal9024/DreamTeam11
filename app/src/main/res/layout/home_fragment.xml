@@ -9,7 +9,7 @@
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
             app:elevation="0dp"
-            android:background="@color/white"
+            android:background="@color/colorTransparent"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
@@ -157,19 +157,20 @@
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <!--<androidx.constraintlayout.widget.ConstraintLayout-->
+          <!---->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content">-->
         <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
-                    android:padding="@dimen/_5sdp"
                     android:id="@+id/txt_title"
                     style="@style/TextStyleSemiBold"
                     android:gravity="center"
+                    android:padding="@dimen/_3sdp"
                     android:textSize="@dimen/_11sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -180,8 +181,9 @@
                     android:layout_height="wrap_content"
             />
             <RelativeLayout
+
                     android:id="@+id/rl_match"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_title"
                     android:layout_width="match_parent"
@@ -236,7 +238,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent" android:id="@+id/view6"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
         <!--<com.amar.library.ui.StickyScrollView-->

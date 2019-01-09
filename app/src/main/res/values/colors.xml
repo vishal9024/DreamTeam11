@@ -8,5 +8,7 @@
     <color name="createTeamColor">#343434</color>
     <color name="GrayColorMain">#f4f4f4</color>
     <color name="colorRed">#df2826</color>
+    <color name="green">#67c767</color>
+    <color name="yellow">#ead303</color>
 
 </resources>

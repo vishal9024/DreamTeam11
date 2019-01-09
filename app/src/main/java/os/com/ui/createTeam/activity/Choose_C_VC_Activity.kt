@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.OnClickCVC
@@ -128,6 +129,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
 
     var countTimer: CountTimer? = CountTimer()
     var matchType = IntentConstant.FIXTURE
+    var team_id = ""
     private fun getData() {
 //        contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
@@ -152,21 +154,45 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         arList = intent.getParcelableArrayListExtra(IntentConstant.AR)
         bowlerList = intent.getParcelableArrayListExtra(IntentConstant.BOWLER)
         batsmenList = intent.getParcelableArrayListExtra(IntentConstant.BATSMEN)
+        if (intent.getIntExtra(IntentConstant.ISEDIT, 0) ==AppRequestCodes.EDIT) {
+            team_id = intent.getStringExtra(IntentConstant.TEAM_ID)
+        }
+
         for (i in wkList) {
-            if (i.isSelected)
+            if (i.isSelected) {
                 this.wkList!!.add(i)
+                if (i.isCaptain)
+                    captain = i.player_id
+                if (i.isViceCaptain)
+                    vicecaptain = i.player_id
+            }
         }
         for (i in arList) {
-            if (i.isSelected)
+            if (i.isSelected) {
                 this.arList!!.add(i)
+                if (i.isCaptain)
+                    captain = i.player_id
+                if (i.isViceCaptain)
+                    vicecaptain = i.player_id
+            }
         }
         for (i in bowlerList) {
-            if (i.isSelected)
+            if (i.isSelected) {
                 this.bowlerList!!.add(i)
+                if (i.isCaptain)
+                    captain = i.player_id
+                if (i.isViceCaptain)
+                    vicecaptain = i.player_id
+            }
         }
         for (i in batsmenList) {
-            if (i.isSelected)
+            if (i.isSelected) {
                 this.batsmenList!!.add(i)
+                if (i.isCaptain)
+                    captain = i.player_id
+                if (i.isViceCaptain)
+                    vicecaptain = i.player_id
+            }
         }
 
         playerList.addAll(this.wkList!!)
@@ -195,6 +221,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
 //      loginRequest[Tags.contest_id] = contest_id
+        loginRequest[Tags.team_id]=team_id
         loginRequest["captain"] = captain
         loginRequest["vice_captain"] = vicecaptain
         loginRequest["player_id"] = player_id.toString()

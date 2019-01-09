@@ -69,6 +69,10 @@ class SelectPlayer() : Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "SelectPlayer(extra_player=$extra_player, wk_count=$wk_count, wk_selected=$wk_selected, bat_mincount=$bat_mincount, bat_maxcount=$bat_maxcount, bat_selected=$bat_selected, ar_mincount=$ar_mincount, ar_maxcount=$ar_maxcount, ar_selected=$ar_selected, bowl_mincount=$bowl_mincount, bowl_maxcount=$bowl_maxcount, bowl_selected=$bowl_selected, selectedPlayer=$selectedPlayer, localTeamplayerCount=$localTeamplayerCount, visitorTeamPlayerCount=$visitorTeamPlayerCount, total_credit=$total_credit, substitute=$substitute)"
+    }
+
     companion object CREATOR : Parcelable.Creator<SelectPlayer> {
         override fun createFromParcel(parcel: Parcel): SelectPlayer {
             return SelectPlayer(parcel)

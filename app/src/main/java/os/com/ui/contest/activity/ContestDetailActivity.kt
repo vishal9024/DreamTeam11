@@ -1,6 +1,7 @@
 package os.com.ui.contest.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.ui.contest.adapter.TeamsAdapter
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.CountTimer
@@ -21,17 +23,28 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_CreateTeam -> {
-//                startActivity(Intent(this, ChooseTeamActivity::class.java))
+                startActivity(
+                    Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    )
+                )
             }
             R.id.ll_winners -> {
                 val bottomSheetDialogFragment = BottomSheetWinningListFragment()
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.txt_Join -> {
-//                showJoinContestDialogue(this, match)
+                startActivity(
+                    Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    )
+                )
             }
         }
     }
+
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
@@ -65,7 +78,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         toolbarTitleTv.setText(R.string.mega_contest)
         setMenu(false, false, false, false)
         setAdapter()
-        val  mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+        val mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
         //By default set BottomSheet Behavior as Collapsed and Height 0
         mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         mBottomSheetBehavior.peekHeight = 0

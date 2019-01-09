@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Data() : Parcelable {
+    var team_id: String = ""
     var captain_player_id: String = ""
     var vice_captain_player_id: String = ""
     var total_bowler: String = ""
@@ -13,6 +14,7 @@ class Data() : Parcelable {
     var player_details: ArrayList<PlayerRecord>? = null
 
     constructor(parcel: Parcel) : this() {
+        team_id = parcel.readString()
         captain_player_id = parcel.readString()
         vice_captain_player_id = parcel.readString()
         total_bowler = parcel.readString()
@@ -22,6 +24,7 @@ class Data() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(team_id)
         parcel.writeString(captain_player_id)
         parcel.writeString(vice_captain_player_id)
         parcel.writeString(total_bowler)

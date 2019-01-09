@@ -19,6 +19,7 @@ import os.com.AppBase.BaseActivity
 import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.SelectPlayerInterface
@@ -35,7 +36,9 @@ import kotlin.collections.ArrayList
 import kotlin.collections.set
 
 class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
+    var exeedCredit = false
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
+
         if (tag == WK) {
             var player_credit = 0.0
             if (isSelected) {
@@ -45,7 +48,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     }
                     var total_credit = selectPlayer!!.total_credit + player_credit
                     if (total_credit > 100) {
-                        view.visibility = VISIBLE
+                        exeedCredit = true
+                        rv_Player.adapter!!.notifyDataSetChanged()
                         return
                     }
                     var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -54,6 +58,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
                     else
                         visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                    wkList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         selectPlayer!!.extra_player,
                         selectPlayer!!.wk_selected + 1,
@@ -65,7 +70,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         visitorTeamPlayerCount,
                         total_credit
                     )
-                    wkList!!.get(position).isSelected = isSelected
+
                 }
             } else {
                 if (selectPlayer!!.wk_selected > 0) {
@@ -80,7 +85,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = selectPlayer!!.localTeamplayerCount - 1
                     else
                         visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount - 1
-
+                    wkList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         selectPlayer!!.extra_player,
                         selectPlayer!!.wk_selected - 1,
@@ -92,7 +97,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         visitorTeamPlayerCount,
                         total_credit
                     )
-                    wkList!!.get(position).isSelected = isSelected
+
                 }
             }
         } else if (tag == AR) {
@@ -110,7 +115,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             }
                             var total_credit = selectPlayer!!.total_credit + player_credit
                             if (total_credit > 100) {
-                                view.visibility = VISIBLE
+                                exeedCredit = true
+                                rv_Player.adapter!!.notifyDataSetChanged()
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -119,7 +125,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                                 localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
                             else
                                 visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
-
+                            arList!!.get(position).isSelected = isSelected
                             updateTeamData(
                                 extra,
                                 selectPlayer!!.wk_selected,
@@ -131,7 +137,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                                 visitorTeamPlayerCount,
                                 total_credit
                             )
-                            arList!!.get(position).isSelected = isSelected
+
                         }
                     }
                 }
@@ -152,7 +158,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = selectPlayer!!.localTeamplayerCount - 1
                     else
                         visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount - 1
-
+                    arList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         extra,
                         selectPlayer!!.wk_selected,
@@ -164,7 +170,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         visitorTeamPlayerCount,
                         total_credit
                     )
-                    arList!!.get(position).isSelected = isSelected
+
                 }
             }
 
@@ -184,7 +190,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             }
                             var total_credit = selectPlayer!!.total_credit + player_credit
                             if (total_credit > 100) {
-                                view.visibility = VISIBLE
+                                exeedCredit = true
+                                rv_Player.adapter!!.notifyDataSetChanged()
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -194,6 +201,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             else
                                 visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
 
+                            batsmenList!!.get(position).isSelected = isSelected
                             updateTeamData(
                                 extra,
                                 selectPlayer!!.wk_selected,
@@ -205,7 +213,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                                 visitorTeamPlayerCount,
                                 total_credit
                             )
-                            batsmenList!!.get(position).isSelected = isSelected
+
                         }
                     }
                 }
@@ -227,7 +235,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     else
                         visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount - 1
 
-
+                    batsmenList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         extra,
                         selectPlayer!!.wk_selected,
@@ -239,7 +247,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         visitorTeamPlayerCount,
                         total_credit
                     )
-                    batsmenList!!.get(position).isSelected = isSelected
+
                 }
             }
 
@@ -258,7 +266,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             }
                             var total_credit = selectPlayer!!.total_credit + player_credit
                             if (total_credit > 100) {
-                                view.visibility = VISIBLE
+                                exeedCredit = true
+                                rv_Player.adapter!!.notifyDataSetChanged()
                                 return
                             }
 
@@ -268,7 +277,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                                 localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
                             else
                                 visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
-
+                            bowlerList!!.get(position).isSelected = isSelected
                             updateTeamData(
                                 extra,
                                 selectPlayer!!.wk_selected,
@@ -280,7 +289,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                                 visitorTeamPlayerCount,
                                 total_credit
                             )
-                            bowlerList!!.get(position).isSelected = isSelected
+
                         }
                     }
                 }
@@ -302,6 +311,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     else
                         visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount - 1
 
+                    bowlerList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         extra,
                         selectPlayer!!.wk_selected,
@@ -313,7 +323,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         visitorTeamPlayerCount,
                         total_credit
                     )
-                    bowlerList!!.get(position).isSelected = isSelected
+
                 }
             }
 
@@ -324,6 +334,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     override fun onClickItem(tag: String, position: Int) {
     }
 
+    var team_id = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_wk -> {
@@ -339,10 +350,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 playerTypeSelector(BOWLER)
             }
             R.id.btn_Next -> {
+
                 startActivity(
                     Intent(this, Choose_C_VC_Activity::class.java)
                         .putExtra(IntentConstant.MATCH, match)
                         .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
+                        .putExtra(IntentConstant.ISEDIT, from)
+                        .putExtra(IntentConstant.TEAM_ID, team_id)
+
                         .putParcelableArrayListExtra(IntentConstant.WK, wkList as java.util.ArrayList<out Parcelable>)
                         .putParcelableArrayListExtra(
                             IntentConstant.BATSMEN,
@@ -373,22 +388,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
+    var from = 0
     private fun initViews() {
-        if (intent != null) {
-            match = intent.getParcelableExtra(IntentConstant.MATCH)
-            matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
-            if (matchType == IntentConstant.FIXTURE) {
-                if (!match!!.star_date.isEmpty()) {
-                    val strt_date = match!!.star_date.split("T")
-                    val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
-                }
-            } else if (matchType == IntentConstant.FIXTURE) {
-                txt_CountDownTimer.setText(getString(R.string.completed))
-            } else
-                txt_CountDownTimer.setText(getString(R.string.in_progress))
-        }
+        getIntentData()
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -402,7 +404,6 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
-
         img_wk.setOnClickListener(this)
         img_ar.setOnClickListener(this)
         img_bat.setOnClickListener(this)
@@ -415,12 +416,40 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
     }
 
+    private fun getIntentData() {
+        if (intent != null) {
+            match = intent.getParcelableExtra(IntentConstant.MATCH)
+            matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
+            from = intent.getIntExtra(IntentConstant.ISEDIT, 0)
+            if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT) {
+
+                playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
+                playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
+            }
+            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            if (matchType == IntentConstant.FIXTURE) {
+                if (!match!!.star_date.isEmpty()) {
+                    val strt_date = match!!.star_date.split("T")
+                    val dateTime = strt_date.get(0) + " " + match!!.star_time
+                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                }
+            } else if (matchType == IntentConstant.FIXTURE) {
+                txt_CountDownTimer.setText(getString(R.string.completed))
+            } else
+                txt_CountDownTimer.setText(getString(R.string.in_progress))
+        }
+    }
+
     var bowlerList: MutableList<Data>? = ArrayList()
     var arList: MutableList<Data>? = ArrayList()
     var wkList: MutableList<Data>? = ArrayList()
     var batsmenList: MutableList<Data>? = ArrayList()
 
     var playerList: MutableList<Data>? = ArrayList()
+
+
+    var playerListPreview: os.com.ui.createTeam.apiResponse.myTeamListResponse.Data? = null
+    var playerListEdit: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord>? = null
     private fun callGetContestListApi() {
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
@@ -472,7 +501,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             arList!!.add(playerList!![i])
                         }
                     }
-                    playerTypeSelector(WK)
+                    if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT)
+                        updateData()
+                    else playerTypeSelector(WK)
                 } else {
                 }
             } catch (exception: Exception) {
@@ -481,6 +512,107 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
     }
 
+    private fun updateData() {
+        if (from == AppRequestCodes.EDIT)
+            team_id = playerListPreview!!.team_id
+        var localTeamplayerCount = 0
+        var visitorTeamPlayerCount = 0
+        var total_credit = 0.0
+        for (position in wkList!!.indices) {
+            for (playerData in playerListEdit!!) {
+                if (wkList!![position].player_id == playerData.player_id) {
+                    wkList!![position].isSelected = true
+                    if (wkList!![position].player_id == playerListPreview!!.captain_player_id)
+                        wkList!![position].isCaptain = true
+                    if (wkList!![position].player_id == playerListPreview!!.vice_captain_player_id)
+                        wkList!![position].isViceCaptain = true
+                    if (wkList!![position].team_id.equals(match!!.local_team_id))
+                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                    else
+                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                    var player_credit = 0.0
+                    if (!wkList!!.get(position).player_record!!.player_credit.isEmpty()) {
+                        player_credit = wkList!!.get(position).player_record!!.player_credit.toDouble()
+                    }
+                    total_credit = selectPlayer!!.total_credit + player_credit
+                }
+            }
+
+        }
+        for (position in arList!!.indices) {
+            for (playerData in playerListEdit!!) {
+                if (arList!![position].player_id == playerData.player_id) {
+                    arList!![position].isSelected = true
+                    if (arList!![position].player_id == playerListPreview!!.captain_player_id)
+                        arList!![position].isCaptain = true
+                    if (arList!![position].player_id == playerListPreview!!.vice_captain_player_id)
+                        arList!![position].isViceCaptain = true
+                    if (arList!![position].team_id.equals(match!!.local_team_id))
+                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                    else
+                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                    var player_credit = 0.0
+                    if (!arList!!.get(position).player_record!!.player_credit.isEmpty()) {
+                        player_credit = arList!!.get(position).player_record!!.player_credit.toDouble()
+                    }
+                    total_credit = selectPlayer!!.total_credit + player_credit
+                }
+            }
+
+        }
+        for (position in batsmenList!!.indices) {
+            for (playerData in playerListEdit!!) {
+                if (batsmenList!![position].player_id == playerData.player_id) {
+                    batsmenList!![position].isSelected = true
+                    if (batsmenList!![position].player_id == playerListPreview!!.captain_player_id)
+                        batsmenList!![position].isCaptain = true
+                    if (batsmenList!![position].player_id == playerListPreview!!.vice_captain_player_id)
+                        batsmenList!![position].isViceCaptain = true
+                    if (batsmenList!![position].team_id.equals(match!!.local_team_id))
+                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                    else
+                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                    var player_credit = 0.0
+                    if (!batsmenList!!.get(position).player_record!!.player_credit.isEmpty()) {
+                        player_credit = batsmenList!!.get(position).player_record!!.player_credit.toDouble()
+                    }
+                    total_credit = selectPlayer!!.total_credit + player_credit
+                }
+            }
+        }
+        for (position in bowlerList!!.indices) {
+            for (playerData in playerListEdit!!) {
+                if (bowlerList!![position].player_id == playerData.player_id) {
+                    bowlerList!![position].isSelected = true
+                    if (bowlerList!![position].player_id == playerListPreview!!.captain_player_id)
+                        bowlerList!![position].isCaptain = true
+                    if (bowlerList!![position].player_id == playerListPreview!!.vice_captain_player_id)
+                        bowlerList!![position].isViceCaptain = true
+                    if (bowlerList!![position].team_id.equals(match!!.local_team_id))
+                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                    else
+                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                    var player_credit = 0.0
+                    if (!bowlerList!!.get(position).player_record!!.player_credit.isEmpty()) {
+                        player_credit = bowlerList!!.get(position).player_record!!.player_credit.toDouble()
+                    }
+                    total_credit = selectPlayer!!.total_credit + player_credit
+                }
+            }
+        }
+        updateTeamData(
+            0,
+            playerListPreview!!.total_wicketkeeper.toInt(),
+            playerListPreview!!.total_batsman.toInt(),
+            playerListPreview!!.total_allrounder.toInt(),
+            playerListPreview!!.total_bowler.toInt(),
+            11,
+            localTeamplayerCount,
+            visitorTeamPlayerCount,
+            total_credit
+        )
+        playerTypeSelector(WK)
+    }
 
     @SuppressLint("WrongConstant")
     private fun setAdapter(playerlist: MutableList<Data>, type: Int) {
@@ -514,6 +646,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         selectPlayer!!.visitorTeamPlayerCount = 0
         selectPlayer!!.total_credit = 0.0
         selectPlayer!!.substitute = false
+        updateUi()
     }
 
     fun updateTeamData(
@@ -527,6 +660,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         visitorTeamPlayerCount: Int,
         total_credit: Double
     ) {
+        exeedCredit = false
         selectPlayer!!.extra_player = extra_player
         selectPlayer!!.wk_selected = wk_selected
         selectPlayer!!.bat_selected = bat_selected
@@ -552,7 +686,51 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         txt_local_count.text = selectPlayer!!.localTeamplayerCount.toString()
         txt_visitor_count.text = selectPlayer!!.visitorTeamPlayerCount.toString()
         txt_visitor.text = match!!.visitor_team_name
+        updateCircle()
+    }
 
+    private fun updateCircle() {
+        txt_WKCount.isSelected = selectPlayer!!.wk_selected == selectPlayer!!.wk_count
+        AppDelegate.LogT("Select Player==>+" + selectPlayer)
+        if (selectPlayer!!.selectedPlayer == 11) {
+            txt_BOWLERCount.isSelected = true
+            txt_ARCount.isSelected = true
+            txt_BATCount.isSelected = true
+            txt_WKCount.isSelected = true
+        } else {
+            when {
+                selectPlayer!!.ar_selected == 0 -> txt_ARCount.isSelected = false
+                selectPlayer!!.ar_selected == selectPlayer!!.ar_maxcount -> txt_ARCount.isSelected = true
+                selectPlayer!!.ar_selected >= selectPlayer!!.ar_mincount && selectPlayer!!.extra_player == 0 -> txt_ARCount.isSelected =
+                        true
+//                selectPlayer!!.ar_selected > 0 -> {
+//                    txt_ARCount.isActivated = true
+//                }
+                else -> txt_ARCount.isSelected = false
+            }
+
+            when {
+                selectPlayer!!.bat_selected == 0 -> txt_BATCount.isSelected = false
+                selectPlayer!!.bat_selected == selectPlayer!!.bat_maxcount -> txt_BATCount.isSelected = true
+                selectPlayer!!.bat_selected >= selectPlayer!!.bat_mincount && selectPlayer!!.extra_player == 0 -> txt_BATCount.isSelected =
+                        true
+//                selectPlayer!!.bat_selected > 0 -> {
+//                    txt_BATCount.isActivated = true
+//                }
+                else -> txt_BATCount.isSelected = false
+            }
+
+            when {
+                selectPlayer!!.bowl_selected == 0 -> txt_BOWLERCount.isSelected = false
+                selectPlayer!!.bowl_selected == selectPlayer!!.bowl_maxcount -> txt_BOWLERCount.isSelected = true
+                selectPlayer!!.bowl_selected >= selectPlayer!!.bowl_mincount && selectPlayer!!.extra_player == 0 -> txt_BOWLERCount.isSelected =
+                        true
+//                selectPlayer!!.bowl_selected > 0 -> {
+//                    txt_BOWLERCount.isActivated = true
+//                }
+                else -> txt_BOWLERCount.isSelected = false
+            }
+        }
     }
 
     fun playerTypeSelector(value: Int) {

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<item android:state_selected="true">-->
+    <!--<bitmap android:src="@mipmap/arselect"-->
+    <!--android:tint="@color/colorPrimary" />-->
+    <!--</item>-->
+    <item android:drawable="@drawable/rounded_square_count_activated" android:state_selected="true"/>
+    <item android:drawable="@drawable/rounded_square_count_update" android:state_active="true"/>
+    <item android:drawable="@drawable/rounded_square_count"/>
+</selector>

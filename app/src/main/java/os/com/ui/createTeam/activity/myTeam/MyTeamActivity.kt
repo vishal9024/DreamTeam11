@@ -31,17 +31,27 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals(Tags.clone)) {
             startActivityForResult(
-                Intent(this, ChooseTeamActivity::class.java).putExtra("show", 1).putExtra(
+                Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
                     data[position]
-                ), AppRequestCodes.CLONE
+                ).putParcelableArrayListExtra(
+                    IntentConstant.SELECT_PLAYER,
+                    data[position].player_details
+                ).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                    .putExtra(IntentConstant.ISEDIT, AppRequestCodes.CLONE),
+                AppRequestCodes.CLONE
             )
         } else if (tag.equals(Tags.edit)) {
             startActivityForResult(
-                Intent(this, ChooseTeamActivity::class.java).putExtra("show", 1).putExtra(
+                Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
                     data[position]
-                ), AppRequestCodes.EDIT
+                ).putParcelableArrayListExtra(
+                    IntentConstant.SELECT_PLAYER,
+                    data[position].player_details
+                ).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                    .putExtra(IntentConstant.ISEDIT, AppRequestCodes.EDIT),
+                AppRequestCodes.EDIT
             )
         }
     }

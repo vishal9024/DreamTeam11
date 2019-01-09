@@ -105,7 +105,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = AllContestAdapter(this, contests,this)
+        rv_Contest!!.adapter = AllContestAdapter(this, contests,matchType,match,this)
     }
 
     override fun onDestroy() {

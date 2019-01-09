@@ -31,6 +31,7 @@
                         android:id="@+id/img_category"
                         android:layout_width="@dimen/_25sdp"
                         android:paddingStart="@dimen/_5sdp"
+                        android:scaleType="centerCrop"
                         android:layout_height="@dimen/_30sdp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/hotcontest"/>
