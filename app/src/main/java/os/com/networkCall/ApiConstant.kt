@@ -98,6 +98,7 @@ object ApiConstant {
     const val getMatchList = "getMatchList"
     const val profile = "profile"
     const val contest_list = "contest-list"
+    const val joined_contest_list = "joined-contest-list"
     const val player_list = "player-list"
     const val create_team = "create-team"
     const val personal_details = "personal_details"

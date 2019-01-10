@@ -41,7 +41,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.ll_winners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment(match!!)
+                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.txt_Join -> {

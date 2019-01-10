@@ -60,6 +60,10 @@ interface ApiInterface {
     fun getContestlist(@Body request: Map<String, String>): Deferred<GetContestResponse>
 
     @Headers("Content-Type: application/json")
+    @POST(ApiConstant.joined_contest_list)
+    fun getJoinedContestlist(@Body request: Map<String, String>): Deferred<GetContestResponse>
+
+    @Headers("Content-Type: application/json")
     @POST(ApiConstant.player_list)
     fun getPlayerList(@Body request: Map<String, String>): Deferred<GetPlayerListResponse>
 

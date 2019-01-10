@@ -198,8 +198,5 @@
             app:finalXPosition="@dimen/_4sdp"
             app:finalYPosition="@dimen/_4sdp"
             app:finalToolbarHeight="?attr/actionBarSize"
-
             app:layout_behavior="os.com.ui.dashboard.profile.activity.AvatarImageBehavior"/>
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

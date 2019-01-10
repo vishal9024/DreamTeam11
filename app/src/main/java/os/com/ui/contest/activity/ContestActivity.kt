@@ -41,38 +41,34 @@ import java.util.*
 
 class ContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
-        when (view!!.id) {
-            R.id.ll_myteam -> {
-                callApi=true
-                startActivity(
-                    Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                        IntentConstant.CONTEST_TYPE,
-                        matchType
+        try {
+            when (view!!.id) {
+                R.id.ll_myteam -> {
+                    startActivity(
+                        Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        )
                     )
-                )
-            }
-            R.id.rl_enterContestCode -> {
-                startActivity(Intent(this, InviteCodeActivity::class.java))
-            }
-            R.id.rl_createContest -> {
-                startActivity(Intent(this, CreateContestActivity::class.java))
-            }
-            R.id.btn_CreateTeam -> {
-                callApi=true
-                startActivityForResult(
-                    Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                        IntentConstant.CONTEST_TYPE,
-                        matchType
-                    ).putExtra(IntentConstant.CONTEST_ID, "")
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE), AppRequestCodes.UPDATE_ACTIVITY
-                )
-            }
-            R.id.ll_joinedContests -> {
-                startActivity(Intent(this, FixtureJoinedContestActivity::class.java))
-            }
-            R.id.ll_AllContest -> {
-                callApi=true
-                if (!contests!!.isEmpty())
+                }
+                R.id.rl_enterContestCode -> {
+                    startActivity(Intent(this, InviteCodeActivity::class.java))
+                }
+                R.id.rl_createContest -> {
+                    startActivity(Intent(this, CreateContestActivity::class.java))
+                }
+                R.id.ll_joinedContests -> {
+                    startActivity(
+                        Intent(this, FixtureJoinedContestActivity::class.java).putExtra(
+                            IntentConstant.MATCH,
+                            match
+                        ).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        )
+                    )
+                }
+                R.id.ll_AllContest -> {
                     startActivity(
                         Intent(
                             this,
@@ -80,10 +76,13 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                         ).putParcelableArrayListExtra(IntentConstant.DATA, contests!!)
                             .putExtra(IntentConstant.MATCH, match)
                             .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                            .putExtra("joined_contest", joined_contest)
                     )
+                }
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,30 +126,31 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     private fun initViews() {
-        match = intent.getParcelableExtra(IntentConstant.DATA)
-        matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.contest)
-        setMenu(false, true, true, false)
-        setAdapter()
-        txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
-        if (matchType == IntentConstant.FIXTURE) {
-            if (!match!!.star_date.isEmpty()) {
-                val strt_date = match!!.star_date.split("T")
-                val dateTime = strt_date.get(0) + " " + match!!.star_time
-                countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
-            }
-        } else if (matchType == IntentConstant.FIXTURE) {
-            txt_CountDownTimer.setText(getString(R.string.completed))
-        } else
-            txt_CountDownTimer.setText(getString(R.string.in_progress))
-        if (NetworkUtils.isConnected()) {
-            callGetContestListApi()
-        } else
-            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+        try {
+            match = intent.getParcelableExtra(IntentConstant.DATA)
+            matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowHomeEnabled(true)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            toolbarTitleTv.setText(R.string.contest)
+            setMenu(false, true, true, false)
+            setAdapter()
+            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            if (matchType == IntentConstant.FIXTURE) {
+                if (!match!!.star_date.isEmpty()) {
+                    val strt_date = match!!.star_date.split("T")
+                    val dateTime = strt_date.get(0) + " " + match!!.star_time
+                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                }
+            } else if (matchType == IntentConstant.FIXTURE) {
+                txt_CountDownTimer.setText(getString(R.string.completed))
+            } else
+                txt_CountDownTimer.setText(getString(R.string.in_progress))
+            if (NetworkUtils.isConnected()) {
+                callGetContestListApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
 
         rl_enterContestCode.setOnClickListener(this)
@@ -170,9 +170,13 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 }
             }
 
-            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
-        })
-        filterBootomSheet()
+                override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+            })
+            filterBootomSheet()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     fun filterBootomSheet() {

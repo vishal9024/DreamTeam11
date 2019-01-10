@@ -99,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/winning_amount"
-                        android:inputType="number"
+                        android:inputType="numberDecimal"
                         android:imeOptions="actionNext"
                         android:textSize="@dimen/_12sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -115,11 +115,11 @@
                 <com.google.android.material.textfield.TextInputEditText
                         style="@style/EditTextStyle"
                         android:id="@+id/et_contest_size"
-                        android:imeOptions="actionNext"
+                        android:imeOptions="actionDone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/contest_size"
-                        android:inputType="textEmailAddress"
+                        android:inputType="numberDecimal"
                         android:textSize="@dimen/_12sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -163,23 +163,38 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:padding="@dimen/_10sdp"
                 android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+<LinearLayout
+        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/ll_entryFee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+android:orientation="horizontal">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_EntryFee"
+            style="@style/TextStyleMedium"
+            android:textSize="@dimen/_13sdp"
+            android:gravity="center"
+            android:textColor="@color/textColorLightBlack"
+            android:text="@string/entry_per_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txt_EntryFeeAmount"
+            style="@style/TextStyleSemiBold"
+            android:textSize="@dimen/_14sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:gravity="center"
+            android:textColor="@color/colorSecondary"
+            android:text="@string/Rs_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+</LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_EntryFee"
-
-                    app:layout_constraintStart_toStartOf="parent"
-                    style="@style/TextStyleMedium"
-                    android:textSize="@dimen/_13sdp"
-                    android:gravity="center"
-                    android:textColor="@color/textColorLightBlack"
-                    android:text="@string/entry_per_team"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_3sdp"
-                    card_view:layout_constraintTop_toBottomOf="@+id/txt_EntryFee"
+                    card_view:layout_constraintTop_toBottomOf="@+id/ll_entryFee"
                     app:layout_constraintStart_toStartOf="parent"
                     style="@style/TextStyleNormal"
                     android:textSize="@dimen/_11sdp"

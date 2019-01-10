@@ -6,12 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+
 import kotlinx.android.synthetic.main.item_joined_contest.view.*
 import os.com.R
+import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
+import os.com.ui.contest.activity.AllContestActivity
+import os.com.ui.contest.apiResponse.getContestList.ContestCategory
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.activity.FixtureJoinedContestDetailActivity
 
-class JoinedFixturesContestAdapter(val mContext: AppCompatActivity) :
+class JoinedFixturesContestAdapter(val mContext: AppCompatActivity,
+                                   var contestList: ArrayList<ContestCategory>,
+                                   var match: Match?,
+                                   var matchType: Int) :
     RecyclerView.Adapter<JoinedFixturesContestAdapter.AppliedCouponCodeHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_joined_contest, parent, false)
