@@ -51,7 +51,6 @@
             android:layout_width="match_parent"
             android:textSize="@dimen/_15sdp"
             android:textColor="@color/colorSecondary"
-            android:text="@string/Rs1000"
             android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/txt_prizeMoney"

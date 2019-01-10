@@ -58,7 +58,7 @@ class AllContestAdapter(
         }
 
         holder.itemView.ll_totalWinners.setOnClickListener {
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+            val bottomSheetDialogFragment = BottomSheetWinningListFragment(match!!)
             bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {

@@ -1,6 +1,7 @@
 package os.com.ui.contest.adapter.ContestAdapter
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes.UPDATEVIEW
 import os.com.constant.AppRequestCodes.UPDATE_ACTIVITY
 import os.com.constant.IntentConstant
+import os.com.constant.Tags
 import os.com.interfaces.OnClickDialogue
 import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.contest.activity.ContestDetailActivity
@@ -58,6 +60,9 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         }
         holder.itemView.ll_totalWinners.setOnClickListener {
             val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+            var bundle= Bundle()
+            bundle.putString(Tags.contest_id,contest[holder.adapterPosition].contest_id)
+            bottomSheetDialogFragment.arguments=bundle
             bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {

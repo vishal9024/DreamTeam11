@@ -22,7 +22,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, PlayerStatsActivity::class.java))
             }
             R.id.ll_totalWinners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+                val bottomSheetDialogFragment = BottomSheetWinningListFragment(match!!)
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.btn_dreamTeam -> {

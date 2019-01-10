@@ -7,9 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_winning_list.view.*
 import os.com.R
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 
 
-class WinningsListAdapter(val mContext: Context) : RecyclerView.Adapter<WinningsListAdapter.AppliedCouponCodeHolder>() {
+class WinningsListAdapter(
+    val mContext: Context,
+    val breakup_detail: ArrayList<PriceBreakUp>
+) : RecyclerView.Adapter<WinningsListAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_winning_list, parent, false)
@@ -18,15 +22,15 @@ class WinningsListAdapter(val mContext: Context) : RecyclerView.Adapter<Winnings
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
-            if (position%2==0){
+            if (position % 2 == 0) {
                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
-            }else{
+            } else {
                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
-
+//holder.itemView.txt_TeamName.text=
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
@@ -34,7 +38,7 @@ class WinningsListAdapter(val mContext: Context) : RecyclerView.Adapter<Winnings
 
 
     override fun getItemCount(): Int {
-        return 45;
+        return breakup_detail.size
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
