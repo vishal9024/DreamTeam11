@@ -49,8 +49,10 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
                     if (s.length!=0){
-                        if (et_contest_size.text.toString()!="")
-                            txt_EntryFeeAmount.setText(et_contest_size.text.toString().toInt()*s.toString().toInt())
+                        if (et_contest_size.text.toString()!="") {
+                                val total=et_contest_size.text.toString().toInt() * s.toString().toInt()
+                                txt_EntryFeeAmount.text=total.toString()
+                            }
                     }
                 }
             })
@@ -65,8 +67,10 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 override fun onTextChanged(s: CharSequence, start: Int,
                                            before: Int, count: Int) {
                     if (s.length!=0){
-                        if (et_winning_amount.text.toString()!="")
-                            txt_EntryFeeAmount.setText(et_contest_size.text.toString().toInt()*s.toString().toInt())
+                        if (et_winning_amount.text.toString()!="") {
+                            val total=et_winning_amount.text.toString().toInt() * s.toString().toInt()
+                            txt_EntryFeeAmount.text=total.toString()
+                        }
                     }
                 }
             })
