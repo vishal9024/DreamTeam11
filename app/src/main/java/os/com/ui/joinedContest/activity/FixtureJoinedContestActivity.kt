@@ -12,12 +12,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
-import os.com.R.string.match
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
-import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
@@ -25,8 +23,7 @@ import os.com.ui.joinedContest.adapter.JoinedFixturesContestAdapter
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
-import java.util.ArrayList
-import java.util.HashMap
+import java.util.*
 
 class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -82,59 +79,68 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
     var contests: ArrayList<Contest>? = ArrayList()
     var contestList: ArrayList<ContestCategory> = ArrayList()
     private fun callGetJoinedContestListApi() {
-        val map = HashMap<String, String>()
-        if (pref!!.isLogin)
-            map[Tags.user_id] = pref!!.userdata!!.user_id
-        map[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        map[Tags.match_id] = match!!.match_id/*"13071965317"*/
-        map[Tags.series_id] = match!!.series_id/*"13071965317"*/
-        GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@FixtureJoinedContestActivity)
-            try {
-                val request = ApiClient.client
-                    .getRetrofitService()
-                    .getJoinedContestlist(map)
-                val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
-                AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)
-                if (response.response!!.status) {
-                    contestList = response.response!!.data!!.match_contest!!
-                    setAdapter()
-                    if (!pref!!.isLogin) {
+          try{
+              val map = HashMap<String, String>()
+              if (pref!!.isLogin)
+                  map[Tags.user_id] = pref!!.userdata!!.user_id
+              map[Tags.language] = FantasyApplication.getInstance().getLanguage()
+              map[Tags.match_id] = match!!.match_id/*"13071965317"*/
+              map[Tags.series_id] = match!!.series_id/*"13071965317"*/
+              GlobalScope.launch(Dispatchers.Main) {
+                  AppDelegate.showProgressDialog(this@FixtureJoinedContestActivity)
+                  try {
+                      val request = ApiClient.client
+                          .getRetrofitService()
+                          .getJoinedContestlist(map)
+                      val response = request.await()
+                      AppDelegate.LogT("Response=>" + response);
+                      AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)
+                      if (response.response!!.status) {
+                          contestList = response.response!!.data!!.match_contest!!
+                          setAdapter()
+                          if (!pref!!.isLogin) {
 //                        ll_viewTeam.visibility = View.GONE
 //                        btn_CreateTeam.visibility = View.VISIBLE
-                    } else {
-                        txt_joined_contest.text = response.response!!.data!!.my_contests
-                        txt_MyTeams.text = response.response!!.data!!.my_teams
-                        if (response.response!!.data!!.my_teams != null) {
-                            if (response.response!!.data!!.my_teams.toInt() == 0) {
+                          } else {
+                              txt_joined_contest.text = response.response!!.data!!.my_contests
+                              txt_MyTeams.text = response.response!!.data!!.my_teams
+                              if (response.response!!.data!!.my_teams != null) {
+                                  if (response.response!!.data!!.my_teams.toInt() == 0) {
 //                                ll_viewTeam.visibility = View.GONE
 //                                btn_CreateTeam.visibility = View.VISIBLE
-                            } else {
+                                  } else {
 //                                ll_viewTeam.visibility = View.VISIBLE
 //                                btn_CreateTeam.visibility = View.GONE
-                            }
-                        }
-                    }
-                    for (contest in contestList) {
-                        contests!!.addAll(contest.contests!!)
+                                  }
+                              }
+                          }
+                          for (contest in contestList) {
+                              contests!!.addAll(contest.contests!!)
 //                        txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
-                    }
-                } else {
-                }
-            } catch (exception: Exception) {
-                AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)
-            }
-        }
+                          }
+                      } else {
+                      }
+                  } catch (exception: Exception) {
+                      AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)
+                  }
+              }
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
+
     }
     var joinedFixturesContestAdapter: JoinedFixturesContestAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_Contest!!.layoutManager = llm
-        joinedFixturesContestAdapter = JoinedFixturesContestAdapter(this, contestList, match, matchType)
-        rv_Contest!!.adapter = joinedFixturesContestAdapter
+          try{
+              val llm = LinearLayoutManager(this)
+              llm.orientation = LinearLayoutManager.VERTICAL
+              rv_Contest!!.layoutManager = llm
+              joinedFixturesContestAdapter = JoinedFixturesContestAdapter(this, contestList, match, matchType)
+              rv_Contest!!.adapter = joinedFixturesContestAdapter
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
     }
 
 }
