@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.content_joinedcontest_detail.*
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.ui.joinedContest.adapter.TeamsAdapter
-import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
 
 class FixtureJoinedContestDetailActivity : BaseActivity(), View.OnClickListener {
@@ -21,8 +20,8 @@ class FixtureJoinedContestDetailActivity : BaseActivity(), View.OnClickListener 
 //                startActivity(Intent(this, ChooseTeamActivity::class.java))
             }
             R.id.ll_winners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+//                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+//                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
 //            R.id.txt_Join -> {
 //                showJoinContestDialogue(this)

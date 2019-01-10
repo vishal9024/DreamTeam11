@@ -54,7 +54,6 @@
             android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/txt_prizeMoney"
-            android:layout_above="@+id/txt_Note"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/rv_Prize"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,10 +63,11 @@
             android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
     <androidx.appcompat.widget.AppCompatTextView
+            android:layout_below="@+id/rv_Prize"
             android:paddingStart="@dimen/_7sdp"
             android:paddingBottom="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:paddingEnd="@dimen/_7sdp"
-            android:layout_alignParentBottom="true"
             android:id="@+id/txt_Note"
             style="@style/TextStyleNormal"
             android:gravity="left"

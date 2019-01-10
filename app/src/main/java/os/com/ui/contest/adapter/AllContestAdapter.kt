@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_all_contest.view.*
+import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
@@ -14,14 +15,13 @@ import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.activity.ContestDetailActivity
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
-import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
 class AllContestAdapter(
     val mContext: AppCompatActivity,
     val contest: MutableList<Contest>?,
-    var matchType:Int,
+    var matchType: Int,
     var match: Match?
-    ,val onClickRecyclerView: OnClickRecyclerView
+    , val onClickRecyclerView: OnClickRecyclerView
 ) :
     RecyclerView.Adapter<AllContestAdapter.AppliedCouponCodeHolder>() {
 
@@ -51,23 +51,36 @@ class AllContestAdapter(
             holder.itemView.crs_Progress.setMaxStartValue(contest.get(holder.adapterPosition).teams_joined.toFloat());
             holder.itemView.crs_Progress.apply();
         }
-
+        if (contest.get(holder.adapterPosition).is_joined)
+            holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
+        else
+            holder.itemView.txt_Join.text = mContext.getString(R.string.join)
         holder.itemView.ll_entryFee.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
+            )
         }
 
         holder.itemView.ll_totalWinners.setOnClickListener {
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-            bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
+            ( mContext as BaseActivity).callWinningBreakupApi(contest[holder.adapterPosition].contest_id)
+//            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+//            var bundle = Bundle()
+//            bundle.putString(Tags.contest_id, contest[holder.adapterPosition].contest_id)
+//            bottomSheetDialogFragment.arguments = bundle
+//            bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
+            )
         }
         holder.itemView.txt_Join.setOnClickListener {
-            onClickRecyclerView.onClickItem(Tags.JoinContestDialog,holder.adapterPosition)
-
+            if (!contest.get(holder.adapterPosition).is_joined)
+                onClickRecyclerView.onClickItem(Tags.JoinContestDialog, holder.adapterPosition)
         }
     }
 

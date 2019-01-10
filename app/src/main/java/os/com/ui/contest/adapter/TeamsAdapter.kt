@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_teams.view.*
 import os.com.R
+import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.createTeam.activity.PlayerDetailActivity
 
-
-class TeamsAdapter(val mContext: Context) : RecyclerView.Adapter<TeamsAdapter.AppliedCouponCodeHolder>() {
+class TeamsAdapter(
+    val mContext: Context,
+    val joined_team_list: ArrayList<Team>
+) : RecyclerView.Adapter<TeamsAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_teams, parent, false)
@@ -31,6 +34,13 @@ class TeamsAdapter(val mContext: Context) : RecyclerView.Adapter<TeamsAdapter.Ap
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
+//        ImageLoader.getInstance().displayImage(
+//            joined_team_list[position].image,
+//            holder.itemView.cimg_player,
+//            FantasyApplication.getInstance().options
+//        )
+        holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name+"("+joined_team_list[holder.adapterPosition].team_no+")")
+        holder.itemView.txt_rank.setText("-")
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
@@ -38,7 +48,7 @@ class TeamsAdapter(val mContext: Context) : RecyclerView.Adapter<TeamsAdapter.Ap
 
 
     override fun getItemCount(): Int {
-        return 15;
+        return joined_team_list.size;
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

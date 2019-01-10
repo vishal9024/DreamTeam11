@@ -2,6 +2,7 @@ package os.com.networkCall
 
 import kotlinx.coroutines.Deferred
 import os.com.networkCall.responseModel.BaseResponse
+import os.com.ui.contest.apiResponse.getContestDetail.GetContestDetailResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
 import os.com.ui.contest.apiResponse.joinContestResponse.JoinContestResponse
 import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.JoinContestWalletAmountResponse
@@ -11,6 +12,7 @@ import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
 import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
+import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedFixtureListResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -61,7 +63,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.joined_contest_list)
-    fun getJoinedContestlist(@Body request: Map<String, String>): Deferred<GetContestResponse>
+    fun getJoinedContestlist(@Body request: Map<String, String>): Deferred<JoinedFixtureListResponse>
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.player_list)
@@ -99,4 +101,12 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_price_breakup)
     fun contest_price_breakup(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.logout)
+    fun logout(@Body request: Map<String, String>): Deferred<BaseResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.contest_detail)
+    fun contest_detail(@Body request: Map<String, String>): Deferred<GetContestDetailResponse>
 }

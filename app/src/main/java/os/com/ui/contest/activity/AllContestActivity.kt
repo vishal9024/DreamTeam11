@@ -90,8 +90,8 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
             ll_viewTeam.visibility = View.VISIBLE
             btn_CreateTeam.visibility = GONE
         }
-        txt_joined_contest.text = FantasyApplication.getInstance().teamCount.toString()
-        txt_MyTeams.text = FantasyApplication.getInstance().joinedCount.toString()
+        txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
+        txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
     }
     override fun onClick(view: View?) {
         when (view!!.id) {

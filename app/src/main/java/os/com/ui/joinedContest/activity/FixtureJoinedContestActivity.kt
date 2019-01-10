@@ -20,10 +20,12 @@ import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.JoinedFixturesContestAdapter
+import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.Data
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
+import kotlin.collections.ArrayList
 
 class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -96,28 +98,7 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
                       AppDelegate.LogT("Response=>" + response);
                       AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)
                       if (response.response!!.status) {
-                          contestList = response.response!!.data!!.match_contest!!
-                          setAdapter()
-                          if (!pref!!.isLogin) {
-//                        ll_viewTeam.visibility = View.GONE
-//                        btn_CreateTeam.visibility = View.VISIBLE
-                          } else {
-                              txt_joined_contest.text = response.response!!.data!!.my_contests
-                              txt_MyTeams.text = response.response!!.data!!.my_teams
-                              if (response.response!!.data!!.my_teams != null) {
-                                  if (response.response!!.data!!.my_teams.toInt() == 0) {
-//                                ll_viewTeam.visibility = View.GONE
-//                                btn_CreateTeam.visibility = View.VISIBLE
-                                  } else {
-//                                ll_viewTeam.visibility = View.VISIBLE
-//                                btn_CreateTeam.visibility = View.GONE
-                                  }
-                              }
-                          }
-                          for (contest in contestList) {
-                              contests!!.addAll(contest.contests!!)
-//                        txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
-                          }
+                          setAdapter(response.response!!.data!!)
                       } else {
                       }
                   } catch (exception: Exception) {
@@ -131,12 +112,12 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
     }
     var joinedFixturesContestAdapter: JoinedFixturesContestAdapter? = null
     @SuppressLint("WrongConstant")
-    private fun setAdapter() {
+    private fun setAdapter(data: ArrayList<Data>) {
           try{
               val llm = LinearLayoutManager(this)
               llm.orientation = LinearLayoutManager.VERTICAL
               rv_Contest!!.layoutManager = llm
-              joinedFixturesContestAdapter = JoinedFixturesContestAdapter(this, contestList, match, matchType)
+              joinedFixturesContestAdapter = JoinedFixturesContestAdapter(this, contestList, match, matchType,data)
               rv_Contest!!.adapter = joinedFixturesContestAdapter
               } catch (e: Exception) {
                       e.printStackTrace()

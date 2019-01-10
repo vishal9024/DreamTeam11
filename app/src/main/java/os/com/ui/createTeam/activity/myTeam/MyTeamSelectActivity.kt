@@ -169,7 +169,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                     if (!data.isEmpty()) {
                         data.get(0).isSelected = true
                         team_id = data[0].teamid
-                        FantasyApplication.getInstance().teamCount == data.size
+                        FantasyApplication.getInstance().teamCount = data.size
                         var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
                         btn_CreateTeam.setText(getString(R.string.create_team) + " " + count)
                     }

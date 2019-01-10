@@ -115,6 +115,8 @@
     <string name="vice_captain">VICE CAPTAIN</string>
     <string name="my_team">My Team</string>
     <string name="join_this_contest">Join This Contest</string>
+    <string name="join_plus">Join +</string>
+    <string name="joined">Joined</string>
     <string name="invite_code">Invite Code</string>
     <string name="enter_contest_name">Enter Contest Name</string>
     <string name="winning_amount">Enter total winning amount (Rs)</string>

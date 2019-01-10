@@ -12,7 +12,6 @@ import kotlinx.android.synthetic.main.content_joined_completed_contest_leadershi
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.ui.joinedContest.adapter.LeaderShipTeamsAdapter
-import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 
 
 class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener {
@@ -22,8 +21,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, PlayerStatsActivity::class.java))
             }
             R.id.ll_totalWinners -> {
-                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+//                val bottomSheetDialogFragment = BottomSheetWinningListFragment(match!!)
+//                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.btn_dreamTeam -> {
 //                startActivity(Intent(this, TeamPreviewActivity::class.java).putExtra("show", 1))

@@ -1,7 +1,6 @@
 package os.com.ui.contest.adapter.ContestAdapter
 
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes.UPDATEVIEW
 import os.com.constant.AppRequestCodes.UPDATE_ACTIVITY
 import os.com.constant.IntentConstant
-import os.com.constant.Tags
 import os.com.interfaces.OnClickDialogue
 import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.contest.activity.ContestDetailActivity
@@ -22,14 +20,13 @@ import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
-import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.networkUtils.NetworkUtils
 
 
 class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<ContestAdapter.AppliedCouponCodeHolder>() {
     var contest: List<Contest> = ArrayList()
-    var match: Match?=null
-    var matchType: Int=IntentConstant.FIXTURE
+    var match: Match? = null
+    var matchType: Int = IntentConstant.FIXTURE
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_contest, parent, false)
         return AppliedCouponCodeHolder(view)
@@ -47,7 +44,8 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         if (!contest.get(holder.adapterPosition).total_teams.isEmpty() && !contest.get(holder.adapterPosition).teams_joined.isEmpty()) {
             val strtValue =
                 contest.get(holder.adapterPosition).total_teams.toInt() - contest.get(holder.adapterPosition).teams_joined.toInt()
-            holder.itemView.txt_StartValue.text = mContext.getString(R.string.only) + " " + strtValue.toString() + " "+mContext.getString(R.string.spots_left)
+            holder.itemView.txt_StartValue.text = mContext.getString(R.string.only) + " " + strtValue.toString() + " " +
+                    mContext.getString(R.string.spots_left)
             holder.itemView.crs_Progress.setMinValue(0f)
             holder.itemView.crs_Progress.setMaxValue(contest.get(holder.adapterPosition).total_teams.toFloat())
             holder.itemView.crs_Progress.setMinStartValue(0f);
@@ -56,33 +54,55 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         }
 
         holder.itemView.ll_entryFee.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
+            mContext.callApi = true
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(
+                    IntentConstant.MATCH,
+                    match
+                ).putExtra(IntentConstant.CONTEST_TYPE, matchType).putExtra(
+                    IntentConstant.DATA,
+                    contest[holder.adapterPosition]
+                )
+            )
         }
+
         holder.itemView.ll_totalWinners.setOnClickListener {
-            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-            var bundle= Bundle()
-            bundle.putString(Tags.contest_id,contest[holder.adapterPosition].contest_id)
-            bottomSheetDialogFragment.arguments=bundle
-            bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
+
+            ( mContext as BaseActivity).callWinningBreakupApi(contest[holder.adapterPosition].contest_id)
+//            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+//            var bundle = Bundle()
+//            bundle.putString(Tags.contest_id, contest[holder.adapterPosition].contest_id)
+//            bottomSheetDialogFragment.arguments = bundle
+//            bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
+            mContext.callApi = true
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
+            )
         }
+        if (contest.get(holder.adapterPosition).is_joined)
+            holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
+        else
+            holder.itemView.txt_Join.text = mContext.getString(R.string.join)
         holder.itemView.txt_Join.setOnClickListener {
-            if (FantasyApplication.getInstance().teamCount==0) {
-                mContext.startActivityForResult(
-                    Intent(mContext, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                        IntentConstant.CONTEST_TYPE,
-                        matchType
-                    ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.JOIN),UPDATE_ACTIVITY
-                )
-            }else if (FantasyApplication.getInstance().teamCount==1){
+            if (!contest.get(holder.adapterPosition).is_joined)
+                if (FantasyApplication.getInstance().teamCount == 0) {
+                    mContext.callApi = true
+                    mContext.startActivityForResult(
+                        Intent(mContext, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id)
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.JOIN), UPDATE_ACTIVITY
+                    )
+                } else if (FantasyApplication.getInstance().teamCount == 1) {
                     if (NetworkUtils.isConnected()) {
-                        (mContext as BaseActivity) .checkAmountWallet(
+                        (mContext as BaseActivity).checkAmountWallet(
                             match!!.match_id,
-                            match!!.series_id,  contest[position].contest_id, "",object: OnClickDialogue{
+                            match!!.series_id, contest[position].contest_id, "", object : OnClickDialogue {
                                 override fun onClick(tag: String, success: Boolean) {
 //                                    if (tag.equals(Tags.success) && success)
 //                                        finish()
@@ -90,26 +110,35 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                             }
                         )
                     } else
-                        Toast.makeText(mContext,mContext. getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-            }else{
-                mContext.startActivityForResult(
-                    Intent(mContext, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                        IntentConstant.CONTEST_TYPE,
-                        matchType
-                    ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id),UPDATEVIEW
-                )
-            }
+                        Toast.makeText(
+                            mContext,
+                            mContext.getString(R.string.error_network_connection),
+                            Toast.LENGTH_LONG
+                        ).show()
+                } else {
+                    mContext.callApi = true
+                    mContext.startActivityForResult(
+
+                        Intent(mContext, MyTeamSelectActivity::class.java).putExtra(
+                            IntentConstant.MATCH,
+                            match
+                        ).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id), UPDATEVIEW
+                    )
+                }
 //            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,matchType)
         }
     }
 
-    fun contestList(data: List<Contest>,match: Match,matchType:Int) {
+    fun contestList(data: List<Contest>, match: Match, matchType: Int) {
         if (contest !== data) {
             contest = data
             notifyDataSetChanged()
         }
-        this.match=match
-        this.matchType=matchType
+        this.match = match
+        this.matchType = matchType
     }
 
 

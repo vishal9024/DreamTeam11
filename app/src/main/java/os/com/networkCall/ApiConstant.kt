@@ -108,4 +108,6 @@ object ApiConstant {
     const val join_contest_wallet_amount="join-contest-wallet-amount"
     const val  join_contest="joinContest"
     const val contest_price_breakup="contest-price-breakup"
+    const  val logout="logout"
+    const val contest_detail="contest-detail"
 }

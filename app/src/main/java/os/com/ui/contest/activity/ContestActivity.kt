@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
-import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
@@ -28,7 +27,6 @@ import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.contest.dialogues.BottomSheetFilterFragment
-import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.invite.activity.InviteCodeActivity
@@ -103,8 +101,8 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             ll_viewTeam.visibility = View.VISIBLE
             btn_CreateTeam.visibility = GONE
         }
-        txt_joined_contest.text = FantasyApplication.getInstance().teamCount.toString()
-        txt_MyTeams.text = FantasyApplication.getInstance().joinedCount.toString()
+        txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
+        txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
         if (callApi)
             if (NetworkUtils.isConnected()) {
                 callGetContestListApi()

@@ -31,6 +31,7 @@ import os.com.utils.networkUtils.NetworkUtils
 class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals(Tags.clone)) {
+            callApi=true
             startActivityForResult(
                 Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
@@ -43,6 +44,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 AppRequestCodes.CLONE
             )
         } else if (tag.equals(Tags.edit)) {
+            callApi=true
             startActivityForResult(
                 Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
@@ -156,7 +158,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 AppDelegate.hideProgressDialog(this@MyTeamActivity)
                 if (response.response!!.status) {
                     data = response.response!!.data!!
-                    FantasyApplication.getInstance().teamCount == data.size
+                    FantasyApplication.getInstance().teamCount = data.size
                     var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
                     btn_CreateTeam.setText(getString(R.string.create_team) + " " + count)
                     setAdapter()

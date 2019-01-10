@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
@@ -29,7 +30,9 @@ import os.com.ui.addCash.activity.AddCashActivity
 import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.Data
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
+import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.AppDelegate
+import os.com.utils.networkUtils.NetworkUtils
 
 
 /**
@@ -227,8 +230,11 @@ open class BaseActivity : AppCompatActivity() {
                     if (!response.response!!.data!!.usable_bonus.isEmpty())
                         bonus = response.response!!.data!!.usable_bonus.toFloat()
                     toPay = entryFee - bonus
-                    if (entryFee>0 && toPay > 0) {
-                        startActivityForResult(Intent(this@BaseActivity,AddCashActivity::class.java),AppRequestCodes.ADD_CASH)
+                    if (entryFee > 0 && toPay > 0) {
+                        startActivityForResult(
+                            Intent(this@BaseActivity, AddCashActivity::class.java),
+                            AppRequestCodes.ADD_CASH
+                        )
 //                        onClickDialogue.onClick(Tags.fail,false)
                     } else
                         showJoinContestDialogue(
@@ -253,6 +259,7 @@ open class BaseActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         /**/
     }
+
     fun showJoinContestDialogue(
         data: Data,
         match_id: String,
@@ -287,13 +294,13 @@ open class BaseActivity : AppCompatActivity() {
         if (bonus >= entryFee)
             toPay = 0f
         var total = cash + winning
-        dialogue. txt_label.text = getString(R.string.unutilized_balance_winnings_rs_0) + " " + getString(R.string.Rs) +
+        dialogue.txt_label.text = getString(R.string.unutilized_balance_winnings_rs_0) + " " + getString(R.string.Rs) +
                 String.format(
                     "%.2f",
                     total
                 )
         dialogue.txt_EntryFee.text = getString(R.string.Rs) + String.format("%.2f", entryFee)
-        dialogue. txt_bonus.text = getString(R.string.Rs) + String.format("%.2f",bonus)
+        dialogue.txt_bonus.text = getString(R.string.Rs) + String.format("%.2f", bonus)
         dialogue.txt_topay.text = getString(R.string.Rs) + String.format("%.2f", toPay)
         dialogue.img_Close.setOnClickListener {
             onClickDialogue.onClick(Tags.cancel, false)
@@ -356,12 +363,12 @@ open class BaseActivity : AppCompatActivity() {
             getString(R.string.yes)
         ) { dialog, id ->
             logoutAlertDialog.dismiss()
-            // callLogoutAPI()
-            Prefs(this).clearSharedPreference()
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            finish()
+            if (NetworkUtils.isConnected()) {
+                callLogoutAPI()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+
         }
         logoutAlertDialog.setButton(
             AlertDialog.BUTTON_NEGATIVE,
@@ -370,6 +377,69 @@ open class BaseActivity : AppCompatActivity() {
             logoutAlertDialog.dismiss()
         }
         logoutAlertDialog.show()
+    }
+
+    private fun callLogoutAPI() {
+        val logoutRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            logoutRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        logoutRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@BaseActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .logout(logoutRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+                if (response.response!!.status!!) {
+                    Prefs(this@BaseActivity).clearSharedPreference()
+                    val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    AppDelegate.showToast(this@BaseActivity, response.response!!.message!!)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+            }
+        }
+    }
+
+    public fun callWinningBreakupApi(
+        contest_id: String
+
+    ) {
+        val loginRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.contest_id] = contest_id
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@BaseActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .contest_price_breakup(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+                if (response.response!!.status) {
+                    val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+                    var bundle = Bundle()
+                    bundle.putParcelable(Tags.contest_id, response.response!!.data!!)
+                    bottomSheetDialogFragment.arguments = bundle
+                    bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+
+
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+            }
+        }
     }
 }
 
