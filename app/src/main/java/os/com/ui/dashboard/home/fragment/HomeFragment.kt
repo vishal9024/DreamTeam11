@@ -21,7 +21,10 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
-import os.com.ui.dashboard.home.adapter.*
+import os.com.ui.dashboard.home.adapter.MatchCompletedAdapter
+import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
+import os.com.ui.dashboard.home.adapter.MatchLiveAdapter
+import os.com.ui.dashboard.home.adapter.PagerAdapter
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
@@ -126,32 +129,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         viewPager_Banner.isCycle = true
     }
 
-
-    private fun setHomeBannerAdapter() {
-        if (!isAdded)
-            return
-        viewPager_Banner.adapter = SlidingImageAdapterHomeBanner(activity!!)
-        viewPager_Banner.setClipToPadding(false);
-        viewPager_Banner.setPadding(50, 0, 50, 0)
-        viewPager_Banner.setPageMargin(10)
-
-//        val handler = Handler()
-//        val Update = Runnable {
-//            if (currentPage == 4) {
-//                currentPage = 0
-//            }
-//            viewPager_Banner.setCurrentItem(currentPage++, true)
-//        }
-//        timer = Timer() // This will create a new Thread
-//        timer!!.schedule(object : TimerTask() { // task to be scheduled
-//            override  fun run() {
-//                handler.post(Update)
-//            }
-//        }, DELAY_MS, PERIOD_MS)
-
-//        viewPager_Banner.startAutoScroll()
-//        viewPager_Banner.isCycle = true
-    }
 
     private var LIVE = 1
     private var FIXTURES = 2

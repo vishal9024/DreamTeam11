@@ -6,13 +6,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:showIn="@layout/activity_all_contest">
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" >
         <LinearLayout
                 android:id="@+id/ll_match"
                 android:background="@color/colorSecondaryLight"
@@ -55,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"/>
         <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/ll_AllContest"
                 android:paddingTop="@dimen/_4sdp"
                 android:paddingBottom="@dimen/_4sdp"
@@ -122,82 +114,98 @@
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
+                app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
                 android:padding="@dimen/_5sdp"
                 android:id="@+id/rv_Contest"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
-                android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 tools:listitem="@layout/item_all_contest"
+                app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
                 android:layout_height="0dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
     <View
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/ll_bottom" android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/GrayColorOTP"/>
     <LinearLayout
-            android:visibility="gone"
+            android:background="@color/white"
             android:orientation="horizontal"
-            android:padding="@dimen/_5sdp"
-            android:id="@+id/ll_bottom" android:layout_width="match_parent"
+            android:id="@+id/ll_bottom"
+            android:layout_width="match_parent"
+
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_height="wrap_content">
         <LinearLayout
-                android:id="@+id/ll_myteam"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
+                android:background="@color/white"
+                android:visibility="visible"
+                android:padding="@dimen/_5sdp"
+                android:id="@+id/ll_viewTeam"
+                android:orientation="horizontal" android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_MyTeams"
-                    style="@style/TextStyleSemiBold"
-                    android:gravity="center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/textColorBlack"
-                    android:text="1"
-                    android:layout_height="wrap_content"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleNormal"
-                    android:gravity="center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/textColorGray"
-                    android:text="My Teams"
-                    android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <View android:layout_width="0.5dp" android:layout_height="match_parent"
-              android:background="@color/GrayColorOTP"/>
-        <LinearLayout
-                android:id="@+id/ll_joinedContests"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
-            <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_joined_contest"
-                    style="@style/TextStyleSemiBold"
-                    android:gravity="center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_width="match_parent"
+            <LinearLayout
+                    android:id="@+id/ll_myteam"
                     android:layout_weight="1"
-                    android:textColor="@color/textColorBlack"
-                    android:text="5"
-                    android:layout_height="match_parent"/>
-            <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextStyleNormal"
-                    android:gravity="center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/textColorGray"
-                    android:text="Joined Contests"
-                    android:layout_height="wrap_content"/>
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_MyTeams"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:text="0"
+                        android:textColor="@color/textColorBlack"
+                        android:layout_height="wrap_content"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleNormal"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorGray"
+                        android:text="My Teams"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <View android:layout_width="0.5dp" android:layout_height="match_parent"
+                  android:background="@color/GrayColorOTP"/>
+            <LinearLayout
+                    android:id="@+id/ll_joinedContests"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_joined_contest"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@color/textColorBlack"
+                        android:text="0"
+                        android:layout_height="match_parent"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextStyleNormal"
+                        android:gravity="center"
+                        android:textSize="@dimen/_10sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorGray"
+                        android:text="Joined Contests"
+                        android:layout_height="wrap_content"/>
+            </LinearLayout>
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+                android:visibility="gone"
+                android:id="@+id/btn_CreateTeam"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                style="@style/ButtonStyle"
+                android:text="@string/create_team1"
+                android:background="@color/colorASPrimary"
+                android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

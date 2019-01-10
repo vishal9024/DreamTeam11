@@ -415,9 +415,7 @@
                     android:layout_width="match_parent"
                     tools:listitem="@layout/item_teams"
                     android:layout_height="0dp">
-
             </androidx.recyclerview.widget.RecyclerView>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--</androidx.core.widget.NestedScrollView>-->
     </com.amar.library.ui.StickyScrollView>

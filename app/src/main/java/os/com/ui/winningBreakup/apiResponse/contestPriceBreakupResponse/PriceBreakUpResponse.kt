@@ -1,0 +1,31 @@
+package os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse
+
+import android.os.Parcel
+import android.os.Parcelable
+
+class PriceBreakUpResponse() : Parcelable {
+    var response: Response? = null
+
+    constructor(parcel: Parcel) : this() {
+
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<PriceBreakUpResponse> {
+        override fun createFromParcel(parcel: Parcel): PriceBreakUpResponse {
+            return PriceBreakUpResponse(parcel)
+        }
+
+        override fun newArray(size: Int): Array<PriceBreakUpResponse?> {
+            return arrayOfNulls(size)
+        }
+    }
+
+}

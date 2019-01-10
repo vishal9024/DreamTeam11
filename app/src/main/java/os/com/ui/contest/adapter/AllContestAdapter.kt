@@ -54,7 +54,7 @@ class AllContestAdapter(
 
         holder.itemView.ll_entryFee.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                IntentConstant.CONTEST_TYPE, matchType))
+                IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
         }
 
         holder.itemView.ll_totalWinners.setOnClickListener {
@@ -63,7 +63,7 @@ class AllContestAdapter(
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
             mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                IntentConstant.CONTEST_TYPE, matchType))
+                IntentConstant.CONTEST_TYPE, matchType).putExtra(IntentConstant.DATA,contest[holder.adapterPosition]))
         }
         holder.itemView.txt_Join.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.JoinContestDialog,holder.adapterPosition)

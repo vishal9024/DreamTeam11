@@ -157,7 +157,6 @@
                     android:textSize="@dimen/_12sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/colorChooseViceCaptain"
-                    android:text="114 Contests"
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatTextView

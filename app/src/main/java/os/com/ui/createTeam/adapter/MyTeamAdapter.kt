@@ -1,6 +1,5 @@
 package os.com.ui.createTeam.adapter
 
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +11,11 @@ import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.createTeam.activity.TeamPreviewActivity
+import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Data
 
 
-class MyTeamAdapter(val mContext: Context, var data: ArrayList<Data>,var onClickRecyclerView: OnClickRecyclerView) :
+class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var onClickRecyclerView: OnClickRecyclerView) :
     RecyclerView.Adapter<MyTeamAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -38,7 +38,8 @@ class MyTeamAdapter(val mContext: Context, var data: ArrayList<Data>,var onClick
             onClickRecyclerView.onClickItem(Tags.edit,holder.adapterPosition)
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
-        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + position+1.toString()
+        var count=position+1
+        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
         for (player in data[holder.adapterPosition].player_details!!) {
             if (player.player_id.equals(data[holder.adapterPosition].captain_player_id))
                 holder.itemView.txt_captain.text = player.name

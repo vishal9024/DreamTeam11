@@ -3,7 +3,7 @@ package os.com.ui.contest.apiResponse.getContestList
 import android.os.Parcel
 import android.os.Parcelable
 
-class Contest() :Parcelable{
+class Contest() : Parcelable {
     var entry_fee = ""
     var prize_money = ""
     var total_teams = ""
@@ -11,6 +11,9 @@ class Contest() :Parcelable{
     var contest_id = ""
     var total_winners = ""
     var teams_joined = ""
+    var is_joined: Boolean = false
+    var multiple_team = false
+    var invite_code = ""
 
     constructor(parcel: Parcel) : this() {
         entry_fee = parcel.readString()

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -14,12 +13,13 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.ui.contest.activity.AllContestActivity
+import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
 
 class ContestMainAdapter(
-    val mContext: AppCompatActivity,
+    val mContext: ContestActivity,
     var contestList: ArrayList<ContestCategory>,
     var match: Match?,
     var matchType: Int
@@ -39,8 +39,11 @@ class ContestMainAdapter(
         )
         holder.itemView.txt_categoryTitle.text = contestList[position].category_title
         holder.itemView.txt_categoryDesc.text = contestList[position].category_desc
-        if (contestList[position].contests!!.size > 3)
+        if (contestList[position].contests!!.size > 3) {
+            var count = contestList[position].contests!!.size-3
+            holder.itemView.txt_view_all.text=count.toString()+" "+mContext.getString(R.string.view_all)
             holder.itemView.ll_view_all.visibility = View.VISIBLE
+        }
         else
             holder.itemView.ll_view_all.visibility = View.GONE
         holder.itemView.ll_view_all.setOnClickListener {

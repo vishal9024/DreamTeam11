@@ -1,6 +1,7 @@
 package os.com.ui.createTeam.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -37,8 +38,12 @@ import kotlin.collections.set
 
 class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
     var exeedCredit = false
-    override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
 
+    companion object {
+        var chooseTeamActivity: ChooseTeamActivity? = null
+    }
+
+    override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
         if (tag == WK) {
             var player_credit = 0.0
             if (isSelected) {
@@ -334,6 +339,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     override fun onClickItem(tag: String, position: Int) {
     }
 
+    var contest_id = ""
     var team_id = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -350,14 +356,15 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 playerTypeSelector(BOWLER)
             }
             R.id.btn_Next -> {
-
-                startActivity(
+                startActivityForResult(
                     Intent(this, Choose_C_VC_Activity::class.java)
                         .putExtra(IntentConstant.MATCH, match)
+                        .putExtra(IntentConstant.CONTEST_TYPE, matchType)
                         .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
                         .putExtra(IntentConstant.ISEDIT, from)
                         .putExtra(IntentConstant.TEAM_ID, team_id)
-
+                        .putExtra(IntentConstant.CONTEST_ID, contest_id)
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, createOrJoin)
                         .putParcelableArrayListExtra(IntentConstant.WK, wkList as java.util.ArrayList<out Parcelable>)
                         .putParcelableArrayListExtra(
                             IntentConstant.BATSMEN,
@@ -367,20 +374,34 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             IntentConstant.BOWLER,
                             bowlerList as java.util.ArrayList<out Parcelable>
                         )
-                        .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>)
+                        .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>),
+                    AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppRequestCodes.UPDATE_ACTIVITY || requestCode == AppRequestCodes.EDIT || requestCode == AppRequestCodes.CLONE)
+            if (resultCode == Activity.RESULT_OK) {
+                val intent = Intent()
+                setResult(Activity.RESULT_OK)
+                startActivity(intent)
+                finish()
+            }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_team)
+        chooseTeamActivity = this
         initViews()
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        chooseTeamActivity = null
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
@@ -390,14 +411,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     var matchType = IntentConstant.FIXTURE
     var from = 0
     private fun initViews() {
-        getIntentData()
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.choose_team)
         setMenu(false, false, false, false)
-        createTeamData()
+        getIntentData()
         if (NetworkUtils.isConnected()) {
             if (match != null)
                 callGetContestListApi()
@@ -416,13 +436,16 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
     }
 
+    var createOrJoin = IntentConstant.CREATE
     private fun getIntentData() {
         if (intent != null) {
+            createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE)
+            if (createOrJoin == IntentConstant.JOIN)
+                contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             from = intent.getIntExtra(IntentConstant.ISEDIT, 0)
             if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT) {
-
                 playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
                 playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
             }
@@ -438,6 +461,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
         }
+        createTeamData()
     }
 
     var bowlerList: MutableList<Data>? = ArrayList()
@@ -514,7 +538,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
     private fun updateData() {
         if (from == AppRequestCodes.EDIT)
-            team_id = playerListPreview!!.team_id
+            team_id = playerListPreview!!.teamid
         var localTeamplayerCount = 0
         var visitorTeamPlayerCount = 0
         var total_credit = 0.0
@@ -527,14 +551,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (wkList!![position].player_id == playerListPreview!!.vice_captain_player_id)
                         wkList!![position].isViceCaptain = true
                     if (wkList!![position].team_id.equals(match!!.local_team_id))
-                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                        localTeamplayerCount = localTeamplayerCount + 1
                     else
-                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                        visitorTeamPlayerCount = visitorTeamPlayerCount + 1
                     var player_credit = 0.0
                     if (!wkList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = wkList!!.get(position).player_record!!.player_credit.toDouble()
                     }
-                    total_credit = selectPlayer!!.total_credit + player_credit
+                    total_credit = total_credit + player_credit
                 }
             }
 
@@ -548,14 +572,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (arList!![position].player_id == playerListPreview!!.vice_captain_player_id)
                         arList!![position].isViceCaptain = true
                     if (arList!![position].team_id.equals(match!!.local_team_id))
-                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                        localTeamplayerCount = localTeamplayerCount + 1
                     else
-                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                        visitorTeamPlayerCount = visitorTeamPlayerCount + 1
                     var player_credit = 0.0
                     if (!arList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = arList!!.get(position).player_record!!.player_credit.toDouble()
                     }
-                    total_credit = selectPlayer!!.total_credit + player_credit
+                    total_credit = total_credit + player_credit
                 }
             }
 
@@ -569,14 +593,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (batsmenList!![position].player_id == playerListPreview!!.vice_captain_player_id)
                         batsmenList!![position].isViceCaptain = true
                     if (batsmenList!![position].team_id.equals(match!!.local_team_id))
-                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                        localTeamplayerCount = localTeamplayerCount + 1
                     else
-                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                        visitorTeamPlayerCount = visitorTeamPlayerCount + 1
                     var player_credit = 0.0
                     if (!batsmenList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = batsmenList!!.get(position).player_record!!.player_credit.toDouble()
                     }
-                    total_credit = selectPlayer!!.total_credit + player_credit
+                    total_credit = total_credit + player_credit
                 }
             }
         }
@@ -589,14 +613,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (bowlerList!![position].player_id == playerListPreview!!.vice_captain_player_id)
                         bowlerList!![position].isViceCaptain = true
                     if (bowlerList!![position].team_id.equals(match!!.local_team_id))
-                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                        localTeamplayerCount = localTeamplayerCount + 1
                     else
-                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+                        visitorTeamPlayerCount = visitorTeamPlayerCount + 1
                     var player_credit = 0.0
                     if (!bowlerList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = bowlerList!!.get(position).player_record!!.player_credit.toDouble()
                     }
-                    total_credit = selectPlayer!!.total_credit + player_credit
+                    total_credit = total_credit + player_credit
                 }
             }
         }
@@ -693,19 +717,26 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         txt_WKCount.isSelected = selectPlayer!!.wk_selected == selectPlayer!!.wk_count
         AppDelegate.LogT("Select Player==>+" + selectPlayer)
         if (selectPlayer!!.selectedPlayer == 11) {
+            txt_ARCount.setBackgroundResource(R.drawable.count_selector)
+            txt_BATCount.setBackgroundResource(R.drawable.count_selector)
+            txt_BOWLERCount.setBackgroundResource(R.drawable.count_selector)
             txt_BOWLERCount.isSelected = true
             txt_ARCount.isSelected = true
             txt_BATCount.isSelected = true
             txt_WKCount.isSelected = true
         } else {
+            txt_ARCount.setBackgroundResource(R.drawable.count_selector)
+            txt_BATCount.setBackgroundResource(R.drawable.count_selector)
+            txt_BOWLERCount.setBackgroundResource(R.drawable.count_selector)
             when {
                 selectPlayer!!.ar_selected == 0 -> txt_ARCount.isSelected = false
                 selectPlayer!!.ar_selected == selectPlayer!!.ar_maxcount -> txt_ARCount.isSelected = true
                 selectPlayer!!.ar_selected >= selectPlayer!!.ar_mincount && selectPlayer!!.extra_player == 0 -> txt_ARCount.isSelected =
                         true
-//                selectPlayer!!.ar_selected > 0 -> {
-//                    txt_ARCount.isActivated = true
-//                }
+                selectPlayer!!.ar_selected > 0 -> {
+                    txt_ARCount.isSelected = true
+                    txt_ARCount.setBackgroundResource(R.drawable.rounded_square_count_update)
+                }
                 else -> txt_ARCount.isSelected = false
             }
 
@@ -714,9 +745,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 selectPlayer!!.bat_selected == selectPlayer!!.bat_maxcount -> txt_BATCount.isSelected = true
                 selectPlayer!!.bat_selected >= selectPlayer!!.bat_mincount && selectPlayer!!.extra_player == 0 -> txt_BATCount.isSelected =
                         true
-//                selectPlayer!!.bat_selected > 0 -> {
-//                    txt_BATCount.isActivated = true
-//                }
+                selectPlayer!!.bat_selected > 0 -> {
+                    txt_BATCount.isSelected = true
+                    txt_BATCount.setBackgroundResource(R.drawable.rounded_square_count_update)
+                }
                 else -> txt_BATCount.isSelected = false
             }
 
@@ -725,9 +757,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 selectPlayer!!.bowl_selected == selectPlayer!!.bowl_maxcount -> txt_BOWLERCount.isSelected = true
                 selectPlayer!!.bowl_selected >= selectPlayer!!.bowl_mincount && selectPlayer!!.extra_player == 0 -> txt_BOWLERCount.isSelected =
                         true
-//                selectPlayer!!.bowl_selected > 0 -> {
-//                    txt_BOWLERCount.isActivated = true
-//                }
+                selectPlayer!!.bowl_selected > 0 -> {
+                    txt_BOWLERCount.isSelected = true
+                    txt_BOWLERCount.setBackgroundResource(R.drawable.rounded_square_count_update)
+                }
                 else -> txt_BOWLERCount.isSelected = false
             }
         }

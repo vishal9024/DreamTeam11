@@ -15,13 +15,21 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import os.com.R
-import os.com.constant.IntentConstant
+import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
+import os.com.constant.Tags
 import os.com.data.Prefs
-import os.com.ui.createTeam.activity.ChooseTeamActivity
-import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.interfaces.OnClickDialogue
+import os.com.networkCall.ApiClient
+import os.com.ui.addCash.activity.AddCashActivity
+import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.Data
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
+import os.com.utils.AppDelegate
 
 
 /**
@@ -186,11 +194,74 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    public fun showJoinContestDialogue(
-        activity: AppCompatActivity,
-        match: Match?,
-        matchType: Int
+    fun checkAmountWallet(
+        match_id: String,
+        series_id: String,
+        contest_id: String,
+        team_id: String,
+        onClickDialogue: OnClickDialogue
     ) {
+        val walletRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        walletRequest[Tags.match_id] = match_id
+        walletRequest[Tags.contest_id] = contest_id
+        walletRequest[Tags.series_id] = series_id
+
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@BaseActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .join_contest_wallet_amount(walletRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+                if (response.response!!.status) {
+                    var entryFee = 0f
+                    var bonus = 0f
+                    var toPay = 0f
+                    if (!response.response!!.data!!.entry_fee.isEmpty())
+                        entryFee = response.response!!.data!!.entry_fee.toFloat()
+                    if (!response.response!!.data!!.usable_bonus.isEmpty())
+                        bonus = response.response!!.data!!.usable_bonus.toFloat()
+                    toPay = entryFee - bonus
+                    if (entryFee>0 && toPay > 0) {
+                        startActivityForResult(Intent(this@BaseActivity,AddCashActivity::class.java),AppRequestCodes.ADD_CASH)
+//                        onClickDialogue.onClick(Tags.fail,false)
+                    } else
+                        showJoinContestDialogue(
+                            response.response!!.data!!,
+                            match_id,
+                            series_id,
+                            contest_id,
+                            team_id,
+                            onClickDialogue
+                        )
+                } else {
+                    AppDelegate.showToast(this@BaseActivity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+            }
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        /**/
+    }
+    fun showJoinContestDialogue(
+        data: Data,
+        match_id: String,
+        series_id: String,
+        contest_id: String,
+        team_id: String,
+        onClickDialogue: OnClickDialogue
+    ) {
+
         var dialogue = Dialog(this)
         dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogue.setContentView(R.layout.dialogue_join_contest)
@@ -199,19 +270,81 @@ open class BaseActivity : AppCompatActivity() {
         dialogue.setCancelable(false)
         dialogue.setCanceledOnTouchOutside(false)
         dialogue.setTitle(null)
+        var cash = 0f
+        var winning = 0f
+        var entryFee = 0f
+        var bonus = 0f
+        var toPay = 0f
+        if (!data.cash_balance.isEmpty())
+            cash = data.cash_balance.toFloat()
+        if (!data.winning_balance.isEmpty())
+            winning = data.winning_balance.toFloat()
+        if (!data.entry_fee.isEmpty())
+            entryFee = data.entry_fee.toFloat()
+        if (!data.usable_bonus.isEmpty())
+            bonus = data.usable_bonus.toFloat()
+        toPay = entryFee - bonus
+        if (bonus >= entryFee)
+            toPay = 0f
+        var total = cash + winning
+        dialogue. txt_label.text = getString(R.string.unutilized_balance_winnings_rs_0) + " " + getString(R.string.Rs) +
+                String.format(
+                    "%.2f",
+                    total
+                )
+        dialogue.txt_EntryFee.text = getString(R.string.Rs) + String.format("%.2f", entryFee)
+        dialogue. txt_bonus.text = getString(R.string.Rs) + String.format("%.2f",bonus)
+        dialogue.txt_topay.text = getString(R.string.Rs) + String.format("%.2f", toPay)
         dialogue.img_Close.setOnClickListener {
+            onClickDialogue.onClick(Tags.cancel, false)
             dialogue.dismiss()
         }
         dialogue.btn_Join.setOnClickListener {
-            startActivity(
-                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
-            )
+            joinContest(match_id, series_id, contest_id, team_id, onClickDialogue)
             dialogue.dismiss()
         }
-
         if (dialogue.isShowing)
             dialogue.dismiss()
         dialogue.show()
+    }
+
+    fun joinContest(
+        match_id: String,
+        series_id: String,
+        contest_id: String,
+        team_id: String,
+        onClickDialogue: OnClickDialogue
+    ) {
+        val walletRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        walletRequest[Tags.match_id] = match_id
+        walletRequest[Tags.contest_id] = contest_id
+        walletRequest[Tags.series_id] = series_id
+        walletRequest[Tags.team_id] = team_id
+
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@BaseActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .join_contest(walletRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+                if (response.response!!.status) {
+                    AppDelegate.showToast(this@BaseActivity, response.response!!.message)
+                    onClickDialogue.onClick(Tags.success, true)
+                } else {
+                    onClickDialogue.onClick(Tags.fail, false)
+                    AppDelegate.showToast(this@BaseActivity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@BaseActivity)
+            }
+        }
+
     }
 
     public fun showLogoutDialog() {

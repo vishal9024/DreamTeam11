@@ -72,5 +72,10 @@ object Tags {
     const val clone = "clone"
     const val edit = "edit"
     const  val team_id="team_id"
+
+
+    const val cancel = "cancel"
+    const val success = "success"
+    const  val fail="fail"
 }
 

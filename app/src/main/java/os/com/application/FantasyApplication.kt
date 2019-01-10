@@ -25,7 +25,9 @@ class FantasyApplication : MultiDexApplication() {
 
     var options: DisplayImageOptions? = null
     private var retrofit: Retrofit? = null
-
+    var teamCount = 0
+    var joinedCount = 0
+    //    var createOrjoin=false
     companion object {
         lateinit var fantasyApplication: FantasyApplication
         fun getInstance(): FantasyApplication {

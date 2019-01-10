@@ -1,6 +1,7 @@
 package os.com.ui.createTeam.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -17,10 +18,11 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
-import os.com.constant.Tags
 import os.com.interfaces.OnClickCVC
+import os.com.interfaces.OnClickDialogue
 import os.com.networkCall.ApiClient
 import os.com.ui.createTeam.adapter.ChooseC_VC_Adapter
+import os.com.ui.createTeam.apiRequest.CreateTeamRequest
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
@@ -30,6 +32,10 @@ import os.com.utils.networkUtils.NetworkUtils
 
 
 class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
+    companion object {
+        var choose_C_VC_Activity: Choose_C_VC_Activity? = null
+    }
+
     public var isShowingWk = false
     public var isShowingbat = false
     public var isShowingbowl = false
@@ -93,17 +99,34 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                         callCreateTeamApi(player_ids)
                     } else
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
-
                 } else
                     AppDelegate.showToast(this, getString(R.string.error_network_connection))
             }
+            R.id.btn_preview -> {
+                startActivity(
+                    Intent(
+                        this@Choose_C_VC_Activity,
+                        TeamPreviewActivity::class.java
+                    ).putParcelableArrayListExtra(
+                        IntentConstant.DATA,
+                        playerList as java.util.ArrayList<out Parcelable>
+                    )
+                )
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppRequestCodes.UPDATEVIEW && resultCode.equals(Activity.RESULT_OK)) {
+            finish()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_c_vc)
+        choose_C_VC_Activity = this
         initViews()
     }
 
@@ -118,11 +141,12 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         getData()
         setAdapter()
         btn_CreateTeam.setOnClickListener(this)
-//        txt_Signup.setOnClickListener(this)
+        btn_preview.setOnClickListener(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        choose_C_VC_Activity = null
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
@@ -130,12 +154,27 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     var countTimer: CountTimer? = CountTimer()
     var matchType = IntentConstant.FIXTURE
     var team_id = ""
-    private fun getData() {
-//        contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+    var contest_id = ""
+    var from = 0
+    var createOrJoin = IntentConstant.CREATE
+
+    fun getData() {
+//       contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+        createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE)
+        if (createOrJoin == IntentConstant.JOIN)
+            contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+        from = intent.getIntExtra(IntentConstant.ISEDIT, 0)
+        if (from == AppRequestCodes.EDIT) {
+            team_id = intent.getStringExtra(IntentConstant.TEAM_ID)
+        } else if (from == AppRequestCodes.CLONE) {
+
+        } else
+            contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+
         if (matchType == IntentConstant.FIXTURE) {
             if (!match!!.star_date.isEmpty()) {
                 val strt_date = match!!.star_date.split("T")
@@ -154,9 +193,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         arList = intent.getParcelableArrayListExtra(IntentConstant.AR)
         bowlerList = intent.getParcelableArrayListExtra(IntentConstant.BOWLER)
         batsmenList = intent.getParcelableArrayListExtra(IntentConstant.BATSMEN)
-        if (intent.getIntExtra(IntentConstant.ISEDIT, 0) ==AppRequestCodes.EDIT) {
-            team_id = intent.getStringExtra(IntentConstant.TEAM_ID)
-        }
+
 
         for (i in wkList) {
             if (i.isSelected) {
@@ -214,38 +251,87 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     }
 
     private fun callCreateTeamApi(player_id: ArrayList<String>) {
-        val loginRequest = HashMap<String, String>()
+        var creteTeamRequest: CreateTeamRequest = CreateTeamRequest()
         if (pref!!.isLogin)
-            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
-        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.match_id] = match!!.match_id
-        loginRequest[Tags.series_id] = match!!.series_id
+            creteTeamRequest.user_id = pref!!.userdata!!.user_id
+        creteTeamRequest.language = FantasyApplication.getInstance().getLanguage()
+        creteTeamRequest.match_id = match!!.match_id
+        creteTeamRequest.series_id = match!!.series_id
 //      loginRequest[Tags.contest_id] = contest_id
-        loginRequest[Tags.team_id]=team_id
-        loginRequest["captain"] = captain
-        loginRequest["vice_captain"] = vicecaptain
-        loginRequest["player_id"] = player_id.toString()
+        creteTeamRequest.team_id = team_id
+        creteTeamRequest.captain = captain
+        creteTeamRequest.vice_captain = vicecaptain
+        creteTeamRequest.player_id = player_id
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@Choose_C_VC_Activity)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
-                    .create_team(loginRequest)
+                    .create_team(creteTeamRequest)
                 val response = request.await()
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
                 if (response.response!!.status!!) {
-                    startActivity(
-                        Intent(
-                            this@Choose_C_VC_Activity,
-                            TeamPreviewActivity::class.java
-                        ).putParcelableArrayListExtra(
-                            IntentConstant.DATA,
-                            playerList as java.util.ArrayList<out Parcelable>
-                        )
-                    )
-                    finish()
+                    if (from != AppRequestCodes.EDIT )
+                        FantasyApplication.getInstance().teamCount + 1
+                    if (createOrJoin == IntentConstant.JOIN) {
+                        if (NetworkUtils.isConnected()) {
+                            checkAmountWallet(
+                                match!!.match_id,
+                                match!!.series_id, contest_id, "", object : OnClickDialogue {
+                                    override fun onClick(tag: String, success: Boolean) {
+
+                                    }
+                                }
+                            )
+
+                            finish()
+                            if(ChooseTeamActivity.chooseTeamActivity!=null){
+                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                            }
+                            val intent=Intent()
+                            setResult(Activity.RESULT_OK)
+                            startActivity(intent)
+                        } else
+                            Toast.makeText(
+                                this@Choose_C_VC_Activity,
+                                getString(R.string.error_network_connection),
+                                Toast.LENGTH_LONG
+                            ).show()
+                    } else {
+                        if (from == AppRequestCodes.EDIT || from == AppRequestCodes.CLONE) {
+                            finish()
+                            if(ChooseTeamActivity.chooseTeamActivity!=null){
+                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                            }
+                            val intent=Intent()
+                            setResult(Activity.RESULT_OK)
+                            startActivity(intent)
+//                            val intent = Intent(this@Choose_C_VC_Activity, MyTeamActivity::class.java)
+//                                .putExtra(IntentConstant.MATCH, match)
+//                                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                            startActivity(intent)
+//                            finish()
+                        } else {
+                            if(ChooseTeamActivity.chooseTeamActivity!=null){
+                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                            }
+                            finish()
+                            val intent=Intent()
+                            setResult(Activity.RESULT_OK)
+                            startActivity(intent)
+
+//                            val intent = Intent(this@Choose_C_VC_Activity, ContestActivity::class.java)
+//                                .putExtra(IntentConstant.MATCH, match)
+//                                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                            startActivity(intent)
+//                            finish()
+                        }
+                    }
                 } else {
+                    AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)

@@ -5,6 +5,5 @@
     <!--android:tint="@color/colorPrimary" />-->
     <!--</item>-->
     <item android:drawable="@drawable/rounded_square_count_activated" android:state_selected="true"/>
-    <item android:drawable="@drawable/rounded_square_count_update" android:state_active="true"/>
     <item android:drawable="@drawable/rounded_square_count"/>
 </selector>

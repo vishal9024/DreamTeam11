@@ -120,20 +120,41 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_pointsDistribution"
-            app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
+            app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
             android:layout_width="match_parent"
 
             tools:listitem="@layout/item_player"
             android:layout_height="0dp">
 
     </androidx.recyclerview.widget.RecyclerView>
-    <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_CreateTeam"
+    <LinearLayout
+            android:visibility="visible"
+            android:id="@+id/ll_bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            style="@style/ButtonStyle"
-            android:text="@string/save_team"
-            android:background="@color/colorASPrimary"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_CreateTeam"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/ButtonStyle"
+                android:text="@string/save_team"
+                android:background="@color/colorASPrimary"
+                android:layout_height="wrap_content"/>
+        <View
+                android:id="@+id/view" android:layout_width="0.5dp" android:layout_height="match_parent"
+                android:background="@color/GrayColorOTP"/>
+        <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_preview"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                style="@style/ButtonStyle"
+                android:text="@string/preview"
+                android:background="@color/colorASPrimary"
+                android:layout_height="wrap_content"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,4 +21,7 @@ object IntentConstant {
     const val AR = "AR"
     const val BATSMEN = "BATSMEN"
     const  val CONTEST_ID="CONTEST_ID"
+    const val CREATE_OR_JOIN = "CREATE_OR_JOIN"
+    const val CREATE = 0
+    const val JOIN = 11
 }

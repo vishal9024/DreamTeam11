@@ -1,6 +1,7 @@
 package os.com.ui.contest.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
@@ -26,6 +28,7 @@ import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.contest.dialogues.BottomSheetFilterFragment
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.invite.activity.InviteCodeActivity
@@ -40,7 +43,13 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.ll_myteam -> {
-                startActivity(Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType))
+                callApi=true
+                startActivity(
+                    Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    )
+                )
             }
             R.id.rl_enterContestCode -> {
                 startActivity(Intent(this, InviteCodeActivity::class.java))
@@ -48,18 +57,31 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             R.id.rl_createContest -> {
                 startActivity(Intent(this, CreateContestActivity::class.java))
             }
+            R.id.btn_CreateTeam -> {
+                callApi=true
+                startActivityForResult(
+                    Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    ).putExtra(IntentConstant.CONTEST_ID, "")
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE), AppRequestCodes.UPDATE_ACTIVITY
+                )
+            }
             R.id.ll_joinedContests -> {
                 startActivity(Intent(this, FixtureJoinedContestActivity::class.java))
             }
             R.id.ll_AllContest -> {
-                startActivity(
-                    Intent(
-                        this,
-                        AllContestActivity::class.java
-                    ).putParcelableArrayListExtra(IntentConstant.DATA, contests!!)
-                        .putExtra(IntentConstant.MATCH, match)
-                        .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                )
+                callApi=true
+                if (!contests!!.isEmpty())
+                    startActivity(
+                        Intent(
+                            this,
+                            AllContestActivity::class.java
+                        ).putParcelableArrayListExtra(IntentConstant.DATA, contests!!)
+                            .putExtra(IntentConstant.MATCH, match)
+                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                            .putExtra("joined_contest", joined_contest)
+                    )
             }
         }
     }
@@ -68,6 +90,37 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_contest)
         initViews()
+    }
+
+    var callApi = false
+    override fun onResume() {
+        super.onResume()
+        if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
+            ll_viewTeam.visibility = View.GONE
+            btn_CreateTeam.visibility = VISIBLE
+            var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
+            btn_CreateTeam.text = getString(R.string.create_team) + " " + count
+        } else {
+            ll_viewTeam.visibility = View.VISIBLE
+            btn_CreateTeam.visibility = GONE
+        }
+        txt_joined_contest.text = FantasyApplication.getInstance().teamCount.toString()
+        txt_MyTeams.text = FantasyApplication.getInstance().joinedCount.toString()
+        if (callApi)
+            if (NetworkUtils.isConnected()) {
+                callGetContestListApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK)
+            if (NetworkUtils.isConnected()) {
+                callGetContestListApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
     }
 
     var countTimer: CountTimer? = CountTimer()
@@ -150,9 +203,11 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         return super.onOptionsItemSelected(item)
     }
 
+    var joined_contest = 0
     var contests: ArrayList<Contest>? = ArrayList()
     var contestList: ArrayList<ContestCategory> = ArrayList()
     private fun callGetContestListApi() {
+        callApi=false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -174,22 +229,36 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                         ll_viewTeam.visibility = View.GONE
                         btn_CreateTeam.visibility = VISIBLE
                     } else {
+
+                        if (response.response!!.data!!.my_contests != null) {
+                            joined_contest = response.response!!.data!!.my_contests.toInt()
+                            FantasyApplication.getInstance().joinedCount =
+                                    response.response!!.data!!.my_contests.toInt()
+                        }
                         txt_joined_contest.text = response.response!!.data!!.my_contests
                         txt_MyTeams.text = response.response!!.data!!.my_teams
                         if (response.response!!.data!!.my_teams != null) {
+                            FantasyApplication.getInstance().teamCount = response.response!!.data!!.my_teams.toInt()
                             if (response.response!!.data!!.my_teams.toInt() == 0) {
                                 ll_viewTeam.visibility = View.GONE
                                 btn_CreateTeam.visibility = VISIBLE
+                                var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
+                                btn_CreateTeam.text = getString(R.string.create_team) + " " + count
                             } else {
                                 ll_viewTeam.visibility = View.VISIBLE
                                 btn_CreateTeam.visibility = GONE
                             }
                         }
                     }
+                    if (contestList.isEmpty()) {
+                        ll_viewTeam.visibility = View.GONE
+                        btn_CreateTeam.visibility = GONE
+                    }
                     for (contest in contestList) {
                         contests!!.addAll(contest.contests!!)
                         txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
                     }
+
                 } else {
                 }
             } catch (exception: Exception) {

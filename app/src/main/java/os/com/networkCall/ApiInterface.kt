@@ -3,6 +3,9 @@ package os.com.networkCall
 import kotlinx.coroutines.Deferred
 import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
+import os.com.ui.contest.apiResponse.joinContestResponse.JoinContestResponse
+import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.JoinContestWalletAmountResponse
+import os.com.ui.createTeam.apiRequest.CreateTeamRequest
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
@@ -61,7 +64,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.create_team)
-    fun create_team(@Body request: Map<String, String>): Deferred<BaseResponse>
+    fun create_team(@Body request: CreateTeamRequest): Deferred<BaseResponse>
 
 
     @Headers("Content-Type: application/json")
@@ -80,4 +83,11 @@ interface ApiInterface {
     @POST(ApiConstant.player_team_list)
     fun player_team_list(@Body request: Map<String, String>): Deferred<GetTeamListResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.join_contest_wallet_amount)
+    fun join_contest_wallet_amount(@Body request: Map<String, String>): Deferred<JoinContestWalletAmountResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.join_contest)
+    fun join_contest(@Body request: Map<String, String>): Deferred<JoinContestResponse>
 }

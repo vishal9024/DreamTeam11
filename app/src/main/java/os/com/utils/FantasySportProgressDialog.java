@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.TextView;
 import os.com.R;
 
@@ -55,6 +54,8 @@ public class FantasySportProgressDialog extends ProgressDialog {
                 msGWProgressDialog = new FantasySportProgressDialog(mContext, R.style.AppCompatAlertDialogStyle);
             }
         } catch (Exception e) {
+                msGWProgressDialog = null;
+                msGWProgressDialog = new FantasySportProgressDialog(mContext, R.style.AppCompatAlertDialogStyle);
             e.printStackTrace();
         }
 
@@ -99,21 +100,31 @@ public class FantasySportProgressDialog extends ProgressDialog {
      */
     public void dismissDialog() {
         try {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if (msGWProgressDialog != null && msGWProgressDialog.isShowing()) {
-                            msGWProgressDialog.dismiss();
-                            msGWProgressDialog = null;
-                        } else if (msGWProgressDialog != null)
-                            msGWProgressDialog = null;
-                    } catch (Exception ex) {
-                        msGWProgressDialog = null;
-                        ex.printStackTrace();
-                    }
-                }
-            }, 500);
+            try {
+                if (msGWProgressDialog != null && msGWProgressDialog.isShowing()) {
+                    msGWProgressDialog.dismiss();
+                    msGWProgressDialog = null;
+                } else if (msGWProgressDialog != null)
+                    msGWProgressDialog = null;
+            } catch (Exception ex) {
+                msGWProgressDialog = null;
+                ex.printStackTrace();
+            }
+//            new Handler().postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        if (msGWProgressDialog != null && msGWProgressDialog.isShowing()) {
+//                            msGWProgressDialog.dismiss();
+//                            msGWProgressDialog = null;
+//                        } else if (msGWProgressDialog != null)
+//                            msGWProgressDialog = null;
+//                    } catch (Exception ex) {
+//                        msGWProgressDialog = null;
+//                        ex.printStackTrace();
+//                    }
+//                }
+//            }, 500);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

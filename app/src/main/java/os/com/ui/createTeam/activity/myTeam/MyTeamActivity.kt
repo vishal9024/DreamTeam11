@@ -1,13 +1,14 @@
 package os.com.ui.createTeam.activity.myTeam
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.content_contest.*
+import kotlinx.android.synthetic.main.content_myteam.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -55,20 +56,45 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
             )
         }
     }
-
+    var callApi=false
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     override fun onClick(view: View?) {
-//        when (view!!.id) {
-//            R.id.btn_CreateTeam -> {
-//            startActivity(Intent(this, ChooseTeamActivity::class.java))
-//        }
-//            R.id.txt_Signup -> {
-//                startActivity(Intent(this, SignUpActivity::class.java))
-//            }
-//        }
+        when (view!!.id) {
+            R.id.btn_CreateTeam -> {
+                callApi=true
+                startActivityForResult(
+                    Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    ).putExtra(IntentConstant.CONTEST_ID, "")
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                )
+            }
+        }
     }
+
+    override fun onResume() {
+        super.onResume()
+            var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
+            btn_CreateTeam.text = getString(R.string.create_team) + " " + count
+        if (callApi)
+            if (NetworkUtils.isConnected()) {
+                callGetTeamListApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode== Activity.RESULT_OK)
+            if (NetworkUtils.isConnected()) {
+                callGetTeamListApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +108,8 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.my_team)
+        var count=os.com.application.FantasyApplication.getInstance().teamCount + 1
+        btn_CreateTeam.setText(getString(R.string.create_team)+" " +count )
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
@@ -97,6 +125,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
         }
+
         setMenu(true, false, false, false)
         if (NetworkUtils.isConnected()) {
             callGetTeamListApi()
@@ -104,10 +133,12 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 //        btn_CreateTeam.setOnClickListener(this)
 //        txt_Signup.setOnClickListener(this)
+        btn_CreateTeam.setOnClickListener(this)
     }
 
     var data: ArrayList<Data> = ArrayList()
     private fun callGetTeamListApi() {
+       callApi= false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -125,6 +156,9 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 AppDelegate.hideProgressDialog(this@MyTeamActivity)
                 if (response.response!!.status) {
                     data = response.response!!.data!!
+                    FantasyApplication.getInstance().teamCount == data.size
+                    var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
+                    btn_CreateTeam.setText(getString(R.string.create_team) + " " + count)
                     setAdapter()
                 } else {
                 }

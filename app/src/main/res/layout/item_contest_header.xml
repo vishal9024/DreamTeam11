@@ -82,7 +82,7 @@
                     android:id="@+id/rv_subContest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_contest"
+
                     android:nestedScrollingEnabled="false"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintStart_toStartOf="parent"
@@ -109,13 +109,14 @@
                         android:paddingTop="@dimen/_5sdp"
                         android:id="@+id/txt_view_all"
                         style="@style/TextStyleSemiBold"
-                        android:gravity="start"
+                        android:gravity="end"
                         android:drawableEnd="@mipmap/arrow_setting"
                         android:textSize="@dimen/_13sdp"
                         android:singleLine="true"
+                        android:drawablePadding="@dimen/_10sdp"
                         android:ellipsize="end"
                         android:layout_width="match_parent"
-                        android:textColor="@color/textColorBlack"
+                        android:textColor="@color/colorSecondary"
                         android:text="@string/view_all"
                         android:layout_height="wrap_content"/>
             </androidx.appcompat.widget.LinearLayoutCompat>

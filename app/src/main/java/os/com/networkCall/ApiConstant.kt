@@ -104,4 +104,7 @@ object ApiConstant {
     const val update_personal_details = "update_personal_details"
     const val change_pasword = "change_pasword"
     const val player_team_list="player-team-list"
+    const val join_contest_wallet_amount="join-contest-wallet-amount"
+    const val  join_contest="joinContest"
+    const val contest_price_breakup="contest-price-breakup"
 }

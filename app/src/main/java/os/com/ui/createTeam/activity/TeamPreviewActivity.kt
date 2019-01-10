@@ -1,6 +1,5 @@
 package os.com.ui.createTeam.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
@@ -12,7 +11,7 @@ import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
-import os.com.ui.dashboard.DashBoardActivity
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     var playerList: MutableList<Data> = ArrayList()
@@ -20,18 +19,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_Edit -> {
-
                 finish()
+                if(Choose_C_VC_Activity.choose_C_VC_Activity!=null){
+                    Choose_C_VC_Activity.choose_C_VC_Activity!!.finish()
+                }
             }
             R.id.img_Close -> {
-                if (isEdit == 1) {
-                    finish()
-                } else {
-                    val intent = Intent(this, DashBoardActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    startActivity(intent)
-                    finish()
-                }
+                finish()
             }
         }
     }
@@ -43,9 +37,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
+    var match: Match? = null
+    var matchType = IntentConstant.FIXTURE
 
     private fun initViews() {
         isEdit = intent.getIntExtra("show", 0)
+        match = intent.getParcelableExtra(IntentConstant.MATCH)
+        matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         if (isEdit == 1) {
             img_Edit.visibility = View.GONE
             playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
@@ -53,6 +51,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
             setDataPreview(playerListPreview!!, players)
         } else {
+            match = intent.getParcelableExtra(IntentConstant.MATCH)
+            matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             img_Edit.visibility = VISIBLE
             playerList = intent.getParcelableArrayListExtra(IntentConstant.DATA)
             setData(playerList as java.util.ArrayList<Data>?)
@@ -281,7 +281,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     txt_bowler4_points.setText(data.player_record!!.player_credit)
                 } else if (rl_bowler5.visibility == View.GONE) {
                     if (data.isCaptain) {
-                        txt_bowler5_cvc.setText("C")
+                        txt_bowler5_cvc.text = "C"
                         txt_bowler5_cvc.visibility = View.VISIBLE
                     } else if (data.isViceCaptain) {
                         txt_bowler5_cvc.setText("VC")

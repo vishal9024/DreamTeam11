@@ -1,4 +1,4 @@
-package com.zoom.utils
+package os.com.utils;
 
 import android.content.Context
 import android.view.GestureDetector
