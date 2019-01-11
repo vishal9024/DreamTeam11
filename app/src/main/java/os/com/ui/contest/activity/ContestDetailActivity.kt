@@ -29,7 +29,6 @@ import os.com.ui.contest.apiResponse.getContestDetail.Data
 import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.createTeam.activity.ChooseTeamActivity
-import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
@@ -37,9 +36,11 @@ import os.com.utils.networkUtils.NetworkUtils
 
 
 class ContestDetailActivity : BaseActivity(), View.OnClickListener {
+    var callApi = false
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_CreateTeam -> {
+                callApi = true
                 startActivityForResult(
                     Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
@@ -61,6 +62,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             R.id.txt_Join -> {
                 if (!data!!.is_joined)
                     if (FantasyApplication.getInstance().teamCount == 0) {
+                        callApi = true
                         startActivityForResult(
                             Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                                 IntentConstant.CONTEST_TYPE,
@@ -85,23 +87,24 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         } else
                             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     } else {
-//                        startActivityForResult(
-//                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-//                                IntentConstant.CONTEST_TYPE,
-//                                matchType
-//                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
-//                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
-//                            AppRequestCodes.UPDATE_ACTIVITY
-//                        )
+                        callApi = true
                         startActivityForResult(
-                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
-                                IntentConstant.MATCH,
-                                match
-                            ).putExtra(
+                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                                 IntentConstant.CONTEST_TYPE,
                                 matchType
-                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
+                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
+                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+                            AppRequestCodes.UPDATE_ACTIVITY
                         )
+//                        startActivityForResult(
+//                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
+//                                IntentConstant.MATCH,
+//                                match
+//                            ).putExtra(
+//                                IntentConstant.CONTEST_TYPE,
+//                                matchType
+//                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
+//                        )
                     }
             }
         }
@@ -114,6 +117,16 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 //                callGetTeamListApi()
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (callApi)
+            if (NetworkUtils.isConnected()) {
+                callContestDetailApi()
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
     }
 
     var contest: Contest? = null
@@ -198,6 +211,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 
     var data: Data? = null
     private fun callContestDetailApi() {
+        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id

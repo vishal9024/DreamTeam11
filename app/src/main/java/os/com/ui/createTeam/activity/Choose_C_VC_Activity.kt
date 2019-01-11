@@ -231,7 +231,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     vicecaptain = i.player_id
             }
         }
-
         playerList.addAll(this.wkList!!)
         playerList.addAll(this.bowlerList!!)
         playerList.addAll(this.arList!!)
@@ -272,46 +271,55 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
                 if (response.response!!.status!!) {
-                    if (from != AppRequestCodes.EDIT )
+                    if (from != AppRequestCodes.EDIT)
                         FantasyApplication.getInstance().teamCount + 1
+
                     if (createOrJoin == AppRequestCodes.JOIN) {
                         if (NetworkUtils.isConnected()) {
                             checkAmountWallet(
                                 match!!.match_id,
                                 match!!.series_id, contest_id, "", object : OnClickDialogue {
                                     override fun onClick(tag: String, success: Boolean) {
-
+                                        finish()
+                                        if (ChooseTeamActivity.chooseTeamActivity != null) {
+                                            ChooseTeamActivity.chooseTeamActivity!!.finish()
+                                        }
+                                        val intent = Intent()
+                                        setResult(Activity.RESULT_OK)
+                                        startActivity(intent)
                                     }
                                 }
                             )
-                            finish()
-                            if(ChooseTeamActivity.chooseTeamActivity!=null){
-                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                            }
-                            val intent=Intent()
-                            setResult(Activity.RESULT_OK)
-                            startActivity(intent)
-                        } else
+                        } else {
                             Toast.makeText(
                                 this@Choose_C_VC_Activity,
                                 getString(R.string.error_network_connection),
                                 Toast.LENGTH_LONG
                             ).show()
+                            finish()
+                            if (ChooseTeamActivity.chooseTeamActivity != null) {
+                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                            }
+                            val intent = Intent()
+                            setResult(Activity.RESULT_OK)
+                            startActivity(intent)
+                        }
+
                     } else {
                         if (from == AppRequestCodes.EDIT || from == AppRequestCodes.CLONE) {
                             finish()
-                            if(ChooseTeamActivity.chooseTeamActivity!=null){
+                            if (ChooseTeamActivity.chooseTeamActivity != null) {
                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
                             }
-                            val intent=Intent()
+                            val intent = Intent()
                             setResult(Activity.RESULT_OK)
                             startActivity(intent)
                         } else {
-                            if(ChooseTeamActivity.chooseTeamActivity!=null){
+                            if (ChooseTeamActivity.chooseTeamActivity != null) {
                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
                             }
                             finish()
-                            val intent=Intent()
+                            val intent = Intent()
                             setResult(Activity.RESULT_OK)
                             startActivity(intent)
                         }
