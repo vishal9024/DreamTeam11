@@ -50,9 +50,9 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                                            before: Int, count: Int) {
                     if (s.length!=0){
                         if (et_contest_size.text.toString()!="") {
-                                val total=et_contest_size.text.toString().toInt() * s.toString().toInt()
-                                txt_EntryFeeAmount.text=total.toString()
-                            }
+                            val total=et_contest_size.text.toString().toInt() * s.toString().toInt()
+                            txt_EntryFeeAmount.text=total.toString()
+                        }
                     }
                 }
             })
@@ -74,7 +74,6 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
             })
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

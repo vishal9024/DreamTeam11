@@ -50,6 +50,7 @@
                   android:orientation="horizontal"
                   android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_how_it_work"
                 android:layout_gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/txt_label"
                 style="@style/TextStyleMedium"
@@ -67,6 +68,7 @@
                 android:layout_marginEnd="@dimen/_5sdp" android:background="@color/GrayColorOTP"
                 android:layout_width="@dimen/_1sdp" android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rule_for_fair_play"
                 android:layout_gravity="center_vertical"
                 app:layout_constraintTop_toBottomOf="@+id/txt_label"
                 style="@style/TextStyleMedium"

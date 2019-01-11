@@ -1,18 +1,31 @@
 package os.com.ui.invite.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_invite_friends.*
 import os.com.AppBase.BaseActivity
 import os.com.R
-import android.content.Intent
-
+import os.com.networkCall.ApiConstant
+import os.com.ui.dashboard.more.activity.WebViewActivity
 
 
 class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
+            R.id.tv_how_it_work -> {
+                val intent = Intent(this, WebViewActivity::class.java)
+                intent.putExtra("PAGE_SLUG", "How it work")
+                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
+                startActivity(intent)
+            }
+            R.id.tv_rule_for_fair_play -> {
+                val intent = Intent(this, WebViewActivity::class.java)
+                intent.putExtra("PAGE_SLUG", "Rule for fair play")
+                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
+                startActivity(intent)
+            }
             R.id.txt_Invite -> {
                 val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
                 sharingIntent.type = "text/plain"
@@ -38,6 +51,8 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
         toolbarTitleTv.setText(R.string.invite_friends)
         setMenu(false, false, false, false)
         txt_Invite.setOnClickListener(this)
+        tv_how_it_work.setOnClickListener(this)
+        tv_rule_for_fair_play.setOnClickListener(this)
         txt_label.setText("kick off your friends " + getString(R.string.app_name) + " Journey!")
         txt_code.setText(pref!!.userdata!!.refer_id)
     }
