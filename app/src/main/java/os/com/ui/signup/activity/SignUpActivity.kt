@@ -18,6 +18,7 @@ import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
+import os.com.ui.TempActivity
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.utils.AppDelegate
 import os.com.utils.ValidationUtil
@@ -37,6 +38,9 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                   }
                   R.id.txt_Login -> {
                       finish()
+                  }
+                  R.id.txt_TC -> {
+                      startActivity(Intent(this, TempActivity::class.java))
                   }
               }
               } catch (e: Exception) {
@@ -62,6 +66,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
               supportActionBar!!.setDisplayShowTitleEnabled(false)
               btn_Register.setOnClickListener(this)
               txt_Login.setOnClickListener(this)
+              txt_TC.setOnClickListener(this)
               try {
                   userData = intent.getParcelableExtra(IntentConstant.DATA)
               } catch (e: Exception) {
