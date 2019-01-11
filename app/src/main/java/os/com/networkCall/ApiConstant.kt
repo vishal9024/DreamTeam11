@@ -64,7 +64,7 @@ object ApiConstant {
 //    https://72.octallabs.com/cashfantasy/pages/static.html
 //    https://72.octallabs.com/cashfantasy/pages/static_tab.html
 
- const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
+    const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
     const val CricsetWebViewURL = "https://72.octallabs.com/dreamstock11/"
     const val fSLWebViewURL = "https://72.octallabs.com/fsl/"
     const val playing11WebViewURL = "https://72.octallabs.com/playing11/"
@@ -88,6 +88,12 @@ object ApiConstant {
     const val point_system = "pages/point_system.html"
     const val static = "pages/static.html"
     const val static_tab = "pages/static_tab.html"
+    const val how_to_play_tab = "pages/how_to_play.html"
+    const val how_it_works_tab = "pages/invite-friends-how-it-works.html"
+    const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
+    const val legality_tab = "pages/legality.html"
+
+
 
     const val signup = "signup"
     const val verify_otp = "verify-otp"
@@ -104,10 +110,10 @@ object ApiConstant {
     const val personal_details = "personal_details"
     const val update_personal_details = "update_personal_details"
     const val change_pasword = "change_pasword"
-    const val player_team_list="player-team-list"
-    const val join_contest_wallet_amount="join-contest-wallet-amount"
-    const val  join_contest="joinContest"
-    const val contest_price_breakup="contest-price-breakup"
-    const  val logout="logout"
-    const val contest_detail="contest-detail"
+    const val player_team_list = "player-team-list"
+    const val join_contest_wallet_amount = "join-contest-wallet-amount"
+    const val join_contest = "joinContest"
+    const val contest_price_breakup = "contest-price-breakup"
+    const val logout = "logout"
+    const val contest_detail = "contest-detail"
 }

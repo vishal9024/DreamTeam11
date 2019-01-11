@@ -52,6 +52,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
             }
             R.id.txt_Signup -> {
                 startActivity(Intent(this, SignUpActivity::class.java))
+                finish()
             }
             R.id.facebookLoginButton -> {
                 faceBookLogin()

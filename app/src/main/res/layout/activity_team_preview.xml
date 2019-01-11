@@ -29,7 +29,7 @@
     />
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_marginTop="@dimen/_60sdp"
-            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginBottom="@dimen/_34sdp"
             android:layout_below="@+id/img_Close"
             android:layout_centerVertical="true"
             android:orientation="vertical"
@@ -85,8 +85,8 @@
                         app:civ_border_color="@color/white"
                         app:civ_fill_color="@color/white"
                         app:civ_border_width="@dimen/_1sdp"
-                        android:id="@+id/cimg_wk1" android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"/>
+                        android:id="@+id/cimg_wk1" android:layout_width="@dimen/_34sdp"
+                        android:layout_height="@dimen/_34sdp"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:singleLine="true"
                         android:ellipsize="end"
@@ -180,8 +180,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat1" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bat1" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -256,8 +256,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat2" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bat2" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_marginTop="-5dp"
                                 android:layout_centerHorizontal="true"
@@ -331,8 +331,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat3" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bat3" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -405,8 +405,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat4" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bat4" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -480,8 +480,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat5" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bat5" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -590,8 +590,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_ar1" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_ar1" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -664,8 +664,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_ar2" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_ar2" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -738,8 +738,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_ar3" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_ar3" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -846,8 +846,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bowler1" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bowler1" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -920,8 +920,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bowler2" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bowler2" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -994,8 +994,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bowler3" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bowler3" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -1068,8 +1068,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bowler4" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bowler4" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -1142,8 +1142,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bowler5" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_bowler5" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"
@@ -1240,8 +1240,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_substitute" android:layout_width="@dimen/_30sdp"
-                                android:layout_height="@dimen/_30sdp"/>
+                                android:id="@+id/cimg_substitute" android:layout_width="@dimen/_34sdp"
+                                android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
                                 android:ellipsize="end"

@@ -3,6 +3,8 @@ package os.com.ui.contest.adapter
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -31,7 +33,13 @@ class AllContestAdapter(
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
-
+        if (!contest!!.get(holder.adapterPosition).entry_fee.isEmpty() && contest.get(holder.adapterPosition).entry_fee.toFloat() > 0) {
+            holder.itemView.ll_scoreBoard.visibility = VISIBLE
+            holder.itemView.ll_practice.visibility = GONE
+        } else {
+            holder.itemView.ll_scoreBoard.visibility = GONE
+            holder.itemView.ll_practice.visibility = VISIBLE
+        }
         holder.itemView.txt_TotalWinnings.text = mContext.getString(R.string.Rs) + " " +
                 contest!!.get(holder.adapterPosition).prize_money
         holder.itemView.txt_Winners.text = contest.get(holder.adapterPosition).total_winners
@@ -64,7 +72,16 @@ class AllContestAdapter(
         }
 
         holder.itemView.ll_totalWinners.setOnClickListener {
-            ( mContext as BaseActivity).callWinningBreakupApi(contest[holder.adapterPosition].contest_id)
+            try {
+                if (!contest.get(position).total_winners.isEmpty() && contest.get(position).total_winners!!.toInt() > 0)
+                    (mContext as BaseActivity).callWinningBreakupApi(
+                        contest[position].contest_id,
+                        contest[position].breakup_detail!!,
+                        contest[position].prize_money
+                    )
+            }catch (e: Exception){
+
+            }
 //            val bottomSheetDialogFragment = BottomSheetWinningListFragment()
 //            var bundle = Bundle()
 //            bundle.putString(Tags.contest_id, contest[holder.adapterPosition].contest_id)
@@ -72,6 +89,13 @@ class AllContestAdapter(
 //            bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
+            )
+        }
+        holder.itemView.ll_practice.setOnClickListener {
             mContext.startActivity(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                     IntentConstant.CONTEST_TYPE, matchType

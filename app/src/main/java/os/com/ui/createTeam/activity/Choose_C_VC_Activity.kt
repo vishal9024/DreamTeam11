@@ -280,13 +280,20 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                                 match!!.match_id,
                                 match!!.series_id, contest_id, "", object : OnClickDialogue {
                                     override fun onClick(tag: String, success: Boolean) {
-                                        finish()
-                                        if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                            ChooseTeamActivity.chooseTeamActivity!!.finish()
+                                        if (success) {
+                                            val intent = Intent()
+                                            setResult(Activity.RESULT_OK)
+                                            startActivity(intent)
+                                            finish()
+                                            if (ChooseTeamActivity.chooseTeamActivity != null) {
+                                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                                            }
+                                        }else{
+                                            finish()
+                                            if (ChooseTeamActivity.chooseTeamActivity != null) {
+                                                ChooseTeamActivity.chooseTeamActivity!!.finish()
+                                            }
                                         }
-                                        val intent = Intent()
-                                        setResult(Activity.RESULT_OK)
-                                        startActivity(intent)
                                     }
                                 }
                             )

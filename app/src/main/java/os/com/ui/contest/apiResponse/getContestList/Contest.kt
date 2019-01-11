@@ -2,6 +2,7 @@ package os.com.ui.contest.apiResponse.getContestList
 
 import android.os.Parcel
 import android.os.Parcelable
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 
 class Contest() : Parcelable {
     var entry_fee = ""
@@ -14,6 +15,7 @@ class Contest() : Parcelable {
     var is_joined: Boolean = false
     var multiple_team = false
     var invite_code = ""
+    var breakup_detail: ArrayList<PriceBreakUp>? = null
 
     constructor(parcel: Parcel) : this() {
         entry_fee = parcel.readString()
@@ -23,6 +25,9 @@ class Contest() : Parcelable {
         contest_id = parcel.readString()
         total_winners = parcel.readString()
         teams_joined = parcel.readString()
+        is_joined = parcel.readByte() != 0.toByte()
+        multiple_team = parcel.readByte() != 0.toByte()
+        invite_code = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -33,6 +38,9 @@ class Contest() : Parcelable {
         parcel.writeString(contest_id)
         parcel.writeString(total_winners)
         parcel.writeString(teams_joined)
+        parcel.writeByte(if (is_joined) 1 else 0)
+        parcel.writeByte(if (multiple_team) 1 else 0)
+        parcel.writeString(invite_code)
     }
 
     override fun describeContents(): Int {

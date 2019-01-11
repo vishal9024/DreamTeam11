@@ -18,7 +18,7 @@
     <string name="don_t_have_an_account_yet">Don\'t have an account yet?</string>
     <string name="sign_up_now">Sign Up Now</string>
     <string name="verify_your_number">Verify Your Number</string>
-    <string name="otp_has_been_sent_to_your_mobile_number">OTP has been sent to your Mobile Number</string>
+    <string name="otp_has_been_sent_to_your_mobile_number">OTP has been sent to</string>
     <string name="submit">Submit</string>
     <string name="_100_just_a_step_away">100 just a step away</string>
     <string name="claim_your_bonus_on_registration">Claim your bonus on registration</string>
@@ -132,11 +132,8 @@
     <string name="teams">Teams</string>
     <string name="all_contest">All Contest</string>
     <string name="winning_list">Winning List</string>
-    <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions">
-        <b>Note:-</b>
-        The actual prize money may be different than the prize money mentioned above if there is a tie for any of
-        the winning positions.
-    </string>
+    <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions"><b>Note:-</b> The actual prize money may be different than the prize money mentioned above if there is a tie for any of
+        the winning positions.</string>
     <string name="view_teams">View Teams</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
     <string name="legality">Legality</string>
@@ -387,6 +384,9 @@
     <string name="mobile_hint_label">You will receive an OTP for verification</string>
     <string name="email_hint_label">No spam, We promise!</string>
     <string name="password_hint_label">Minimum 8 characters with 1 number/symbol</string>
+    <string name="join_contest">Join Contest</string>
+    <string name="prectice_contest">Practice Contest</string>
+    <string name="winner_takes_all_the_glory">Winner takes all the glory</string>
     <string name="term_and_condition">
         <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam,
             feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.

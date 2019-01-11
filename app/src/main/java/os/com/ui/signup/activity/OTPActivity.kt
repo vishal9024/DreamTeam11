@@ -76,6 +76,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         otp = intent.getStringExtra(IntentConstant.OTP)
         phone = intent.getStringExtra(IntentConstant.MOBILE)
         user_id = intent.getStringExtra(IntentConstant.USER_ID)
+        txt_VerifyNumberLabel.text=getString(R.string.otp_has_been_sent_to_your_mobile_number)+" "+phone
         resendOTPLayout.setOnClickListener(this)
         otp_view.setText(otp)
         resendOTPLayout.isEnabled = false

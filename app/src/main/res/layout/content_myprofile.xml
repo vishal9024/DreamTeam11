@@ -468,7 +468,7 @@
                         </LinearLayout>
                         <LinearLayout
                                 android:padding="@dimen/_10sdp"
-                                android:layout_gravity="center_vertical"
+                                android:layout_gravity="top"
                                 android:orientation="vertical"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
@@ -484,6 +484,7 @@
                                     android:text="@string/add_cash"
                                     android:layout_height="@dimen/_25sdp"/>
                             <androidx.appcompat.widget.AppCompatButton
+                                    android:layout_marginTop="@dimen/_7sdp"
                                     android:id="@+id/txt_Withdraw"
                                     android:textSize="@dimen/_9sdp"
                                     style="@style/ButtonStyle"

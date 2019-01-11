@@ -44,7 +44,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     setTitleVisibility(false, true)
                     setMenu(true, false, false, false)
                     setTitleText(getString(R.string.home))
-                    setFragment(HomeFragment())
+                    setFragment(HomeFragment(), R.id.container)
                 }
                 return true
             }
@@ -55,7 +55,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     setMenu(true, false, false, false)
                     setTitleVisibility(true, false)
                     setTitleText(getString(R.string.my_contest))
-                    setFragment(MyContestFragment())
+                    setFragment(MyContestFragment(),R.id.container)
                 }
                 return true
             }
@@ -66,7 +66,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     setTitleVisibility(true, false)
                     setMenu(false, false, false, true)
                     setTitleText(getString(R.string.profile))
-                    setFragment(ProfileFragment())
+                    setFragment(ProfileFragment(), R.id.container)
                 }
                 return true
             }
@@ -75,7 +75,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     toolbar.visibility = View.VISIBLE
                     setMenu(true, false, false, false)
                     setTitleText(getString(R.string.more))
-                    setFragment(MoreFragment())
+                    setFragment(MoreFragment(), R.id.container)
                 }
                 return true
             }
@@ -117,7 +117,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
         removeShiftMode(bottomNavigationView)
-        setFragment(HomeFragment())
+        setFragment(HomeFragment(), R.id.container)
     }
 
 //    fun updateNavigationView() {
@@ -137,12 +137,33 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             toolbarTitle.visibility = GONE
     }
 
-    private fun setFragment(fragment: Fragment) {
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 1) {
+            finish()
+        } else {
+            super.onBackPressed()
+        }
+    }
+//    private fun setFragment(fragment: Fragment) {
+//        val backStateName = fragment.javaClass.name
+//
+//        val manager = supportFragmentManager
+//        val fragmentPopped = manager.popBackStackImmediate(backStateName, 0)
+//
+//        if (!fragmentPopped) { //fragment not in back stack, create it.
+//            val ft = manager.beginTransaction()
+//            ft.replace(R.id.container, fragment)
+//            ft.addToBackStack(backStateName)
+//            ft.commitAllowingStateLoss()
+//        }
+//    }
+    private fun setFragment(fragment: Fragment, container: Int ) {
         val fragmentManager = supportFragmentManager
         fragmentManager
             .beginTransaction()
 //            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
-            .replace(R.id.container, fragment)
+            .replace(container, fragment)
+//            .addToBackStack(null)
             .commitAllowingStateLoss()
     }
 

@@ -31,8 +31,8 @@
                         android:id="@+id/img_category"
                         android:layout_width="@dimen/_25sdp"
                         android:paddingStart="@dimen/_5sdp"
-                        android:scaleType="centerCrop"
-                        android:layout_height="@dimen/_30sdp"
+                        android:scaleType="fitXY"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_gravity="center_vertical"
                         android:src="@mipmap/hotcontest"/>
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -99,6 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 <View
+                        android:visibility="gone"
                         card_view:layout_constraintTop_toBottomOf="@+id/ll_label"
                         card_view:layout_constraintStart_toStartOf="parent"
                         card_view:layout_constraintEnd_toEndOf="parent"
@@ -108,7 +109,7 @@
                         android:paddingBottom="@dimen/_5sdp"
                         android:paddingTop="@dimen/_5sdp"
                         android:id="@+id/txt_view_all"
-                        style="@style/TextStyleSemiBold"
+                        style="@style/TextStyleNormal"
                         android:gravity="end"
                         android:drawableEnd="@mipmap/arrow_setting"
                         android:textSize="@dimen/_13sdp"

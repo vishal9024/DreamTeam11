@@ -17,13 +17,13 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
             R.id.tv_how_it_work -> {
                 val intent = Intent(this, WebViewActivity::class.java)
                 intent.putExtra("PAGE_SLUG", "How it work")
-                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
+                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.how_it_works_tab)
                 startActivity(intent)
             }
             R.id.tv_rule_for_fair_play -> {
                 val intent = Intent(this, WebViewActivity::class.java)
                 intent.putExtra("PAGE_SLUG", "Rule for fair play")
-                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
+                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.how_fair_play_tab)
                 startActivity(intent)
             }
             R.id.txt_Invite -> {

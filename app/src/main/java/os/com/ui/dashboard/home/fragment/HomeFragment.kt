@@ -212,6 +212,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
+            if (!isAdded)
+                return@launch
             AppDelegate.showProgressDialog(activity!!)
             try {
                 val request = ApiClient.client

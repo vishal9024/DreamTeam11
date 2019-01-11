@@ -30,6 +30,7 @@ import os.com.ui.addCash.activity.AddCashActivity
 import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.Data
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
@@ -408,39 +409,52 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     public fun callWinningBreakupApi(
-        contest_id: String
+        contest_id: String,
+        breakup_detail: ArrayList<PriceBreakUp>,
+        prize_money: String
 
     ) {
-        val loginRequest = HashMap<String, String>()
-        if (pref!!.isLogin)
-            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
-        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.contest_id] = contest_id
-        GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@BaseActivity)
-            try {
-                val request = ApiClient.client
-                    .getRetrofitService()
-                    .contest_price_breakup(loginRequest)
-                val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
-                AppDelegate.hideProgressDialog(this@BaseActivity)
-                if (response.response!!.status) {
-                    val bottomSheetDialogFragment = BottomSheetWinningListFragment()
-                    var bundle = Bundle()
-                    bundle.putParcelable(Tags.contest_id, response.response!!.data!!)
-                    bottomSheetDialogFragment.arguments = bundle
-                    bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+        val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+        var bundle = Bundle()
+        bundle.putParcelableArrayList(Tags.contest_id, breakup_detail)
+        bundle.putString(Tags.winning_prize,prize_money)
+        bottomSheetDialogFragment.arguments = bundle
+        bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
 
 
-                } else {
-                }
-            } catch (exception: Exception) {
-                AppDelegate.hideProgressDialog(this@BaseActivity)
-            }
-        }
+//        val loginRequest = HashMap<String, String>()
+//        if (pref!!.isLogin)
+//            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+//        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+//        loginRequest[Tags.contest_id] = contest_id
+//        GlobalScope.launch(Dispatchers.Main) {
+//            AppDelegate.showProgressDialog(this@BaseActivity)
+//            try {
+//                val request = ApiClient.client
+//                    .getRetrofitService()
+//                    .contest_price_breakup(loginRequest)
+//                val response = request.await()
+//                AppDelegate.LogT("Response=>" + response);
+//                AppDelegate.hideProgressDialog(this@BaseActivity)
+//                if (response.response!!.status) {
+//                    val bottomSheetDialogFragment = BottomSheetWinningListFragment()
+//                    var bundle = Bundle()
+//                    bundle.putParcelable(Tags.contest_id, response.response!!.data!!)
+//                    bundle.putString(Tags.winning_prize, response.response!!.data!!)
+//                    bottomSheetDialogFragment.arguments = bundle
+//                    bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
+//
+//
+//                } else {
+//                }
+//            } catch (exception: Exception) {
+//                AppDelegate.hideProgressDialog(this@BaseActivity)
+//            }
+//        }
     }
 }
+
+
 
 
 

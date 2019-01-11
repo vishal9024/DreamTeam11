@@ -40,20 +40,24 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var callApi = false
     override fun onClick(view: View?) {
         when (view!!.id) {
-            R.id.btn_CreateTeam -> {
+            R.id.btn_joinContest -> {
                 callApi = true
                 startActivityForResult(
                     Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
                     AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
             R.id.ll_winners -> {
-
-                callWinningBreakupApi(contest!!.contest_id)
+                if (!contest!!.total_winners.isEmpty() && contest!!.total_winners.toInt() > 0)
+                    callWinningBreakupApi(
+                        contest!!.contest_id,
+                        contest!!.breakup_detail!!,
+                        contest!!.prize_money
+                    )
 //                val bottomSheetDialogFragment = BottomSheetWinningListFragment()
 //                var bundle = Bundle()
 //                bundle.putString(Tags.contest_id, contest!!.contest_id)
@@ -175,7 +179,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         })
 
         ll_winners.setOnClickListener(this)
-        btn_CreateTeam.setOnClickListener(this)
+        btn_joinContest.setOnClickListener(this)
         txt_Join.setOnClickListener(this)
     }
 
@@ -232,28 +236,60 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         )
                     else
                         txt_TeamCount.setText("0 " + getString(R.string.teams))
+                    if (!data!!.entry_fee.isEmpty() && data!!.entry_fee.toFloat() > 0) {
+                        ll_scoreBoard.visibility = VISIBLE
+                        ll_practice.visibility = GONE
+                    } else {
+                        ll_scoreBoard.visibility = GONE
+                        ll_practice.visibility = VISIBLE
+                    }
+
                     if (!response.response!!.data!!.join_multiple_teams) {
                         cl_m.visibility = GONE
+                        cl_m1.visibility = GONE
                         if (data!!.is_joined) {
+                            cl_join.visibility = GONE
+                            cl_viewJoined.visibility = VISIBLE
                             var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
-                            if (total_teams == 0)
-                                txt_Join.text = getString(R.string.invite)
-                            else
+                            if (total_teams > 0) {
+                                ll_bottom.visibility = VISIBLE
+                                btn_InviteFriends.visibility = VISIBLE
+                                btn_joinContest.visibility = GONE
+                                view11.visibility = GONE
                                 txt_Join.text = getString(R.string.joined)
-                        } else
+                            } else {
+                                ll_bottom.visibility = GONE
+                                txt_Join.text = getString(R.string.invite)
+                            }
+                        } else {
+                            ll_bottom.visibility = GONE
+                            cl_join.visibility = VISIBLE
+                            cl_viewJoined.visibility = GONE
                             txt_Join.text = getString(R.string.join_this_contest)
+                        }
                     } else {
                         cl_m.visibility = VISIBLE
-                        if (data!!.is_joined)
+                        cl_m1.visibility = VISIBLE
+                        if (data!!.is_joined) {
+                            cl_join.visibility = GONE
+                            cl_viewJoined.visibility = VISIBLE
                             txt_Join.text = getString(R.string.join_plus)
-                        else
+                            var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
+                            if (total_teams > 0) {
+                                ll_bottom.visibility = VISIBLE
+                                btn_InviteFriends.visibility = VISIBLE
+                                btn_joinContest.visibility = VISIBLE
+                                view11.visibility = VISIBLE
+                                txt_Join.text = getString(R.string.joined)
+                            } else {
+                                ll_bottom.visibility = GONE
+                                txt_Join.text = getString(R.string.invite)
+                            }
+                        } else {
+                            cl_join.visibility = VISIBLE
+                            cl_viewJoined.visibility = GONE
                             txt_Join.text = getString(R.string.join_this_contest)
-//                            if (data!!.total_teams.is)
-                        var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
-                        if (total_teams == 0)
-                            txt_Join.text = getString(R.string.invite)
-                        else
-                            txt_Join.text = getString(R.string.joined)
+                        }
                     }
                     setAdapter(response.response!!.data!!.joined_team_list!!)
                 } else {

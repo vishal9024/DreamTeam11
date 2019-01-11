@@ -8,18 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_winninglist.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import os.com.R
-import os.com.application.FantasyApplication
 import os.com.constant.Tags
-import os.com.data.Prefs
-import os.com.networkCall.ApiClient
 import os.com.ui.winningBreakup.adapter.WinningsListAdapter
-import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.Data
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
-import os.com.utils.AppDelegate
 
 class BottomSheetWinningListFragment() : BottomSheetDialogFragment() {
 
@@ -27,7 +19,6 @@ class BottomSheetWinningListFragment() : BottomSheetDialogFragment() {
 //        val contest_id = arguments!!.getString(Tags.contest_id)
 //        callWinningBreakupApi(contest_id)
     }
-
 
 
     //Bottom Sheet Callback
@@ -55,9 +46,10 @@ class BottomSheetWinningListFragment() : BottomSheetDialogFragment() {
             behavior.state = BottomSheetBehavior.STATE_HIDDEN
         }
 
-        val data = arguments!!.getParcelable<Data>(Tags.contest_id)
-        dialog.txt_prizeMoney.text = getString(R.string.Rs) + " " + data!!.winning_price
-        setAdapter(data!!.breakup_detail!!)
+        val data = arguments!!.getParcelableArrayList<PriceBreakUp>(Tags.contest_id)
+        val winning_price = arguments!!.getString(Tags.winning_prize)
+        dialog.txt_prizeMoney.text = getString(R.string.Rs) + " " + winning_price
+        setAdapter(data!!)
         dialog.img_Close.setOnClickListener { dismiss() }
     }
 

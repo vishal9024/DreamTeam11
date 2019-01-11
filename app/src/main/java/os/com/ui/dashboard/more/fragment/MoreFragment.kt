@@ -33,7 +33,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
             R.id.tv_how_to_play -> {
                 val intent = Intent(activity, WebViewActivity::class.java)
                 intent.putExtra("PAGE_SLUG", "How to Play")
-                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ApiConstant.index)
+                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ApiConstant.how_to_play_tab)
                 startActivity(intent)
 
             }
@@ -57,7 +57,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
             R.id.tv_rules ->{
                     val intent = Intent(activity, WebViewActivity::class.java)
                     intent.putExtra("PAGE_SLUG", "Legality")
-                    intent.putExtra("URL", ApiConstant.getWebViewUrl()+ApiConstant.static)
+                    intent.putExtra("URL", ApiConstant.getWebViewUrl()+ApiConstant.legality_tab)
                     startActivity(intent)
             }
             R.id.tv_logout -> {

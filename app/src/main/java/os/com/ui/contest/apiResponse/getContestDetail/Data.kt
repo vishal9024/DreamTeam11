@@ -2,6 +2,7 @@ package os.com.ui.contest.apiResponse.getContestDetail
 
 import android.os.Parcel
 import android.os.Parcelable
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 
 class Data() : Parcelable {
     var prize_money = ""
@@ -13,6 +14,7 @@ class Data() : Parcelable {
     var is_joined =false
     var my_team_ids: ArrayList<String>? = null
     var joined_team_list: ArrayList<Team>? = null
+    var breakup_detail: ArrayList<PriceBreakUp>? = null
 
     constructor(parcel: Parcel) : this() {
         prize_money = parcel.readString()

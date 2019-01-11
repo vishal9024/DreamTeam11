@@ -87,7 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 style="@style/ButtonStyle"
-                android:text="@string/join_the_contest"
+                android:text="@string/join_contest"
                 android:background="@color/colorASPrimary"
                 android:layout_height="wrap_content"/>
     </LinearLayout>

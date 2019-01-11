@@ -39,7 +39,7 @@ class TeamsAdapter(
 //            holder.itemView.cimg_player,
 //            FantasyApplication.getInstance().options
 //        )
-        holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name+"("+joined_team_list[holder.adapterPosition].team_no+")")
+        holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name+"(T"+joined_team_list[holder.adapterPosition].team_no+")")
         holder.itemView.txt_rank.setText("-")
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))

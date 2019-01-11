@@ -77,5 +77,6 @@ object Tags {
     const val cancel = "cancel"
     const val success = "success"
     const  val fail="fail"
+    const val winning_prize="winning_prize"
 }
 

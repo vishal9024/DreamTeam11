@@ -29,6 +29,13 @@ class JoinedFixturesContestAdapter(
 //        holder.itemView.card_view.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, FixtureJoinedContestDetailActivity::class.java))
 //        }
+        if (!data!!.get(holder.adapterPosition).entry_fee.isEmpty() && data.get(holder.adapterPosition).entry_fee.toFloat()>0){
+            holder.itemView.ll_scoreBoard.visibility= View.VISIBLE
+            holder.itemView.ll_practice.visibility= View.GONE
+        }else{
+            holder.itemView.ll_scoreBoard.visibility= View.GONE
+            holder.itemView.ll_practice.visibility= View.VISIBLE
+        }
         holder.itemView.txt_TotalWinnings.text = mContext.getString(R.string.Rs) + " " +
                 data.get(holder.adapterPosition).prize_money
         holder.itemView.txt_Winners.text = data.get(holder.adapterPosition).total_winners

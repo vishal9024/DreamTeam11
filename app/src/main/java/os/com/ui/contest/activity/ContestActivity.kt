@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
@@ -27,6 +28,7 @@ import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.contest.dialogues.BottomSheetFilterFragment
+import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.invite.activity.InviteCodeActivity
@@ -51,6 +53,16 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 }
                 R.id.rl_enterContestCode -> {
                     startActivity(Intent(this, InviteCodeActivity::class.java))
+                }
+                R.id.btn_CreateTeam->{
+                    callApi=true
+                    startActivityForResult(
+                        Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, "")
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                    )
                 }
                 R.id.rl_createContest -> {
                     startActivity(Intent(this, CreateContestActivity::class.java))
@@ -231,7 +243,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                         ll_viewTeam.visibility = View.GONE
                         btn_CreateTeam.visibility = VISIBLE
                     } else {
-
                         if (response.response!!.data!!.my_contests != null) {
                             joined_contest = response.response!!.data!!.my_contests.toInt()
                             FantasyApplication.getInstance().joinedCount =
