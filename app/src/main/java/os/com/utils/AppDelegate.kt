@@ -131,9 +131,9 @@ object AppDelegate {
         var date: Date? = null
         try {
             // 2018-12-22 07:00:00
-            val utcFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
+            val utcFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault())
             // DateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:SS'Z'");
-            utcFormat.timeZone = TimeZone.getTimeZone("IST")
+//            utcFormat.timeZone = TimeZone.getTimeZone("IST")
             date = utcFormat.parse(date1)
         } catch (e: Exception) {
             e.printStackTrace()

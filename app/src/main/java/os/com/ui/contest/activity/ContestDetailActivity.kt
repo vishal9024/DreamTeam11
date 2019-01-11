@@ -29,6 +29,7 @@ import os.com.ui.contest.apiResponse.getContestDetail.Data
 import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.createTeam.activity.ChooseTeamActivity
+import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
@@ -89,22 +90,14 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                     } else {
                         callApi = true
                         startActivityForResult(
-                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
+                                IntentConstant.MATCH,
+                                match
+                            ).putExtra(
                                 IntentConstant.CONTEST_TYPE,
                                 matchType
-                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
-                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
-                            AppRequestCodes.UPDATE_ACTIVITY
+                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
                         )
-//                        startActivityForResult(
-//                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
-//                                IntentConstant.MATCH,
-//                                match
-//                            ).putExtra(
-//                                IntentConstant.CONTEST_TYPE,
-//                                matchType
-//                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
-//                        )
                     }
             }
         }
@@ -160,7 +153,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.mega_contest)
+        toolbarTitleTv.setText(R.string.contest_detail)
         setMenu(false, false, false, false)
         setData()
         if (NetworkUtils.isConnected()) {
@@ -239,31 +232,28 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         )
                     else
                         txt_TeamCount.setText("0 " + getString(R.string.teams))
-                    if (response.response!!.data!!.join_multiple_teams) {
-                        cl_m.visibility = VISIBLE
-                        if (data!!.is_joined)
-                            txt_Join.text = getString(R.string.joined)
-                        else
+                    if (!response.response!!.data!!.join_multiple_teams) {
+                        cl_m.visibility = GONE
+                        if (data!!.is_joined) {
+                            var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
+                            if (total_teams == 0)
+                                txt_Join.text = getString(R.string.invite)
+                            else
+                                txt_Join.text = getString(R.string.joined)
+                        } else
                             txt_Join.text = getString(R.string.join_this_contest)
                     } else {
-                        cl_m.visibility = GONE
+                        cl_m.visibility = VISIBLE
                         if (data!!.is_joined)
-                            txt_Join.text = getString(R.string.joined)
+                            txt_Join.text = getString(R.string.join_plus)
                         else
                             txt_Join.text = getString(R.string.join_this_contest)
-//                        if (data!!.is_joined) {
-//                            if (data!!.is_joined)
-//                                txt_Join.text = getString(R.string.join_plus)
-//                            else
-//                                txt_Join.text = getString(R.string.join_this_contest)
-////                            if (data!!.total_teams.is)
-//                            var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
-//                            if (total_teams == 0)
-//                                txt_Join.text = getString(R.string.invite)
-//                            else
-//                                txt_Join.text = getString(R.string.joined)
-//                        } else
-//                            txt_Join.text = getString(R.string.join_this_contest)
+//                            if (data!!.total_teams.is)
+                        var total_teams = data!!.total_teams.toInt() - data!!.teams_joined.toInt()
+                        if (total_teams == 0)
+                            txt_Join.text = getString(R.string.invite)
+                        else
+                            txt_Join.text = getString(R.string.joined)
                     }
                     setAdapter(response.response!!.data!!.joined_team_list!!)
                 } else {

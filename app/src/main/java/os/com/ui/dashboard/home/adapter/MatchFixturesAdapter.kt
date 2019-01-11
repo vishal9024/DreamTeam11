@@ -82,12 +82,12 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
 
             ImageLoader.getInstance().displayImage(
                 matchList[position].local_team_flag,
-                holder.itemView.cimg_Match1,
+                holder.itemView.cimg_Match2,
                 FantasyApplication.getInstance().options
             )
             ImageLoader.getInstance().displayImage(
                 matchList[position].visitor_team_flag,
-                holder.itemView.cimg_Match2,
+                holder.itemView.cimg_Match1,
                 FantasyApplication.getInstance().options
             )
         } catch (e: Exception) {

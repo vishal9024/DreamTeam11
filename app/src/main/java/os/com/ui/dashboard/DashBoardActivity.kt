@@ -39,36 +39,44 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.navigation_home -> {
-                toolbar.visibility = View.VISIBLE
-                setTitleVisibility(false, true)
-                setMenu(true, false, false, false)
-                setTitleText(getString(R.string.home))
-                setFragment(HomeFragment())
+                if (supportFragmentManager.findFragmentById(R.id.container) !is HomeFragment) {
+                    toolbar.visibility = View.VISIBLE
+                    setTitleVisibility(false, true)
+                    setMenu(true, false, false, false)
+                    setTitleText(getString(R.string.home))
+                    setFragment(HomeFragment())
+                }
                 return true
             }
 
             R.id.navigation_mycontest -> {
-                toolbar.visibility = View.VISIBLE
-                setMenu(true, false, false, false)
-                setTitleVisibility(true, false)
-                setTitleText(getString(R.string.my_contest))
-                setFragment(MyContestFragment())
+                if (supportFragmentManager.findFragmentById(R.id.container) !is MyContestFragment) {
+                    toolbar.visibility = View.VISIBLE
+                    setMenu(true, false, false, false)
+                    setTitleVisibility(true, false)
+                    setTitleText(getString(R.string.my_contest))
+                    setFragment(MyContestFragment())
+                }
                 return true
             }
 
             R.id.navigation_profile -> {
-                toolbar.visibility = View.GONE
-                setTitleVisibility(true, false)
-                setMenu(false, false, false, true)
-                setTitleText(getString(R.string.profile))
-                setFragment(ProfileFragment())
+                if (supportFragmentManager.findFragmentById(R.id.container) !is ProfileFragment) {
+                    toolbar.visibility = View.GONE
+                    setTitleVisibility(true, false)
+                    setMenu(false, false, false, true)
+                    setTitleText(getString(R.string.profile))
+                    setFragment(ProfileFragment())
+                }
                 return true
             }
             R.id.navigation_more -> {
-                toolbar.visibility = View.VISIBLE
-                setMenu(true, false, false, false)
-                setTitleText(getString(R.string.more))
-                setFragment(MoreFragment())
+                if (supportFragmentManager.findFragmentById(R.id.container) !is MoreFragment) {
+                    toolbar.visibility = View.VISIBLE
+                    setMenu(true, false, false, false)
+                    setTitleText(getString(R.string.more))
+                    setFragment(MoreFragment())
+                }
                 return true
             }
         }

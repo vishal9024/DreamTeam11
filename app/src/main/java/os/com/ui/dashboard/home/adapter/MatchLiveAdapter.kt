@@ -24,21 +24,35 @@ class MatchLiveAdapter(val mContext: Context, var matchList: List<Match>) :
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
-        holder.itemView. view2.visibility= View.GONE
-        holder.itemView. txt_contestJoined.visibility= View.GONE
+        holder.itemView.view2.visibility = View.GONE
+        holder.itemView.txt_contestJoined.visibility = View.GONE
         holder.itemView.txt_Countdown.text = mContext.getString(R.string.in_progress)
         holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.textColorPrimarylight))
         holder.itemView.card_view.setOnClickListener {
-            mContext.startActivity(Intent(mContext, ContestActivity::class.java).putExtra(IntentConstant.DATA,matchList.get(position)).putExtra(
-                IntentConstant.CONTEST_TYPE,
-                IntentConstant.LIVE))
+            mContext.startActivity(
+                Intent(mContext, ContestActivity::class.java).putExtra(
+                    IntentConstant.DATA,
+                    matchList.get(position)
+                ).putExtra(
+                    IntentConstant.CONTEST_TYPE,
+                    IntentConstant.LIVE
+                )
+            )
         }
-        holder.itemView.txt_Title.text=matchList.get(position).series_name
-        holder.itemView.txt_Team1.text=matchList.get(position).local_team_name
-        holder.itemView.txt_Team2.text=matchList.get(position).visitor_team_name
+        holder.itemView.txt_Title.text = matchList.get(position).series_name
+        holder.itemView.txt_Team1.text = matchList.get(position).local_team_name
+        holder.itemView.txt_Team2.text = matchList.get(position).visitor_team_name
 
-        ImageLoader.getInstance().displayImage(matchList[position].local_team_flag, holder.itemView.cimg_Match1, FantasyApplication.getInstance().options)
-        ImageLoader.getInstance().displayImage(matchList[position].visitor_team_flag, holder.itemView.cimg_Match2, FantasyApplication.getInstance().options)
+        ImageLoader.getInstance().displayImage(
+            matchList[position].local_team_flag,
+            holder.itemView.cimg_Match2,
+            FantasyApplication.getInstance().options
+        )
+        ImageLoader.getInstance().displayImage(
+            matchList[position].visitor_team_flag,
+            holder.itemView.cimg_Match1,
+            FantasyApplication.getInstance().options
+        )
 
     }
 

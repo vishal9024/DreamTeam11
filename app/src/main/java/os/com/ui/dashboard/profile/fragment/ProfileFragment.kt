@@ -103,9 +103,9 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             txtLogout.setOnClickListener(this)
             setData()
             if (pref!!.isLogin) {
-               if(! pref!!.userdata!!.fb_id.isEmpty() ||! pref!!.userdata!!.google_id.isEmpty()  ){
-                   txt_changePassword.visibility=GONE
-               }
+                if (!pref!!.userdata!!.fb_id.isEmpty() || !pref!!.userdata!!.google_id.isEmpty()) {
+                    txt_changePassword.visibility = GONE
+                }
                 if (NetworkUtils.isConnected()) {
                     getProfileData()
                 } else
@@ -132,7 +132,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
     private fun getProfileData() {
         try {
             GlobalScope.launch(Dispatchers.Main) {
-                AppDelegate.showProgressDialog(activity!!)
+                if (activity != null)
+                    AppDelegate.showProgressDialog(activity!!)
                 try {
                     var map = HashMap<String, String>()
                     map[Tags.user_id] = pref!!.userdata!!.user_id
@@ -170,11 +171,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     main_textview_title.setText(mData!!.team_name)
                 }
                 if (mData!!.total_cash_amount != null && mData!!.total_cash_amount != "")
-                    txtCashDeposited.setText("\u20B9 "+mData!!.total_cash_amount)
+                    txtCashDeposited.setText("\u20B9 " + mData!!.total_cash_amount)
                 if (mData!!.total_winning_amount != null && mData!!.total_winning_amount != "")
-                    txtCashWinnings.setText("\u20B9 "+mData!!.total_winning_amount)
+                    txtCashWinnings.setText("\u20B9 " + mData!!.total_winning_amount)
                 if (mData!!.cash_bonus_amount != null && mData!!.cash_bonus_amount != "")
-                    txtCashBonus.setText("\u20B9 "+mData!!.cash_bonus_amount)
+                    txtCashBonus.setText("\u20B9 " + mData!!.cash_bonus_amount)
                 if (mData!!.series_wins != null && mData!!.series_wins != "")
                     txtSeries.setText(mData!!.series_wins)
             }

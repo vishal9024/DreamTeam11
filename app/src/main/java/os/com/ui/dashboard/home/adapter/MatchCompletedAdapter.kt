@@ -38,8 +38,8 @@ class MatchCompletedAdapter(val mContext: Context, var matchList: List<Match>) :
         holder.itemView.txt_Team1.text=matchList.get(position).local_team_name
         holder.itemView.txt_Team2.text=matchList.get(position).visitor_team_name
 
-        ImageLoader.getInstance().displayImage(matchList[position].local_team_flag, holder.itemView.cimg_Match1, FantasyApplication.getInstance().options)
-        ImageLoader.getInstance().displayImage(matchList[position].visitor_team_flag, holder.itemView.cimg_Match2, FantasyApplication.getInstance().options)
+        ImageLoader.getInstance().displayImage(matchList[position].local_team_flag, holder.itemView.cimg_Match2, FantasyApplication.getInstance().options)
+        ImageLoader.getInstance().displayImage(matchList[position].visitor_team_flag, holder.itemView.cimg_Match1, FantasyApplication.getInstance().options)
 
 
     }

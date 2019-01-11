@@ -111,11 +111,11 @@
     <string name="preview">Preview</string>
     <string name="clone">Clone</string>
     <string name="capatain">CAPATAIN</string>
-    <string name="vice_caotain">VICE CAOTAIN</string>
+    <string name="vice_caotain">VICE CAPTAIN</string>
     <string name="vice_captain">VICE CAPTAIN</string>
     <string name="my_team">My Team</string>
     <string name="join_this_contest">Join This Contest</string>
-    <string name="join_plus">Join +</string>
+    <string name="join_plus">Join with new Team</string>
     <string name="joined">Joined</string>
     <string name="invite_code">Invite Code</string>
     <string name="enter_contest_name">Enter Contest Name</string>
@@ -383,4 +383,5 @@
     <string name="add_cash_to_your_account">Add cash to your account</string>
     <string name="amount_to_add">Amount to add</string>
     <string name="coming_soon">Contest for this match will open soon. Stay tuned!</string>
+    <string name="contest_detail">Contest Detail</string>
 </resources>
