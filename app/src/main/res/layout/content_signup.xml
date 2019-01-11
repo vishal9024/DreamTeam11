@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:padding="@dimen/_16sdp"
+        android:padding="@dimen/_8sdp"
         tools:showIn="@layout/activity_signup"
         android:layout_height="match_parent">
 
@@ -12,7 +13,11 @@
             android:id="@+id/ll_label"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+    android:layout_margin="@dimen/_10sdp"
+    android:paddingTop="@dimen/_10sdp"
+    android:paddingLeft="@dimen/_10sdp"
+    android:paddingBottom="@dimen/_5sdp">
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,12 +50,26 @@
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
-
-
+    <androidx.cardview.widget.CardView
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ll_label"
+            android:layout_height="wrap_content"
+            card_view:cardCornerRadius="@dimen/_6sdp"
+            card_view:cardElevation="@dimen/_3sdp"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:contentPadding="@dimen/_3sdp"
+            card_view:cardUseCompatPadding="true" >
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                android:padding="@dimen/_16sdp"
+                android:layout_height="match_parent">
     <com.google.android.material.textfield.TextInputLayout
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_label"
             android:layout_marginTop="@dimen/_15sdp"
             android:id="@+id/til_EnviteCode"
             android:layout_width="0dp"
@@ -67,6 +86,7 @@
                 android:imeOptions="actionNext"
                 android:textSize="@dimen/_13sdp"/>
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -83,14 +103,27 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/mobile_number"
                 android:inputType="number"
-                android:maxLength="10"
+                android:maxLength="13"
                 android:imeOptions="actionNext"
                 android:textSize="@dimen/_13sdp"/>
     </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_Mobile"
+                    android:id="@+id/tv_mobile_label"
+                    style="@style/TextStyleLight"
+                    android:gravity="start"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="@string/mobile_hint_label"
+                    android:layout_height="wrap_content"/>
     <com.google.android.material.textfield.TextInputLayout
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_Mobile"
+            app:layout_constraintTop_toBottomOf="@+id/tv_mobile_label"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/til_Email"
             android:layout_width="0dp"
@@ -106,15 +139,29 @@
                 android:inputType="textEmailAddress"
                 android:textSize="@dimen/_13sdp"/>
     </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_Email"
+                    android:id="@+id/tv_email_label"
+                    style="@style/TextStyleLight"
+                    android:gravity="start"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="@string/email_hint_label"
+                    android:layout_height="wrap_content"/>
     <com.google.android.material.textfield.TextInputLayout
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/til_Email"
+            app:layout_constraintTop_toBottomOf="@+id/tv_email_label"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/til_Password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:theme="@style/EditTextLabel">
+            android:theme="@style/EditTextLabel"
+            app:passwordToggleEnabled="false">
         <com.google.android.material.textfield.TextInputEditText
                 style="@style/EditTextStyle"
                 android:id="@+id/et_Password"
@@ -125,13 +172,25 @@
                 android:inputType="textPassword"
                 android:textSize="@dimen/_13sdp"/>
     </com.google.android.material.textfield.TextInputLayout>
-
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_Password"
+                    android:id="@+id/tv_password_label"
+                    style="@style/TextStyleLight"
+                    android:gravity="start"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="@string/password_hint_label"
+                    android:layout_height="wrap_content"/>
     <androidx.appcompat.widget.AppCompatButton
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/_10sdp"
             android:id="@+id/btn_Register"
-            app:layout_constraintTop_toBottomOf="@+id/til_Password"
+            app:layout_constraintTop_toBottomOf="@+id/tv_password_label"
             style="@style/ButtonStyle"
             android:text="@string/register"
             android:backgroundTint="@color/colorASPrimary"
@@ -171,6 +230,9 @@
                 app:layout_constraintStart_toStartOf="parent"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
     <!--<androidx.appcompat.widget.AppCompatTextView-->
             <!--android:id="@+id/txt_SignInWith"-->
             <!--style="@style/TextStyleNormal"-->

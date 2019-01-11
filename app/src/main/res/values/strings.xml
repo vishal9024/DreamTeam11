@@ -384,4 +384,7 @@
     <string name="amount_to_add">Amount to add</string>
     <string name="coming_soon">Contest for this match will open soon. Stay tuned!</string>
     <string name="contest_detail">Contest Detail</string>
+    <string name="mobile_hint_label">You will receive an OTP for verification</string>
+    <string name="email_hint_label">No spam, We promise!</string>
+    <string name="password_hint_label">Minimum 8 characters with 1 number/symbol</string>
 </resources>
