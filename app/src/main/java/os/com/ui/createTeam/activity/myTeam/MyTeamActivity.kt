@@ -71,7 +71,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, "")
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
         }

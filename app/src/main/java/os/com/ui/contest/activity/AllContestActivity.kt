@@ -38,7 +38,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, contests!![position].contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.JOIN), AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN), AppRequestCodes.UPDATE_ACTIVITY
                 )
             } else if (FantasyApplication.getInstance().teamCount == 1) {
                 if (NetworkUtils.isConnected()) {
@@ -119,7 +119,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, "")
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
 //            R.id.txt_Signup -> {

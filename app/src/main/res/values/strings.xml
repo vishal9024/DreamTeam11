@@ -382,4 +382,5 @@
     <string name="current_balance">Current Balance</string>
     <string name="add_cash_to_your_account">Add cash to your account</string>
     <string name="amount_to_add">Amount to add</string>
+    <string name="coming_soon">Contest for this match will open soon. Stay tuned!</string>
 </resources>

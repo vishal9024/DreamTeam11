@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.item_contest.view.*
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.AppRequestCodes.UPDATEVIEW
 import os.com.constant.AppRequestCodes.UPDATE_ACTIVITY
 import os.com.constant.IntentConstant
@@ -96,7 +97,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                             IntentConstant.CONTEST_TYPE,
                             matchType
                         ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id)
-                            .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.JOIN), UPDATE_ACTIVITY
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN), UPDATE_ACTIVITY
                     )
                 } else if (FantasyApplication.getInstance().teamCount == 1) {
                     if (NetworkUtils.isConnected()) {

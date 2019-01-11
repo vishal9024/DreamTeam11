@@ -3,7 +3,7 @@ package os.com.ui.dashboard.home.apiResponse.getMatchList
 import android.os.Parcel
 import android.os.Parcelable
 
-class Match() :Parcelable {
+class Match() : Parcelable {
     var series_id = ""
     var match_id = ""
     var series_name = ""
@@ -15,6 +15,8 @@ class Match() :Parcelable {
     var visitor_team_flag = ""
     var star_date = ""
     var star_time = ""
+    var total_contest = ""
+
     constructor(parcel: Parcel) : this() {
         series_id = parcel.readString()
         match_id = parcel.readString()
@@ -27,10 +29,7 @@ class Match() :Parcelable {
         visitor_team_flag = parcel.readString()
         star_date = parcel.readString()
         star_time = parcel.readString()
-    }
-
-    override fun toString(): String {
-        return "Match(series_id='$series_id', match_id='$match_id', series_name='$series_name', local_team_id='$local_team_id', local_team_name='$local_team_name', local_team_flag='$local_team_flag', visitor_team_id='$visitor_team_id', visitor_team_name='$visitor_team_name', visitor_team_flag='$visitor_team_flag', star_date='$star_date', star_time='$star_time')"
+        total_contest = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -45,6 +44,7 @@ class Match() :Parcelable {
         parcel.writeString(visitor_team_flag)
         parcel.writeString(star_date)
         parcel.writeString(star_time)
+        parcel.writeString(total_contest)
     }
 
     override fun describeContents(): Int {

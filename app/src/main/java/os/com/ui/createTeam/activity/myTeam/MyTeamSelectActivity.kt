@@ -62,7 +62,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE), AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE), AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
             R.id.btn_joinContest -> {
@@ -74,8 +74,6 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                         )
                     } else
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
-
             }
         }
     }

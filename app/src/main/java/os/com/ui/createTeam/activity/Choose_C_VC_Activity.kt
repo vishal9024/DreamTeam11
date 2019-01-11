@@ -156,12 +156,12 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     var team_id = ""
     var contest_id = ""
     var from = 0
-    var createOrJoin = IntentConstant.CREATE
+    var createOrJoin = AppRequestCodes.CREATE
 
     fun getData() {
 //       contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
-        createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE)
-        if (createOrJoin == IntentConstant.JOIN)
+        createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE)
+        if (createOrJoin == AppRequestCodes.JOIN)
             contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -274,7 +274,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 if (response.response!!.status!!) {
                     if (from != AppRequestCodes.EDIT )
                         FantasyApplication.getInstance().teamCount + 1
-                    if (createOrJoin == IntentConstant.JOIN) {
+                    if (createOrJoin == AppRequestCodes.JOIN) {
                         if (NetworkUtils.isConnected()) {
                             checkAmountWallet(
                                 match!!.match_id,
@@ -284,7 +284,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                                     }
                                 }
                             )
-
                             finish()
                             if(ChooseTeamActivity.chooseTeamActivity!=null){
                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
@@ -307,12 +306,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                             val intent=Intent()
                             setResult(Activity.RESULT_OK)
                             startActivity(intent)
-//                            val intent = Intent(this@Choose_C_VC_Activity, MyTeamActivity::class.java)
-//                                .putExtra(IntentConstant.MATCH, match)
-//                                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                            startActivity(intent)
-//                            finish()
                         } else {
                             if(ChooseTeamActivity.chooseTeamActivity!=null){
                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
@@ -321,13 +314,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                             val intent=Intent()
                             setResult(Activity.RESULT_OK)
                             startActivity(intent)
-
-//                            val intent = Intent(this@Choose_C_VC_Activity, ContestActivity::class.java)
-//                                .putExtra(IntentConstant.MATCH, match)
-//                                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                            startActivity(intent)
-//                            finish()
                         }
                     }
                 } else {

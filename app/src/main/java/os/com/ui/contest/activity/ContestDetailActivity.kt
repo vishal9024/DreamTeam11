@@ -45,7 +45,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE),
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),
                     AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
@@ -59,37 +59,50 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
 //                bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
             }
             R.id.txt_Join -> {
-                if (FantasyApplication.getInstance().teamCount == 0) {
-                    startActivityForResult(
-                        Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                            IntentConstant.CONTEST_TYPE,
-                            matchType
-                        ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
-                            .putExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.JOIN),
-                        AppRequestCodes.UPDATE_ACTIVITY
-                    )
-                } else if (FantasyApplication.getInstance().teamCount == 1) {
-                    if (NetworkUtils.isConnected()) {
-                        checkAmountWallet(
-                            match!!.match_id,
-                            match!!.series_id, contest!!.contest_id, "", object : OnClickDialogue {
-                                override fun onClick(tag: String, success: Boolean) {
+                if (!data!!.is_joined)
+                    if (FantasyApplication.getInstance().teamCount == 0) {
+                        startActivityForResult(
+                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                                IntentConstant.CONTEST_TYPE,
+                                matchType
+                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
+                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+                            AppRequestCodes.UPDATE_ACTIVITY
+                        )
+                    } else if (FantasyApplication.getInstance().teamCount == 1) {
+
+                        if (NetworkUtils.isConnected()) {
+                            checkAmountWallet(
+                                match!!.match_id,
+                                match!!.series_id, contest!!.contest_id, "", object : OnClickDialogue {
+                                    override fun onClick(tag: String, success: Boolean) {
 //                                    if (tag.equals(Tags.success) && success)
 //                                        finish()
-                                }
+                                    }
 
-                            }
+                                }
+                            )
+                        } else
+                            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                    } else {
+//                        startActivityForResult(
+//                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+//                                IntentConstant.CONTEST_TYPE,
+//                                matchType
+//                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id)
+//                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+//                            AppRequestCodes.UPDATE_ACTIVITY
+//                        )
+                        startActivityForResult(
+                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
+                                IntentConstant.MATCH,
+                                match
+                            ).putExtra(
+                                IntentConstant.CONTEST_TYPE,
+                                matchType
+                            ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
                         )
-                    } else
-                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-                } else {
-                    startActivityForResult(
-                        Intent(this, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                            IntentConstant.CONTEST_TYPE,
-                            matchType
-                        ).putExtra(IntentConstant.CONTEST_ID, contest!!.contest_id), AppRequestCodes.UPDATEVIEW
-                    )
-                }
+                    }
             }
         }
     }

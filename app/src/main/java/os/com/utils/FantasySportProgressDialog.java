@@ -80,6 +80,20 @@ public class FantasySportProgressDialog extends ProgressDialog {
         }
     }
 
+    public void showCancelableDialog() {
+
+        try {
+            if (msGWProgressDialog.isShowing()) {
+                msGWProgressDialog.dismiss();
+            }
+            msGWProgressDialog.show();
+            msGWProgressDialog.setCancelable(true);
+            //  titleTv.setText(title);
+        } catch (Exception ex) {
+            msGWProgressDialog = null;
+            ex.printStackTrace();
+        }
+    }
     /*
      * set title of progress dialog*/
 

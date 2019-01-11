@@ -436,11 +436,11 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
     }
 
-    var createOrJoin = IntentConstant.CREATE
+    var createOrJoin = AppRequestCodes.CREATE
     private fun getIntentData() {
         if (intent != null) {
-            createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, IntentConstant.CREATE)
-            if (createOrJoin == IntentConstant.JOIN)
+            createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE)
+            if (createOrJoin == AppRequestCodes.JOIN)
                 contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)

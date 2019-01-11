@@ -268,7 +268,6 @@ open class BaseActivity : AppCompatActivity() {
         team_id: String,
         onClickDialogue: OnClickDialogue
     ) {
-
         var dialogue = Dialog(this)
         dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogue.setContentView(R.layout.dialogue_join_contest)

@@ -54,7 +54,7 @@ class WebViewActivity : BaseActivity() {
                 //Show loader on url load
                 override fun onLoadResource(view: WebView, url: String) {
 //                    progress_bar.visibility= View.VISIBLE
-                    AppDelegate.showProgressDialog(this@WebViewActivity)
+                    AppDelegate.showProgressDialogCancelable(this@WebViewActivity)
 
                 }
 
