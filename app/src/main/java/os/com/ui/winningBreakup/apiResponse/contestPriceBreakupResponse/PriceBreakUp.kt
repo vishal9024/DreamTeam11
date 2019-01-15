@@ -21,6 +21,10 @@ class PriceBreakUp() :Parcelable {
         return 0
     }
 
+    override fun toString(): String {
+        return "PriceBreakUp(rank='$rank', price='$price')"
+    }
+
     companion object CREATOR : Parcelable.Creator<PriceBreakUp> {
         override fun createFromParcel(parcel: Parcel): PriceBreakUp {
             return PriceBreakUp(parcel)
@@ -30,4 +34,5 @@ class PriceBreakUp() :Parcelable {
             return arrayOfNulls(size)
         }
     }
+
 }

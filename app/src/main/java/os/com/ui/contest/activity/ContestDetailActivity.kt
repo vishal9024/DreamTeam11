@@ -55,7 +55,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 if (!contest!!.total_winners.isEmpty() && contest!!.total_winners.toInt() > 0)
                     callWinningBreakupApi(
                         contest!!.contest_id,
-                        contest!!.breakup_detail!!,
+                        data!!.breakup_detail!!,
                         contest!!.prize_money
                     )
 //                val bottomSheetDialogFragment = BottomSheetWinningListFragment()

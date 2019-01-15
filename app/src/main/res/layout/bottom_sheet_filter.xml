@@ -78,8 +78,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/entry_1_100"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -90,8 +91,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/entry_101_1000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -107,8 +109,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/entry_1001_5000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -119,8 +122,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/entry_5000_more"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -152,8 +156,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_1_10000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -164,8 +169,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_10001_50000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -181,8 +187,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_50001_1lac"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -193,8 +200,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_1lac_10lac"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -210,8 +218,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_10lac_25lac"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -222,8 +231,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/winning_25lac_more"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -254,8 +264,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contest_multientry"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -266,8 +277,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contest_multiwinner"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -278,8 +290,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contest_confirmed"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -310,8 +323,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_2"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -322,8 +336,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_3_10"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -339,8 +354,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_11_20"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -351,8 +367,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_21_100"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -368,8 +385,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_101_1000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -380,8 +398,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_1001_10000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"
@@ -397,8 +416,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_10001_50000"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_marginEnd="@dimen/_5sdp"
                             android:layout_width="0dp"
@@ -409,8 +429,9 @@
                             android:textColor="@color/textColorGray"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/contestsize_50000_more"
                             android:padding="@dimen/_7sdp"
-                            android:background="@drawable/button_background_black"
+                            android:background="@drawable/filter_selector"
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             style="@style/TextStyleNormal"

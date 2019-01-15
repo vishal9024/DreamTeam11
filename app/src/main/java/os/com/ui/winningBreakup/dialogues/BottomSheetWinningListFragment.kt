@@ -12,6 +12,7 @@ import os.com.R
 import os.com.constant.Tags
 import os.com.ui.winningBreakup.adapter.WinningsListAdapter
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
+import os.com.utils.AppDelegate
 
 class BottomSheetWinningListFragment() : BottomSheetDialogFragment() {
 
@@ -55,7 +56,7 @@ class BottomSheetWinningListFragment() : BottomSheetDialogFragment() {
 
     @SuppressLint("WrongConstant")
     private fun setAdapter(breakup_detail: ArrayList<PriceBreakUp>) {
-
+        AppDelegate.LogT("breakup_detail==>"+breakup_detail)
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         dialog.rv_Prize!!.layoutManager = llm

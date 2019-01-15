@@ -3,59 +3,65 @@ package os.com.ui.contest.apiResponse.getContestList
 import android.os.Parcel
 import android.os.Parcelable
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
+import java.util.*
 
-class Contest() : Parcelable {
-    var entry_fee = ""
-    var prize_money = ""
-    var total_teams = ""
-    var category_id = ""
-    var contest_id = ""
-    var total_winners = ""
-    var teams_joined = ""
-    var is_joined: Boolean = false
-    var multiple_team = false
-    var invite_code = ""
-    var breakup_detail: ArrayList<PriceBreakUp>? = null
+class Contest protected constructor(`in`: Parcel) : Parcelable {
+    internal var entry_fee = ""
+    internal var prize_money = ""
+    internal var total_teams = ""
+    internal var category_id = ""
+    internal var contest_id = ""
+    internal var total_winners = ""
+    internal var teams_joined = ""
+    internal var is_joined: Boolean? = false
+    internal var multiple_team: Boolean? = false
+    internal var invite_code = ""
+    internal var breakup_detail: ArrayList<PriceBreakUp>
 
-    constructor(parcel: Parcel) : this() {
-        entry_fee = parcel.readString()
-        prize_money = parcel.readString()
-        total_teams = parcel.readString()
-        category_id = parcel.readString()
-        contest_id = parcel.readString()
-        total_winners = parcel.readString()
-        teams_joined = parcel.readString()
-        is_joined = parcel.readByte() != 0.toByte()
-        multiple_team = parcel.readByte() != 0.toByte()
-        invite_code = parcel.readString()
+    init {
+        entry_fee = `in`.readString()
+        prize_money = `in`.readString()
+        total_teams = `in`.readString()
+        category_id = `in`.readString()
+        contest_id = `in`.readString()
+        total_winners = `in`.readString()
+        teams_joined = `in`.readString()
+        val tmpIs_joined = `in`.readByte()
+        is_joined = if (tmpIs_joined.toInt() == 0) null else tmpIs_joined.toInt() == 1
+        val tmpMultiple_team = `in`.readByte()
+        multiple_team = if (tmpMultiple_team.toInt() == 0) null else tmpMultiple_team.toInt() == 1
+        invite_code = `in`.readString()
+        breakup_detail = `in`.createTypedArrayList(PriceBreakUp)
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(entry_fee)
-        parcel.writeString(prize_money)
-        parcel.writeString(total_teams)
-        parcel.writeString(category_id)
-        parcel.writeString(contest_id)
-        parcel.writeString(total_winners)
-        parcel.writeString(teams_joined)
-        parcel.writeByte(if (is_joined) 1 else 0)
-        parcel.writeByte(if (multiple_team) 1 else 0)
-        parcel.writeString(invite_code)
+    override fun writeToParcel(dest: Parcel, flags: Int) {
+        dest.writeString(entry_fee)
+        dest.writeString(prize_money)
+        dest.writeString(total_teams)
+        dest.writeString(category_id)
+        dest.writeString(contest_id)
+        dest.writeString(total_winners)
+        dest.writeString(teams_joined)
+        dest.writeByte((if (is_joined == null) 0 else if (is_joined!!) 1 else 2).toByte())
+        dest.writeByte((if (multiple_team == null) 0 else if (multiple_team!!) 1 else 2).toByte())
+        dest.writeString(invite_code)
+        dest.writeTypedList(breakup_detail)
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Contest> {
-        override fun createFromParcel(parcel: Parcel): Contest {
-            return Contest(parcel)
-        }
+    companion object {
 
-        override fun newArray(size: Int): Array<Contest?> {
-            return arrayOfNulls(size)
+      @JvmField val CREATOR: Parcelable.Creator<Contest> = object : Parcelable.Creator<Contest> {
+            override fun createFromParcel(`in`: Parcel): Contest {
+                return Contest(`in`)
+            }
+
+            override fun newArray(size: Int): Array<Contest?> {
+                return arrayOfNulls(size)
+            }
         }
     }
-
-
 }

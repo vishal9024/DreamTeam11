@@ -31,7 +31,7 @@ class WinningsListAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
 holder.itemView.txt_TeamName.text=breakup_detail[holder.adapterPosition].rank
-        holder.itemView.txt_rank.text=mContext.getString(R.string.Rs)+" "+breakup_detail[holder.adapterPosition].rank
+        holder.itemView.txt_rank.text=mContext.getString(R.string.Rs)+" "+breakup_detail[holder.adapterPosition].price
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }

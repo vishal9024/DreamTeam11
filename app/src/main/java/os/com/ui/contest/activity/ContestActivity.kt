@@ -193,7 +193,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         val mBottomSheetBehaviorfilter = BottomSheetBehavior.from(bottom_sheet_filter)
         mBottomSheetBehaviorfilter.state = BottomSheetBehavior.STATE_COLLAPSED
         mBottomSheetBehaviorfilter.peekHeight = 0
-        //If you want to handle callback of Sheet Behavior you can use below code
         mBottomSheetBehaviorfilter.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
@@ -210,6 +209,11 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             R.id.menu_filter -> {
                 val view = findViewById<View>(R.id.menu_filter)
                 val bottomSheetDialogFragment = BottomSheetFilterFragment()
+                var bundle = Bundle()
+                bundle.putParcelableArrayList(Tags.DATA, contests)
+                bundle .putParcelable(IntentConstant.MATCH, match)
+                bundle .putInt(IntentConstant.CONTEST_TYPE, matchType)
+                bottomSheetDialogFragment.arguments = bundle
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
                 return true
             }

@@ -81,7 +81,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
 
     override fun onResume() {
         super.onResume()
-        if (os.com.application.FantasyApplication.getInstance().teamCount== 0) {
+        if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
             ll_viewTeam.visibility = View.GONE
             btn_CreateTeam.visibility = VISIBLE
             var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
@@ -93,6 +93,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
         txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
     }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_winning -> {
@@ -108,18 +109,24 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
                 sortBySelector(ENTRY_FEE)
             }
             R.id.ll_myteam -> {
-                startActivity(Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType))
+                startActivity(
+                    Intent(this, MyTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                        IntentConstant.CONTEST_TYPE,
+                        matchType
+                    )
+                )
             }
             R.id.ll_joinedContests -> {
                 startActivity(Intent(this, FixtureJoinedContestActivity::class.java))
             }
-            R.id.btn_CreateTeam->{
+            R.id.btn_CreateTeam -> {
                 startActivityForResult(
                     Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, "")
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),
+                    AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
 //            R.id.txt_Signup -> {
@@ -136,13 +143,14 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
         setContentView(R.layout.activity_all_contest)
         initViews()
     }
-var joined_contest=0
+
+    var joined_contest = 0
     var contests: MutableList<Contest>? = ArrayList()
     private fun initViews() {
         contests = intent.getParcelableArrayListExtra(IntentConstant.DATA)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-        joined_contest=intent.getIntExtra("joined_contest",0)
+        joined_contest = intent.getIntExtra("joined_contest", 0)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -198,6 +206,10 @@ var joined_contest=0
             countTimer!!.stopUpdateTimer()
     }
 
+    fun selectorWINNERS(p: Contest): Int = p.total_winners.toInt()
+    fun selectorWINNING(p: Contest): Int = p.prize_money.toInt()
+    fun selectorENTRY_FEE(p: Contest): Double = p.entry_fee.toDouble()
+    fun selectorTEAMS(p: Contest): Int = p.total_teams.toInt()
     private var WINNERS = 1
     private var WINNING = 2
     private var ENTRY_FEE = 3
@@ -210,15 +222,23 @@ var joined_contest=0
         when (value) {
             WINNERS -> {
                 txt_Winners.isSelected = true
+                contests!!.sortBy { selectorWINNERS(it) }
+                rv_Contest!!.adapter!!.notifyDataSetChanged()
             }
             WINNING -> {
                 txt_winning.isSelected = true
+                contests!!.sortBy { selectorWINNING(it) }
+                rv_Contest!!.adapter!!.notifyDataSetChanged()
             }
             ENTRY_FEE -> {
                 txt_EntryFee.isSelected = true
+                contests!!.sortBy { selectorENTRY_FEE(it) }
+                rv_Contest!!.adapter!!.notifyDataSetChanged()
             }
             TEAMS -> {
                 txt_Team.isSelected = true
+                contests!!.sortBy { selectorTEAMS(it) }
+                rv_Contest!!.adapter!!.notifyDataSetChanged()
             }
         }
 

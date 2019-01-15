@@ -105,12 +105,12 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                 ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
             )
         }
-        if (contest.get(holder.adapterPosition).is_joined)
+        if (contest.get(holder.adapterPosition).is_joined!!)
             holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
         else
             holder.itemView.txt_Join.text = mContext.getString(R.string.join)
         holder.itemView.txt_Join.setOnClickListener {
-            if (!contest.get(holder.adapterPosition).is_joined)
+            if (!contest.get(holder.adapterPosition).is_joined!!)
                 if (FantasyApplication.getInstance().teamCount == 0) {
                     mContext.callApi = true
                     mContext.startActivityForResult(

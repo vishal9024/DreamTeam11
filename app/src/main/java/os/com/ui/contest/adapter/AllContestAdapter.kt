@@ -59,7 +59,7 @@ class AllContestAdapter(
             holder.itemView.crs_Progress.setMaxStartValue(contest.get(holder.adapterPosition).teams_joined.toFloat());
             holder.itemView.crs_Progress.apply();
         }
-        if (contest.get(holder.adapterPosition).is_joined)
+        if (contest.get(holder.adapterPosition).is_joined!!)
             holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
         else
             holder.itemView.txt_Join.text = mContext.getString(R.string.join)
@@ -103,7 +103,7 @@ class AllContestAdapter(
             )
         }
         holder.itemView.txt_Join.setOnClickListener {
-            if (!contest.get(holder.adapterPosition).is_joined)
+            if (!contest.get(holder.adapterPosition).is_joined!!)
                 onClickRecyclerView.onClickItem(Tags.JoinContestDialog, holder.adapterPosition)
         }
     }
