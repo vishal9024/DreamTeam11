@@ -6,10 +6,12 @@ import android.view.View.VISIBLE
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_team_preview.*
 import os.com.AppBase.BaseActivity
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord
+import os.com.ui.createTeam.apiResponse.myTeamListResponse.Substitute
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
@@ -20,7 +22,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         when (view!!.id) {
             R.id.img_Edit -> {
                 finish()
-                if(Choose_C_VC_Activity.choose_C_VC_Activity!=null){
+                if (Choose_C_VC_Activity.choose_C_VC_Activity != null) {
                     Choose_C_VC_Activity.choose_C_VC_Activity!!.finish()
                 }
             }
@@ -39,7 +41,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
-
+    var substituteDetail: Substitute? = null
     private fun initViews() {
         isEdit = intent.getIntExtra("show", 0)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -49,6 +51,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
             var players: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord> =
                 intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
+            substituteDetail = intent.getParcelableExtra("substitute")
             setDataPreview(playerListPreview!!, players)
         } else {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -64,7 +67,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(playerList: ArrayList<Data>?) {
         for (data in playerList!!)
-            if (data.player_role.contains("Wicketkeeper", true)) {
+            if (data.player_role.contains("Wicketkeeper", true)  &&
+                !data.isSubstitute ) {
                 if (data.isCaptain) {
                     txt_wk_cvc.setText("C")
                     txt_wk_cvc.visibility = View.VISIBLE
@@ -80,7 +84,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 txt_wk1.setText(data.player_record!!.player_name)
                 txt_wk_points.setText(data.player_record!!.player_credit)
 
-            } else if (data.player_role.contains("Batsman", true)) {
+            } else if (data.player_role.contains("Batsman", true) &&
+                !data.isSubstitute) {
                 if (rl_bat1.visibility == View.GONE) {
                     if (data.isCaptain) {
                         txt_bat1_cvc.setText("C")
@@ -162,7 +167,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     txt_bat5.setText(data.player_record!!.player_name)
                     txt_bat5_points.setText(data.player_record!!.player_credit)
                 }
-            } else if (data.player_role.contains("Allrounder", true)) {
+            } else if (data.player_role.contains("Allrounder", true) &&
+                !data.isSubstitute) {
                 if (rl_ar1.visibility == View.GONE) {
                     if (data.isCaptain) {
                         txt_ar1_cvc.setText("C")
@@ -213,7 +219,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     txt_ar3_points.setText(data.player_record!!.player_credit)
                 }
 
-            } else if (data.player_role.contains("Bowler", true)) {
+            } else if (data.player_role.contains("Bowler", true) &&
+                !data.isSubstitute) {
 
                 if (rl_bowler1.visibility == View.GONE) {
                     if (data.isCaptain) {
@@ -296,6 +303,17 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     txt_bowler5.setText(data.player_record!!.player_name)
                     txt_bowler5_points.setText(data.player_record!!.player_credit)
                 }
+            } else if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
+                data.isSubstitute
+            ) {
+                ll_substitute.visibility = VISIBLE
+                ImageLoader.getInstance().displayImage(
+                    data.player_record!!.image,
+                    cimg_substitute,
+                    FantasyApplication.getInstance().options
+                )
+                txt_substitute.setText(data.player_record!!.player_name)
+                txt_substitute_points.setText(data.player_record!!.player_credit)
             }
     }
 
@@ -303,6 +321,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         playerList: os.com.ui.createTeam.apiResponse.myTeamListResponse.Data,
         players: ArrayList<PlayerRecord>
     ) {
+        if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
+            substituteDetail != null
+        ) {
+            ll_substitute.visibility = VISIBLE
+            ImageLoader.getInstance().displayImage(
+                substituteDetail!!.image,
+                cimg_substitute,
+                FantasyApplication.getInstance().options
+            )
+            txt_substitute.setText(substituteDetail!!.name)
+            txt_substitute_points.setText(substituteDetail!!.credits)
+        }
         for (data in players)
             if (data.role.contains("Wicketkeeper", true)) {
                 if (data.player_id.equals(playerList.captain_player_id)) {
@@ -537,7 +567,5 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 }
 
             }
-
-
     }
 }

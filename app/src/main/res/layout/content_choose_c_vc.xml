@@ -78,7 +78,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_width="wrap_content"
                 android:text="(C) "
-                android:textColor="@color/colorSecondary"
+                android:textColor="@color/colorChooseCaptain"
                 android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_gravity="center_vertical"
@@ -96,7 +96,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:layout_width="wrap_content"
                 android:text=" (VC) "
-                android:textColor="@color/colorSecondary"
+                android:textColor="@color/colorChooseViceCaptain"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
     <androidx.appcompat.widget.AppCompatTextView

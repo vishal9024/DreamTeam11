@@ -37,7 +37,7 @@
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="@dimen/_45sdp"
                     android:layout_height="@dimen/_50sdp">
-                <de.hdodenhof.circleimageview.CircleImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         card_view:layout_constraintStart_toStartOf="parent"
                         android:id="@+id/cimg_Match1"
                         android:layout_width="@dimen/_42sdp"
@@ -107,7 +107,7 @@
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="@dimen/_45sdp"
                     android:layout_height="@dimen/_50sdp">
-                <de.hdodenhof.circleimageview.CircleImageView
+                <androidx.appcompat.widget.AppCompatImageView
                         card_view:layout_constraintEnd_toEndOf="parent"
                         android:id="@+id/cimg_Match2"
                         android:layout_width="@dimen/_42sdp"

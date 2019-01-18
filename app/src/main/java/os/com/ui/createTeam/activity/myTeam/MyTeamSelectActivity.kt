@@ -24,6 +24,7 @@ import os.com.interfaces.SelectPlayerInterface
 import os.com.networkCall.ApiClient
 import os.com.ui.createTeam.activity.ChooseTeamActivity
 import os.com.ui.createTeam.adapter.SelectTeamAdapter
+import os.com.ui.createTeam.apiRequest.SwitchTeamRequest
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
@@ -37,11 +38,37 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
     }
 
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
-        for (i in data.indices) {
-            data[i].isSelected = false
+        when (FOR) {
+            AppRequestCodes.JOIN -> {
+                for (i in data.indices) {
+                    data[i].isSelected = false
+                }
+                data[position].isSelected = true
+                team_id = data[position].teamid
+            }
+            AppRequestCodes.JOIN_PLUS -> {
+                for (i in data.indices) {
+                    data[i].isSelected = data[i].isJOINED
+                }
+                data[position].isSelected = isSelected
+                team_id = data[position].teamid
+            }
+            AppRequestCodes.SWITCH -> {
+                val filterSelectedList: List<Data> = data.filter { it.isSelected }
+                if (isSelected) {
+                    if (filterSelectedList.size == my_team_ids.size) {
+                        AppDelegate.showToast(
+                            this,
+                            getString(R.string.you_cant_select_more_than) + " " + my_team_ids.size + " " + getString(R.string.teams)
+                        )
+                    } else {
+                        data[position].isSelected = isSelected
+                    }
+                } else
+                    data[position].isSelected = isSelected
+            }
         }
-        data[position].isSelected = true
-        team_id = data[position].teamid
+
         rv_Contest!!.adapter!!.notifyDataSetChanged()
     }
 
@@ -62,18 +89,90 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                         IntentConstant.CONTEST_TYPE,
                         matchType
                     ).putExtra(IntentConstant.CONTEST_ID, contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE), AppRequestCodes.UPDATE_ACTIVITY
+                        .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),
+                    AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
             R.id.btn_joinContest -> {
-                if (!team_id.isEmpty())
-                    if (NetworkUtils.isConnected()) {
-                        checkAmountWallet(
-                            match!!.match_id,
-                            match!!.series_id, contest_id, team_id, this
-                        )
-                    } else
-                        Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                when (FOR) {
+                    AppRequestCodes.JOIN -> {
+                        if (!team_id.isEmpty())
+                            if (NetworkUtils.isConnected()) {
+                                checkAmountWallet(
+                                    match!!.match_id,
+                                    match!!.series_id, contest_id, team_id, this
+                                )
+                            } else
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.error_network_connection),
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                    }
+                    AppRequestCodes.JOIN_PLUS -> {
+                        if (!team_id.isEmpty())
+                            if (NetworkUtils.isConnected()) {
+                                checkAmountWallet(
+                                    match!!.match_id,
+                                    match!!.series_id, contest_id, team_id, this
+                                )
+                            } else
+                                Toast.makeText(
+                                    this,
+                                    getString(R.string.error_network_connection),
+                                    Toast.LENGTH_LONG
+                                ).show()
+
+                    }
+                    AppRequestCodes.SWITCH -> {
+                        var newTeamArray: ArrayList<String> = ArrayList()
+                        for (i in data.indices) {
+                            if (data[i].isSelected)
+                                newTeamArray.add(data[i].teamid)
+                        }
+                        if (!my_team_ids.isEmpty())
+                            if (newTeamArray.size < my_team_ids.size)
+                                AppDelegate.showToast(
+                                    this,
+                                    getString(R.string.please_select_any) + " " + my_team_ids.size + " " + getString(R.string.teams)
+                                )
+                            else if (newTeamArray.size == my_team_ids.size) {
+                                var switchTeamRequest = SwitchTeamRequest()
+                                if (pref!!.isLogin)
+                                    switchTeamRequest.user_id = pref!!.userdata!!.user_id
+                                switchTeamRequest.language = FantasyApplication.getInstance().getLanguage()
+                                switchTeamRequest.match_id = match!!.match_id
+                                switchTeamRequest.contest_id = contest_id
+                                switchTeamRequest.series_id = match!!.series_id
+                                switchTeamRequest.team_id = newTeamArray
+                                callSwitchTeamApi(switchTeamRequest)
+                            }
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    private fun callSwitchTeamApi(switchTeamRequest: SwitchTeamRequest) {
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@MyTeamSelectActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .switch_team(switchTeamRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@MyTeamSelectActivity)
+                if (response.response!!.status) {
+                    finish()
+                } else {
+                    AppDelegate.showToast(this@MyTeamSelectActivity, response.response!!.message)
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@MyTeamSelectActivity)
             }
         }
     }
@@ -105,7 +204,9 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
         initViews()
     }
 
+    var FOR = AppRequestCodes.JOIN
     var contest_id = ""
+    var my_team_ids: ArrayList<String> = ArrayList()
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -121,17 +222,29 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
-            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            FOR = intent.getIntExtra(IntentConstant.FOR, AppRequestCodes.JOIN)
+            if (FOR == AppRequestCodes.JOIN_PLUS || FOR == AppRequestCodes.SWITCH)
+                my_team_ids = intent.getStringArrayListExtra(IntentConstant.TEAM_ID)
+            var localTeamName=match!!.local_team_name
+            var visitorTeamName=match!!.visitor_team_name
+            if (match!!.local_team_name.length>5)
+                localTeamName=match!!.local_team_name.substring(0,4)
+            if (match!!.visitor_team_name.length>5)
+                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+
+            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
                     countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
                 }
-            } else if (matchType == IntentConstant.FIXTURE) {
+            } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
+
+
         }
         setMenu(true, false, false, false)
         if (NetworkUtils.isConnected()) {
@@ -146,7 +259,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
 
     var data: ArrayList<Data> = ArrayList()
     private fun callGetTeamListApi() {
-        callApi=false
+        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -160,16 +273,26 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                     .getRetrofitService()
                     .player_team_list(loginRequest)
                 val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.LogT("Response=>" + response)
                 AppDelegate.hideProgressDialog(this@MyTeamSelectActivity)
                 if (response.response!!.status) {
                     data = response.response!!.data!!
                     if (!data.isEmpty()) {
-                        data.get(0).isSelected = true
-                        team_id = data[0].teamid
+                        if (FOR == AppRequestCodes.JOIN) {
+                            data.get(0).isSelected = true
+                            team_id = data[0].teamid
+                        }
                         FantasyApplication.getInstance().teamCount = data.size
                         var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
                         btn_CreateTeam.setText(getString(R.string.create_team) + " " + count)
+                    }
+                    for (i in data.indices) {
+                        for (j in my_team_ids.indices) {
+                            if (data[i].teamid == my_team_ids[j]) {
+                                data[i].isJOINED = true
+                                data[i].isSelected = true
+                            }
+                        }
                     }
                     setAdapter()
                 } else {
@@ -185,6 +308,6 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = SelectTeamAdapter(this, data, this)
+        rv_Contest!!.adapter = SelectTeamAdapter(this, data, this, FOR, my_team_ids)
     }
 }

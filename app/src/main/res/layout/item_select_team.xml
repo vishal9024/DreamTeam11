@@ -12,16 +12,25 @@
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true">
     <androidx.constraintlayout.widget.ConstraintLayout
-
+            android:id="@+id/cl"
             android:background="@drawable/button_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatRadioButton
+        <androidx.appcompat.widget.AppCompatImageView
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintBottom_toBottomOf="@+id/txt_team"
+                android:padding="@dimen/_2sdp"
+                android:id="@+id/img_check"
+                card_view:srcCompat="@drawable/checked_selector"
+                card_view:layout_constraintStart_toStartOf="parent"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"/>
+        <androidx.appcompat.widget.AppCompatTextView
                 card_view:layout_constraintTop_toTopOf="parent"
                 android:id="@+id/txt_team"
                 style="@style/TextStyleNormal"
-                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintStart_toEndOf="@id/img_check"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 android:gravity="start|center"
                 android:paddingTop="@dimen/_5sdp"
@@ -30,7 +39,7 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
                 android:drawableEnd="@mipmap/info"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:textColor="@color/textColorLightBlack"
                 android:text="Team 1"
                 android:layout_height="wrap_content"/>
@@ -282,7 +291,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <RelativeLayout android:layout_width="0dp"
-android:visibility="gone"
+                            android:visibility="gone"
                             android:id="@+id/rl_edit"
                             android:layout_weight="1" android:layout_height="match_parent">
                 <androidx.appcompat.widget.AppCompatTextView
@@ -303,7 +312,7 @@ android:visibility="gone"
             <RelativeLayout
                     android:id="@+id/rl_preview"
                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content">
+                    android:layout_height="wrap_content">
                 <androidx.appcompat.widget.AppCompatTextView
                         android:paddingStart="@dimen/_15sdp"
                         android:drawablePadding="@dimen/_10sdp"

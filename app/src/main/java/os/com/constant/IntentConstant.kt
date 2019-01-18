@@ -1,7 +1,7 @@
 package os.com.constant
 
 /**
- * Created by monikab on 2/21/2018.
+ * Created by heenas on 2/21/2018.
  */
 object IntentConstant {
     const val TEAM_ID = "TEAM_ID"
@@ -22,5 +22,7 @@ object IntentConstant {
     const val BATSMEN = "BATSMEN"
     const  val CONTEST_ID="CONTEST_ID"
     const val CREATE_OR_JOIN = "CREATE_OR_JOIN"
-
+    const val FOR = "FOR"
+    const val FROM = "FROM"
+    const val CONTEST = "CONTEST"
 }

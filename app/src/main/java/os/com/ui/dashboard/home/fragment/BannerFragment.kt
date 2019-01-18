@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.nostra13.universalimageloader.core.DisplayImageOptions
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
+import os.com.BuildConfig
 import os.com.R
 
 
@@ -21,7 +22,10 @@ class BannerFragment : Fragment() {
     //    private NewsModel newsModel;
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        rootview = inflater.inflate(R.layout.child_banner_layout, container, false)
+        if (BuildConfig.APPLICATION_ID == "os.cashfantasy")
+            rootview = inflater.inflate(R.layout.bannerlayout_cashfantasy, container, false)
+        else
+            rootview = inflater.inflate(R.layout.child_banner_layout, container, false)
         bundle = arguments
         //        newsModel = bundle.getParcelable(Tags.DATA);
         imageLoader.init(ImageLoaderConfiguration.createDefault(activity!!))

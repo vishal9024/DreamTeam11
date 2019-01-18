@@ -318,12 +318,12 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/txt_switch_team"
                                         card_view:layout_constraintTop_toTopOf="@+id/c"
                                         card_view:layout_constraintBottom_toBottomOf="@+id/joined_with"
                                         android:background="@drawable/button_rounded_background_white_green"
                                         android:layout_marginStart="@dimen/_25sdp"
                                         card_view:layout_constraintStart_toEndOf="@id/c"
-
                                         style="@style/TextStyleNormal"
                                         android:textSize="@dimen/_9sdp"
                                         android:textColor="@color/colorSecondary"

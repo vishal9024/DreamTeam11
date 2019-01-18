@@ -9,5 +9,6 @@ class CreateTeamRequest {
     var team_id:String=""
     var captain:String=""
     var vice_captain:String=""
+    var substitute:String=""
     var player_id:ArrayList<String>?=null
 }

@@ -1,5 +1,6 @@
 package os.com.ui.contest.dialogues
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.os.Parcelable
@@ -16,7 +17,19 @@ import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 
+
 class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListener {
+    var onClickFilter: OnClickFilter? = null
+
+    fun setOnFilterListener(activity: Activity) {
+        onClickFilter = activity as OnClickFilter
+    }
+
+    interface OnClickFilter {
+        fun onClick(tag: String, finalArrayList: ArrayList<Contest>)
+    }
+
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.entry_1_100 ->
@@ -68,7 +81,37 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             R.id.btn_CreateTeam -> {
                 filterEntryArray()
             }
+            R.id.txt_Reset -> {
+                resetAll()
+            }
         }
+    }
+
+    private fun resetAll() {
+        dialog.entry_1_100.isSelected = false
+        dialog.entry_101_1000.isSelected = false
+        dialog.entry_1001_5000.isSelected = false
+        dialog.entry_5000_more.isSelected = false
+
+        dialog.winning_1_10000.isSelected = false
+        dialog.winning_10001_50000.isSelected = false
+        dialog.winning_50001_1lac.isSelected = false
+        dialog.winning_1lac_10lac.isSelected = false
+        dialog.winning_10lac_25lac.isSelected = false
+        dialog.winning_25lac_more.isSelected = false
+
+        dialog.contest_confirmed.isSelected = false
+        dialog.contest_multientry.isSelected = false
+        dialog.contest_multiwinner.isSelected = false
+
+        dialog.contestsize_2.isSelected = false
+        dialog.contestsize_3_10.isSelected = false
+        dialog.contestsize_11_20.isSelected = false
+        dialog.contestsize_21_100.isSelected = false
+        dialog.contestsize_101_1000.isSelected = false
+        dialog.contestsize_1001_10000.isSelected = false
+        dialog.contestsize_10001_50000.isSelected = false
+        dialog.contestsize_50000_more.isSelected = false
     }
 
     //Bottom Sheet Callback
@@ -84,7 +127,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
     var contestList: ArrayList<Contest> = ArrayList()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
-
+    var FROM = 0
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
         //Get the content View
@@ -100,8 +143,10 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         contestList = arguments!!.getParcelableArrayList<Contest>(Tags.DATA)
         match = arguments!!.getParcelable(IntentConstant.MATCH)
         matchType = arguments!!.getInt(IntentConstant.CONTEST_TYPE)
-
+        FROM = arguments!!.getInt(IntentConstant.FROM)
         dialog.txt_close.setOnClickListener { dismiss() }
+        dialog.txt_Reset.setOnClickListener(this)
+
         dialog.entry_1_100.setOnClickListener(this)
         dialog.entry_101_1000.setOnClickListener(this)
         dialog.entry_1001_5000.setOnClickListener(this)
@@ -126,7 +171,6 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         dialog.contestsize_1001_10000.setOnClickListener(this)
         dialog.contestsize_10001_50000.setOnClickListener(this)
         dialog.contestsize_50000_more.setOnClickListener(this)
-
         dialog.btn_CreateTeam.setOnClickListener(this)
     }
 
@@ -199,8 +243,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         if (!finalArrayList.isEmpty())
             filterValue(finalArrayList)
         else
-            AppDelegate.showToast(context,"No Contest Found.")
-
+            AppDelegate.showToast(context, "No Contest Found.")
     }
 
     fun filterContestArray(contestList: ArrayList<Contest>) {
@@ -263,14 +306,25 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
 
     fun filterValue(finalArrayList: ArrayList<Contest>) {
         finalArrayList.distinct()
-        startActivity(
-            Intent(
-                context,
-                AllContestActivity::class.java
-            ).putParcelableArrayListExtra(IntentConstant.DATA, finalArrayList as java.util.ArrayList<out Parcelable>)
-                .putExtra(IntentConstant.MATCH, match)
-                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-        )
+        if (FROM == 1)
+            onClickFilter!!.onClick("DATA", finalArrayList);
+        else
+            startActivity(
+                Intent(
+                    context,
+                    AllContestActivity::class.java
+                ).putParcelableArrayListExtra(
+                    IntentConstant.CONTEST,
+                    finalArrayList as java.util.ArrayList<out Parcelable>
+                )
+                    .putParcelableArrayListExtra(
+                        IntentConstant.DATA,
+                        contestList
+                    )
+                    .putExtra(IntentConstant.MATCH, match)
+                    .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                    .putExtra(IntentConstant.FROM, 1)
+            )
         dialog.dismiss()
     }
 }

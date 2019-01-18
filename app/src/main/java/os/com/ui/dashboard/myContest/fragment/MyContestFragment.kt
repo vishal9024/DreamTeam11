@@ -7,8 +7,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import os.com.AppBase.BaseFragment
+import os.com.BuildConfig
 import os.com.R
 import os.com.ui.dashboard.myContest.adapter.MyContestCompletedAdapter
 import os.com.ui.dashboard.myContest.adapter.MyContestFixturesAdapter
@@ -37,6 +39,23 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         initViews()
     }
+    private fun initTabLayout(tabLayout: TabLayout) {
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.fixtures)), true);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.live)), false);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.results)), false);
+        tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when {
+                    tab.text == getString(R.string.fixtures) -> matchSelector(FIXTURES)
+                    tab.text == getString(R.string.live) -> matchSelector(LIVE)
+                    else -> matchSelector(RESULTS)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+    }
 
     private fun initViews() {
         viewPager_Banner.visibility= GONE
@@ -45,6 +64,22 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
+        if (pref!!.isLogin)
+            if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+//                tabLayoutfsl.visibility = GONE
+                ll_matchSelector.visibility = GONE
+                tabLayout.visibility = View.VISIBLE
+                initTabLayout(tabLayout)
+            } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+//                tabLayoutfsl.visibility = VISIBLE
+                ll_matchSelector.visibility = GONE
+                tabLayout.visibility = View.VISIBLE
+                initTabLayout(tabLayout)
+            } else {
+//                tabLayoutfsl.visibility = GONE
+                ll_matchSelector.visibility = View.VISIBLE
+                tabLayout.visibility = GONE
+            }
     }
 
 

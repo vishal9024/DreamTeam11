@@ -394,4 +394,12 @@
             condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci,
             sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus,
             tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>></string>
+    <string name="please_select_any">Please select any</string>
+    <string name="you_cant_select_more_than">You can\'t select more than</string>
+    <string name="join_Contest">Joined Contest</string>
+    <string name="join_contests_in_upcoming_matches">Join contests in upcoming matches</string>
+    <string name="FOR">FOR</string>
+    <string name="match_not_started">Match has not started yet</string>
+    <string name="select_substitute">Select Substitute</string>
+    <string name="join_new">Join+</string>
 </resources>

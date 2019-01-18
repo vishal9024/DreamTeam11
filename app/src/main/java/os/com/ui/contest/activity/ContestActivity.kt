@@ -146,14 +146,21 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             toolbarTitleTv.setText(R.string.contest)
             setMenu(false, true, true, false)
             setAdapter()
-            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            var localTeamName=match!!.local_team_name
+            var visitorTeamName=match!!.visitor_team_name
+            if (match!!.local_team_name.length>5)
+                localTeamName=match!!.local_team_name.substring(0,4)
+            if (match!!.visitor_team_name.length>5)
+                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+
+            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
                     countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
                 }
-            } else if (matchType == IntentConstant.FIXTURE) {
+            } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
@@ -213,6 +220,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 bundle.putParcelableArrayList(Tags.DATA, contests)
                 bundle .putParcelable(IntentConstant.MATCH, match)
                 bundle .putInt(IntentConstant.CONTEST_TYPE, matchType)
+                bundle .putInt(IntentConstant.FROM, 0)
                 bottomSheetDialogFragment.arguments = bundle
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
                 return true

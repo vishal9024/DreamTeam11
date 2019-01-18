@@ -6,7 +6,9 @@ import os.com.ui.contest.apiResponse.getContestDetail.GetContestDetailResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
 import os.com.ui.contest.apiResponse.joinContestResponse.JoinContestResponse
 import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.JoinContestWalletAmountResponse
+import os.com.ui.contest.apiResponse.matchScoreResponse.MatchScoreResponse
 import os.com.ui.createTeam.apiRequest.CreateTeamRequest
+import os.com.ui.createTeam.apiRequest.SwitchTeamRequest
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
@@ -99,6 +101,11 @@ interface ApiInterface {
     fun join_contest(@Body request: Map<String, String>): Deferred<JoinContestResponse>
 
     @Headers("Content-Type: application/json")
+    @POST(ApiConstant.switch_team)
+    fun switch_team(@Body request: SwitchTeamRequest): Deferred<JoinContestResponse>
+
+
+    @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_price_breakup)
     fun contest_price_breakup(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
 
@@ -109,4 +116,8 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_detail)
     fun contest_detail(@Body request: Map<String, String>): Deferred<GetContestDetailResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.match_scores)
+    fun match_scores(@Body request: Map<String, String>): Deferred<MatchScoreResponse>
 }

@@ -48,7 +48,7 @@
                         android:text="@string/filter"
                         android:layout_height="match_parent"/>
                 <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_TeamCount"
+                        android:id="@+id/txt_Reset"
                         style="@style/TextStyleMedium"
                         android:gravity="end"
                         android:layout_width="0dp"

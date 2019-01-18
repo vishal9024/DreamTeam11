@@ -17,7 +17,11 @@ import os.com.ui.createTeam.activity.PlayerDetailActivity
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 
 
-class ChooseC_VC_Adapter(val mContext: AppCompatActivity, val onClickCVC: OnClickCVC, val playerList: MutableList<Data>) :
+class ChooseC_VC_Adapter(
+    val mContext: AppCompatActivity,
+    val onClickCVC: OnClickCVC,
+    val playerList: MutableList<Data>
+) :
 
     RecyclerView.Adapter<ChooseC_VC_Adapter.AppliedCouponCodeHolder>() {
 
@@ -33,50 +37,82 @@ class ChooseC_VC_Adapter(val mContext: AppCompatActivity, val onClickCVC: OnClic
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
-        if (playerList[position].player_role.contains("Wicketkeeper", true)) {
-            if (!(mContext as Choose_C_VC_Activity).isShowingWk) {
-                (mContext as Choose_C_VC_Activity).isShowingWk=true
-                holder.itemView.txt_playerType.visibility = View.VISIBLE
-                holder.itemView.txt_playerType.text = "Wicket-Keeper"
-            }else
-                holder.itemView.txt_playerType.visibility = View.GONE
-        } else if (playerList[position].player_role.contains("Batsman", true)) {
+        if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
+            playerList[position].isSubstitute
+        ) {
+            holder.itemView.txt_playerType.visibility = View.VISIBLE
+            holder.itemView.txt_playerType.text = "Substitute"
+            holder.itemView.ll_ADD.visibility = View.GONE
+//            if (!(mContext as Choose_C_VC_Activity).isShowinSubstitute) {
+//                (mContext as Choose_C_VC_Activity).isShowinSubstitute = true
+//                holder.itemView.txt_playerType.visibility = View.VISIBLE
+//                holder.itemView.txt_playerType.text = "Substitute"
+//                holder.itemView.ll_ADD.visibility = View.GONE
+//            }
+        } else if (playerList[position].player_role.contains(
+                "Wicketkeeper",
+                true
+            ) && !playerList[position].isSubstitute
+        ) {
+            (mContext as Choose_C_VC_Activity).isShowingWk = true
+            holder.itemView.txt_playerType.visibility = View.VISIBLE
+            holder.itemView.txt_playerType.text = "Wicket-Keeper"
+//            if (!(mContext as Choose_C_VC_Activity).isShowingWk) {
+//                (mContext as Choose_C_VC_Activity).isShowingWk = true
+//                holder.itemView.txt_playerType.visibility = View.VISIBLE
+//                holder.itemView.txt_playerType.text = "Wicket-Keeper"
+//            }
+
+        } else if (playerList[position].player_role.contains("Batsman", true) && !playerList[position].isSubstitute) {
             if (!(mContext as Choose_C_VC_Activity).isShowingbat) {
                 (mContext as Choose_C_VC_Activity).isShowingbat = true
                 holder.itemView.txt_playerType.visibility = View.VISIBLE
                 holder.itemView.txt_playerType.text = "Batsmen"
-            }else
+            } else
                 holder.itemView.txt_playerType.visibility = View.GONE
-        } else if (playerList[position].player_role.contains("Allrounder", true)) {
+        } else if (playerList[position].player_role.contains(
+                "Allrounder",
+                true
+            ) && !playerList[position].isSubstitute
+        ) {
             if (!(mContext as Choose_C_VC_Activity).isShowingAr) {
                 (mContext as Choose_C_VC_Activity).isShowingAr = true
                 holder.itemView.txt_playerType.visibility = View.VISIBLE
                 holder.itemView.txt_playerType.text = "All-Rounder"
-            }else
+            } else
                 holder.itemView.txt_playerType.visibility = View.GONE
-        } else if (playerList[position].player_role.contains("Bowler", true)) {
+        } else if (playerList[position].player_role.contains("Bowler", true) && !playerList[position].isSubstitute) {
             if (!(mContext as Choose_C_VC_Activity).isShowingbowl) {
                 (mContext as Choose_C_VC_Activity).isShowingbowl = true
                 holder.itemView.txt_playerType.visibility = View.VISIBLE
                 holder.itemView.txt_playerType.text = "Bowler"
-            }else
+            } else
                 holder.itemView.txt_playerType.visibility = View.GONE
-        } else {
-            holder.itemView.txt_playerType.visibility = View.GONE
         }
-        if (playerList!![position].player_record != null) {
+
+
+        if (playerList[position].player_record != null) {
             ImageLoader.getInstance().displayImage(
-                playerList!![position].player_record!!.image,
+                playerList[position].player_record!!.image,
                 holder.itemView.cimg_player,
                 FantasyApplication.getInstance().options
             )
-
-            holder.itemView.txt_PlayerName.text = playerList!![position].player_record!!.player_name
-            holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
+            holder.itemView.txt_PlayerName.text = playerList[position].player_record!!.player_name
+            holder.itemView.txt_Country.text = playerList[position].player_record!!.country
 //        holder.itemView. txt_Avg.text=playerList!![position].player_record!!
         }
         holder.itemView.img_captain.isSelected = playerList[position].isCaptain
         holder.itemView.img_vc.isSelected = playerList[position].isViceCaptain
+        if (playerList[position].isSubstitute) {
+            holder.itemView.ll_ADD.visibility = View.GONE
+        }
+        if (playerList[position].isCaptain)
+            holder.itemView.img_c_vc.setImageResource(R.mipmap.v_points)
+        if (playerList[position].isViceCaptain)
+            holder.itemView.img_c_vc.setImageResource(R.mipmap.vc_points)
+        if (!playerList[position].isCaptain && !playerList[position].isViceCaptain)
+            holder.itemView.img_c_vc.setImageResource(0)
+
         holder.itemView.img_captain.setOnClickListener {
             onClickCVC.onClick("c", holder.adapterPosition)
         }
@@ -84,7 +120,6 @@ class ChooseC_VC_Adapter(val mContext: AppCompatActivity, val onClickCVC: OnClic
             onClickCVC.onClick("vc", holder.adapterPosition)
         }
     }
-
 
     override fun getItemCount(): Int {
         return playerList.size

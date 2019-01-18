@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
-               android:background="@mipmap/bgone"
                 android:fitsSystemWindows="true"
+                android:background="#13641c"
+
                 android:layout_height="wrap_content">
+    <ImageView
+            android:alpha="0.5"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/bgone" android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     <!--android:background="#14851F"-->
+
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                android:id="@+id/img_Edit"
                android:layout_toStartOf="@+id/img_Close"
@@ -27,10 +34,25 @@
                android:padding="@dimen/_7sdp"
                android:layout_alignParentEnd="true"
     />
+    <androidx.appcompat.widget.AppCompatTextView
+            android:layout_below="@+id/img_Close"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_Appname"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:singleLine="true"
+            android:ellipsize="end"
+            style="@style/TextStyleMedium"
+            android:fontFamily="@font/kirstybold"
+            android:textColor="@color/greenlightText"
+            android:textSize="@dimen/_21sdp"
+            android:padding="@dimen/_5sdp"/>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_marginTop="@dimen/_60sdp"
-            android:layout_marginBottom="@dimen/_34sdp"
-            android:layout_below="@+id/img_Close"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_below="@+id/txt_Appname"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:gravity="center_horizontal"
@@ -53,7 +75,7 @@
             <RelativeLayout
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             >
@@ -226,8 +248,8 @@
                         android:layout_height="wrap_content"
                 >
                     <RelativeLayout
-                             android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content">
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
                         <TextView
                                 android:visibility="gone"
 
@@ -534,7 +556,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"/>
             <LinearLayout
-                    android:layout_marginTop="@dimen/_10sdp" android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_5sdp" android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
                 <RelativeLayout
@@ -803,7 +825,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"/>
             <LinearLayout
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
@@ -1183,6 +1205,7 @@
         </LinearLayout>
         <LinearLayout
                 android:visibility="gone"
+                android:id="@+id/ll_substitute"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -1198,16 +1221,14 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11sdp"/>
             <LinearLayout
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
                     android:layout_height="wrap_content">
                 <RelativeLayout
-                        android:visibility="visible"
                         android:id="@+id/rl_substitute"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/_10sdp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
@@ -1227,6 +1248,7 @@
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/_8sdp"/>
                         <androidx.appcompat.widget.AppCompatImageView
+                                android:visibility="gone"
                                 android:id="@+id/img_delete_substitute"
                                 android:layout_toEndOf="@+id/cimg_substitute"
                                 android:src="@mipmap/delete"
@@ -1268,7 +1290,7 @@
                                 android:layout_below="@+id/txt_substitute"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/txt_bowler1_substitute"
+                                android:id="@+id/txt_substitute_points"
                                 android:text="160 points"
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"

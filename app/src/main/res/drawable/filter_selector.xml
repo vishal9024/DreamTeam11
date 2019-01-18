@@ -4,6 +4,6 @@
         <!--<bitmap android:src="@mipmap/arselect"-->
                 <!--android:tint="@color/colorPrimary" />-->
     <!--</item>-->
-    <item android:drawable="@drawable/button_rounded_background_white_green" android:state_selected="true" />
+    <item android:drawable="@drawable/button_background_filter_selected" android:state_selected="true" />
     <item android:drawable="@drawable/button_background_black" />
 </selector>

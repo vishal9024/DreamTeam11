@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
@@ -40,6 +41,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     public var isShowingbat = false
     public var isShowingbowl = false
     public var isShowingAr = false
+    public var isShowinSubstitute = false
     var bowlerList: MutableList<Data>? = ArrayList()
     var arList: MutableList<Data>? = ArrayList()
     var wkList: MutableList<Data>? = ArrayList()
@@ -60,7 +62,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             }
             playerList[position].isCaptain = true
             captain = playerList[position].player_id
-            isShowingWk = false
             isShowingbat = false
             isShowingbowl = false
             isShowingAr = false
@@ -75,7 +76,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             }
             playerList[position].isViceCaptain = true
             vicecaptain = playerList[position].player_id
-            isShowingWk = false
             isShowingbat = false
             isShowingbowl = false
             isShowingAr = false
@@ -139,7 +139,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         toolbarTitleTv.setText(getString(R.string.choose_c_vc_title))
         setMenu(false, false, false, false)
         getData()
-        setAdapter()
+
         btn_CreateTeam.setOnClickListener(this)
         btn_preview.setOnClickListener(this)
     }
@@ -157,16 +157,23 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     var contest_id = ""
     var from = 0
     var createOrJoin = AppRequestCodes.CREATE
-
+    var substitute_id = ""
     fun getData() {
-//       contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+//      contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE)
         if (createOrJoin == AppRequestCodes.JOIN)
             contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-        txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+        var localTeamName = match!!.local_team_name
+        var visitorTeamName = match!!.visitor_team_name
+        if (match!!.local_team_name.length > 5)
+            localTeamName = match!!.local_team_name.substring(0, 4)
+        if (match!!.visitor_team_name.length > 5)
+            visitorTeamName = match!!.visitor_team_name.substring(0, 4)
+
+        txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
         from = intent.getIntExtra(IntentConstant.ISEDIT, 0)
         if (from == AppRequestCodes.EDIT) {
             team_id = intent.getStringExtra(IntentConstant.TEAM_ID)
@@ -181,7 +188,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 val dateTime = strt_date.get(0) + " " + match!!.star_time
                 countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
             }
-        } else if (matchType == IntentConstant.FIXTURE) {
+        } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))
         } else
             txt_CountDownTimer.setText(getString(R.string.in_progress))
@@ -203,6 +210,13 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 if (i.isViceCaptain)
                     vicecaptain = i.player_id
             }
+            if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                if (playerList.isEmpty())
+                    if (i.isSubstitute) {
+                        substitute_id = i.player_id
+                        this.playerList.add(i)
+                    }
+            }
         }
         for (i in arList) {
             if (i.isSelected) {
@@ -212,6 +226,14 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 if (i.isViceCaptain)
                     vicecaptain = i.player_id
             }
+            if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                if (playerList.isEmpty())
+                    if (i.isSubstitute) {
+                        substitute_id = i.player_id
+                        this.playerList.add(i)
+                    }
+            }
+
         }
         for (i in bowlerList) {
             if (i.isSelected) {
@@ -220,6 +242,13 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     captain = i.player_id
                 if (i.isViceCaptain)
                     vicecaptain = i.player_id
+            }
+            if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                if (playerList.isEmpty())
+                    if (i.isSubstitute) {
+                        substitute_id = i.player_id
+                        this.playerList.add(i)
+                    }
             }
         }
         for (i in batsmenList) {
@@ -230,11 +259,20 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 if (i.isViceCaptain)
                     vicecaptain = i.player_id
             }
+            if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                if (playerList.isEmpty())
+                    if (i.isSubstitute) {
+                        substitute_id = i.player_id
+                        this.playerList.add(i)
+                    }
+            }
         }
         playerList.addAll(this.wkList!!)
         playerList.addAll(this.bowlerList!!)
         playerList.addAll(this.arList!!)
         playerList.addAll(this.batsmenList!!)
+        playerList.distinct()
+        setAdapter()
     }
 
     var playerList: MutableList<Data> = ArrayList()
@@ -245,7 +283,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Players!!.layoutManager = llm
-        adapter = ChooseC_VC_Adapter(this, this, playerList)
+        adapter = ChooseC_VC_Adapter(this, this, playerList.distinct() as MutableList<Data>)
         rv_Players!!.adapter = adapter
     }
 
@@ -261,6 +299,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         creteTeamRequest.captain = captain
         creteTeamRequest.vice_captain = vicecaptain
         creteTeamRequest.player_id = player_id
+        creteTeamRequest.substitute = substitute_id
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@Choose_C_VC_Activity)
             try {
@@ -283,12 +322,11 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                                         if (success) {
                                             val intent = Intent()
                                             setResult(Activity.RESULT_OK)
-                                            startActivity(intent)
                                             finish()
                                             if (ChooseTeamActivity.chooseTeamActivity != null) {
                                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
                                             }
-                                        }else{
+                                        } else {
                                             finish()
                                             if (ChooseTeamActivity.chooseTeamActivity != null) {
                                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
@@ -309,7 +347,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                             }
                             val intent = Intent()
                             setResult(Activity.RESULT_OK)
-                            startActivity(intent)
                         }
 
                     } else {
@@ -320,7 +357,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                             }
                             val intent = Intent()
                             setResult(Activity.RESULT_OK)
-                            startActivity(intent)
                         } else {
                             if (ChooseTeamActivity.chooseTeamActivity != null) {
                                 ChooseTeamActivity.chooseTeamActivity!!.finish()
@@ -328,7 +364,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                             finish()
                             val intent = Intent()
                             setResult(Activity.RESULT_OK)
-                            startActivity(intent)
                         }
                     }
                 } else {

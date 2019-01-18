@@ -22,7 +22,7 @@ class Data() : Parcelable {
     }
 
     override fun toString(): String {
-        return "Data(upcoming_match=$upcoming_match, live_match=$live_match, completed_match=$completed_match)"
+        return "JoinedContestData(upcoming_match=$upcoming_match, live_match=$live_match, completed_match=$completed_match)"
     }
 
     companion object CREATOR : Parcelable.Creator<Data> {

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_select_team.view.*
 import os.com.R
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.SelectPlayerInterface
@@ -18,7 +19,9 @@ import os.com.ui.createTeam.apiResponse.myTeamListResponse.Data
 class SelectTeamAdapter(
     val mContext: MyTeamSelectActivity,
     var data: ArrayList<Data>,
-    var onClickRecyclerView: SelectPlayerInterface
+    var onClickRecyclerView: SelectPlayerInterface,
+    val FOR: Int,
+    val my_team_ids: ArrayList<String>
 ) :
     RecyclerView.Adapter<SelectTeamAdapter.AppliedCouponCodeHolder>() {
 
@@ -38,27 +41,42 @@ class SelectTeamAdapter(
                     IntentConstant.DATA,
                     data[holder.adapterPosition]
                 ).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER, data[holder.adapterPosition].player_details)
+                    .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
             )
         }
-        holder.itemView.card_view.setOnClickListener {
-            if (data[position].isSelected)
-                onClickRecyclerView.onClickItem(0, holder.adapterPosition, false)
+        if (FOR == AppRequestCodes.JOIN_PLUS)
+            if (data[position].isJOINED)
+                holder.itemView.card_view.alpha=0.7f
             else
-                onClickRecyclerView.onClickItem(0, holder.adapterPosition, true)
+                holder.itemView.card_view.alpha=1f
+        holder.itemView.card_view.setOnClickListener {
+            if (FOR == AppRequestCodes.JOIN_PLUS) {
+                if (!data[position].isJOINED) {
+                    if (data[position].isSelected)
+                        onClickRecyclerView.onClickItem(0, holder.adapterPosition, false)
+                    else
+                        onClickRecyclerView.onClickItem(0, holder.adapterPosition, true)
+                }
+            } else {
+                if (data[position].isSelected)
+                    onClickRecyclerView.onClickItem(0, holder.adapterPosition, false)
+                else
+                    onClickRecyclerView.onClickItem(0, holder.adapterPosition, true)
+            }
         }
         holder.itemView.rl_edit.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.edit, holder.adapterPosition)
         }
-        holder.itemView.txt_team.isClickable=false
+        holder.itemView.txt_team.isClickable = false
         if (data[position].isSelected) {
-            holder.itemView.txt_team.isChecked = true
+            holder.itemView.img_check.isSelected = true
             holder.itemView.card_view.setCardBackgroundColor(mContext.resources.getColor(R.color.colorSecondary))
         } else {
-            holder.itemView.txt_team.isChecked = false
+            holder.itemView.img_check.isSelected = false
             holder.itemView.card_view.setCardBackgroundColor(mContext.resources.getColor(R.color.white))
         }
 
-        var count=position+1
+        var count = position + 1
         holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
         for (player in data[holder.adapterPosition].player_details!!) {
             if (player.player_id.equals(data[holder.adapterPosition].captain_player_id))

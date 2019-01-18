@@ -116,4 +116,6 @@ object ApiConstant {
     const val contest_price_breakup = "contest-price-breakup"
     const val logout = "logout"
     const val contest_detail = "contest-detail"
+    const val switch_team="switch-team"
+    const val match_scores="match-scores"
 }

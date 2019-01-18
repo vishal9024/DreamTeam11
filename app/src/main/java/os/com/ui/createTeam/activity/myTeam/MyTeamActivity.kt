@@ -40,6 +40,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                     IntentConstant.SELECT_PLAYER,
                     data[position].player_details
                 ).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                    .putExtra("substitute",data[position].substitute_detail)
                     .putExtra(IntentConstant.ISEDIT, AppRequestCodes.CLONE),
                 AppRequestCodes.CLONE
             )
@@ -52,7 +53,8 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 ).putParcelableArrayListExtra(
                     IntentConstant.SELECT_PLAYER,
                     data[position].player_details
-                ).putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                ).putExtra("substitute",data[position].substitute_detail)
+                    .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
                     .putExtra(IntentConstant.ISEDIT, AppRequestCodes.EDIT),
                 AppRequestCodes.EDIT
             )
@@ -115,14 +117,21 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-            txt_matchVS.text = match!!.local_team_name + " " + getString(R.string.vs) + " " + match!!.visitor_team_name
+            var localTeamName=match!!.local_team_name
+            var visitorTeamName=match!!.visitor_team_name
+            if (match!!.local_team_name.length>5)
+                localTeamName=match!!.local_team_name.substring(0,4)
+            if (match!!.visitor_team_name.length>5)
+                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+
+            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
                     countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
                 }
-            } else if (matchType == IntentConstant.FIXTURE) {
+            } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))

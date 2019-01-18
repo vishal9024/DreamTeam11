@@ -1,5 +1,6 @@
 package os.com.ui.joinedContest.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,34 +8,38 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_joined_contest.view.*
 import os.com.R
-import os.com.ui.contest.apiResponse.getContestList.ContestCategory
+import os.com.constant.AppRequestCodes
+import os.com.constant.IntentConstant
+import os.com.ui.contest.activity.ContestDetailActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
-import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.Data
+import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedContestData
 
 class JoinedFixturesContestAdapter(
     val mContext: AppCompatActivity,
-    var contestList: ArrayList<ContestCategory>,
     var match: Match?,
     var matchType: Int,
-    var data: ArrayList<Data>
+    var data: ArrayList<JoinedContestData>
 ) :
     RecyclerView.Adapter<JoinedFixturesContestAdapter.AppliedCouponCodeHolder>() {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_joined_contest, parent, false)
         return AppliedCouponCodeHolder(view)
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
-//        holder.itemView.card_view.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, FixtureJoinedContestDetailActivity::class.java))
-//        }
-        if (!data!!.get(holder.adapterPosition).entry_fee.isEmpty() && data.get(holder.adapterPosition).entry_fee.toFloat()>0){
-            holder.itemView.ll_scoreBoard.visibility= View.VISIBLE
-            holder.itemView.ll_practice.visibility= View.GONE
-        }else{
-            holder.itemView.ll_scoreBoard.visibility= View.GONE
-            holder.itemView.ll_practice.visibility= View.VISIBLE
+        holder.itemView.card_view.setOnClickListener {
+            mContext.startActivity(
+                Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putExtra(IntentConstant.FROM,AppRequestCodes.JOINED)
+            )
+        }
+        if (!data!!.get(holder.adapterPosition).entry_fee.isEmpty() && data.get(holder.adapterPosition).entry_fee.toFloat() > 0) {
+            holder.itemView.ll_scoreBoard.visibility = View.VISIBLE
+            holder.itemView.ll_practice.visibility = View.GONE
+        } else {
+            holder.itemView.ll_scoreBoard.visibility = View.GONE
+            holder.itemView.ll_practice.visibility = View.VISIBLE
         }
         holder.itemView.txt_TotalWinnings.text = mContext.getString(R.string.Rs) + " " +
                 data.get(holder.adapterPosition).prize_money

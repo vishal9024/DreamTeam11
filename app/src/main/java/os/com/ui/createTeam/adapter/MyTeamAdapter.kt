@@ -31,8 +31,9 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.rl_preview.setOnClickListener {
-            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details))
-//                        mContext.startActivity(Intent(mContext, ::class.java))
+            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details)
+                .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
+            )
         }
         holder.itemView.rl_edit.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.edit,holder.adapterPosition)

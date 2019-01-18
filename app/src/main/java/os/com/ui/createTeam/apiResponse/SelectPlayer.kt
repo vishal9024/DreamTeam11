@@ -26,7 +26,8 @@ class SelectPlayer() : Parcelable {
 
     var total_credit = 0.0
     var substitute = false
-
+    var substitute_id = ""
+    var substitute_type = 1
     constructor(parcel: Parcel) : this() {
         wk_count = parcel.readInt()
         wk_selected = parcel.readInt()

@@ -16,6 +16,7 @@ class Data() : Parcelable {
     var t20: String = ""
     var test: String = ""
     var player_record: PlayerRecord? = null
+    var isSubstitute = false
     var isSelected = false
     var isCaptain = false
     var isViceCaptain = false
@@ -33,6 +34,7 @@ class Data() : Parcelable {
         t20 = parcel.readString()
         test = parcel.readString()
         player_record = parcel.readParcelable(PlayerRecord::class.java.classLoader)
+        isSubstitute = parcel.readByte() != 0.toByte()
         isSelected = parcel.readByte() != 0.toByte()
         isCaptain = parcel.readByte() != 0.toByte()
         isViceCaptain = parcel.readByte() != 0.toByte()
@@ -51,6 +53,7 @@ class Data() : Parcelable {
         parcel.writeString(t20)
         parcel.writeString(test)
         parcel.writeParcelable(player_record, flags)
+        parcel.writeByte(if (isSubstitute) 1 else 0)
         parcel.writeByte(if (isSelected) 1 else 0)
         parcel.writeByte(if (isCaptain) 1 else 0)
         parcel.writeByte(if (isViceCaptain) 1 else 0)
@@ -58,6 +61,10 @@ class Data() : Parcelable {
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun toString(): String {
+        return "Data(id='$id', series_id='$series_id', series_name='$series_name', team_id='$team_id', team_name='$team_name', player_id='$player_id', player_name='$player_name', player_role='$player_role', odi='$odi', t20='$t20', test='$test', player_record=$player_record, isSubstitute=$isSubstitute, isSelected=$isSelected, isCaptain=$isCaptain, isViceCaptain=$isViceCaptain)"
     }
 
     companion object CREATOR : Parcelable.Creator<Data> {

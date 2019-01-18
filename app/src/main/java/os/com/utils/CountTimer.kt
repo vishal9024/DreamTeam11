@@ -12,7 +12,6 @@ class CountTimer {
     fun updateTimeRemaining(currentTime: Long) {
         try {
                 val timeDiff = AppDelegate.getTimeStampFromDate(dateTime!!)!! - currentTime
-                AppDelegate.LogT("timeDiff=" + timeDiff)
                 if (timeDiff > 0) {
                     val seconds = (timeDiff / 1000).toInt() % 60
                     val minutes = (timeDiff / (1000 * 60) % 60).toInt()
@@ -27,9 +26,8 @@ class CountTimer {
                         textView!!.setText(hours.toString() + "h " + minutes + "m " + seconds + "s")
                     }
                 } else {
-                    textView!!.setText("Expired!!")
+                    textView!!.text = "Expired!!"
                 }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

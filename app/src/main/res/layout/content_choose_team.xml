@@ -242,13 +242,14 @@
                 android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_substitute"
-                android:visibility="gone"
+                android:visibility="visible"
                 style="@style/TextStyleMedium"
                 android:paddingStart="@dimen/_11sdp"
                 android:paddingEnd="@dimen/_11sdp"
                 android:paddingBottom="@dimen/_5sdp"
                 android:paddingTop="@dimen/_5sdp"
-                android:background="@drawable/button_rounded_background"
+                android:enabled="false"
+                android:background="@drawable/substitute_selector"
                 android:textSize="@dimen/_9sdp"
                 android:layout_gravity="center_vertical"
                 android:layout_width="wrap_content"

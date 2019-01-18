@@ -105,12 +105,38 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                 ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
             )
         }
-        if (contest.get(holder.adapterPosition).is_joined!!)
-            holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
-        else
-            holder.itemView.txt_Join.text = mContext.getString(R.string.join)
+//        if (contest.get(holder.adapterPosition).is_joined!!)
+//            holder.itemView.txt_Join.text = mContext.getString(R.string.joined)
+//        else
+//            holder.itemView.txt_Join.text = mContext.getString(R.string.join)
+        if (!contest.get(holder.adapterPosition).multiple_team!!) {
+            if (contest.get(holder.adapterPosition).is_joined!!) {
+                val total_teams = contest.get(holder.adapterPosition).total_teams.toInt() - contest.get(holder.adapterPosition).teams_joined.toInt()
+                if (total_teams> 0) {
+                    holder.itemView. txt_Join.text =mContext. getString(R.string.invite)
+                } else {
+                    holder.itemView.txt_Join.text =mContext.  getString(R.string.joined)
+                }
+            } else {
+                holder.itemView. txt_Join.text = mContext. getString(R.string.join)
+            }
+        } else {
+            if (contest.get(holder.adapterPosition).is_joined!!) {
+                holder.itemView. txt_Join.text = mContext. getString(R.string.join_plus)
+                val total_teams = contest.get(holder.adapterPosition).total_teams.toInt() - contest.get(holder.adapterPosition).teams_joined.toInt()
+                if (total_teams > 0) {
+                    holder.itemView.txt_Join.text =mContext.  getString(R.string.join_new)
+                } else {
+                    holder.itemView. txt_Join.text =mContext.  getString(R.string.joined)
+                }
+            } else {
+                holder.itemView. txt_Join.text =mContext.  getString(R.string.join)
+            }
+        }
+
+
         holder.itemView.txt_Join.setOnClickListener {
-            if (!contest.get(holder.adapterPosition).is_joined!!)
+            if (!contest.get(holder.adapterPosition).is_joined!!) {
                 if (FantasyApplication.getInstance().teamCount == 0) {
                     mContext.callApi = true
                     mContext.startActivityForResult(
@@ -147,9 +173,30 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                         ).putExtra(
                             IntentConstant.CONTEST_TYPE,
                             matchType
-                        ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id), UPDATEVIEW
+                        ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id).putExtra(
+                            IntentConstant.FOR,
+                            AppRequestCodes.JOIN
+                        ), UPDATEVIEW
                     )
                 }
+            }else{
+                if (holder.itemView.txt_Join.text.toString().equals(mContext.getString(R.string.join_new))){
+                    mContext.callApi = true
+                    mContext.startActivityForResult(
+
+                        Intent(mContext, MyTeamSelectActivity::class.java).putExtra(
+                            IntentConstant.MATCH,
+                            match
+                        ).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id).putExtra(
+                            IntentConstant.FOR,
+                            AppRequestCodes.JOIN
+                        ), UPDATEVIEW
+                    )
+                }
+            }
 //            (mContext as BaseActivity).showJoinContestDialogue(mContext,match,matchType)
         }
     }

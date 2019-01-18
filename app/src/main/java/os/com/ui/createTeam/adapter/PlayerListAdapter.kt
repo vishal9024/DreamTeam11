@@ -62,11 +62,23 @@ class PlayerListAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
         if (playerList!![position].player_record != null) {
-            ImageLoader.getInstance().displayImage(
-                playerList!![position].player_record!!.image,
-                holder.itemView.cimg_player,
-                FantasyApplication.getInstance().options
-            )
+            if (BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                holder.itemView.img_player.visibility = View.VISIBLE
+                holder.itemView.cimg_player.visibility = View.GONE
+                ImageLoader.getInstance().displayImage(
+                    playerList!![position].player_record!!.image,
+                    holder.itemView.img_player,
+                    FantasyApplication.getInstance().options
+                )
+            } else {
+                holder.itemView.img_player.visibility = View.GONE
+                holder.itemView.cimg_player.visibility = View.VISIBLE
+                ImageLoader.getInstance().displayImage(
+                    playerList!![position].player_record!!.image,
+                    holder.itemView.cimg_player,
+                    FantasyApplication.getInstance().options
+                )
+            }
 
             holder.itemView.txt_PlayerName.text = playerList!![position].player_record!!.player_name
             holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
@@ -74,7 +86,13 @@ class PlayerListAdapter(
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
         holder.itemView.img_add.isSelected = playerList!![position]!!.isSelected
-
+        if (BuildConfig.APPLICATION_ID == "os.cashfantasy")
+            holder.itemView.ll_main.setOnClickListener {
+                if (playerList!![position].isSelected)
+                    onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)
+                else
+                    onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
+            }
         holder.itemView.img_add.setOnClickListener {
             if (playerList!![position].isSelected)
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)

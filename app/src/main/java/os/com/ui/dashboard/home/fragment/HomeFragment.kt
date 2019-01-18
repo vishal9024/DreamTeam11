@@ -12,11 +12,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseFragment
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
@@ -30,6 +32,7 @@ import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by heenas on 3/5/2018.
@@ -73,6 +76,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 
     private fun initViews() {
         if (!pref!!.isLogin) {
+//            tabLayoutfsl.visibility = GONE
+            tabLayout.visibility = GONE
             txt_toolbartitle.visibility = View.VISIBLE
             ll_matchSelector.visibility = View.GONE
             txt_title.visibility = View.GONE
@@ -81,7 +86,24 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             cl_main.visibility = View.VISIBLE
             txt_title.visibility = View.VISIBLE
         }
-        app_bar.addOnOffsetChangedListener(this);
+        app_bar.addOnOffsetChangedListener(this)
+        if (pref!!.isLogin)
+            if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+//                tabLayoutfsl.visibility = GONE
+                ll_matchSelector.visibility = GONE
+                tabLayout.visibility = VISIBLE
+                initTabLayout(tabLayout)
+            } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+//                tabLayoutfsl.visibility = VISIBLE
+                ll_matchSelector.visibility = GONE
+                tabLayout.visibility = VISIBLE
+                initTabLayout(tabLayout)
+            } else {
+//                tabLayoutfsl.visibility = GONE
+                ll_matchSelector.visibility = VISIBLE
+                tabLayout.visibility = GONE
+            }
+
         matchSelector(FIXTURES)
         setFixturesAdapter()
         setCompletedAdapter()
@@ -91,7 +113,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         } else
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
-
         Handler().postDelayed(Runnable {
             setBanner()
         }, 100)
@@ -99,6 +120,24 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
 
+    }
+
+    private fun initTabLayout(tabLayout: TabLayout) {
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.fixtures)), true);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.live)), false);
+        tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.results)), false);
+        tabLayout.setOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                when {
+                    tab.text == getString(R.string.fixtures) -> matchSelector(FIXTURES)
+                    tab.text == getString(R.string.live) -> matchSelector(LIVE)
+                    else -> matchSelector(RESULTS)
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
     private val bannerFragment: ArrayList<Fragment> = ArrayList()
@@ -122,8 +161,17 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
         viewPager_Banner.setAdapter(bannerPagerAdapter)
         viewPager_Banner.setClipToPadding(false);
-        viewPager_Banner.setPadding(50, 0, 50, 0)
-        viewPager_Banner.setPageMargin(10)
+        if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+
+            viewPager_Banner.setPadding(0, 0, 0, 0)
+        } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+            viewPager_Banner.setPageMargin(10)
+            viewPager_Banner.setPadding(50, 0, 50, 0)
+        } else {
+            viewPager_Banner.setPageMargin(10)
+            viewPager_Banner.setPadding(50, 0, 50, 0)
+        }
+
         viewPager_Banner.setCurrentItem(0)
         viewPager_Banner.startAutoScroll()
         viewPager_Banner.isCycle = true
@@ -153,6 +201,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             }
             FIXTURES -> {
                 if (!pref!!.isLogin) {
+//                    tabLayoutfsl.visibility = GONE
+                    tabLayout.visibility = GONE
                     ll_matchSelector.visibility = GONE
                     txt_title.visibility = GONE
                     txt_toolbartitle.visibility = VISIBLE
