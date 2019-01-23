@@ -285,6 +285,8 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         rv_Players!!.layoutManager = llm
         adapter = ChooseC_VC_Adapter(this, this, playerList.distinct() as MutableList<Data>)
         rv_Players!!.adapter = adapter
+        adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount)
+
     }
 
     private fun callCreateTeamApi(player_id: ArrayList<String>) {

@@ -37,9 +37,7 @@ class ChooseC_VC_Adapter(
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
-        if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
-            playerList[position].isSubstitute
-        ) {
+        if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") && playerList[position].isSubstitute) {
             holder.itemView.txt_playerType.visibility = View.VISIBLE
             holder.itemView.txt_playerType.text = "Substitute"
             holder.itemView.ll_ADD.visibility = View.GONE
@@ -49,11 +47,7 @@ class ChooseC_VC_Adapter(
 //                holder.itemView.txt_playerType.text = "Substitute"
 //                holder.itemView.ll_ADD.visibility = View.GONE
 //            }
-        } else if (playerList[position].player_role.contains(
-                "Wicketkeeper",
-                true
-            ) && !playerList[position].isSubstitute
-        ) {
+        } else if (playerList[position].player_role.contains("Wicketkeeper",true) && !playerList[position].isSubstitute) {
             (mContext as Choose_C_VC_Activity).isShowingWk = true
             holder.itemView.txt_playerType.visibility = View.VISIBLE
             holder.itemView.txt_playerType.text = "Wicket-Keeper"
@@ -70,11 +64,7 @@ class ChooseC_VC_Adapter(
                 holder.itemView.txt_playerType.text = "Batsmen"
             } else
                 holder.itemView.txt_playerType.visibility = View.GONE
-        } else if (playerList[position].player_role.contains(
-                "Allrounder",
-                true
-            ) && !playerList[position].isSubstitute
-        ) {
+        } else if (playerList[position].player_role.contains("Allrounder",true) && !playerList[position].isSubstitute) {
             if (!(mContext as Choose_C_VC_Activity).isShowingAr) {
                 (mContext as Choose_C_VC_Activity).isShowingAr = true
                 holder.itemView.txt_playerType.visibility = View.VISIBLE

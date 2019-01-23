@@ -53,7 +53,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
     var matchType = IntentConstant.FIXTURE
     private fun initViews() {
         try {
-            card_view1.visibility= GONE
+            card_view1.visibility = GONE
             setSupportActionBar(toolbar)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
@@ -64,14 +64,14 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
             if (intent != null) {
                 match = intent.getParcelableExtra(IntentConstant.MATCH)
                 matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-                var localTeamName=match!!.local_team_name
-                var visitorTeamName=match!!.visitor_team_name
-                if (match!!.local_team_name.length>5)
-                    localTeamName=match!!.local_team_name.substring(0,4)
-                if (match!!.visitor_team_name.length>5)
-                    visitorTeamName=match!!.visitor_team_name.substring(0,4)
+                var localTeamName = match!!.local_team_name
+                var visitorTeamName = match!!.visitor_team_name
+                if (match!!.local_team_name.length > 5)
+                    localTeamName = match!!.local_team_name.substring(0, 4)
+                if (match!!.visitor_team_name.length > 5)
+                    visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-                txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+                txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
                 if (matchType == IntentConstant.LIVE) {
                     if (!match!!.star_date.isEmpty()) {
                         val strt_date = match!!.star_date.split("T")
@@ -181,7 +181,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun updateScoreBoard(data: Data?) {
-        card_view1.visibility= VISIBLE
+        card_view1.visibility = VISIBLE
         txt_WinBy.visibility = VISIBLE
         ll_visitorTeamScore.visibility = VISIBLE
         txt_localTeamScore.text = match!!.local_team_name + "  " + data!!.localteam_score + "(" +
@@ -207,8 +207,8 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                 val hours = (timeDiff / (1000 * 60 * 60)).toInt()
                 ll_visitorTeamScore.visibility = GONE
                 txt_WinBy.visibility = GONE
-                card_view1.visibility= VISIBLE
-                txt_localTeamScore.text=getString(R.string.match_not_started)
+                card_view1.visibility = VISIBLE
+                txt_localTeamScore.text = getString(R.string.match_not_started)
             } else {
                 txt_WinBy.visibility = VISIBLE
                 ll_visitorTeamScore.visibility = VISIBLE

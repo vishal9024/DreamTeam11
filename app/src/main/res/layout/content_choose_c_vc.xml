@@ -122,7 +122,6 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_pointsDistribution"
             app:layout_constraintBottom_toTopOf="@+id/ll_bottom"
             android:layout_width="match_parent"
-
             tools:listitem="@layout/item_player"
             android:layout_height="0dp">
 
