@@ -31,6 +31,8 @@ class SelectTeamAdapter(
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
+        var count = position + 1
+        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
         holder.itemView.rl_clone.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.clone, holder.adapterPosition)
         }
@@ -42,6 +44,7 @@ class SelectTeamAdapter(
                     data[holder.adapterPosition]
                 ).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER, data[holder.adapterPosition].player_details)
                     .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
+                    .putExtra("teamName",holder.itemView.txt_team.text.toString())
             )
         }
         if (FOR == AppRequestCodes.JOIN_PLUS)
@@ -76,8 +79,7 @@ class SelectTeamAdapter(
             holder.itemView.card_view.setCardBackgroundColor(mContext.resources.getColor(R.color.white))
         }
 
-        var count = position + 1
-        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
+
         for (player in data[holder.adapterPosition].player_details!!) {
             if (player.player_id.equals(data[holder.adapterPosition].captain_player_id))
                 holder.itemView.txt_captain.text = player.name

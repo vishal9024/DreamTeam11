@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/coordinator"
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        xmlns:tools="http://schemas.android.com/tools" android:id="@+id/coordinator"
         android:background="@drawable/bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -187,16 +187,39 @@
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="@dimen/image_width"
-            android:layout_height="@dimen/image_width"
+    <RelativeLayout
+            app:layout_behavior="os.com.ui.dashboard.profile.activity.AvatarImageBehaviorRelative"
+            android:id="@+id/rl"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="@dimen/spacing_normal"
-            android:src="@mipmap/cricketer"
+            android:layout_width="@dimen/image_width"
             app:finalHeight="@dimen/image_final_width"
             app:finalXPosition="@dimen/_4sdp"
             app:finalYPosition="@dimen/_4sdp"
             app:finalToolbarHeight="?attr/actionBarSize"
-            app:layout_behavior="os.com.ui.dashboard.profile.activity.AvatarImageBehavior"/>
+            android:layout_height="@dimen/image_width" tools:ignore="MissingPrefix">
+        <de.hdodenhof.circleimageview.CircleImageView
+                app:civ_border_width="@dimen/_1sdp"
+                app:civ_border_color="@color/white"
+                android:layout_margin="@dimen/_2sdp"
+                android:layout_width="@dimen/image_width"
+                android:layout_height="@dimen/image_width"
+                android:layout_gravity="top|center_horizontal"
+                android:src="@mipmap/cricketer"
+                app:finalHeight="@dimen/image_final_width"
+                app:finalXPosition="@dimen/_4sdp"
+                app:finalYPosition="@dimen/_4sdp"
+                app:finalToolbarHeight="?attr/actionBarSize"
+               />
+        <de.hdodenhof.circleimageview.CircleImageView
+                app:finalHeight="@dimen/_10sdp"
+                app:finalXPosition="@dimen/_8sdp"
+                app:finalYPosition="@dimen/_8sdp"
+                android:padding="7dp"
+                android:src="@mipmap/camera_avatar"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="@dimen/_28sdp"
+                android:layout_height="@dimen/_28sdp"/>
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

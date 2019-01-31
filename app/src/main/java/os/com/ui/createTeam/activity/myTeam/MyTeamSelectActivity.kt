@@ -33,8 +33,11 @@ import os.com.utils.networkUtils.NetworkUtils
 
 class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface, OnClickDialogue {
     override fun onClick(tag: String, success: Boolean) {
-        if (tag.equals(Tags.success) && success)
+        if (tag.equals(Tags.success) && success) {
+            var intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
             finish()
+        }
     }
 
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
@@ -76,14 +79,13 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
     override fun onClickItem(tag: String, position: Int) {
     }
 
-    var callApi = false
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_CreateTeam -> {
-                callApi = true
+//                callApi = true
                 startActivityForResult(
                     Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
@@ -181,11 +183,11 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
         super.onResume()
         var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
         btn_CreateTeam.text = getString(R.string.create_team) + " " + count
-        if (callApi)
-            if (NetworkUtils.isConnected()) {
-                callGetTeamListApi()
-            } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+//        if (callApi)
+//            if (NetworkUtils.isConnected()) {
+//                callGetTeamListApi()
+//            } else
+//                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
     }
 
@@ -225,14 +227,14 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
             FOR = intent.getIntExtra(IntentConstant.FOR, AppRequestCodes.JOIN)
             if (FOR == AppRequestCodes.JOIN_PLUS || FOR == AppRequestCodes.SWITCH)
                 my_team_ids = intent.getStringArrayListExtra(IntentConstant.TEAM_ID)
-            var localTeamName=match!!.local_team_name
-            var visitorTeamName=match!!.visitor_team_name
-            if (match!!.local_team_name.length>5)
-                localTeamName=match!!.local_team_name.substring(0,4)
-            if (match!!.visitor_team_name.length>5)
-                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+            var localTeamName = match!!.local_team_name
+            var visitorTeamName = match!!.visitor_team_name
+            if (match!!.local_team_name.length > 5)
+                localTeamName = match!!.local_team_name.substring(0, 4)
+            if (match!!.visitor_team_name.length > 5)
+                visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+            txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
@@ -253,13 +255,11 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
         btn_CreateTeam.setOnClickListener(this)
         btn_joinContest.setOnClickListener(this)
-//        btn_CreateTeam.setOnClickListener(this)
-//        txt_Signup.setOnClickListener(this)
     }
 
     var data: ArrayList<Data> = ArrayList()
     private fun callGetTeamListApi() {
-        callApi = false
+//        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id

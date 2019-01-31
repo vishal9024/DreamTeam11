@@ -87,7 +87,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (!wkList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = wkList!!.get(position).player_record!!.player_credit.toDouble()
                     }
-                    var total_credit = selectPlayer!!.total_credit - player_credit
+                    val total_credit = selectPlayer!!.total_credit - player_credit
                     var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
                     var visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount
                     if (wkList!![position].team_id.equals(match!!.local_team_id))
@@ -124,7 +124,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (!arList!!.get(position).player_record!!.player_credit.isEmpty()) {
                                 player_credit = arList!!.get(position).player_record!!.player_credit.toDouble()
                             }
-                            var total_credit = selectPlayer!!.total_credit + player_credit
+                            val total_credit = selectPlayer!!.total_credit + player_credit
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
@@ -188,7 +188,6 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     txt_substitute.setText("Substitute")
                 }
             }
-
         } else if (tag == BAT) {
             var player_credit = 0.0
             if (isSelected) {
@@ -395,8 +394,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             IntentConstant.BOWLER,
                             bowlerList as java.util.ArrayList<out Parcelable>
                         )
-                        .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>),
-                    AppRequestCodes.UPDATE_ACTIVITY
+//                        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+                        .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>)
+                    , AppRequestCodes.UPDATE_ACTIVITY
                 )
             }
         }
@@ -424,7 +424,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppRequestCodes.SELECT_SUBSTITUTE)
+        if (requestCode == AppRequestCodes.SELECT_SUBSTITUTE) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     val isSubstitute = data.getBooleanExtra("isSubstitute", false)
@@ -440,7 +440,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         batsmenList!![i].isSubstitute = batsmenList!![i].player_id == substitute_id
                     }
                     for (i in arList!!.indices) {
-                        batsmenList!![i].isSubstitute = arList!![i].player_id == substitute_id
+                        arList!![i].isSubstitute = arList!![i].player_id == substitute_id
                     }
                     selectPlayer!!.substitute = true
                     selectPlayer!!.substitute_id = substitute_id
@@ -448,13 +448,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     updateUi()
 //                    }
                 }
-            } else if (requestCode == AppRequestCodes.UPDATE_ACTIVITY || requestCode == AppRequestCodes.EDIT || requestCode == AppRequestCodes.CLONE)
-                if (resultCode == Activity.RESULT_OK) {
-                    val intent = Intent()
-                    setResult(Activity.RESULT_OK)
-                    startActivity(intent)
-                    finish()
-                }
+            }
+        } else if (requestCode == AppRequestCodes.UPDATE_ACTIVITY || requestCode == AppRequestCodes.EDIT || requestCode == AppRequestCodes.CLONE)
+            if (resultCode == Activity.RESULT_OK) {
+                val intent = Intent()
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -514,16 +514,16 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT) {
                 playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
                 playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
-                substituteDetail=intent.getParcelableExtra("substitute")
+                substituteDetail = intent.getParcelableExtra("substitute")
             }
-            var localTeamName=match!!.local_team_name
-            var visitorTeamName=match!!.visitor_team_name
-            if (match!!.local_team_name.length>5)
-                localTeamName=match!!.local_team_name.substring(0,4)
-            if (match!!.visitor_team_name.length>5)
-                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+            var localTeamName = match!!.local_team_name
+            var visitorTeamName = match!!.visitor_team_name
+            if (match!!.local_team_name.length > 5)
+                localTeamName = match!!.local_team_name.substring(0, 4)
+            if (match!!.visitor_team_name.length > 5)
+                visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+            txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
@@ -544,7 +544,6 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     var batsmenList: MutableList<Data>? = ArrayList()
 
     var playerList: MutableList<Data>? = ArrayList()
-
 
     var playerListPreview: os.com.ui.createTeam.apiResponse.myTeamListResponse.Data? = null
     var playerListEdit: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord>? = null
@@ -616,7 +615,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         var localTeamplayerCount = 0
         var visitorTeamPlayerCount = 0
         var total_credit = 0.0
-
+        var totalWk = 0
+        var totalAR = 0
+        var totalBat = 0
+        var totalBowler = 0
         for (position in wkList!!.indices) {
             for (playerData in playerListEdit!!) {
                 if (wkList!![position].player_id == playerData.player_id) {
@@ -629,20 +631,24 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = localTeamplayerCount + 1
                     else
                         visitorTeamPlayerCount = visitorTeamPlayerCount + 1
+
                     var player_credit = 0.0
                     if (!wkList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = wkList!!.get(position).player_record!!.player_credit.toDouble()
                     }
                     total_credit = total_credit + player_credit
+                    totalWk = totalWk + 1
                 }
-                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy"){
-                  if (substituteDetail!=null)
-                      if (wkList!![position].player_id.equals(substituteDetail!!.player_id)){
-                          wkList!![position].isSubstitute=true
-                          selectPlayer!!.substitute = true
-                          selectPlayer!!.substitute_id = substituteDetail!!.player_id
-                          txt_substitute.setText("1 Substitute")
-                      }
+
+                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                    if (substituteDetail != null)
+                        if (wkList!![position].player_id.equals(substituteDetail!!.player_id)) {
+                            wkList!![position].isSubstitute = true
+                            selectPlayer!!.substitute = true
+                            selectPlayer!!.substitute_id = substituteDetail!!.player_id
+                            txt_substitute.setText("1 Substitute")
+                        }
+
                 }
             }
 
@@ -659,16 +665,19 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = localTeamplayerCount + 1
                     else
                         visitorTeamPlayerCount = visitorTeamPlayerCount + 1
+
                     var player_credit = 0.0
                     if (!arList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = arList!!.get(position).player_record!!.player_credit.toDouble()
                     }
                     total_credit = total_credit + player_credit
+                    totalAR = totalAR + 1
                 }
-                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy"){
-                    if (substituteDetail!=null)
-                        if (arList!![position].player_id.equals(substituteDetail!!.player_id)){
-                            arList!![position].isSubstitute=true
+
+                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                    if (substituteDetail != null)
+                        if (arList!![position].player_id.equals(substituteDetail!!.player_id)) {
+                            arList!![position].isSubstitute = true
                             selectPlayer!!.substitute = true
                             selectPlayer!!.substitute_id = substituteDetail!!.player_id
                             txt_substitute.setText("1 Substitute")
@@ -689,16 +698,20 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = localTeamplayerCount + 1
                     else
                         visitorTeamPlayerCount = visitorTeamPlayerCount + 1
+
+
                     var player_credit = 0.0
                     if (!batsmenList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = batsmenList!!.get(position).player_record!!.player_credit.toDouble()
                     }
                     total_credit = total_credit + player_credit
+                    totalBat = totalBat + 1
                 }
-                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy"){
-                    if (substituteDetail!=null)
-                        if (batsmenList!![position].player_id.equals(substituteDetail!!.player_id)){
-                            batsmenList!![position].isSubstitute=true
+
+                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                    if (substituteDetail != null)
+                        if (batsmenList!![position].player_id.equals(substituteDetail!!.player_id)) {
+                            batsmenList!![position].isSubstitute = true
                             selectPlayer!!.substitute = true
                             selectPlayer!!.substitute_id = substituteDetail!!.player_id
                             txt_substitute.setText("1 Substitute")
@@ -719,29 +732,33 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         localTeamplayerCount = localTeamplayerCount + 1
                     else
                         visitorTeamPlayerCount = visitorTeamPlayerCount + 1
+
                     var player_credit = 0.0
                     if (!bowlerList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = bowlerList!!.get(position).player_record!!.player_credit.toDouble()
                     }
                     total_credit = total_credit + player_credit
+                    totalBowler = totalBowler + 1
                 }
-                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy"){
-                    if (substituteDetail!=null)
-                        if (bowlerList!![position].player_id.equals(substituteDetail!!.player_id)){
-                            bowlerList!![position].isSubstitute=true
+
+                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                    if (substituteDetail != null)
+                        if (bowlerList!![position].player_id.equals(substituteDetail!!.player_id)) {
+                            bowlerList!![position].isSubstitute = true
                             selectPlayer!!.substitute = true
                             selectPlayer!!.substitute_id = substituteDetail!!.player_id
                             txt_substitute.setText("1 Substitute")
                         }
                 }
+
             }
         }
         updateTeamData(
             0,
-            playerListPreview!!.total_wicketkeeper.toInt(),
-            playerListPreview!!.total_batsman.toInt(),
-            playerListPreview!!.total_allrounder.toInt(),
-            playerListPreview!!.total_bowler.toInt(),
+            totalWk,
+            totalBat,
+            totalAR,
+            totalBowler,
             11,
             localTeamplayerCount,
             visitorTeamPlayerCount,
@@ -807,15 +824,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         selectPlayer!!.localTeamplayerCount = localTeamplayerCount
         selectPlayer!!.visitorTeamPlayerCount = visitorTeamPlayerCount
         selectPlayer!!.total_credit = total_credit
-
         updateUi()
     }
 
-    fun addSubstitute(isSelectedSubstitute: Boolean, substitute_id: String, substituteType: Int) {
-        selectPlayer!!.substitute_id = substitute_id!!
-        selectPlayer!!.substitute_type = substituteType
-        selectPlayer!!.substitute = false
-    }
 
     private fun updateUi() {
         txt_WKCount.text = selectPlayer!!.wk_selected.toString()

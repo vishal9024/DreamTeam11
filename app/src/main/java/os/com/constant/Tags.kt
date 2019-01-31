@@ -3,6 +3,7 @@ package os.com.constant
 import org.joda.time.DateTimeZone
 
 object Tags {
+    const  val team_no="team_no"
     const val birthday = "birthday"
     const val social_id = "social_id"
     const val payment_mode = "payment_mode"
@@ -73,7 +74,7 @@ object Tags {
     const val edit = "edit"
     const  val team_id="team_id"
 
-
+const  val  invite_code="invite_code"
     const val cancel = "cancel"
     const val success = "success"
     const  val fail="fail"

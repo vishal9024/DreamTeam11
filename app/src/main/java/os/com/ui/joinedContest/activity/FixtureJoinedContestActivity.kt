@@ -1,6 +1,8 @@
 package os.com.ui.joinedContest.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -78,10 +80,9 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
-    private fun callGetJoinedContestListApi() {
+    public fun callGetJoinedContestListApi() {
         try {
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
@@ -109,9 +110,14 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode== Activity.RESULT_OK)
+            callGetJoinedContestListApi()
+    }
     var joinedFixturesContestAdapter: JoinedFixturesContestAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setAdapter(data: ArrayList<JoinedContestData>) {

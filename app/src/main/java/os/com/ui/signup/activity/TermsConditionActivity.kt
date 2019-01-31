@@ -1,4 +1,4 @@
-package os.com.ui
+package os.com.ui.signup.activity
 
 
 import android.os.Bundle
@@ -9,7 +9,7 @@ import os.com.R
 
 
 
-class TempActivity : BaseActivity() {
+class TermsConditionActivity : BaseActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

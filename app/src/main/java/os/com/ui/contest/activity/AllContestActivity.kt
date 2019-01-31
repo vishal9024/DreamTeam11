@@ -53,14 +53,12 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
                     ).putExtra(IntentConstant.CONTEST_ID, contests!![position].contest_id)
                         .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN), AppRequestCodes.UPDATE_ACTIVITY
                 )
-            } else if (FantasyApplication.getInstance().teamCount == 1) {
+            } else if (FantasyApplication.getInstance().teamCount== 1) {
                 if (NetworkUtils.isConnected()) {
                     checkAmountWallet(
                         match!!.match_id,
                         match!!.series_id, contests!![position].contest_id, "", object : OnClickDialogue {
                             override fun onClick(tag: String, success: Boolean) {
-//                                    if (tag.equals(Tags.success) && success)
-//                                        finish()
                             }
                         }
                     )
@@ -91,8 +89,6 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
             ll_viewTeam.visibility = View.VISIBLE
             btn_CreateTeam.visibility = View.GONE
         }
-//        if (resultCode== Activity.RESULT_OK)
-//            UpdateView()
     }
 
 override    fun onAttachFragment(fragment: Fragment) {

@@ -79,26 +79,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             >
-                <TextView
-                        android:id="@+id/txt_wk_cvc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/rounded_square_count"
-                        android:gravity="center"
-                        android:minWidth="@dimen/_10sdp"
-                        android:padding="@dimen/_2sdp"
-                        android:text=" C "
-                        android:visibility="gone"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_8sdp"/>
-                <androidx.appcompat.widget.AppCompatImageView
-                        android:visibility="gone"
-                        android:id="@+id/img_delete_wk"
-                        android:layout_toEndOf="@+id/cimg_wk1"
-                        android:src="@mipmap/delete"
-                        android:scaleType="fitCenter"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_10sdp"/>
+
+
                 <de.hdodenhof.circleimageview.CircleImageView
 
                         android:src="@mipmap/cricketer"
@@ -140,6 +122,28 @@
                         style="@style/TextStyleNormal"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_7sdp"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:background="@drawable/rounded_square_count"
+                        android:visibility="gone"
+                        android:id="@+id/img_dreamTeam_wk"
+                        android:padding="@dimen/_1sdp"
+                        android:layout_toEndOf="@+id/cimg_wk1"
+                        android:src="@mipmap/top_player_selected"
+                        android:tint="@color/colorSecondary"
+                        android:layout_width="@dimen/_13sdp"
+                        android:layout_height="@dimen/_13sdp"/>
+                <TextView
+                        android:id="@+id/txt_wk_cvc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/captain_selected"
+                        android:gravity="center"
+                        android:minWidth="@dimen/_10sdp"
+                        android:padding="@dimen/_2sdp"
+                        android:text=" C "
+                        android:visibility="gone"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_8sdp"/>
             </RelativeLayout>
             />
         </LinearLayout>
@@ -175,26 +179,8 @@
 
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:id="@+id/txt_bat1_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:visibility="gone"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bat1"
-                                android:layout_toEndOf="@+id/cimg_bat1"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -202,7 +188,8 @@
                                 app:civ_border_color="@color/white"
                                 app:civ_fill_color="@color/white"
                                 app:civ_border_width="@dimen/_1sdp"
-                                android:id="@+id/cimg_bat1" android:layout_width="@dimen/_34sdp"
+                                android:id="@+id/cimg_bat1"
+                                android:layout_width="@dimen/_34sdp"
                                 android:layout_height="@dimen/_34sdp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:singleLine="true"
@@ -235,6 +222,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bat1"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bat1"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:id="@+id/txt_bat1_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:visibility="gone"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -250,27 +260,7 @@
                     <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
 
-                                android:id="@+id/txt_bat2_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bat2"
-                                android:layout_toEndOf="@+id/cimg_bat2"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -311,6 +301,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bat2"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bat2"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bat2_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -325,27 +338,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
 
-                                android:id="@+id/txt_bat3_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bat3"
-                                android:layout_toEndOf="@+id/cimg_bat3"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -386,6 +379,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bat3"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bat3"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bat3_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -400,26 +416,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:id="@+id/txt_bat4_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="VC"
-                                android:visibility="gone"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_7sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bat4"
-                                android:layout_toEndOf="@+id/cimg_bat4"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -460,6 +457,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bat4"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bat4"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:id="@+id/txt_bat4_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="VC"
+                                android:visibility="gone"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_7sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -474,27 +494,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:id="@+id/txt_bat5_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:visibility="gone"
 
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bat5"
-                                android:layout_toEndOf="@+id/cimg_bat5"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -535,6 +535,30 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bat5"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bat5"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:id="@+id/txt_bat5_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:visibility="gone"
+
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -582,28 +606,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
 
-
-                                android:visibility="gone"
-                                android:id="@+id/txt_ar1_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_ar1"
-                                android:layout_toEndOf="@+id/cimg_ar1"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
 
                                 android:src="@mipmap/cricketer"
@@ -645,6 +648,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_ar1"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_ar1"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_ar1_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -659,26 +685,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_ar2_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_ar2"
-                                android:layout_toEndOf="@+id/cimg_ar2"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -719,6 +726,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_ar2"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_ar2"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_ar2_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -733,26 +763,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:id="@+id/txt_ar3_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:visibility="gone"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_ar3"
-                                android:layout_toEndOf="@+id/cimg_ar3"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -793,6 +804,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_ar3"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_ar3"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:id="@+id/txt_ar3_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:visibility="gone"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -841,26 +875,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_bowler1_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bowler1"
-                                android:layout_toEndOf="@+id/cimg_bowler1"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -901,6 +916,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bowler1"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bowler1"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bowler1_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -915,26 +953,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_bowler2_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bowler2"
-                                android:layout_toEndOf="@+id/cimg_bowler2"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -975,6 +994,30 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bowler2"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bowler2"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bowler2_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
+
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -989,26 +1032,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_bowler3_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bowler3"
-                                android:layout_toEndOf="@+id/cimg_bowler3"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -1049,6 +1073,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bowler3"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bowler3"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bowler3_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -1063,26 +1110,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_bowler4_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bowler4"
-                                android:layout_toEndOf="@+id/cimg_bowler4"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -1123,6 +1151,29 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bowler4"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bowler4"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bowler4_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
                 <RelativeLayout
@@ -1137,26 +1188,7 @@
                 >
                     <RelativeLayout android:layout_width="wrap_content"
                                     android:layout_height="wrap_content">
-                        <TextView
-                                android:visibility="gone"
-                                android:id="@+id/txt_bowler5_cvc"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/rounded_square_count"
-                                android:gravity="center"
-                                android:minWidth="@dimen/_10sdp"
-                                android:padding="@dimen/_2sdp"
-                                android:text="C"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/_8sdp"/>
-                        <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="gone"
-                                android:id="@+id/img_delete_bowler5"
-                                android:layout_toEndOf="@+id/cimg_bowler5"
-                                android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/_10sdp"/>
+
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:src="@mipmap/cricketer"
                                 android:layout_centerHorizontal="true"
@@ -1197,10 +1229,31 @@
                                 style="@style/TextStyleNormal"
                                 android:textColor="@color/white"
                                 android:textSize="@dimen/_7sdp"/>
+                        <de.hdodenhof.circleimageview.CircleImageView
+                                android:background="@drawable/rounded_square_count"
+                                android:visibility="gone"
+                                android:id="@+id/img_dreamTeam_bowler5"
+                                android:padding="@dimen/_1sdp"
+                                android:layout_toEndOf="@+id/cimg_bowler5"
+                                android:src="@mipmap/top_player_selected"
+                                android:tint="@color/colorSecondary"
+                               
+                                android:layout_width="@dimen/_13sdp"
+                                android:layout_height="@dimen/_13sdp"/>
+                        <TextView
+                                android:visibility="gone"
+                                android:id="@+id/txt_bowler5_cvc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/captain_selected"
+                                android:gravity="center"
+                                android:minWidth="@dimen/_10sdp"
+                                android:padding="@dimen/_2sdp"
+                                android:text="C"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/_8sdp"/>
                     </RelativeLayout>
                 </RelativeLayout>
-
-
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -1252,7 +1305,7 @@
                                 android:id="@+id/img_delete_substitute"
                                 android:layout_toEndOf="@+id/cimg_substitute"
                                 android:src="@mipmap/delete"
-                                android:scaleType="fitCenter"
+                               
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView

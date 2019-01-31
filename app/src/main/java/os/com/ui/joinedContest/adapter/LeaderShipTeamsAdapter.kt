@@ -8,10 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_completed_leadershipteams.view.*
 import os.com.R
+import os.com.data.Prefs
+import os.com.interfaces.OnClickRecyclerView
+import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.createTeam.activity.PlayerDetailActivity
 
 
-class LeaderShipTeamsAdapter(val mContext: Context) : RecyclerView.Adapter<LeaderShipTeamsAdapter.AppliedCouponCodeHolder>() {
+class LeaderShipTeamsAdapter(
+    val mContext: Context,
+    var joined_team_list: ArrayList<Team>,
+    val onClickRecyclerView: OnClickRecyclerView
+) : RecyclerView.Adapter<LeaderShipTeamsAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_completed_leadershipteams, parent, false)
@@ -19,8 +26,9 @@ class LeaderShipTeamsAdapter(val mContext: Context) : RecyclerView.Adapter<Leade
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
+
         try {
-            if (position % 2 == 0) {
+            if (joined_team_list[position].user_id.equals(Prefs(mContext).userdata!!.user_id)) {
                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
             } else {
                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
@@ -31,6 +39,24 @@ class LeaderShipTeamsAdapter(val mContext: Context) : RecyclerView.Adapter<Leade
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
+//        ImageLoader.getInstance().displayImage(
+//            joined_team_list[position].image,
+//            holder.itemView.cimg_player,
+//            FantasyApplication.getInstance().options
+//        )
+        holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name + "(T" + joined_team_list[holder.adapterPosition].team_no + ")")
+        if (!!joined_team_list[holder.adapterPosition].rank.isEmpty() && !joined_team_list[holder.adapterPosition].rank.equals(
+                "0"
+            )
+        )
+            holder.itemView.txt_rank.setText("#" + joined_team_list[holder.adapterPosition].rank)
+        else
+            holder.itemView.txt_rank.setText("-")
+        holder.itemView.txt_Points.setText(joined_team_list[holder.adapterPosition].point + mContext.getString(R.string.points))
+        holder.itemView.ll_main.setOnClickListener {
+            onClickRecyclerView.onClickItem("Preview", position)
+        }
+
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
@@ -38,7 +64,7 @@ class LeaderShipTeamsAdapter(val mContext: Context) : RecyclerView.Adapter<Leade
 
 
     override fun getItemCount(): Int {
-        return 25;
+        return joined_team_list.size;
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

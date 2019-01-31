@@ -229,7 +229,7 @@ open class BaseActivity : AppCompatActivity() {
                     if (!response.response!!.data!!.entry_fee.isEmpty())
                         entryFee = response.response!!.data!!.entry_fee.toFloat()
                     if (!response.response!!.data!!.usable_bonus.isEmpty())
-                        bonus = response.response!!.data!!.usable_bonus.toFloat()
+                        bonus = response.response!!.data!!.usable_bonus.toFloat()+ response.response!!.data!!.winning_balance.toFloat()+ response.response!!.data!!.cash_balance.toFloat()
                     toPay = entryFee - bonus
                     if (entryFee > 0 && toPay > 0) {
                         startActivityForResult(
@@ -289,7 +289,8 @@ open class BaseActivity : AppCompatActivity() {
         if (!data.entry_fee.isEmpty())
             entryFee = data.entry_fee.toFloat()
         if (!data.usable_bonus.isEmpty())
-            bonus = data.usable_bonus.toFloat()
+            bonus = data!!.usable_bonus.toFloat()+ data!!.winning_balance.toFloat()+ data!!.cash_balance.toFloat()
+
         toPay = entryFee - bonus
         if (bonus >= entryFee)
             toPay = 0f

@@ -21,6 +21,7 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
+import os.com.ui.addCash.activity.AddCashActivity
 import os.com.ui.dashboard.profile.activity.ChangePasswordActivity
 import os.com.ui.dashboard.profile.activity.FullProfileActivity
 import os.com.ui.dashboard.profile.activity.MyAccountActivity
@@ -59,6 +60,9 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
 //                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
 //                startActivity(intent)
 //                activity!!.finish()
+                }
+                R.id.txt_AddCash -> {
+                    startActivity(Intent(activity, AddCashActivity::class.java))
                 }
             }
         } catch (e: Exception) {
@@ -101,6 +105,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             txt_Ranking.setOnClickListener(this)
             btn_InviteFriends.setOnClickListener(this)
             txtLogout.setOnClickListener(this)
+            txt_AddCash.setOnClickListener(this)
             setData()
             if (pref!!.isLogin) {
                 if (!pref!!.userdata!!.fb_id.isEmpty() || !pref!!.userdata!!.google_id.isEmpty()) {

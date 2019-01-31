@@ -28,7 +28,10 @@ class SelectPlayer() : Parcelable {
     var substitute = false
     var substitute_id = ""
     var substitute_type = 1
+
+
     constructor(parcel: Parcel) : this() {
+        extra_player = parcel.readInt()
         wk_count = parcel.readInt()
         wk_selected = parcel.readInt()
         bat_mincount = parcel.readInt()
@@ -45,9 +48,12 @@ class SelectPlayer() : Parcelable {
         visitorTeamPlayerCount = parcel.readInt()
         total_credit = parcel.readDouble()
         substitute = parcel.readByte() != 0.toByte()
+        substitute_id = parcel.readString()
+        substitute_type = parcel.readInt()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeInt(extra_player)
         parcel.writeInt(wk_count)
         parcel.writeInt(wk_selected)
         parcel.writeInt(bat_mincount)
@@ -64,14 +70,12 @@ class SelectPlayer() : Parcelable {
         parcel.writeInt(visitorTeamPlayerCount)
         parcel.writeDouble(total_credit)
         parcel.writeByte(if (substitute) 1 else 0)
+        parcel.writeString(substitute_id)
+        parcel.writeInt(substitute_type)
     }
 
     override fun describeContents(): Int {
         return 0
-    }
-
-    override fun toString(): String {
-        return "SelectPlayer(extra_player=$extra_player, wk_count=$wk_count, wk_selected=$wk_selected, bat_mincount=$bat_mincount, bat_maxcount=$bat_maxcount, bat_selected=$bat_selected, ar_mincount=$ar_mincount, ar_maxcount=$ar_maxcount, ar_selected=$ar_selected, bowl_mincount=$bowl_mincount, bowl_maxcount=$bowl_maxcount, bowl_selected=$bowl_selected, selectedPlayer=$selectedPlayer, localTeamplayerCount=$localTeamplayerCount, visitorTeamPlayerCount=$visitorTeamPlayerCount, total_credit=$total_credit, substitute=$substitute)"
     }
 
     companion object CREATOR : Parcelable.Creator<SelectPlayer> {

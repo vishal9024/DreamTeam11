@@ -5,7 +5,8 @@ import android.os.Parcelable
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 import java.util.*
 
-class Contest protected constructor(`in`: Parcel) : Parcelable {
+class Contest (`in`: Parcel) : Parcelable {
+
     internal var entry_fee = ""
     internal var prize_money = ""
     internal var total_teams = ""
@@ -17,7 +18,7 @@ class Contest protected constructor(`in`: Parcel) : Parcelable {
     internal var multiple_team: Boolean? = false
     internal var invite_code = ""
     internal var breakup_detail: ArrayList<PriceBreakUp>
-
+    internal var my_team_ids: ArrayList<String>
     init {
         entry_fee = `in`.readString()
         prize_money = `in`.readString()
@@ -32,6 +33,7 @@ class Contest protected constructor(`in`: Parcel) : Parcelable {
         multiple_team = if (tmpMultiple_team.toInt() == 0) null else tmpMultiple_team.toInt() == 1
         invite_code = `in`.readString()
         breakup_detail = `in`.createTypedArrayList(PriceBreakUp)
+        my_team_ids = `in`.createStringArrayList()
     }
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
@@ -46,6 +48,8 @@ class Contest protected constructor(`in`: Parcel) : Parcelable {
         dest.writeByte((if (multiple_team == null) 0 else if (multiple_team!!) 1 else 2).toByte())
         dest.writeString(invite_code)
         dest.writeTypedList(breakup_detail)
+        dest.writeStringList(my_team_ids)
+
     }
 
     override fun describeContents(): Int {

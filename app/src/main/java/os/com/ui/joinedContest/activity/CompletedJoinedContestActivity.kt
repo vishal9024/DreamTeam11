@@ -51,6 +51,8 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
 
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
+    var localTeamName = ""
+    var visitorTeamName = ""
     private fun initViews() {
         try {
             card_view1.visibility = GONE
@@ -64,15 +66,19 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
             if (intent != null) {
                 match = intent.getParcelableExtra(IntentConstant.MATCH)
                 matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-                var localTeamName = match!!.local_team_name
-                var visitorTeamName = match!!.visitor_team_name
+                localTeamName = match!!.local_team_name
+                visitorTeamName = match!!.visitor_team_name
                 if (match!!.local_team_name.length > 5)
                     localTeamName = match!!.local_team_name.substring(0, 4)
                 if (match!!.visitor_team_name.length > 5)
                     visitorTeamName = match!!.visitor_team_name.substring(0, 4)
-
                 txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
+                txt_NoContestJoinedForMatch.text = " " + getString(R.string.FOR) + " " +
+                        localTeamName + " " + getString(
+                    R.string.vs
+                ) + " " + visitorTeamName
                 if (matchType == IntentConstant.LIVE) {
+                    callMatchScoreApi()
                     if (!match!!.star_date.isEmpty()) {
                         val strt_date = match!!.star_date.split("T")
                         val dateTime = strt_date.get(0) + " " + match!!.star_time
@@ -117,10 +123,10 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                             cl_noJoinedContest.visibility = View.GONE
                         } else {
                             cl_noJoinedContest.visibility = View.VISIBLE
-                            txt_NoContestJoinedForMatch.text = " " + getString(R.string.FOR) + " " +
-                                    match!!.local_team_name + " " + getString(
-                                R.string.vs
-                            ) + " " + match!!.visitor_team_name
+//                            txt_NoContestJoinedForMatch.text = " " + getString(R.string.FOR) + " " +
+//                                    match!!.local_team_name + " " + getString(
+//                                R.string.vs
+//                            ) + " " + match!!.visitor_team_name
                             setAdapterUpcomingContest(response.response!!.data!!.upcoming_match!!)
                         }
                     } else {
@@ -152,6 +158,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
 
     private fun callMatchScoreApi() {
         try {
+            callApi = false
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
@@ -181,22 +188,26 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun updateScoreBoard(data: Data?) {
-        card_view1.visibility = VISIBLE
-        txt_WinBy.visibility = VISIBLE
-        ll_visitorTeamScore.visibility = VISIBLE
-        txt_localTeamScore.text = match!!.local_team_name + "  " + data!!.localteam_score + "(" +
-                data!!.localteam_over + ")"
-        txt_visitorTeamScore.text = match!!.visitor_team_name + "  " + data.visitorteam_score + "(" +
-                data.visitorteam_over + ")"
-        txt_WinBy.text = data.comment
+        if(data!!.match_started) {
+            card_view1.visibility = VISIBLE
+            txt_WinBy.visibility = VISIBLE
+            ll_visitorTeamScore.visibility = VISIBLE
+            txt_localTeamScore.text = localTeamName + "  " + data!!.local_team_score
+            txt_visitorTeamScore.text = visitorTeamName + "  " + data.vistor_team_score
+            txt_WinBy.text = data.comment
+        }else{
+            ll_visitorTeamScore.visibility = GONE
+            txt_WinBy.visibility = GONE
+            card_view1.visibility = VISIBLE
+            txt_localTeamScore.text = getString(R.string.match_not_started)
+        }
     }
-
 
     private val updateRemainingTimeRunnable = Runnable {
         val currentTime = System.currentTimeMillis()
         updateTimeRemaining(currentTime)
     }
-
+    var callApi = true
     fun updateTimeRemaining(currentTime: Long) {
         try {
             val timeDiff = AppDelegate.getTimeStampFromDate(dateTime!!)!! - currentTime
@@ -212,7 +223,10 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
             } else {
                 txt_WinBy.visibility = VISIBLE
                 ll_visitorTeamScore.visibility = VISIBLE
-                callMatchScoreApi()
+                if (callApi) {
+                    callApi = false
+                    callMatchScoreApi()
+                }
 //                textView!!.text = "Expired!!"
             }
         } catch (e: Exception) {

@@ -7,12 +7,12 @@ import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 class Data protected constructor(parcel: Parcel) : Parcelable {
     var joined_contest: ArrayList<JoinedContestData>? = null
     var upcoming_match: ArrayList<Match>? = null
+    var my_team_count: String = ""
 
     init {
         joined_contest = parcel.createTypedArrayList(JoinedContestData)
         upcoming_match = parcel.createTypedArrayList(Match)
     }
-
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeTypedList(joined_contest)

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="os.com">
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <application
@@ -137,7 +139,7 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".ui.TempActivity"
+        <activity android:name=".ui.signup.activity.TermsConditionActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
@@ -155,7 +157,6 @@
                 android:label="@string/app_name" />
         <activity android:name=".ui.createTeam.activity.myTeam.MyTeamSelectActivity"/>
         <activity android:name=".ui.addCash.activity.AddCashActivity"/>
-        <activity android:name=".ui.joinedContest.activity.LiveJoinedContestActivity"/>
         <activity android:name=".ui.createTeam.activity.ChooseSubstituteActivity"/>
 
         <meta-data
@@ -172,6 +173,11 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <meta-data
+                android:name="com.razorpay.ApiKey"
+                android:value="rzp_test_4RGhVnbezMvHGW"
+        />
+
     </application>
 
 </manifest>

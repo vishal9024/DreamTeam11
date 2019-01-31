@@ -7,7 +7,6 @@
 <include layout="@layout/app_toolbar"/>
     <include layout="@layout/content_megacontest"/>
     <androidx.core.widget.NestedScrollView
-            android:visibility="gone"
             android:id="@+id/bottom_sheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -176,7 +176,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_view1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
                     android:layout_marginTop="@dimen/_10sdp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -188,6 +188,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:id="@+id/txt_NoContestJoined"
                         android:paddingTop="@dimen/_3sdp"
+                        android:paddingStart="@dimen/_10sdp"
                         android:paddingEnd="@dimen/_2sdp"
                         android:paddingBottom="@dimen/_1sdp"
                         style="@style/TextStyleSemiBold"
@@ -205,7 +206,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         android:id="@+id/txt_NoContestJoinedForMatch"
                         android:paddingTop="@dimen/_3sdp"
-                        android:paddingEnd="@dimen/_2sdp"
+                        android:paddingEnd="@dimen/_10sdp"
                         android:paddingBottom="@dimen/_1sdp"
                         style="@style/TextStyleMedium"
                         android:textSize="@dimen/_10sdp"
@@ -214,7 +215,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/textColorLightBlack"
                 />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                     app:layout_constraintEnd_toEndOf="parent"

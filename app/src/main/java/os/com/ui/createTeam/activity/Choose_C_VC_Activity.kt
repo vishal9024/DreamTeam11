@@ -22,8 +22,9 @@ import os.com.constant.IntentConstant
 import os.com.interfaces.OnClickCVC
 import os.com.interfaces.OnClickDialogue
 import os.com.networkCall.ApiClient
-import os.com.ui.createTeam.adapter.ChooseC_VC_Adapter
+import os.com.ui.createTeam.adapter.cvcAdapter.ChooseC_VC_AdapterMain
 import os.com.ui.createTeam.apiRequest.CreateTeamRequest
+import os.com.ui.createTeam.apiResponse.PlayerListModel
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
@@ -37,11 +38,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         var choose_C_VC_Activity: Choose_C_VC_Activity? = null
     }
 
-    public var isShowingWk = false
-    public var isShowingbat = false
-    public var isShowingbowl = false
-    public var isShowingAr = false
-    public var isShowinSubstitute = false
+    var substituteList: MutableList<Data>? = ArrayList()
     var bowlerList: MutableList<Data>? = ArrayList()
     var arList: MutableList<Data>? = ArrayList()
     var wkList: MutableList<Data>? = ArrayList()
@@ -50,35 +47,37 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     private var captain = ""
     private var vicecaptain = ""
     var selectPlayer: SelectPlayer? = null
-    //    var contest_id = ""
-    override fun onClick(tag: String, position: Int) {
+    override fun onClick(tag: String, type: Int, position: Int) {
         if (tag == "c") {
-            for (i in playerList.indices) {
-                playerList[i].isCaptain = false
+            for (i in playerListCVC.indices) {
+                for (j in playerListCVC[i].playerList!!.indices) {
+                    playerListCVC[i].playerList!![j].isCaptain = false
+                }
+                if (type == playerListCVC[i].type) {
+                    if (playerListCVC[i].playerList!![position].isViceCaptain) {
+                        playerListCVC[i].playerList!![position].isViceCaptain = false
+                        vicecaptain = ""
+                    }
+                    playerListCVC[i].playerList!![position].isCaptain = true
+                    captain = playerListCVC[i].playerList!![position].player_id
+                }
             }
-            if (playerList[position].isViceCaptain) {
-                playerList[position].isViceCaptain = false
-                vicecaptain = ""
-            }
-            playerList[position].isCaptain = true
-            captain = playerList[position].player_id
-            isShowingbat = false
-            isShowingbowl = false
-            isShowingAr = false
             adapter!!.notifyDataSetChanged()
         } else if (tag == "vc") {
-            for (i in playerList.indices) {
-                playerList[i].isViceCaptain = false
+            for (i in playerListCVC.indices) {
+                for (j in playerListCVC[i].playerList!!.indices) {
+                    playerListCVC[i].playerList!![j].isViceCaptain = false
+                }
+                if (type == playerListCVC[i].type) {
+                    if (playerListCVC[i].playerList!![position].isCaptain) {
+                        playerListCVC[i].playerList!![position].isCaptain = false
+                        vicecaptain = ""
+                    }
+                    playerListCVC[i].playerList!![position].isViceCaptain = true
+                    vicecaptain = playerListCVC[i].playerList!![position].player_id
+                }
             }
-            if (playerList[position].isCaptain) {
-                playerList[position].isCaptain = false
-                captain = ""
-            }
-            playerList[position].isViceCaptain = true
-            vicecaptain = playerList[position].player_id
-            isShowingbat = false
-            isShowingbowl = false
-            isShowingAr = false
+
             adapter!!.notifyDataSetChanged()
         }
     }
@@ -92,8 +91,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     AppDelegate.showToast(this, getString(R.string.select_vc))
                 } else if (NetworkUtils.isConnected()) {
                     var player_ids: ArrayList<String> = ArrayList()
-                    for (i in playerList) {
-                        player_ids.add(i.player_id)
+                    for (i in playerListCVC) {
+                        for (j in i.playerList!!)
+                            if (!j.isSubstitute)
+                                player_ids.add(j.player_id)
                     }
                     if (NetworkUtils.isConnected()) {
                         callCreateTeamApi(player_ids)
@@ -109,7 +110,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                         TeamPreviewActivity::class.java
                     ).putParcelableArrayListExtra(
                         IntentConstant.DATA,
-                        playerList as java.util.ArrayList<out Parcelable>
+                        playerListCVC as java.util.ArrayList<out Parcelable>
                     )
                 )
             }
@@ -139,7 +140,6 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         toolbarTitleTv.setText(getString(R.string.choose_c_vc_title))
         setMenu(false, false, false, false)
         getData()
-
         btn_CreateTeam.setOnClickListener(this)
         btn_preview.setOnClickListener(this)
     }
@@ -203,7 +203,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
 
 
         for (i in wkList) {
-            if (i.isSelected) {
+            if (i.isSelected && !i.isSubstitute) {
                 this.wkList!!.add(i)
                 if (i.isCaptain)
                     captain = i.player_id
@@ -211,15 +211,15 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     vicecaptain = i.player_id
             }
             if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-                if (playerList.isEmpty())
+                if (substituteList!!.isEmpty())
                     if (i.isSubstitute) {
                         substitute_id = i.player_id
-                        this.playerList.add(i)
+                        this.substituteList!!.add(i)
                     }
             }
         }
         for (i in arList) {
-            if (i.isSelected) {
+            if (i.isSelected && !i.isSubstitute) {
                 this.arList!!.add(i)
                 if (i.isCaptain)
                     captain = i.player_id
@@ -227,16 +227,16 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     vicecaptain = i.player_id
             }
             if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-                if (playerList.isEmpty())
+                if (substituteList!!.isEmpty())
                     if (i.isSubstitute) {
                         substitute_id = i.player_id
-                        this.playerList.add(i)
+                        this.substituteList!!.add(i)
                     }
             }
 
         }
         for (i in bowlerList) {
-            if (i.isSelected) {
+            if (i.isSelected && !i.isSubstitute) {
                 this.bowlerList!!.add(i)
                 if (i.isCaptain)
                     captain = i.player_id
@@ -244,15 +244,15 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     vicecaptain = i.player_id
             }
             if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-                if (playerList.isEmpty())
+                if (substituteList!!.isEmpty())
                     if (i.isSubstitute) {
                         substitute_id = i.player_id
-                        this.playerList.add(i)
+                        this.substituteList!!.add(i)
                     }
             }
         }
         for (i in batsmenList) {
-            if (i.isSelected) {
+            if (i.isSelected && !i.isSubstitute) {
                 this.batsmenList!!.add(i)
                 if (i.isCaptain)
                     captain = i.player_id
@@ -260,33 +260,64 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                     vicecaptain = i.player_id
             }
             if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-                if (playerList.isEmpty())
+                if (substituteList!!.isEmpty())
                     if (i.isSubstitute) {
                         substitute_id = i.player_id
-                        this.playerList.add(i)
+                        this.substituteList!!.add(i)
                     }
             }
         }
-        playerList.addAll(this.wkList!!)
-        playerList.addAll(this.bowlerList!!)
-        playerList.addAll(this.arList!!)
-        playerList.addAll(this.batsmenList!!)
-        playerList.distinct()
+
+        var player = PlayerListModel()
+        player.type = WK
+        player.playerList = this.wkList!! as ArrayList<Data>
+        playerListCVC.add(player)
+
+        player = PlayerListModel()
+        player.type = AR
+        player.playerList = this.arList!! as ArrayList<Data>
+        playerListCVC.add(player)
+
+        player = PlayerListModel()
+        player.type = BAT
+        player.playerList = this.batsmenList!! as ArrayList<Data>
+        playerListCVC.add(player)
+
+        player = PlayerListModel()
+        player.type = BOWLER
+        player.playerList = this.bowlerList!! as ArrayList<Data>
+        playerListCVC.add(player)
+
+
+        if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+            player = PlayerListModel()
+            player.type = SUBSTITUTE
+            player.playerList = this.substituteList!! as ArrayList<Data>
+            playerListCVC.add(player)
+        }
+        playerListCVC.distinct()
+
         setAdapter()
     }
 
-    var playerList: MutableList<Data> = ArrayList()
-
-    var adapter: ChooseC_VC_Adapter? = null
+    private var WK = 1
+    private var BAT = 2
+    private var AR = 3
+    private var BOWLER = 4
+    private var SUBSTITUTE = 5
+    var playerListCVC: MutableList<PlayerListModel> = ArrayList()
+    var adapter: ChooseC_VC_AdapterMain? = null
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Players!!.layoutManager = llm
-        adapter = ChooseC_VC_Adapter(this, this, playerList.distinct() as MutableList<Data>)
+        adapter = ChooseC_VC_AdapterMain(
+            this,
+            this,
+            playerListCVC
+        )
         rv_Players!!.adapter = adapter
-        adapter!!.notifyItemRangeChanged(0, adapter!!.itemCount)
-
     }
 
     private fun callCreateTeamApi(player_id: ArrayList<String>) {
@@ -311,29 +342,18 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                 val response = request.await()
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
-                if (response.response!!.status!!) {
+                if (response.response!!.status) {
                     if (from != AppRequestCodes.EDIT)
                         FantasyApplication.getInstance().teamCount + 1
-
                     if (createOrJoin == AppRequestCodes.JOIN) {
                         if (NetworkUtils.isConnected()) {
                             checkAmountWallet(
                                 match!!.match_id,
-                                match!!.series_id, contest_id, "", object : OnClickDialogue {
+                                match!!.series_id, contest_id, response.response!!.data!!.team_id, object : OnClickDialogue {
                                     override fun onClick(tag: String, success: Boolean) {
-                                        if (success) {
-                                            val intent = Intent()
-                                            setResult(Activity.RESULT_OK)
-                                            finish()
-                                            if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                                            }
-                                        } else {
-                                            finish()
-                                            if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                                            }
-                                        }
+                                        val intent = Intent()
+                                        setResult(Activity.RESULT_OK, intent)
+                                        finish()
                                     }
                                 }
                             )
@@ -343,33 +363,17 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                                 getString(R.string.error_network_connection),
                                 Toast.LENGTH_LONG
                             ).show()
-                            finish()
-                            if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                            }
                             val intent = Intent()
-                            setResult(Activity.RESULT_OK)
+                            setResult(Activity.RESULT_OK, intent)
+                            finish()
                         }
-
                     } else {
-                        if (from == AppRequestCodes.EDIT || from == AppRequestCodes.CLONE) {
-                            finish()
-                            if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                            }
-                            val intent = Intent()
-                            setResult(Activity.RESULT_OK)
-                        } else {
-                            if (ChooseTeamActivity.chooseTeamActivity != null) {
-                                ChooseTeamActivity.chooseTeamActivity!!.finish()
-                            }
-                            finish()
-                            val intent = Intent()
-                            setResult(Activity.RESULT_OK)
-                        }
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
                     }
                 } else {
-                    AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message!!)
+                    AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)

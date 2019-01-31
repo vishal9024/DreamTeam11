@@ -16,6 +16,7 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseFragment
 import os.com.BuildConfig
@@ -29,10 +30,10 @@ import os.com.ui.dashboard.home.adapter.MatchLiveAdapter
 import os.com.ui.dashboard.home.adapter.PagerAdapter
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
+import os.com.utils.AppDelegate.isNetworkAvailable
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 import kotlin.collections.ArrayList
-
 
 /**
  * Created by heenas on 3/5/2018.
@@ -58,7 +59,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             R.id.txt_Live -> matchSelector(LIVE)
             R.id.txt_Results -> matchSelector(RESULTS)
         }
-
     }
 
     var fixturesMatchList: MutableList<Match> = ArrayList()
@@ -76,7 +76,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 
     private fun initViews() {
         if (!pref!!.isLogin) {
-//            tabLayoutfsl.visibility = GONE
             tabLayout.visibility = GONE
             txt_toolbartitle.visibility = View.VISIBLE
             ll_matchSelector.visibility = View.GONE
@@ -109,7 +108,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         setCompletedAdapter()
         setLiveAdapter()
         if (NetworkUtils.isConnected()) {
-            callGetMatchListApi()
+            callGetMatchListApi(VISIBLE)
         } else
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
@@ -119,7 +118,23 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)
+        swipeToRefresh.setOnRefreshListener {
+            if (isNetworkAvailable(activity!!))
+                refreshItems()
+        }
+    }
 
+    private fun refreshItems() {
+        GlobalScope.launch {
+            delay(200)
+            try {
+                if (isAdded)
+                    if (isNetworkAvailable(activity!!))
+                        callGetMatchListApi(View.GONE)
+            } catch (e: Exception) {
+                swipeToRefresh.isRefreshing = false
+            }
+        }
     }
 
     private fun initTabLayout(tabLayout: TabLayout) {
@@ -256,7 +271,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         recyclerView_CompleteMatch!!.adapter = completedAdapter
     }
 
-    private fun callGetMatchListApi() {
+    private fun callGetMatchListApi(visibility: Int) {
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -264,7 +279,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)
                 return@launch
-            AppDelegate.showProgressDialog(activity!!)
+            if (visibility == VISIBLE)
+                AppDelegate.showProgressDialog(activity!!)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
@@ -272,6 +288,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                 val response = request.await()
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(activity)
+                swipeToRefresh.isRefreshing = false
                 if (response.response!!.status) {
 //                    AppDelegate.showToast(activity, response.response!!.message)
                     fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
@@ -288,6 +305,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 //                    AppDelegate.showToast(activity, response.response!!.message)
                 }
             } catch (exception: Exception) {
+                swipeToRefresh.isRefreshing = false
                 AppDelegate.hideProgressDialog(activity)
             }
         }

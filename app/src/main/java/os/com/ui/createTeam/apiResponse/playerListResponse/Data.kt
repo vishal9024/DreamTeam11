@@ -21,6 +21,7 @@ class Data() : Parcelable {
     var isCaptain = false
     var isViceCaptain = false
 
+
     constructor(parcel: Parcel) : this() {
         id = parcel.readString()
         series_id = parcel.readString()

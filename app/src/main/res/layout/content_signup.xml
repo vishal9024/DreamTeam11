@@ -204,10 +204,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_register"
                 style="@style/TextStyleLight"
                 android:textColor="@color/textColorLightBlack"
                 android:layout_width="wrap_content"
-                android:text="@string/by_registering_i_agree_to_playing_11_s_t_amp_cs"
+                android:text="@string/by_registering_i_agree_to"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_10sdp"
                 android:backgroundTint="@color/colorBackgroundLoginFacebook"

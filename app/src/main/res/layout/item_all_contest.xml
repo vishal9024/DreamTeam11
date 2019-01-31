@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.LinearLayoutCompat
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:padding="@dimen/_5sdp"
                     android:id="@+id/ll_practice"
                     android:orientation="horizontal"
@@ -53,24 +53,21 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
                 <androidx.appcompat.widget.LinearLayoutCompat
-                        android:paddingStart="@dimen/_9sdp"
-                        android:paddingTop="@dimen/_5sdp"
-                        android:paddingEnd="@dimen/_9sdp"
                         android:orientation="vertical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextStyleSemiBold"
-                            android:gravity="start"
-                            android:textSize="@dimen/_11sdp"
-                            android:layout_width="match_parent"
-                            android:textColor="@color/textColorBlack"
-                            android:text="@string/entry"
-                            android:layout_height="wrap_content"/>
+                        style="@style/TextStyleNormal"
+                        android:gravity="start"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/textColorGray"
+                        android:text="@string/entry"
+                        android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextStyleNormal"
                             android:gravity="end"
-                            android:textSize="@dimen/_9sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:textSize="@dimen/_11sdp"
                             android:layout_width="match_parent"
                             android:textColor="@color/textColorLightBlack"
                             android:text="@string/Rs_0"
@@ -79,6 +76,7 @@
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
             <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/ll_scoreBoard"
                     android:layout_marginTop="@dimen/_5sdp"
                     card_view:layout_constraintStart_toStartOf="parent"
@@ -165,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorGray"
-                            android:text="@string/entry_fee"
+                            android:text="@string/entry"
 
                     />
                     <androidx.appcompat.widget.AppCompatTextView

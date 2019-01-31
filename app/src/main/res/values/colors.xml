@@ -11,5 +11,6 @@
     <color name="green">#67c767</color>
     <color name="greenlightText">#6bb76b</color>
     <color name="yellow">#ead303</color>
-
+    <color name="captainColor">#CA2B30</color>
+    <color name="vicecaptainColor">#F57E23</color>
 </resources>

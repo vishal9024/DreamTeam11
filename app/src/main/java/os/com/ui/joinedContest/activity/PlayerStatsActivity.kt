@@ -17,6 +17,7 @@ import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.PlayerStatsAdapter
+import os.com.ui.joinedContest.apiResponse.getSeriesPlayerListResponse.Data
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 
@@ -51,6 +52,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         } else
             AppDelegate.showToast(this, getString(R.string.error_network_connection))
     }
+    var playerPoints:ArrayList<Data> = ArrayList()
     private fun callPlayerStatsApi() {
         try {
             val map = HashMap<String, String>()
@@ -64,11 +66,12 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                 try {
                     val request = ApiClient.client
                         .getRetrofitService()
-                        .getJoinedContestlist(map)
+                        .getSeriesPlayerList(map)
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@PlayerStatsActivity)
                     if (response.response!!.status) {
+                        playerPoints=response.response!!.data!!
                             setAdapter()
                     } else {
                     }
@@ -85,7 +88,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Players!!.layoutManager = llm
-        rv_Players!!.adapter = PlayerStatsAdapter(this)
+        rv_Players!!.adapter = PlayerStatsAdapter(this, playerPoints,matchType)
     }
 
 

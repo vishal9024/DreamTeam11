@@ -2,6 +2,9 @@ package os.com.networkCall
 
 import kotlinx.coroutines.Deferred
 import os.com.networkCall.responseModel.BaseResponse
+import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
+import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
+import os.com.ui.addCash.apiResponse.generatePaytmChecksumResponse.GeneratePaytmChecksumResponse
 import os.com.ui.contest.apiResponse.getContestDetail.GetContestDetailResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
 import os.com.ui.contest.apiResponse.joinContestResponse.JoinContestResponse
@@ -9,11 +12,14 @@ import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.JoinContest
 import os.com.ui.contest.apiResponse.matchScoreResponse.MatchScoreResponse
 import os.com.ui.createTeam.apiRequest.CreateTeamRequest
 import os.com.ui.createTeam.apiRequest.SwitchTeamRequest
+import os.com.ui.createTeam.apiResponse.createTeamResponse.CreateTeamResponse
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
 import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
+import os.com.ui.invite.apiResponse.getContestInviteResponse.GetContestInviteResponse
+import os.com.ui.joinedContest.apiResponse.getSeriesPlayerListResponse.GetSeriesPlayerListResponse
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedFixtureListResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
@@ -73,7 +79,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.create_team)
-    fun create_team(@Body request: CreateTeamRequest): Deferred<BaseResponse>
+    fun create_team(@Body request: CreateTeamRequest): Deferred<CreateTeamResponse>
 
 
     @Headers("Content-Type: application/json")
@@ -118,6 +124,23 @@ interface ApiInterface {
     fun contest_detail(@Body request: Map<String, String>): Deferred<GetContestDetailResponse>
 
     @Headers("Content-Type: application/json")
-    @POST(ApiConstant.match_scores)
+    @POST(ApiConstant.team_scores)
     fun match_scores(@Body request: Map<String, String>): Deferred<MatchScoreResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.apply_contest_invite_code)
+    fun apply_contest_invite_code(@Body request: Map<String, String>): Deferred<GetContestInviteResponse>
+
+    @POST(ApiConstant.joined_contest_matches)
+    fun joined_contest_matches(@Body request: Map<String, String>): Deferred<GetMatchResponse>
+
+    @POST(ApiConstant.getSeriesPlayerList)
+    fun getSeriesPlayerList(@Body request: Map<String, String>): Deferred<GetSeriesPlayerListResponse>
+
+    @POST(ApiConstant.generate_paytm_checksum)
+    fun generate_paytm_checksum(@Body request: GeneratePayTmCheckSumRequest): Deferred<GeneratePaytmChecksumResponse>
+
+    @POST(ApiConstant.update_transactions)
+    fun update_transactions(@Body request: UpdateTransactionRequest): Deferred<GeneratePaytmChecksumResponse>
+
 }

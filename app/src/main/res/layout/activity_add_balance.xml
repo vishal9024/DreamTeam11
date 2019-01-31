@@ -79,7 +79,7 @@
                             android:theme="@style/EditTextLabel">
                         <com.google.android.material.textfield.TextInputEditText
                                 style="@style/EditTextStyle"
-                                android:id="@+id/et_NewPassword"
+                                android:id="@+id/et_addCash"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/amount_to_add"

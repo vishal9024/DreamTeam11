@@ -31,7 +31,6 @@ import os.com.utils.networkUtils.NetworkUtils
 class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals(Tags.clone)) {
-            callApi=true
             startActivityForResult(
                 Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
@@ -45,7 +44,6 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 AppRequestCodes.CLONE
             )
         } else if (tag.equals(Tags.edit)) {
-            callApi=true
             startActivityForResult(
                 Intent(this, ChooseTeamActivity::class.java).putExtra(
                     IntentConstant.DATA,
@@ -60,14 +58,12 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
             )
         }
     }
-    var callApi=false
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_CreateTeam -> {
-                callApi=true
                 startActivityForResult(
                     Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
@@ -83,11 +79,6 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
         super.onResume()
             var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
             btn_CreateTeam.text = getString(R.string.create_team) + " " + count
-        if (callApi)
-            if (NetworkUtils.isConnected()) {
-                callGetTeamListApi()
-            } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -149,7 +140,6 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
 
     var data: ArrayList<Data> = ArrayList()
     private fun callGetTeamListApi() {
-       callApi= false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id

@@ -23,46 +23,10 @@ object ApiConstant {
             BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL
             BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL
             BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL
-            else -> BuildConfig.APPLICATION_ID == "os.realbash"
+            BuildConfig.APPLICATION_ID == "os.realbash"-> return realBashBaseURL
         }
         return realBashBaseURL
     }
-
-//    Fsl
-//    https://72.octallabs.com/fsl/pages/index.html
-//    https://72.octallabs.com/fsl/pages/point_system.html
-//    https://72.octallabs.com/fsl/pages/static.html
-//    https://72.octallabs.com/fsl/pages/static_tab.html
-//
-//    realBash
-//    https://72.octallabs.com/realBash/pages/index.html
-//    https://72.octallabs.com/realBash/pages/point_system.html
-//    https://72.octallabs.com/realBash/pages/static.html
-//    https://72.octallabs.com/realBash/pages/static_tab.html
-//
-//    playing11
-//    https://72.octallabs.com/playing11/pages/index.html
-//    https://72.octallabs.com/playing11/pages/point_system.html
-//    https://72.octallabs.com/playing11/pages/static.html
-//    https://72.octallabs.com/playing11/pages/static_tab.html
-//
-//    dreamstock11
-//    https://72.octallabs.com/dreamstock11/pages/index.html
-//    https://72.octallabs.com/dreamstock11/pages/point_system.html
-//    https://72.octallabs.com/dreamstock11/pages/static.html
-//    https://72.octallabs.com/dreamstock11/pages/static_tab.html
-//
-//    real11
-//    https://72.octallabs.com/real11/pages/index.html
-//    https://72.octallabs.com/real11/pages/point_system.html
-//    https://72.octallabs.com/real11/pages/static.html
-//    https://72.octallabs.com/real11/pages/static_tab.html
-//
-//    cashfantasy
-//    https://72.octallabs.com/cashfantasy/pages/index.html
-//    https://72.octallabs.com/cashfantasy/pages/point_system.html
-//    https://72.octallabs.com/cashfantasy/pages/static.html
-//    https://72.octallabs.com/cashfantasy/pages/static_tab.html
 
     const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
     const val CricsetWebViewURL = "https://72.octallabs.com/dreamstock11/"
@@ -93,8 +57,6 @@ object ApiConstant {
     const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
     const val legality_tab = "pages/legality.html"
 
-
-
     const val signup = "signup"
     const val verify_otp = "verify-otp"
     const val resend_otp = "resend-otp"
@@ -116,6 +78,12 @@ object ApiConstant {
     const val contest_price_breakup = "contest-price-breakup"
     const val logout = "logout"
     const val contest_detail = "contest-detail"
-    const val switch_team="switch-team"
-    const val match_scores="match-scores"
+    const val switch_team = "switch-team"
+    const val match_scores = "match-scores"
+    const val apply_contest_invite_code = "apply-contest-invite-code"
+    const val joined_contest_matches = "joined-contest-matches"
+    const val team_scores = "team-scores"
+    const val getSeriesPlayerList = "getSeriesPlayerList"
+    const val generate_paytm_checksum="generate-paytm-checksum"
+const val update_transactions="update-transactions"
 }

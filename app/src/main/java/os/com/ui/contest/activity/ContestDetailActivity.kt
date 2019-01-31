@@ -23,12 +23,14 @@ import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.OnClickDialogue
+import os.com.interfaces.OnClickRecyclerView
 import os.com.networkCall.ApiClient
 import os.com.ui.contest.adapter.TeamsAdapter
 import os.com.ui.contest.apiResponse.getContestDetail.Data
 import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.createTeam.activity.ChooseTeamActivity
+import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedContestData
@@ -37,17 +39,37 @@ import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 
 
-class ContestDetailActivity : BaseActivity(), View.OnClickListener {
-    var callApi = false
+class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
+
+
+    //    var callApi = false
+    public fun prepareShareIntent(shareCode: String) {
+        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareCode)
+        sharingIntent.type = "text/plain";
+        startActivity(Intent.createChooser(sharingIntent, "Invite"))
+    }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
+            R.id.btn_InviteFriends -> {
+                var shareCode = ""
+                shareCode =
+                        "You've been challanged! \n\nThink you can beat me? Join the contest on " +
+                        getString(R.string.app_name) + " for the " + match!!.series_name +
+                        " match and prove it! \n\nUse Contest Code " + data!!.invite_code.capitalize() +
+                        " & join the action NOW!"
+
+                prepareShareIntent(shareCode)
+            }
             R.id.txt_switch_team -> {
-                callApi = true
+//                callApi = true
                 var contest_id = ""
                 if (from == AppRequestCodes.JOINED)
                     contest_id = joinedContest!!.contest_id
-                else
-                    contest!!.contest_id
+                else if (from == AppRequestCodes.INVITE_CONTEST)
+                    contest_id = this.contest_id
+                else contest_id = contest!!.contest_id
                 startActivityForResult(
                     Intent(this, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                         IntentConstant.CONTEST_TYPE,
@@ -59,100 +81,119 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 )
             }
             R.id.btn_joinContest -> {
-                var contest_id = ""
-                if (from == AppRequestCodes.JOINED)
-                    contest_id = joinedContest!!.contest_id
-                else
-                    contest!!.contest_id
-                callApi = true
-                startActivityForResult(
-                    Intent(this, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                        IntentConstant.CONTEST_TYPE,
-                        matchType
-                    ).putExtra(IntentConstant.CONTEST_ID, contest_id)
-                        .putExtra(IntentConstant.FOR, AppRequestCodes.JOIN_PLUS)
-                        .putExtra(IntentConstant.TEAM_ID, data!!.my_team_ids), AppRequestCodes.UPDATEVIEW
-                )
+                joinContest()
             }
             R.id.ll_winners -> {
-                if (from == AppRequestCodes.JOINED) {
-                    if (!joinedContest!!.total_winners.isEmpty() && joinedContest!!.total_winners.toInt() > 0)
-                        callWinningBreakupApi(
-                            joinedContest!!.contest_id,
-                            data!!.breakup_detail!!,
-                            joinedContest!!.prize_money
-                        )
-                } else {
-                    if (!contest!!.total_winners.isEmpty() && contest!!.total_winners.toInt() > 0)
-                        callWinningBreakupApi(
-                            contest!!.contest_id,
-                            data!!.breakup_detail!!,
-                            contest!!.prize_money
-                        )
-                }
-            }
-            R.id.txt_Join -> {
                 var contest_id = ""
                 if (from == AppRequestCodes.JOINED)
                     contest_id = joinedContest!!.contest_id
-                else
-                    contest!!.contest_id
-                if (!data!!.is_joined)
-                    if (FantasyApplication.getInstance().teamCount == 0) {
-                        callApi = true
-                        startActivityForResult(
-                            Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                                IntentConstant.CONTEST_TYPE,
-                                matchType
-                            ).putExtra(IntentConstant.CONTEST_ID, contest_id)
-                                .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
-                            AppRequestCodes.UPDATE_ACTIVITY
-                        )
-                    } else if (FantasyApplication.getInstance().teamCount == 1) {
+                else if (from == AppRequestCodes.INVITE_CONTEST)
+                    contest_id = this.contest_id
+                else contest_id = contest!!.contest_id
 
-                        if (NetworkUtils.isConnected()) {
-                            checkAmountWallet(
-                                match!!.match_id,
-                                match!!.series_id, contest_id, "", object : OnClickDialogue {
-                                    override fun onClick(tag: String, success: Boolean) {
-                                    }
-                                }
-                            )
-                        } else
-                            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-                    } else {
-                        callApi = true
-                        startActivityForResult(
-                            Intent(this, MyTeamSelectActivity::class.java).putExtra(
-                                IntentConstant.MATCH, match
-                            )
-                                .putExtra(IntentConstant.CONTEST_TYPE, matchType).putExtra(
-                                    IntentConstant.CONTEST_ID,
-                                    contest_id
-                                )
-                                .putExtra(IntentConstant.FOR, AppRequestCodes.JOIN), AppRequestCodes.UPDATEVIEW
-                        )
-                    }
+                if (!data!!.total_winners.isEmpty() && data!!.total_winners.toInt() > 0)
+                    callWinningBreakupApi(
+                        contest_id,
+                        data!!.breakup_detail!!,
+                        data!!.prize_money
+                    )
+            }
+            R.id.txt_Join -> {
+
+                joinContest()
             }
         }
     }
+
+    fun joinContest() {
+        var contest_id = ""
+        if (from == AppRequestCodes.JOINED)
+            contest_id = joinedContest!!.contest_id
+        else if (from == AppRequestCodes.INVITE_CONTEST)
+            contest_id = this.contest_id
+        else contest_id = contest!!.contest_id
+
+//    if (!data!!.is_joined)
+        if (FantasyApplication.getInstance().teamCount == 0) {
+//            callApi = true
+            startActivityForResult(
+                Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE,
+                    matchType
+                ).putExtra(IntentConstant.CONTEST_ID, contest_id)
+                    .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+                AppRequestCodes.UPDATE_ACTIVITY
+            )
+        } else if (FantasyApplication.getInstance().teamCount == 1) {
+            if (NetworkUtils.isConnected()) {
+                checkAmountWallet(
+                    match!!.match_id,
+                    match!!.series_id, contest_id, "", object : OnClickDialogue {
+                        override fun onClick(tag: String, success: Boolean) {
+                            callContestDetailApi()
+                        }
+                    }
+                )
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+        } else {
+            if (!data!!.is_joined)
+                startActivityForResult(
+                    Intent(this, MyTeamSelectActivity::class.java).putExtra(
+                        IntentConstant.MATCH, match
+                    )
+                        .putExtra(IntentConstant.CONTEST_TYPE, matchType).putExtra(
+                            IntentConstant.CONTEST_ID,
+                            contest_id
+                        )
+                        .putExtra(IntentConstant.FOR, AppRequestCodes.JOIN), AppRequestCodes.UPDATEVIEW
+                )
+            else {
+                if (data!!.my_team_ids!!.size == FantasyApplication.getInstance().teamCount) {
+                    startActivityForResult(
+                        Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, contest_id)
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+                        AppRequestCodes.UPDATE_ACTIVITY
+                    )
+                } else {
+                    startActivityForResult(
+                        Intent(this, MyTeamSelectActivity::class.java).putExtra(
+                            IntentConstant.MATCH,
+                            match
+                        ).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.TEAM_ID, data!!.my_team_ids)
+                            .putExtra(IntentConstant.CONTEST_ID, contest_id).putExtra(
+                                IntentConstant.FOR,
+                                AppRequestCodes.JOIN_PLUS
+                            ), AppRequestCodes.UPDATEVIEW
+                    )
+                }
+            }
+        }
+    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK)
             if (NetworkUtils.isConnected()) {
-//                callGetTeamListApi()
+                callContestDetailApi()
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
     }
 
     override fun onResume() {
         super.onResume()
-        if (callApi)
-            if (NetworkUtils.isConnected()) {
-                callContestDetailApi()
-            } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+//        if (callApi)
+//            if (NetworkUtils.isConnected()) {
+//                callContestDetailApi()
+//            } else
+//                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
     }
 
     var joinedContest: JoinedContestData? = null
@@ -160,6 +201,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
+    var contest_id = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_megacontest)
@@ -174,16 +216,18 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
             from = intent.getIntExtra(IntentConstant.FROM, 0)
             if (from == AppRequestCodes.JOINED)
                 joinedContest = intent.getParcelableExtra(IntentConstant.DATA)
+            else if (from == AppRequestCodes.INVITE_CONTEST)
+                contest_id = intent.getStringExtra(IntentConstant.DATA)
             else
                 contest = intent.getParcelableExtra(IntentConstant.DATA)
-            var localTeamName=match!!.local_team_name
-            var visitorTeamName=match!!.visitor_team_name
-            if (match!!.local_team_name.length>5)
-                localTeamName=match!!.local_team_name.substring(0,4)
-            if (match!!.visitor_team_name.length>5)
-                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+            var localTeamName = match!!.local_team_name
+            var visitorTeamName = match!!.visitor_team_name
+            if (match!!.local_team_name.length > 5)
+                localTeamName = match!!.local_team_name.substring(0, 4)
+            if (match!!.visitor_team_name.length > 5)
+                visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+            txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
@@ -201,7 +245,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.contest_detail)
         setMenu(false, false, false, false)
-        setData()
         if (NetworkUtils.isConnected()) {
             callContestDetailApi()
         } else
@@ -223,61 +266,43 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
         btn_joinContest.setOnClickListener(this)
         txt_Join.setOnClickListener(this)
         txt_switch_team.setOnClickListener(this)
+        btn_InviteFriends.setOnClickListener(this)
+
     }
 
-    private fun setData() {
-        if (from == AppRequestCodes.JOINED) {
-            txt_TotalWinnings.text = getString(R.string.Rs) + " " +
-                    joinedContest!!.prize_money
-            txt_Winners.text = joinedContest!!.total_winners
-            txt_EntryFee.text = getString(R.string.Rs) + " " +
-                    joinedContest!!.entry_fee
-            txt_EndValue.text = joinedContest!!.total_teams + " " +
-                    getString(R.string.teams)
+    private fun setdata(data: Data) {
+        txt_TotalWinnings.text = getString(R.string.Rs) + " " +
+                data.prize_money
+        txt_Winners.text = data.total_winners
+        txt_EntryFee.text = getString(R.string.Rs) + " " +
+                data.entry_fee
+        txt_EndValue.text = data.total_teams + " " +
+                getString(R.string.teams)
 
-            if (!joinedContest!!.total_teams.isEmpty() && !joinedContest!!.teams_joined.isEmpty()) {
-                val strtValue =
-                    joinedContest!!.total_teams.toInt() - joinedContest!!.teams_joined.toInt()
-                txt_StartValue.text = getString(R.string.only) + " " + strtValue.toString() + " " +
-                        getString(R.string.spots_left)
-                crs_Progress.setMinValue(0f)
-                crs_Progress.setMaxValue(joinedContest!!.total_teams.toFloat())
-                crs_Progress.setMinStartValue(0f);
-                crs_Progress.setMaxStartValue(joinedContest!!.teams_joined.toFloat());
-                crs_Progress.apply();
-            }
-        } else {
-            txt_TotalWinnings.text = getString(R.string.Rs) + " " +
-                    contest!!.prize_money
-            txt_Winners.text = contest!!.total_winners
-            txt_EntryFee.text = getString(R.string.Rs) + " " +
-                    contest!!.entry_fee
-            txt_EndValue.text = contest!!.total_teams + " " +
-                    getString(R.string.teams)
-
-            if (!contest!!.total_teams.isEmpty() && !contest!!.teams_joined.isEmpty()) {
-                val strtValue =
-                    contest!!.total_teams.toInt() - contest!!.teams_joined.toInt()
-                txt_StartValue.text = getString(R.string.only) + " " + strtValue.toString() + " " +
-                        getString(R.string.spots_left)
-                crs_Progress.setMinValue(0f)
-                crs_Progress.setMaxValue(contest!!.total_teams.toFloat())
-                crs_Progress.setMinStartValue(0f);
-                crs_Progress.setMaxStartValue(contest!!.teams_joined.toFloat());
-                crs_Progress.apply();
-            }
+        if (!data.total_teams.isEmpty() && !data.teams_joined.isEmpty()) {
+            val strtValue =
+                data.total_teams.toInt() - data.teams_joined.toInt()
+            txt_StartValue.text = getString(R.string.only) + " " + strtValue.toString() + " " +
+                    getString(R.string.spots_left)
+            crs_Progress.setMinValue(0f)
+            crs_Progress.setMaxValue(data.total_teams.toFloat())
+            crs_Progress.setMinStartValue(0f);
+            crs_Progress.setMaxStartValue(data.teams_joined.toFloat());
+            crs_Progress.apply();
         }
     }
 
     var data: Data? = null
     private fun callContestDetailApi() {
-        callApi = false
+//        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         if (from == AppRequestCodes.JOINED)
             loginRequest[Tags.contest_id] = joinedContest!!.contest_id
+        else if (from == AppRequestCodes.INVITE_CONTEST)
+            loginRequest[Tags.contest_id] = contest_id
         else
             loginRequest[Tags.contest_id] = contest!!.contest_id
         loginRequest[Tags.match_id] = match!!.match_id
@@ -294,6 +319,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
                 if (response.response!!.status) {
                     data = response.response!!.data!!
+                    setdata(data!!)
                     UpdateView(data!!)
 
                 } else {
@@ -378,14 +404,68 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener {
                 txt_Join.text = getString(R.string.join_this_contest)
             }
         }
-        setAdapter(data.joined_team_list!!)
+        joined_team_list = data.joined_team_list!!
+        setAdapter()
     }
 
+    var joined_team_list: ArrayList<Team> = ArrayList()
     @SuppressLint("WrongConstant")
-    private fun setAdapter(joined_team_list: ArrayList<Team>) {
+    private fun setAdapter() {
+        joined_team_list.sortedWith(Comparator { t: Team, u: Team -> t.user_id.compareTo(pref!!.userdata!!.user_id) })
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = TeamsAdapter(this, joined_team_list)
+        rv_Contest!!.adapter = TeamsAdapter(this, joined_team_list, this)
+    }
+
+    override fun onClickItem(tag: String, position: Int) {
+        if (tag.equals("Preview")) {
+            callGetTeamListApi(
+                joined_team_list[position].user_id,
+                joined_team_list[position].team_no,
+                joined_team_list[position].team_name
+            )
+        }
+    }
+
+    private fun callGetTeamListApi(user_id: String, teamNo: String, team_name: String) {
+        val loginRequest = HashMap<String, String>()
+        loginRequest[Tags.user_id] = user_id
+        loginRequest[Tags.team_no] = teamNo
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.match_id] = match!!.match_id
+        loginRequest[Tags.series_id] = match!!.series_id
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@ContestDetailActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .player_team_list(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@ContestDetailActivity)
+                if (response.response!!.status) {
+                    var teamName = getString(R.string.team) + teamNo
+                    if (!team_name.isEmpty()) {
+                        teamName = team_name + "(T" + teamNo + ")"
+                    }
+                    startActivity(
+                        Intent(this@ContestDetailActivity, TeamPreviewActivity::class.java)
+                            .putExtra("show", 1)
+                            .putExtra(IntentConstant.DATA, response.response!!.data!![0])
+                            .putParcelableArrayListExtra(
+                                IntentConstant.SELECT_PLAYER,
+                                response.response!!.data!![0].player_details
+                            )
+                            .putExtra("substitute", response.response!!.data!![0].substitute_detail)
+                            .putExtra("teamName", teamName)
+                            .putExtra("points",true)
+                    )
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@ContestDetailActivity)
+            }
+        }
     }
 }

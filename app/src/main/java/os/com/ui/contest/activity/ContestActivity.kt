@@ -54,14 +54,15 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 R.id.rl_enterContestCode -> {
                     startActivity(Intent(this, InviteCodeActivity::class.java))
                 }
-                R.id.btn_CreateTeam->{
-                    callApi=true
+                R.id.btn_CreateTeam -> {
+//                    callApi = true
                     startActivityForResult(
                         Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                             IntentConstant.CONTEST_TYPE,
                             matchType
                         ).putExtra(IntentConstant.CONTEST_ID, "")
-                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),   AppRequestCodes.UPDATE_ACTIVITY
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE),
+                        AppRequestCodes.UPDATE_ACTIVITY
                     )
                 }
                 R.id.rl_createContest -> {
@@ -88,6 +89,16 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                             .putExtra(IntentConstant.CONTEST_TYPE, matchType)
                     )
                 }
+                R.id.card_view -> {
+                    startActivity(
+                        Intent(
+                            this,
+                            AllContestActivity::class.java
+                        ).putParcelableArrayListExtra(IntentConstant.DATA, contests!!)
+                            .putExtra(IntentConstant.MATCH, match)
+                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                    )
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -101,7 +112,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-    var callApi = false
+//    var callApi = false
     override fun onResume() {
         super.onResume()
         if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
@@ -115,11 +126,11 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         }
         txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
-        if (callApi)
-            if (NetworkUtils.isConnected()) {
-                callGetContestListApi()
-            } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+//        if (callApi)
+//            if (NetworkUtils.isConnected()) {
+//                callGetContestListApi()
+//            } else
+//                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
     }
 
@@ -146,14 +157,14 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             toolbarTitleTv.setText(R.string.contest)
             setMenu(false, true, true, false)
             setAdapter()
-            var localTeamName=match!!.local_team_name
-            var visitorTeamName=match!!.visitor_team_name
-            if (match!!.local_team_name.length>5)
-                localTeamName=match!!.local_team_name.substring(0,4)
-            if (match!!.visitor_team_name.length>5)
-                visitorTeamName=match!!.visitor_team_name.substring(0,4)
+            var localTeamName = match!!.local_team_name
+            var visitorTeamName = match!!.visitor_team_name
+            if (match!!.local_team_name.length > 5)
+                localTeamName = match!!.local_team_name.substring(0, 4)
+            if (match!!.visitor_team_name.length > 5)
+                visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-            txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+            txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
@@ -169,23 +180,23 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
-
-        rl_enterContestCode.setOnClickListener(this)
-        rl_createContest.setOnClickListener(this)
-        btn_CreateTeam.setOnClickListener(this)
-        ll_myteam.setOnClickListener(this)
-        ll_joinedContests.setOnClickListener(this)
-        ll_AllContest.setOnClickListener(this)
-        val mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
-        //By default set BottomSheet Behavior as Collapsed and Height 0
-        mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        mBottomSheetBehavior.peekHeight = 0
-        //If you want to handle callback of Sheet Behavior you can use below code
-        mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
-            override fun onStateChanged(bottomSheet: View, newState: Int) {
-                when (newState) {
+            card_view.setOnClickListener(this)
+            rl_enterContestCode.setOnClickListener(this)
+            rl_createContest.setOnClickListener(this)
+            btn_CreateTeam.setOnClickListener(this)
+            ll_myteam.setOnClickListener(this)
+            ll_joinedContests.setOnClickListener(this)
+            ll_AllContest.setOnClickListener(this)
+            val mBottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet)
+            //By default set BottomSheet Behavior as Collapsed and Height 0
+            mBottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            mBottomSheetBehavior.peekHeight = 0
+            //If you want to handle callback of Sheet Behavior you can use below code
+            mBottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+                override fun onStateChanged(bottomSheet: View, newState: Int) {
+                    when (newState) {
+                    }
                 }
-            }
 
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
@@ -193,7 +204,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     fun filterBootomSheet() {
@@ -218,9 +228,9 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 val bottomSheetDialogFragment = BottomSheetFilterFragment()
                 var bundle = Bundle()
                 bundle.putParcelableArrayList(Tags.DATA, contests)
-                bundle .putParcelable(IntentConstant.MATCH, match)
-                bundle .putInt(IntentConstant.CONTEST_TYPE, matchType)
-                bundle .putInt(IntentConstant.FROM, 0)
+                bundle.putParcelable(IntentConstant.MATCH, match)
+                bundle.putInt(IntentConstant.CONTEST_TYPE, matchType)
+                bundle.putInt(IntentConstant.FROM, 0)
                 bottomSheetDialogFragment.arguments = bundle
                 bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
                 return true
@@ -232,8 +242,8 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
     var joined_contest = 0
     var contests: ArrayList<Contest>? = ArrayList()
     var contestList: ArrayList<ContestCategory> = ArrayList()
-    private fun callGetContestListApi() {
-        callApi=false
+    public fun callGetContestListApi() {
+//        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -276,9 +286,11 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                         }
                     }
                     if (contestList.isEmpty()) {
+                        card_view.visibility = View.GONE
                         ll_viewTeam.visibility = View.GONE
                         btn_CreateTeam.visibility = GONE
                     }
+                    contests!!.clear()
                     for (contest in contestList) {
                         contests!!.addAll(contest.contests!!)
                         txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
@@ -306,5 +318,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         rv_Contest!!.layoutManager = llm
         contestMainAdapter = ContestMainAdapter(this, contestList, match, matchType)
         rv_Contest!!.adapter = contestMainAdapter
+        if (!contestList.isEmpty())
+            card_view.visibility = View.VISIBLE
     }
 }

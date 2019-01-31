@@ -10,7 +10,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/cimg_player"
             android:layout_marginStart="@dimen/_3sdp"
-            android:src="@mipmap/cricketer"
+            android:src="@drawable/com_facebook_profile_picture_blank_square"
             android:layout_width="@dimen/_25sdp"
             android:layout_height="@dimen/_25sdp"/>
     <androidx.appcompat.widget.AppCompatTextView

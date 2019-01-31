@@ -115,5 +115,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
+
+    /*Paytm plugin*/
+    implementation 'com.paytm:pgplussdk:1.1.2'
+    /*RazorPay Plugin*/
+    implementation 'com.razorpay:checkout:1.5.2'
+
 }
 apply plugin: 'com.google.gms.google-services'

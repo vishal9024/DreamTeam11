@@ -14,7 +14,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal"
             android:padding="@dimen/_9sdp"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
@@ -58,7 +57,6 @@
                 android:descendantFocusability="blocksDescendants"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
             <androidx.cardview.widget.CardView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -75,7 +73,6 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:padding="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -99,6 +96,7 @@
                             card_view:layout_constraintTop_toBottomOf="@+id/txt_scoreBoard"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent"
+                            android:paddingBottom="@dimen/_8sdp"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
@@ -108,13 +106,13 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txt_localTeamScore"
                                     style="@style/TextStyleMedium"
                                     android:textSize="@dimen/_9sdp"
                                     android:layout_gravity="center_vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/textColorBlack"
-                                    android:text="BAN  211-4 (20.0)"
 
                             />
 
@@ -122,11 +120,13 @@
                         <View android:layout_width="0.5dp" android:layout_height="match_parent"
                               android:background="@color/textColorBlack"/>
                         <LinearLayout
+                                android:id="@+id/ll_visitorTeamScore"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content">
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txt_visitorTeamScore"
                                     style="@style/TextStyleMedium"
                                     android:textSize="@dimen/_9sdp"
                                     android:gravity="center"
@@ -134,7 +134,6 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/textColorBlack"
-                                    android:text="WI  211-4 (20.0)"
 
                             />
                         </LinearLayout>
@@ -145,7 +144,7 @@
                             card_view:layout_constraintTop_toBottomOf="@+id/ll_score"
                             android:id="@+id/txt_WinBy"
                             android:gravity="start"
-                            android:paddingTop="@dimen/_8sdp"
+
                             android:paddingEnd="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_5sdp"
                             style="@style/TextStyleMedium"
@@ -154,7 +153,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorGray"
-                            android:text="BAN wins by 36 runs"
                     />
                     <View
                             card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
@@ -165,7 +163,7 @@
                             card_view:layout_constraintTop_toBottomOf="@+id/txt_WinBy"
                             android:id="@+id/txt_ViewPlayerStats"
                             android:drawablePadding="@dimen/_8sdp"
-                            android:paddingTop="@dimen/_3sdp"
+                            android:paddingTop="@dimen/_8sdp"
                             android:paddingEnd="@dimen/_2sdp"
                             android:paddingBottom="@dimen/_1sdp"
                             android:drawableEnd="@mipmap/arrow_setting"
@@ -182,6 +180,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -205,17 +204,71 @@
                         android:padding="@dimen/_5sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                            android:visibility="gone"
+                            android:padding="@dimen/_3sdp"
+                            android:id="@+id/ll_practice"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:paddingEnd="@dimen/_9sdp"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleMedium"
+                                    android:gravity="start"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorBlack"
+                                    android:text="@string/prectice_contest"
+                                    android:layout_height="wrap_content"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleNormal"
+                                    android:gravity="start"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorLightBlack"
+                                    android:text="@string/winner_takes_all_the_glory"
+                                    android:layout_height="wrap_content"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                                android:orientation="vertical"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/TextStyleNormal"
+                                    android:gravity="start"
+                                    android:textSize="@dimen/_9sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="@string/entry"
+                                    android:layout_height="wrap_content"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:gravity="end"
+                                    style="@style/TextStyleSemiBold"
+                                    android:textSize="@dimen/_11sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorLightBlack"
+                                    android:text="@string/Rs_0"
+                                    android:layout_height="wrap_content"/>
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
                     <LinearLayout
+                            android:visibility="visible"
+                            card_view:layout_constraintTop_toTopOf="parent"
                             android:id="@+id/ll_scoreBoard"
-                            android:padding="@dimen/_8sdp"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                         <LinearLayout
-                                android:id="@+id/ll_totalWinnings"
+                                android:padding="@dimen/_3sdp"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
@@ -227,7 +280,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/textColorGray"
-                                    android:text="@string/prize_pool"
+                                    android:text="@string/total_winnings"
 
                             />
                             <androidx.appcompat.widget.AppCompatTextView
@@ -244,7 +297,8 @@
 
                         </LinearLayout>
                         <LinearLayout
-                                android:id="@+id/ll_totalWinners"
+                                android:padding="@dimen/_3sdp"
+                                android:id="@+id/ll_winners"
                                 android:layout_weight="1"
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
@@ -270,13 +324,14 @@
                                     android:layout_height="wrap_content"
                                     android:drawableEnd="@mipmap/arrowdown"
                                     android:textColor="@color/colorSecondary"
-                                    android:text="5 "
+                                    android:text="35000"
 
                             />
 
                         </LinearLayout>
                         <LinearLayout
-                                android:id="@+id/ll_entryFee"
+                                android:padding="@dimen/_3sdp"
+
                                 android:layout_weight="1"
                                 android:orientation="vertical"
                                 android:layout_width="0dp"
@@ -289,7 +344,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/textColorGray"
-                                    android:text="@string/entry_fee"
+                                    android:text="@string/entry"
 
                             />
                             <androidx.appcompat.widget.AppCompatTextView
@@ -425,12 +480,11 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
-                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     tools:listitem="@layout/item_completed_leadershipteams"
+                    android:nestedScrollingEnabled="false"
                     android:layout_height="0dp">
             </androidx.recyclerview.widget.RecyclerView>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <!--</androidx.core.widget.NestedScrollView>-->

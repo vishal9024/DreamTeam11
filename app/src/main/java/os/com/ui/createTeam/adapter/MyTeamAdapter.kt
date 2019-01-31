@@ -24,6 +24,8 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
+        var count=position+1
+        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
         holder.itemView.rl_clone.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.clone,holder.adapterPosition)
 //            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]))
@@ -33,14 +35,14 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
         holder.itemView.rl_preview.setOnClickListener {
             mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details)
                 .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
+                .putExtra("teamName",holder.itemView.txt_team.text.toString())
             )
         }
         holder.itemView.rl_edit.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.edit,holder.adapterPosition)
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
-        var count=position+1
-        holder.itemView.txt_team.text = mContext.getString(R.string.team) + " " + count
+
         for (player in data[holder.adapterPosition].player_details!!) {
             if (player.player_id.equals(data[holder.adapterPosition].captain_player_id))
                 holder.itemView.txt_captain.text = player.name

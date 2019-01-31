@@ -2,6 +2,8 @@ package os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse
 
 import android.os.Parcel
 import android.os.Parcelable
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
+import java.util.*
 
 class JoinedContestData() : Parcelable {
     var entry_fee: String = ""
@@ -14,6 +16,11 @@ class JoinedContestData() : Parcelable {
     var invite_code: String = ""
     var is_joined = false
     var multiple_team = false
+    var my_team_ids: ArrayList<String>? = null
+    var breakup_detail: ArrayList<PriceBreakUp>? = null
+    var points_earned: String = ""
+    var my_rank: String = ""
+    var team_number: ArrayList<String>? = null
 
     constructor(parcel: Parcel) : this() {
         entry_fee = parcel.readString()
@@ -26,6 +33,11 @@ class JoinedContestData() : Parcelable {
         invite_code = parcel.readString()
         is_joined = parcel.readByte() != 0.toByte()
         multiple_team = parcel.readByte() != 0.toByte()
+        my_team_ids = parcel.createStringArrayList()
+        breakup_detail = parcel.createTypedArrayList(PriceBreakUp)
+        points_earned = parcel.readString()
+        my_rank = parcel.readString()
+        team_number = parcel.createStringArrayList()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -39,6 +51,11 @@ class JoinedContestData() : Parcelable {
         parcel.writeString(invite_code)
         parcel.writeByte(if (is_joined) 1 else 0)
         parcel.writeByte(if (multiple_team) 1 else 0)
+        parcel.writeStringList(my_team_ids)
+        parcel.writeTypedList(breakup_detail)
+        parcel.writeString(points_earned)
+        parcel.writeString(my_rank)
+        parcel.writeStringList(team_number)
     }
 
     override fun describeContents(): Int {

@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_joined_completed_list.view.*
 import os.com.R
+import os.com.constant.AppRequestCodes
+import os.com.constant.IntentConstant
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.activity.LeaderShipBoardActivity
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedContestData
@@ -27,7 +29,14 @@ class JoinedCompletedContestAdapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.txt_ViewLeaderShipBoard.setOnClickListener {
-            mContext.startActivity(Intent(mContext, LeaderShipBoardActivity::class.java))
+            mContext.startActivity(
+                Intent(mContext, LeaderShipBoardActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                    IntentConstant.CONTEST_TYPE, matchType
+                ).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putExtra(
+                    IntentConstant.FROM,
+                    AppRequestCodes.JOINED
+                )
+            )
         }
         if (!data.get(holder.adapterPosition).entry_fee.isEmpty() && data.get(holder.adapterPosition).entry_fee.toFloat() > 0) {
             holder.itemView.ll_scoreBoard.visibility = View.VISIBLE
@@ -40,10 +49,20 @@ class JoinedCompletedContestAdapter(
                 data.get(holder.adapterPosition).prize_money
         holder.itemView.txt_Winners.text = data.get(holder.adapterPosition).total_winners
         holder.itemView.txt_EntryFee.text = mContext.getString(R.string.Rs) + " " +
-          data.get(holder.adapterPosition).entry_fee
-//      holder.itemView.txt_joinedwith.text = "-"
-        holder.itemView.txt_points.text = "-"
-        holder.itemView.txt_rank.text = "-"
+                data.get(holder.adapterPosition).entry_fee
+        if (!data.get(holder.adapterPosition).my_team_ids!!.isEmpty()) {
+            if (data.get(holder.adapterPosition).my_team_ids!!.size == 1) {
+                if (!data.get(holder.adapterPosition).team_number!!.isEmpty())
+                    holder.itemView.txt_joinedwith.text = mContext.getString(R.string.team) +
+                            data.get(holder.adapterPosition).team_number!!.get(0)
+            } else {
+                holder.itemView.txt_joinedwith.text = data.get(holder.adapterPosition).my_team_ids!!.size.toString() +
+                        mContext.getString(R.string.teams)
+            }
+        }
+
+        holder.itemView.txt_points.text = data.get(holder.adapterPosition).points_earned
+        holder.itemView.txt_rank.text = data.get(holder.adapterPosition).my_rank
     }
 
     override fun getItemCount(): Int {
