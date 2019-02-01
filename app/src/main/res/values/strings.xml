@@ -376,7 +376,7 @@
 
     <string name="Rs_100">\u20B9 100</string>
     <string name="Rs_200">\u20B9 200</string>
-    <string name="Rs_599">\u20B9 599</string>
+    <string name="Rs_599">\u20B9 500</string>
     <string name="current_balance">Current Balance</string>
     <string name="add_cash_to_your_account">Add cash to your account</string>
     <string name="amount_to_add">Amount to add</string>
@@ -412,4 +412,5 @@
     <string name="paypal">PayPal</string>
     <string name="Pts">Pts</string>
     <string name="Cr">Cr</string>
+    <string name="guru">GURU</string>
 </resources>

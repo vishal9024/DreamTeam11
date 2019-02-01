@@ -30,7 +30,7 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.player_detail)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         setAdapter()
     }
 

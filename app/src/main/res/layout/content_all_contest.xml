@@ -81,7 +81,7 @@
                     android:gravity="center"
                     android:textSize="@dimen/_10sdp"
                     android:drawableTint="@color/sort_allcontest_color_selector"
-android:drawablePadding="@dimen/_2sdp"
+                    android:drawablePadding="@dimen/_2sdp"
                     android:layout_width="wrap_content"
                     android:paddingStart="@dimen/_8sdp"
                     android:textColor="@color/sort_allcontest_color_selector"
@@ -93,55 +93,55 @@ android:drawablePadding="@dimen/_2sdp"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_Team"
-                android:layout_centerInParent="true"
-                style="@style/TextStyleSemiBold"
-                android:gravity="center"
-                android:textSize="@dimen/_10sdp"
-                android:drawableTint="@color/sort_allcontest_color_selector"
-                android:drawablePadding="@dimen/_2sdp"
-                android:layout_width="wrap_content"
-                android:layout_weight="1.3"
-                android:textColor="@color/sort_allcontest_color_selector"
-                android:text="@string/teams"
-                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Team"
+                    android:layout_centerInParent="true"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="center"
+                    android:textSize="@dimen/_10sdp"
+                    android:drawableTint="@color/sort_allcontest_color_selector"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1.3"
+                    android:textColor="@color/sort_allcontest_color_selector"
+                    android:text="@string/teams"
+                    android:layout_height="wrap_content"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/rl_Winners"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_Winners"
-                style="@style/TextStyleSemiBold"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:drawableTint="@color/sort_allcontest_color_selector"
-                android:drawablePadding="@dimen/_2sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:textColor="@color/sort_allcontest_color_selector"
-                android:text="@string/winners"
-                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Winners"
+                    style="@style/TextStyleSemiBold"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:drawableTint="@color/sort_allcontest_color_selector"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/sort_allcontest_color_selector"
+                    android:text="@string/winners"
+                    android:layout_height="wrap_content"/>
         </RelativeLayout>
         <RelativeLayout
                 android:id="@+id/rl_EntryFee"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content">
-        <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_EntryFee"
-                android:layout_centerInParent="true"
-                style="@style/TextStyleSemiBold"
-                android:gravity="end"
-                android:drawableTint="@color/sort_allcontest_color_selector"
-                android:drawablePadding="@dimen/_2sdp"
-                android:textSize="@dimen/_10sdp"
-                android:layout_width="wrap_content"
-                android:textColor="@color/sort_allcontest_color_selector"
-                android:text="@string/entry"
-                android:layout_height="wrap_content"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_EntryFee"
+                    android:layout_centerInParent="true"
+                    style="@style/TextStyleSemiBold"
+                    android:gravity="end"
+                    android:drawableTint="@color/sort_allcontest_color_selector"
+                    android:drawablePadding="@dimen/_2sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/sort_allcontest_color_selector"
+                    android:text="@string/entry"
+                    android:layout_height="wrap_content"/>
         </RelativeLayout>
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView

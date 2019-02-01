@@ -36,7 +36,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.create_contest)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
             btn_CreateContest.setOnClickListener(this)
             et_winning_amount.addTextChangedListener(object : TextWatcher {
 

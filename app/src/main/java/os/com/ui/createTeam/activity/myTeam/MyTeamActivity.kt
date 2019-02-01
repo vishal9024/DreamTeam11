@@ -128,7 +128,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
         }
 
-        setMenu(true, false, false, false)
+        setMenu(true, false, false, false,false)
         if (NetworkUtils.isConnected()) {
             callGetTeamListApi()
         } else

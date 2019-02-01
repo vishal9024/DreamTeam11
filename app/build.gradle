@@ -88,7 +88,7 @@ dependencies {
     /*Firebase for notification*/
     implementation 'com.google.firebase:firebase-messaging:17.3.4'
     /*to choose image from gallery and camera*/
-    implementation 'com.github.jkwiecien:EasyImage:2.0.2'
+//    implementation 'com.github.jkwiecien:EasyImage:2.0.2'
     /*OTP InputLayout*/
     implementation 'com.chaos.view:pinview:1.4.2'
     /*AutoScrollViewPager*/

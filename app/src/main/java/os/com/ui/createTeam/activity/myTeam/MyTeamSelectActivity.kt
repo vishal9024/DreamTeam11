@@ -248,7 +248,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
 
 
         }
-        setMenu(true, false, false, false)
+        setMenu(true, false, false, false,false)
         if (NetworkUtils.isConnected()) {
             callGetTeamListApi()
         } else

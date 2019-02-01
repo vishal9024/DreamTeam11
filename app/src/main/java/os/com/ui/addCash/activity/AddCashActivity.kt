@@ -47,20 +47,36 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_addCash -> {
-                if (ContextCompat.checkSelfPermission(
-                        this,
-                        android.Manifest.permission.READ_SMS
-                    ) !== PackageManager.PERMISSION_GRANTED
-                ) {
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(android.Manifest.permission.READ_SMS, android.Manifest.permission.RECEIVE_SMS),
-                        1
-                    )
-                } else {
-                    showPaymentOption()
-                }
+                checkPermission()
             }
+            R.id.txt_500 -> {
+                et_addCash.setText("500")
+                checkPermission()
+            }
+            R.id.txt_200 -> {
+                et_addCash.setText("200")
+                checkPermission()
+            }
+            R.id.txt_100 -> {
+                et_addCash.setText("100")
+                checkPermission()
+            }
+        }
+    }
+
+    fun checkPermission() {
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_SMS
+            ) !== PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.READ_SMS, android.Manifest.permission.RECEIVE_SMS),
+                1
+            )
+        } else {
+            showPaymentOption()
         }
     }
 
@@ -71,9 +87,10 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         dialogue.setContentView(R.layout.dialogue_add_cash_option)
         dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogue.setCancelable(false)
-        dialogue.setCanceledOnTouchOutside(false)
+        dialogue.setCancelable(true)
+        dialogue.setCanceledOnTouchOutside(true)
         dialogue.setTitle(null)
+        dialogue.txt_balance.text = getString(R.string.Rs) + " " + et_addCash.text.toString()
         dialogue.ll_paytm.setOnClickListener {
             payUsingPaytm()
             dialogue.dismiss()
@@ -91,7 +108,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         dialogue.show()
     }
 
-   override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int, @NonNull permissions: Array<String>, @NonNull grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == 1) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -101,11 +118,12 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
             }
         }
     }
+
     private fun payUsingPaytm() {
         if (AppDelegate.isNetworkAvailable(this)) {
             try {
                 AppDelegate.showProgressDialog(this)
-                orderId = getRendomOrderID()
+                orderId = "PAY" + getRendomOrderID()
                 callbackURL = AppRequestCodes.STAGING_CALLBACKURL_PAYTM + orderId + ""
                 val generatePayTmCheckSumRequest = GeneratePayTmCheckSumRequest()
                 generatePayTmCheckSumRequest.MID = AppRequestCodes.getLiveMerchantId().trim()
@@ -139,7 +157,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
                 if (response.response!!.status) {
 //                    generatePayTmCheckSumRequest.CHECKSUMHASH = response.response!!.data!!.checksum
-                    startPaytmTransaction(generatePayTmCheckSumRequest,response.response!!.data!!.checksum)
+                    startPaytmTransaction(generatePayTmCheckSumRequest, response.response!!.data!!.checksum)
                 } else {
                 }
             } catch (exception: Exception) {
@@ -223,7 +241,8 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
                 AppDelegate.showToast(this@AddCashActivity, response.response!!.message)
                 if (response.response!!.status) {
-
+                    et_addCash.setText("")
+                    finish()
                 } else {
                 }
             } catch (exception: Exception) {
@@ -234,8 +253,8 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
 
     private fun getRendomOrderID(): String {
         val r = Random(System.currentTimeMillis())
-        return ("PAY" + (1 + r.nextInt(2)) * 10000
-                + r.nextInt(10000))
+        return ((1 + r.nextInt(2)) * 10000
+                + r.nextInt(10000)).toString()
     }
 
     private fun payUsingRazorPay() {
@@ -277,8 +296,12 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.add_cash)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         btn_addCash.setOnClickListener(this)
+        txt_100.setOnClickListener(this)
+        txt_200.setOnClickListener(this)
+        txt_500.setOnClickListener(this)
+
     }
 
     private fun getRendomBankTxnID(): String {
@@ -296,16 +319,19 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
     override fun onPaymentSuccess(paymentId: String) {
         Log.e("tag", "onPaymentSuccess$paymentId")
         try {
+            val cal = Calendar.getInstance()
             val updateTransactionRequest = UpdateTransactionRequest()
             updateTransactionRequest.user_id = pref!!.userdata!!.user_id
             updateTransactionRequest.language = FantasyApplication.getInstance().getLanguage()
-            updateTransactionRequest.order_id =  getRendomOrderID()
+            updateTransactionRequest.order_id = "RAZ" + getRendomOrderID()
             updateTransactionRequest.txn_id = paymentId
             updateTransactionRequest.banktxn_id = getRendomBankTxnID()
-            updateTransactionRequest.txn_date = AppDelegate.convertTimestampToDate(System.currentTimeMillis())
+            updateTransactionRequest.txn_date =
+                    cal.time.toString()/*AppDelegate.convertTimestampToDate(System.currentTimeMillis())*/
+            /*   DateFormat.getDateTimeInstance().format(Date());*/
             updateTransactionRequest.txn_amount = options!!.getString("amount")
             updateTransactionRequest.currency = options!!.getString("currency")
-            updateTransactionRequest.gateway_name ="RAZORPAY"
+            updateTransactionRequest.gateway_name = "Razorpay"
             updateTransactionRequest.checksum = getRendomChecksum()
             callUpdateTransactionApi(updateTransactionRequest)
         } catch (e: Exception) {

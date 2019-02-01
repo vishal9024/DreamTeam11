@@ -42,7 +42,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 if (supportFragmentManager.findFragmentById(R.id.container) !is HomeFragment) {
                     toolbar.visibility = View.VISIBLE
                     setTitleVisibility(false, true)
-                    setMenu(true, false, false, false)
+                    setMenu(true, false, false, false,false)
                     setTitleText(getString(R.string.home))
                     setFragment(HomeFragment(), R.id.container)
                 }
@@ -52,7 +52,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             R.id.navigation_mycontest -> {
                 if (supportFragmentManager.findFragmentById(R.id.container) !is MyContestFragment) {
                     toolbar.visibility = View.VISIBLE
-                    setMenu(true, false, false, false)
+                    setMenu(true, false, false, false,false)
                     setTitleVisibility(true, false)
                     setTitleText(getString(R.string.my_contest))
                     setFragment(MyContestFragment(),R.id.container)
@@ -64,7 +64,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 if (supportFragmentManager.findFragmentById(R.id.container) !is ProfileFragment) {
                     toolbar.visibility = View.GONE
                     setTitleVisibility(true, false)
-                    setMenu(false, false, false, true)
+                    setMenu(false, false, false, true,false)
                     setTitleText(getString(R.string.profile))
                     setFragment(ProfileFragment(), R.id.container)
                 }
@@ -73,7 +73,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             R.id.navigation_more -> {
                 if (supportFragmentManager.findFragmentById(R.id.container) !is MoreFragment) {
                     toolbar.visibility = View.VISIBLE
-                    setMenu(true, false, false, false)
+                    setMenu(true, false, false, false,false)
                     setTitleText(getString(R.string.more))
                     setFragment(MoreFragment(), R.id.container)
                 }
@@ -112,7 +112,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
         setTitleVisibility(false, true)
-        setMenu(true, false, false, false)
+        setMenu(true, false, false, false,false)
 
         bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
         bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED

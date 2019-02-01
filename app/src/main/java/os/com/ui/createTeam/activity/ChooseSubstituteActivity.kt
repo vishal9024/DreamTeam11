@@ -97,7 +97,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.select_substitute)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         getData()
     }
 

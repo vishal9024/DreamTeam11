@@ -244,7 +244,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.contest_detail)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         if (NetworkUtils.isConnected()) {
             callContestDetailApi()
         } else
@@ -318,6 +318,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
                 if (response.response!!.status) {
+                    scrollView.visibility=View.VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)

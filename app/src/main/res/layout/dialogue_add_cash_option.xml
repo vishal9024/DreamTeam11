@@ -7,6 +7,7 @@
         android:layout_margin="@dimen/_25sdp"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="@dimen/_6sdp"
+        card_view:contentPadding="@dimen/_8sdp"
         card_view:cardElevation="@dimen/_3sdp"
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true">
@@ -31,7 +32,7 @@
                 android:text="Amount to be added"
                 android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_amount"
+                android:id="@+id/txt_balance"
                 card_view:layout_constraintTop_toTopOf="parent"
                 card_view:layout_constraintEnd_toEndOf="parent"
                 android:tint="@color/textColorGray"
@@ -45,6 +46,7 @@
                 android:text="added"
                 android:layout_height="wrap_content"/>
         <LinearLayout
+                android:layout_marginTop="@dimen/_8sdp"
                 android:id="@+id/ll_paytm"
                 card_view:layout_constraintTop_toBottomOf="@+id/txt_amountLabel"
                 card_view:layout_constraintEnd_toEndOf="parent"
@@ -52,9 +54,11 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content">
             <ImageView
                     android:src="@mipmap/paytm"
+
                     android:padding="@dimen/_7sdp"
                     android:layout_width="@dimen/_50sdp" android:layout_height="@dimen/_25sdp"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_5sdp"
                     style="@style/TextStyleMedium"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/textColorGray"
@@ -66,6 +70,7 @@
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/ll_rajorpay"
                 card_view:layout_constraintTop_toBottomOf="@+id/ll_paytm"
                 card_view:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +81,7 @@
                     android:src="@mipmap/razorpay"
                     android:layout_width="@dimen/_50sdp" android:layout_height="@dimen/_25sdp"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_5sdp"
                     style="@style/TextStyleMedium"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/textColorGray"
@@ -87,6 +93,7 @@
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+                android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/ll_paypal"
                 card_view:layout_constraintTop_toBottomOf="@+id/ll_rajorpay"
                 card_view:layout_constraintEnd_toEndOf="parent"
@@ -97,6 +104,7 @@
                     android:src="@mipmap/paypal"
                     android:layout_width="@dimen/_50sdp" android:layout_height="@dimen/_25sdp"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_5sdp"
                     style="@style/TextStyleMedium"
                     android:layout_gravity="center_vertical"
                     android:tint="@color/textColorGray"

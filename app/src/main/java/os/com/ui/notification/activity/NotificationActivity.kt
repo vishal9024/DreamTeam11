@@ -34,7 +34,7 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.notification)
-        setMenu(false,false,false,false)
+        setMenu(false,false,false,false,false)
         setAdapter()
 //        btn_CreateTeam.setOnClickListener(this)
 //        txt_Signup.setOnClickListener(this)

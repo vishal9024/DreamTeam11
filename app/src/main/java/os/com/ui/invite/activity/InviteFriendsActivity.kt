@@ -49,7 +49,7 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.invite_friends)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         txt_Invite.setOnClickListener(this)
         tv_how_it_work.setOnClickListener(this)
         tv_rule_for_fair_play.setOnClickListener(this)

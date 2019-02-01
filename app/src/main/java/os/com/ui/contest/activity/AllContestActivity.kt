@@ -186,10 +186,10 @@ override    fun onAttachFragment(fragment: Fragment) {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.all_contest)
         if (FROM == 1) {
-            setMenu(false, true, true, false)
+            setMenu(false, true, true, false,false)
             filterContests = intent.getParcelableArrayListExtra(IntentConstant.CONTEST)
         } else
-            setMenu(false, true, false, false)
+            setMenu(false, true, false, false,false)
         var localTeamName=match!!.local_team_name
         var visitorTeamName=match!!.visitor_team_name
         if (match!!.local_team_name.length>5)

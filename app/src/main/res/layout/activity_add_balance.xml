@@ -83,8 +83,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/amount_to_add"
-                                android:inputType="textEmailAddress"
-                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:imeOptions="actionDone"
                                 android:textSize="@dimen/_13sdp"/>
                     </com.google.android.material.textfield.TextInputLayout>
                    <LinearLayout android:layout_width="match_parent"
@@ -96,6 +96,7 @@
                    android:orientation="horizontal"
                    android:gravity="center">
                        <androidx.appcompat.widget.AppCompatTextView
+                               android:id="@+id/txt_100"
                                android:layout_gravity="center_vertical"
                                style="@style/TextStyleSemiBold"
                                android:gravity="center"
@@ -111,6 +112,7 @@
                        <androidx.appcompat.widget.AppCompatTextView
                                android:layout_gravity="center_vertical"
                                style="@style/TextStyleSemiBold"
+                               android:id="@+id/txt_200"
                                android:gravity="center"
                                android:textSize="@dimen/_14sdp"
                                android:layout_marginStart="@dimen/_16sdp"
@@ -126,6 +128,7 @@
                                android:layout_gravity="center_vertical"
                                style="@style/TextStyleSemiBold"
                                android:gravity="center"
+                               android:id="@+id/txt_500"
                                android:textSize="@dimen/_14sdp"
                                android:layout_marginStart="@dimen/_16sdp"
                                android:layout_width="0dp"

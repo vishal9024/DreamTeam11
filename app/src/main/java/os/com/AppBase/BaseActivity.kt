@@ -48,6 +48,8 @@ open class BaseActivity : AppCompatActivity() {
     var wallet = false
     var filter = false
     var edit = false
+    var guru = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0);
@@ -89,6 +91,7 @@ open class BaseActivity : AppCompatActivity() {
         menu.findItem(R.id.menu_notification).isVisible = notif
         menu.findItem(R.id.menu_wallet).isVisible = wallet
         menu.findItem(R.id.menu_edit).isVisible = edit
+        menu.findItem(R.id.menu_guru).isVisible = guru
 //        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
@@ -101,16 +104,18 @@ open class BaseActivity : AppCompatActivity() {
         return true
     }
 
-    fun setMenu(notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean) {
+    fun setMenu(notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean,guru:Boolean) {
         this.notif = notif
         this.wallet = wallet
         this.filter = filter
         this.edit = edit
+        this.guru = guru
         if (menu != null) {
             menu!!.findItem(R.id.menu_filter).isVisible = filter
             menu!!.findItem(R.id.menu_notification).isVisible = notif
             menu!!.findItem(R.id.menu_wallet).isVisible = wallet
             menu!!.findItem(R.id.menu_edit).isVisible = edit
+            menu!!.findItem(R.id.menu_guru).isVisible = guru
         }
     }
 

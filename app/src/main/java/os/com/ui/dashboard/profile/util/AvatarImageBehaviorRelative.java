@@ -1,16 +1,16 @@
-package os.com.ui.dashboard.profile.activity;
+package os.com.ui.dashboard.profile.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RelativeLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.appbar.AppBarLayout;
-import de.hdodenhof.circleimageview.CircleImageView;
 import os.com.R;
 
 
-public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageView> {
+public class AvatarImageBehaviorRelative extends CoordinatorLayout.Behavior<RelativeLayout> {
 
     // calculated from given layout
     private int startXPositionImage;
@@ -28,7 +28,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     // user configured params
     private float finalToolbarHeight, finalXPosition, finalYPosition, finalHeight;
 
-    public AvatarImageBehavior(
+    public AvatarImageBehaviorRelative(
             final Context context,
             final AttributeSet attrs_avatar) {
 
@@ -45,7 +45,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     @Override
     public boolean layoutDependsOn(
             final CoordinatorLayout parent,
-            final CircleImageView child,
+            final RelativeLayout child,
             final View dependency) {
 
         return dependency instanceof AppBarLayout; // change if you want another sibling to depend on
@@ -54,7 +54,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     @Override
     public boolean onDependentViewChanged(
             final CoordinatorLayout parent,
-            final CircleImageView child,
+            final RelativeLayout child,
             final View dependency) {
 
         // make child (avatar) change in relation to dependency (toolbar) in both size and position, init with properties from layout
@@ -86,7 +86,7 @@ public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageV
     }
 
     private void initProperties(
-            final CircleImageView child,
+            final RelativeLayout child,
             final View dependency) {
 
         if (!initialised) {

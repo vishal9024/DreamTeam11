@@ -1,12 +1,20 @@
 package os.com.ui.joinedContest.activity
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.app.DownloadManager
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_megacontest.*
@@ -59,6 +67,64 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             R.id.btn_dreamTeam -> {
 //                startActivity(Intent(this, TeamPreviewActivity::class.java).putExtra("show", 1))
             }
+            R.id.btn_ViewTeams -> {
+//                  val intent = Intent(this, DownloadService::class.java)
+//                intent.putExtra("url", "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf")
+//                intent.putExtra("receiver", DownloadReceiver(this,Handler(),name))
+//                intent.putExtra("name", name)
+//                startService(intent)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                        applicationContext,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        ), 10
+                    )
+                } else {
+                    DownloadTeam()
+                }
+
+            }
+        }
+    }
+
+    fun DownloadTeam() {
+        var name =
+            localTeamName + getString(R.string.vs) + visitorTeamName + "-" + data!!.invite_code + "-" + System.currentTimeMillis()
+        //
+        val request =
+            DownloadManager.Request(Uri.parse("http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf"))
+        //                request.setDescription("ritioSome descn")
+        request.setTitle(name)
+        // in order for this if to run, you must use the android 3.2 to compile your app
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            request.allowScanningByMediaScanner()
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        }
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, name + ".pdf")
+        // get download service and enqueue file
+        val manager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        manager.enqueue(request)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            DownloadTeam()
         }
     }
 
@@ -104,7 +170,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.joined_Contest)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         if (NetworkUtils.isConnected()) {
             callContestDetailApi()
             callMatchScoreApi()
@@ -128,6 +194,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         ll_winners.setOnClickListener(this)
         btn_dreamTeam.setOnClickListener(this)
         txt_ViewPlayerStats.setOnClickListener(this)
+        btn_ViewTeams.setOnClickListener(this)
     }
 
     var data: Data? = null
@@ -151,6 +218,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
+                    scrollView.visibility=View.VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
@@ -188,6 +256,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         joined_team_list = data.joined_team_list!!
         setAdapter()
     }
+
     var joined_team_list: ArrayList<Team> = ArrayList()
     private fun callMatchScoreApi() {
         try {
@@ -242,16 +311,20 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, joined_team_list,this)
+        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, joined_team_list, this)
     }
 
     override fun onClickItem(tag: String, position: Int) {
         if (tag.equals("Preview")) {
-            callGetTeamListApi(joined_team_list[position].user_id,joined_team_list[position].team_no,joined_team_list[position].team_name)
+            callGetTeamListApi(
+                joined_team_list[position].user_id,
+                joined_team_list[position].team_no,
+                joined_team_list[position].team_name
+            )
         }
     }
 
-    private fun callGetTeamListApi(user_id: String, teamNo: String,team_name:String) {
+    private fun callGetTeamListApi(user_id: String, teamNo: String, team_name: String) {
         val loginRequest = HashMap<String, String>()
         loginRequest[Tags.user_id] = user_id
         loginRequest[Tags.team_no] = teamNo
@@ -268,15 +341,21 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
-                    var teamName=getString(R.string.team)+teamNo
-                    if (!team_name.isEmpty())
-                    {
-                        teamName=  team_name+"(T"+teamNo+")"
+                    var teamName = getString(R.string.team) + teamNo
+                    if (!team_name.isEmpty()) {
+                        teamName = team_name + "(T" + teamNo + ")"
                     }
-                    startActivity(Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,response.response!!.data!![0].player_details)
-                        .putExtra("substitute",response.response!!.data!![0].substitute_detail)
-                        .putExtra("teamName",teamName)
-                        .putExtra("points",true)
+                    startActivity(
+                        Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
+                            "show",
+                            1
+                        ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
+                            IntentConstant.SELECT_PLAYER,
+                            response.response!!.data!![0].player_details
+                        )
+                            .putExtra("substitute", response.response!!.data!![0].substitute_detail)
+                            .putExtra("teamName", teamName)
+                            .putExtra("points", true)
                     )
                 } else {
                 }

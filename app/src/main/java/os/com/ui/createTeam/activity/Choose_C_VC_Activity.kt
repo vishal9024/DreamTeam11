@@ -138,7 +138,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(getString(R.string.choose_c_vc_title))
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         getData()
         btn_CreateTeam.setOnClickListener(this)
         btn_preview.setOnClickListener(this)

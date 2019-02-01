@@ -61,7 +61,18 @@ class JoinedFixturesContestAdapter(
 //        else
 //            holder.itemView.txt_Join.text = mContext.getString(R.string.join)
 //
+        holder.itemView.ll_totalWinners.setOnClickListener {
+            try {
+                if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toInt() > 0)
+                    (mContext as BaseActivity).callWinningBreakupApi(
+                        data[position].contest_id,
+                        data[position].breakup_detail!!,
+                        data[position].prize_money
+                    )
+            } catch (e: Exception) {
 
+            }
+        }
 
         if (!data.get(holder.adapterPosition).multiple_team!!) {
             if (data.get(holder.adapterPosition).is_joined!!) {

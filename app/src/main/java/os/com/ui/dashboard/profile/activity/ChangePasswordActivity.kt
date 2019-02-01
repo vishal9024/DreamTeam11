@@ -5,9 +5,7 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_change_password.*
-import kotlinx.android.synthetic.main.activity_my_account.*
 import kotlinx.android.synthetic.main.app_toolbar.*
-import kotlinx.android.synthetic.main.content_signup.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -18,7 +16,7 @@ import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
-import java.util.HashMap
+import java.util.*
 
 class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -87,7 +85,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.change_password)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
             btn_ChangePassword.setOnClickListener(this)
         } catch (e: Exception) {
             e.printStackTrace()

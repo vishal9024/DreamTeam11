@@ -112,7 +112,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-//    var callApi = false
+    //    var callApi = false
     override fun onResume() {
         super.onResume()
         if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
@@ -155,7 +155,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.contest)
-            setMenu(false, true, true, false)
+            setMenu(false, true, true, false,false)
             setAdapter()
             var localTeamName = match!!.local_team_name
             var visitorTeamName = match!!.visitor_team_name
@@ -260,6 +260,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@ContestActivity)
                 if (response.response!!.status) {
                     contestList = response.response!!.data!!.match_contest!!
+                    ll_bottom.visibility = View.VISIBLE
                     setAdapter()
                     if (!pref!!.isLogin) {
                         ll_viewTeam.visibility = View.GONE

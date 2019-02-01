@@ -129,7 +129,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.personal_detail)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
             initState()
             ll_male.setOnClickListener(this)
             ll_female.setOnClickListener(this)

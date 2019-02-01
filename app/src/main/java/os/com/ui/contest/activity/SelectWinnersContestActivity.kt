@@ -44,7 +44,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.create_contest)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
             winnerBootomSheet()
             setAdapter()
             btn_CreateSelectContest.setOnClickListener(this)

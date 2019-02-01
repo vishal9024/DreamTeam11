@@ -25,6 +25,15 @@ import os.com.utils.networkUtils.NetworkUtils
 class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
+            R.id.txt_Players -> {
+                sortBySelector(Players)
+            }
+            R.id.txt_SelectedBy -> {
+                sortBySelector(SelectedBy)
+            }
+            R.id.txt_Points -> {
+                sortBySelector(Points)
+            }
         }
     }
 
@@ -42,7 +51,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.player_points)
-        setMenu(false, false, false, false)
+        setMenu(false, false, false, false,false)
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
@@ -51,8 +60,15 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
             callPlayerStatsApi()
         } else
             AppDelegate.showToast(this, getString(R.string.error_network_connection))
+        txt_Players.setOnClickListener(this)
+        txt_SelectedBy.setOnClickListener(this)
+        txt_Points.setOnClickListener(this)
+        txt_Players.isEnabled = false
+        txt_SelectedBy.isEnabled = false
+        txt_Points.isEnabled = false
     }
-    var playerPoints:ArrayList<Data> = ArrayList()
+
+    var playerPoints: ArrayList<Data> = ArrayList()
     private fun callPlayerStatsApi() {
         try {
             val map = HashMap<String, String>()
@@ -71,8 +87,12 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@PlayerStatsActivity)
                     if (response.response!!.status) {
-                        playerPoints=response.response!!.data!!
-                            setAdapter()
+                        txt_Players.isEnabled = true
+                        txt_SelectedBy.isEnabled = true
+                        txt_Points.isEnabled = true
+                        playerPoints = response.response!!.data!!
+                        setAdapter()
+                        sortBySelector(Players)
                     } else {
                     }
                 } catch (exception: Exception) {
@@ -83,13 +103,72 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
             e.printStackTrace()
         }
     }
+
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
+
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Players!!.layoutManager = llm
-        rv_Players!!.adapter = PlayerStatsAdapter(this, playerPoints,matchType)
+        rv_Players!!.adapter = PlayerStatsAdapter(this, playerPoints, matchType)
     }
 
+    var isAsc = true
+    fun selectorPlayers(p: Data): String = p.player_name
+    fun selectorSelectedBy(p: Data): Int = p.selection_percent.toInt()
+    fun selectorPoints(p: Data): Double = p.points.toDouble()
+    private var Players = 1
+    private var SelectedBy = 2
+    private var Points = 3
+    fun sortBySelector(value: Int) {
+        txt_Players.isSelected = false
+        txt_SelectedBy.isSelected = false
+        txt_Points.isSelected = false
 
+        txt_Players.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        txt_SelectedBy.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        txt_Points.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        when (value) {
+            Players -> {
+                txt_Players.isSelected = true
+                if (isAsc) {
+                    isAsc = false
+                    playerPoints!!.sortBy { selectorPlayers(it) }
+                    txt_Players.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                } else {
+                    isAsc = true
+                    playerPoints!!.sortByDescending { selectorPlayers(it) }
+                    txt_Players.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                }
+
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+            }
+            SelectedBy -> {
+                txt_SelectedBy.isSelected = true
+                if (isAsc) {
+                    isAsc = false
+                    playerPoints!!.sortByDescending { selectorSelectedBy(it) }
+                    txt_SelectedBy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                } else {
+                    isAsc = true
+                    playerPoints!!.sortBy { selectorSelectedBy(it) }
+                    txt_SelectedBy.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                }
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+            }
+            Points -> {
+                txt_Points.isSelected = true
+                if (isAsc) {
+                    isAsc = false
+                    playerPoints!!.sortByDescending { selectorPoints(it) }
+                    txt_Points.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                } else {
+                    isAsc = true
+                    playerPoints!!.sortBy { selectorPoints(it) }
+                    txt_Points.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                }
+                rv_Players!!.adapter!!.notifyDataSetChanged()
+            }
+        }
+    }
 }

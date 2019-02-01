@@ -48,7 +48,7 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.joined_Contest)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
 
 //              setAdapter()
             if (intent != null) {

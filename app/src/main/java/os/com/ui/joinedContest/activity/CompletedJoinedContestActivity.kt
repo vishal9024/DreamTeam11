@@ -61,7 +61,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.join_Contest)
-            setMenu(false, false, false, false)
+            setMenu(false, false, false, false,false)
             txt_ViewPlayerStats.setOnClickListener(this)
             if (intent != null) {
                 match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -118,15 +118,12 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                     if (response.response!!.status) {
+                        constraint_layout.visibility= VISIBLE
                         if (!response.response!!.data!!.joined_contest!!.isEmpty()) {
                             setAdapterJoinedContest(response.response!!.data!!.joined_contest!!)
                             cl_noJoinedContest.visibility = View.GONE
                         } else {
                             cl_noJoinedContest.visibility = View.VISIBLE
-//                            txt_NoContestJoinedForMatch.text = " " + getString(R.string.FOR) + " " +
-//                                    match!!.local_team_name + " " + getString(
-//                                R.string.vs
-//                            ) + " " + match!!.visitor_team_name
                             setAdapterUpcomingContest(response.response!!.data!!.upcoming_match!!)
                         }
                     } else {

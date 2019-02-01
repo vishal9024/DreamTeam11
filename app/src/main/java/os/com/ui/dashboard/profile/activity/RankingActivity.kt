@@ -14,7 +14,7 @@ import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.ui.dashboard.profile.adapter.CustomSpinnerAdapter
 import os.com.ui.dashboard.profile.adapter.RankingAdapter
-import java.util.ArrayList
+import java.util.*
 
 class RankingActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -48,7 +48,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.leaderboard)
-        setMenu(false,false,false,false)
+        setMenu(false,false,false,false,false)
             initYear()
         setAdapter()
 //        btn_CreateTeam.setOnClickListener(this)

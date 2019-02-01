@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_joined_completed_list.view.*
+import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
@@ -60,7 +61,18 @@ class JoinedCompletedContestAdapter(
                         mContext.getString(R.string.teams)
             }
         }
+holder.itemView.ll_totalWinners.setOnClickListener {
+    try {
+        if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toInt() > 0)
+            (mContext as BaseActivity).callWinningBreakupApi(
+                data[position].contest_id,
+                data[position].breakup_detail!!,
+                data[position].prize_money
+            )
+    } catch (e: Exception) {
 
+    }
+}
         holder.itemView.txt_points.text = data.get(holder.adapterPosition).points_earned
         holder.itemView.txt_rank.text = data.get(holder.adapterPosition).my_rank
     }
