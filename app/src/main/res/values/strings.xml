@@ -413,4 +413,9 @@
     <string name="Pts">Pts</string>
     <string name="Cr">Cr</string>
     <string name="guru">GURU</string>
+    <string name="tell_your_friends">Tell Your Friends</string>
+    <string name="share">Share</string>
+    <string name="top_players">Top Players</string>
+    <string name="points_breakup">Points Breakup</string>
+    <string name="not_in_your_team">Not in your team</string>
 </resources>

@@ -12,8 +12,6 @@ import os.com.R
 import os.com.utils.AppDelegate
 
 
-
-
 class WebViewActivity : BaseActivity() {
 
     var slug: String = ""

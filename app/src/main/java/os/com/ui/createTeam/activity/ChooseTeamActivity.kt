@@ -6,11 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_team.*
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +40,7 @@ import os.com.utils.networkUtils.NetworkUtils
 import java.util.HashMap
 import kotlin.collections.ArrayList
 import kotlin.collections.set
+
 
 class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
     var exeedCredit = false
@@ -481,7 +486,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.choose_team)
-        setMenu(false, false, false, false,true)
+        setMenu(false, false, false, false, true)
         getIntentData()
         if (NetworkUtils.isConnected()) {
             if (match != null)
@@ -827,7 +832,6 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         updateUi()
     }
 
-
     private fun updateUi() {
         txt_WKCount.text = selectPlayer!!.wk_selected.toString()
         txt_ARCount.text = selectPlayer!!.ar_selected.toString()
@@ -939,5 +943,27 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
         }
 
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_guru -> {
+//                val intent = Intent(this, WebViewActivity::class.java)
+//                intent.putExtra("PAGE_SLUG", getString(R.string.guru))
+//                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
+//                startActivity(intent)
+//
+                val viewf = findViewById<View>(R.id.menu_guru)
+                val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
+                val view = snack.getView()
+                view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+                val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+                params.gravity = Gravity.TOP
+                view.setLayoutParams(params)
+                snack.show()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

@@ -188,7 +188,7 @@
 
     </androidx.appcompat.widget.Toolbar>
     <RelativeLayout
-            app:layout_behavior="os.com.ui.dashboard.profile.activity.AvatarImageBehaviorRelative"
+            app:layout_behavior="os.com.ui.dashboard.profile.util.AvatarImageBehaviorRelative"
             android:id="@+id/rl"
             android:layout_gravity="top|center_horizontal"
             android:layout_marginTop="@dimen/spacing_normal"
@@ -210,7 +210,7 @@
                 app:finalXPosition="@dimen/_4sdp"
                 app:finalYPosition="@dimen/_4sdp"
                 app:finalToolbarHeight="?attr/actionBarSize"
-               />
+        />
         <de.hdodenhof.circleimageview.CircleImageView
                 app:finalHeight="@dimen/_10sdp"
                 app:finalXPosition="@dimen/_8sdp"
