@@ -16,6 +16,7 @@ import os.com.ui.createTeam.apiResponse.createTeamResponse.CreateTeamResponse
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
+import os.com.ui.dashboard.profile.apiResponse.AvtarListResponse
 import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 import os.com.ui.invite.apiResponse.getContestInviteResponse.GetContestInviteResponse
@@ -142,5 +143,14 @@ interface ApiInterface {
 
     @POST(ApiConstant.update_transactions)
     fun update_transactions(@Body request: UpdateTransactionRequest): Deferred<GeneratePaytmChecksumResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.avetar_list)
+    fun avetar_list(@Body request: Map<String, String>): Deferred<AvtarListResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.update_user_image)
+    fun update_user_image(@Body request: Map<String, String>): Deferred<AvtarListResponse>
 
 }

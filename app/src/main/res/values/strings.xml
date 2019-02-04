@@ -352,7 +352,7 @@
         <item>Gujarat</item>
         <item>Haryana</item>
         <item>Himachal Pradesh</item>
-    <item>Jammu and Kashmir</item>
+        <item>Jammu and Kashmir</item>
         <item>Jharkhand</item>
         <item>Karnataka</item>
         <item>Kerala</item>
@@ -413,4 +413,9 @@
     <string name="Pts">Pts</string>
     <string name="Cr">Cr</string>
     <string name="guru">GURU</string>
+    <string name="recent_performances">Recent Performances</string>
+    <string name="small_points">points</string>
+    <string name="points_breakup">POINTS BREAKUP</string>
+    <string name="choose_your_avatar">Choose your avatar</string>
+    <string name="save">Save</string>
 </resources>

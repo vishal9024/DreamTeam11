@@ -85,5 +85,11 @@ object ApiConstant {
     const val team_scores = "team-scores"
     const val getSeriesPlayerList = "getSeriesPlayerList"
     const val generate_paytm_checksum="generate-paytm-checksum"
+
+
+    const val avetar_list="avetar-list"
+    const val update_user_image="update-user-image"
+
+
 const val update_transactions="update-transactions"
 }

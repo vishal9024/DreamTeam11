@@ -73,6 +73,7 @@ object Tags {
     const val clone = "clone"
     const val edit = "edit"
     const  val team_id="team_id"
+    const  val img_id="img_id"
 
 const  val  invite_code="invite_code"
     const val cancel = "cancel"
