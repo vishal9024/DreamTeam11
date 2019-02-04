@@ -92,7 +92,52 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 }
 
             }
+            R.id.btn_InviteFriends -> {
+                tellUrFriends()
+            }
         }
+    }
+
+    fun tellUrFriends() {
+        var team_name = ""
+        var rank = ""
+        if (!data!!.my_team_ids!!.isEmpty()) {
+            if (data!!.my_team_ids!!.size == 1) {
+                if (pref!!.isLogin)
+                    if (!data!!.joined_team_list!!.isEmpty()) {
+                        val filterContestList: Team =
+                            data!!.joined_team_list!!.filter { it.user_id.equals(pref!!.userdata!!.user_id) }
+                                .single()
+                        if (filterContestList != null) {
+                            rank = filterContestList.rank
+                            if (!filterContestList.team_name.isEmpty())
+                                team_name = filterContestList.team_name
+                        } else
+                            team_name = "Team " + filterContestList.team_no
+                    }
+            }
+        }
+
+        var link = "market://details?id="
+        try {
+            // play market available
+            packageManager?.getPackageInfo("com.android.vending", 0)
+            // not available
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            // should use browser
+            link = "https://play.google.com/store/apps/details?id="
+        }
+        // starts external action
+//                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link +packageName)))
+        var shareCode = ""
+        shareCode =
+                "I just won playing Cricket on " +
+                getString(R.string.app_name) + "| My team " + team_name + " finished  " + rank + " in the " +
+                match!!.series_name +
+                " match Click " + Uri.parse(link + packageName) +
+                " & join and Play Fantasy Cricket!"
+        AppDelegate.prepareShareIntent(shareCode, this, getString(R.string.share))
     }
 
     fun DownloadTeam() {
@@ -170,7 +215,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.joined_Contest)
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         if (NetworkUtils.isConnected()) {
             callContestDetailApi()
             callMatchScoreApi()
@@ -195,6 +240,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         btn_dreamTeam.setOnClickListener(this)
         txt_ViewPlayerStats.setOnClickListener(this)
         btn_ViewTeams.setOnClickListener(this)
+        btn_InviteFriends.setOnClickListener(this)
     }
 
     var data: Data? = null
@@ -218,7 +264,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
-                    scrollView.visibility=View.VISIBLE
+                    scrollView.visibility = View.VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
@@ -303,15 +349,21 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             txt_localTeamScore.text = getString(R.string.match_not_started)
         }
     }
-
+    fun selectorRank(p: Team): Int = p.rank.toInt()
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
 //        joined_team_list.sortWith(Comparator  { t,  -> t.user_id.compareTo(pref!!.userdata!!.user_id) })
         joined_team_list.sortedWith(Comparator { t: Team, u: Team -> t.user_id.compareTo(pref!!.userdata!!.user_id) })
+        var teams=joined_team_list.filter { it.user_id.equals(pref!!.userdata!!.user_id)}as ArrayList
+        var newTeam=joined_team_list.filter { !it.user_id.equals(pref!!.userdata!!.user_id)} as ArrayList
+        newTeam. sortBy { selectorRank(it) }
+          joined_team_list.clear()
+        joined_team_list.addAll(teams)
+        joined_team_list.addAll(newTeam)
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, joined_team_list, this)
+        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, joined_team_list, this, matchType)
     }
 
     override fun onClickItem(tag: String, position: Int) {

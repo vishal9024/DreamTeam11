@@ -115,7 +115,12 @@ object AppDelegate {
         }
         return isInBackground
     }
-
+    public fun prepareShareIntent(shareCode: String,context: Context,title:String) {
+        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareCode)
+        sharingIntent.type = "text/plain";
+        context. startActivity(Intent.createChooser(sharingIntent, title))
+    }
     fun setLocale(lang: String?, mContext: Context) {
 
         val locale = Locale(lang, "IND")

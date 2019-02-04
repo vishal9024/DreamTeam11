@@ -7,8 +7,10 @@ class Team() : Parcelable {
     var user_id = ""
     var team_name = ""
     var team_no = ""
-    var rank=""
-    var point=""
+    var rank = ""
+    var point = ""
+    var previous_rank = ""
+    var winning_amount=""
 
     constructor(parcel: Parcel) : this() {
         user_id = parcel.readString()
@@ -16,6 +18,8 @@ class Team() : Parcelable {
         team_no = parcel.readString()
         rank = parcel.readString()
         point = parcel.readString()
+        previous_rank = parcel.readString()
+        winning_amount = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -24,6 +28,8 @@ class Team() : Parcelable {
         parcel.writeString(team_no)
         parcel.writeString(rank)
         parcel.writeString(point)
+        parcel.writeString(previous_rank)
+        parcel.writeString(winning_amount)
     }
 
     override fun describeContents(): Int {

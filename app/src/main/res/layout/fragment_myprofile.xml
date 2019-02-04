@@ -217,7 +217,7 @@ android:gravity="center">
                 app:finalXPosition="@dimen/_4sdp"
                 app:finalYPosition="@dimen/_4sdp"
                 app:finalToolbarHeight="?attr/actionBarSize"
-               />
+        />
         <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imvEditImage"
                 app:finalHeight="@dimen/_10sdp"

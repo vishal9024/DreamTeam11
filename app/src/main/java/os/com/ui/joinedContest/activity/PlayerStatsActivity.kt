@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_completed_player_stats.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +67,19 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         txt_Players.isEnabled = false
         txt_SelectedBy.isEnabled = false
         txt_Points.isEnabled = false
+        filterBootomSheet()
+    }
+    private fun filterBootomSheet() {
+        val mBottomSheetBehaviorfilter = BottomSheetBehavior.from(bottom_sheet_filter)
+        mBottomSheetBehaviorfilter.state = BottomSheetBehavior.STATE_COLLAPSED
+        mBottomSheetBehaviorfilter.peekHeight = 0
+        mBottomSheetBehaviorfilter.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                }
+            }
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        })
     }
 
     var playerPoints: ArrayList<Data> = ArrayList()

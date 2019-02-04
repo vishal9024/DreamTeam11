@@ -1,5 +1,6 @@
 package os.com.ui.createTeam.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
@@ -10,10 +11,12 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
+import os.com.networkCall.ApiConstant
 import os.com.ui.createTeam.apiResponse.PlayerListModel
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Substitute
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.ui.dashboard.more.activity.WebViewActivity
 
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     var playerList: MutableList<PlayerListModel> = ArrayList()
@@ -28,6 +31,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             }
             R.id.img_Close -> {
                 finish()
+            }
+            R.id.pts -> {
+                val intent = Intent(this, WebViewActivity::class.java)
+                intent.putExtra("PAGE_SLUG", "Fantasy Point System")
+                intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.point_system)
+                startActivity(intent)
             }
         }
     }
@@ -49,6 +58,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         points = intent.getBooleanExtra("points", false)
+        if (points)
+                rl_bottom.visibility = VISIBLE
+        pts.setOnClickListener(this)
         if (isEdit == 1) {
             img_Edit.visibility = View.GONE
             playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
@@ -110,9 +122,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     txt_wk1.setText(getName(getName(data.player_record!!.player_name)))
                     if (points)
-                        txt_wk_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                        txt_wk_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                     else
-                        txt_wk_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                        txt_wk_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
                 }
             } else if (dataMain.type == BAT) {
                 for (data in dataMain.playerList!!) {
@@ -134,9 +146,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bat1.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bat1_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bat1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bat1_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bat1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
                     } else if (rl_bat2.visibility == View.GONE) {
                         if (data.isCaptain) {
                             txt_bat2_cvc.setText("C")
@@ -155,9 +167,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bat2.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bat2_points.text = data.player_record!!.player_credit+" " + getString(R.string.Pts)
+                            txt_bat2_points.text = data.player_record!!.player_credit + " " + getString(R.string.Pts)
                         else
-                            txt_bat2_points.text = data.player_record!!.player_credit+" " + getString(R.string.Cr)
+                            txt_bat2_points.text = data.player_record!!.player_credit + " " + getString(R.string.Cr)
                     } else if (rl_bat3.visibility == View.GONE) {
                         if (data.isCaptain) {
                             txt_bat3_cvc.setText("C")
@@ -176,9 +188,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bat3.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bat3_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bat3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bat3_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bat3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
                     } else if (rl_bat4.visibility == View.GONE) {
                         if (data.isCaptain) {
                             txt_bat4_cvc.setText("C")
@@ -197,9 +209,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bat4.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bat4_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bat4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bat4_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bat4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_bat5.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -219,9 +231,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bat5.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bat5_points.setText(data.player_record!!.player_credit +" "+ getString(R.string.Pts))
+                            txt_bat5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bat5_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bat5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     }
                 }
@@ -246,9 +258,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_ar1.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_ar1_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_ar1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_ar1_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_ar1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_ar2.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -268,9 +280,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_ar2.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_ar2_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_ar2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_ar2_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_ar2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_ar3.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -290,9 +302,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_ar3.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_ar3_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_ar3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_ar3_points.setText(data.player_record!!.player_credit +" "+ getString(R.string.Cr))
+                            txt_ar3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     }
                 }
@@ -317,9 +329,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bowler1.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bowler1_points.setText(data.player_record!!.player_credit +" "+ getString(R.string.Pts))
+                            txt_bowler1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bowler1_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bowler1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_bowler2.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -339,9 +351,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bowler2.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bowler2_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bowler2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bowler2_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bowler2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_bowler3.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -361,9 +373,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bowler3.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bowler3_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bowler3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bowler3_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bowler3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_bowler4.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -384,9 +396,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bowler4.setText(getName(data.player_record!!.player_name))
 
                         if (points)
-                            txt_bowler4_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bowler4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bowler4_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bowler4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     } else if (rl_bowler5.visibility == View.GONE) {
                         if (data.isCaptain) {
@@ -406,9 +418,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         )
                         txt_bowler5.setText(getName(data.player_record!!.player_name))
                         if (points)
-                            txt_bowler5_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                            txt_bowler5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
-                            txt_bowler5_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Cr))
+                            txt_bowler5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                     }
                 }
@@ -424,9 +436,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_substitute.setText(getName(data.player_record!!.player_name))
                     if (points)
-                        txt_substitute_points.setText(data.player_record!!.player_credit+" " + getString(R.string.Pts))
+                        txt_substitute_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                     else
-                        txt_substitute_points.setText(data.player_record!!.player_credit +" "+ getString(R.string.Cr))
+                        txt_substitute_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Cr))
 
                 }
             }
@@ -447,9 +459,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             )
             txt_substitute.setText(getName(substituteDetail!!.name))
             if (points)
-                txt_substitute_points.setText(substituteDetail!!.credits +" "+ getString(R.string.Pts))
+                txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
             else
-                txt_substitute_points.setText(substituteDetail!!.credits+" " + getString(R.string.Cr))
+                txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Cr))
 
         }
         for (data in players)
@@ -470,9 +482,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 )
                 txt_wk1.setText(getName(data.name))
                 if (points)
-                    txt_wk_points.setText(data.credits+" " + getString(R.string.Pts))
+                    txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
                 else
-                    txt_wk_points.setText(data.credits+" " + getString(R.string.Cr))
+                    txt_wk_points.setText(data.credits + " " + getString(R.string.Cr))
 
             } else if (data.role.contains("Batsman", true)) {
                 if (rl_bat1.visibility == View.GONE) {
@@ -493,9 +505,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bat1.setText(getName(data.name))
                     if (points)
-                        txt_bat1_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bat1_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bat1_points.setText(data.credits + " " + getString(R.string.Cr))
 
                 } else if (rl_bat2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
@@ -515,9 +527,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bat2.setText(getName(data.name))
                     if (points)
-                        txt_bat2_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bat2_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bat2_points.setText(data.credits + " " + getString(R.string.Cr))
 
                 } else if (rl_bat3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
@@ -537,9 +549,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bat3.setText(getName(data.name))
                     if (points)
-                        txt_bat3_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bat3_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bat3_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bat4.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bat4_cvc.setText("C")
@@ -558,9 +570,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bat4.setText(getName(data.name))
                     if (points)
-                        txt_bat4_points.setText(data.credits +" "+ getString(R.string.Pts))
+                        txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bat4_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bat4_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bat5.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bat5_cvc.setText("C")
@@ -579,9 +591,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bat5.setText(getName(data.name))
                     if (points)
-                        txt_bat5_points.setText(data.credits +" "+ getString(R.string.Pts))
+                        txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bat5_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bat5_points.setText(data.credits + " " + getString(R.string.Cr))
                 }
             } else if (data.role.contains("Allrounder", true)) {
                 if (rl_ar1.visibility == View.GONE) {
@@ -602,9 +614,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_ar1.setText(getName(data.name))
                     if (points)
-                        txt_ar1_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_ar1_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_ar1_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_ar2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_ar2_cvc.setText("C")
@@ -623,9 +635,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_ar2.setText(getName(data.name))
                     if (points)
-                        txt_ar2_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_ar2_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_ar2_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_ar3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_ar3_cvc.setText("C")
@@ -644,9 +656,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_ar3.setText(getName(data.name))
                     if (points)
-                        txt_ar3_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_ar3_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_ar3_points.setText(data.credits + " " + getString(R.string.Cr))
                 }
 
             } else if (data.role.contains("Bowler", true)) {
@@ -668,9 +680,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bowler1.setText(getName(data.name))
                     if (points)
-                        txt_bowler1_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bowler1_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bowler1_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler2_cvc.setText("C")
@@ -689,9 +701,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bowler2.setText(getName(data.name))
                     if (points)
-                        txt_bowler2_points.setText(data.credits +" "+ getString(R.string.Pts))
+                        txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bowler2_points.setText(data.credits +" "+ getString(R.string.Cr))
+                        txt_bowler2_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler3_cvc.setText("C")
@@ -710,9 +722,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bowler3.setText(getName(data.name))
                     if (points)
-                        txt_bowler3_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bowler3_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bowler3_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler4.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler4_cvc.setText("C")
@@ -731,9 +743,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bowler4.setText(getName(data.name))
                     if (points)
-                        txt_bowler4_points.setText(data.credits+" " + getString(R.string.Pts))
+                        txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bowler4_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bowler4_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler5.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler5_cvc.setText("C")
@@ -752,9 +764,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     txt_bowler5.setText(getName(data.name))
                     if (points)
-                        txt_bowler5_points.setText(data.credits +" "+ getString(R.string.Pts))
+                        txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
-                        txt_bowler5_points.setText(data.credits+" " + getString(R.string.Cr))
+                        txt_bowler5_points.setText(data.credits + " " + getString(R.string.Cr))
                 }
 
             }

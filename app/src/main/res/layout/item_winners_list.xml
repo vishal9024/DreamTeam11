@@ -21,6 +21,7 @@
                 android:text="Rank 1"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_actual"
                 style="@style/TextStyleSemiBold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
@@ -28,8 +29,8 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
-                android:layout_weight="0.3"
-                android:layout_width="wrap_content"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
                 android:textColor="@color/textColorGray"
                 android:text="7.5%"
                 android:layout_height="match_parent"/>
@@ -42,7 +43,8 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="0.5"
                 android:textColor="@color/textColorBlack"
                 android:text="@string/Rs20"
                 android:layout_height="match_parent"/>

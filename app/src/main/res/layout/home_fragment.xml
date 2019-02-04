@@ -5,6 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
 >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -15,14 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-                android:id="@+id/toolbar_layout"
-                app:contentScrim="@android:color/transparent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-        >
-
+        <!--<com.google.android.material.appbar.CollapsingToolbarLayout-->
+                <!--android:id="@+id/toolbar_layout"-->
+                <!--app:contentScrim="@android:color/transparent"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+        <!--&gt;-->
+<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
             <com.github.demono.AutoScrollViewPager
                     android:layout_marginBottom="@dimen/_45sdp"
                     android:id="@+id/viewPager_Banner"
@@ -152,14 +153,17 @@
                             android:layout_height="wrap_content"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+</RelativeLayout>
+        <!--</com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/swipeToRefresh"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
+
                 android:id="@+id/constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

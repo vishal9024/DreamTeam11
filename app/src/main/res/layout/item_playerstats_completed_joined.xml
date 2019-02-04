@@ -54,24 +54,26 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="0.5"
                 android:id="@+id/txt_SelectedBy"
                 style="@style/TextStyleMedium"
                 android:gravity="center"
                 android:paddingStart="@dimen/_20sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:textColor="@color/textColorGray"
                 android:text="81.5%"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
+                android:layout_weight="0.5"
                 android:id="@+id/txt_rank"
                 style="@style/TextStyleMedium"
                 android:gravity="center"
                 android:paddingStart="@dimen/_18sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:textColor="@color/colorSecondary"
                 android:text="49.31"
                 android:layout_height="match_parent"/>

@@ -66,5 +66,5 @@
     <!--ChooseCaptainBackgroundColorTop-->
     <color name="colorChooseCaptain">#f43338</color>
     <color name="colorChooseViceCaptain">#f33438</color>
-
+    <color name="whiteTab">#3c3c3c</color>
 </resources>

@@ -43,12 +43,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
 
 
     //    var callApi = false
-    public fun prepareShareIntent(shareCode: String) {
-        val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareCode)
-        sharingIntent.type = "text/plain";
-        startActivity(Intent.createChooser(sharingIntent, "Invite"))
-    }
+
 
     override fun onClick(view: View?) {
         when (view!!.id) {
@@ -59,8 +54,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                         getString(R.string.app_name) + " for the " + match!!.series_name +
                         " match and prove it! \n\nUse Contest Code " + data!!.invite_code.capitalize() +
                         " & join the action NOW!"
-
-                prepareShareIntent(shareCode)
+                AppDelegate.prepareShareIntent(shareCode,this,getString(R.string.invite))
             }
             R.id.txt_switch_team -> {
 //                callApi = true

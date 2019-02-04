@@ -119,6 +119,10 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                     if (response.response!!.status) {
                         constraint_layout.visibility= VISIBLE
+                        if(matchType==IntentConstant.COMPLETED)
+                            ll_bottom.visibility= VISIBLE
+                        else
+                            ll_bottom.visibility=GONE
                         if (!response.response!!.data!!.joined_contest!!.isEmpty()) {
                             setAdapterJoinedContest(response.response!!.data!!.joined_contest!!)
                             cl_noJoinedContest.visibility = View.GONE
