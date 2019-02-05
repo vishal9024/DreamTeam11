@@ -12,10 +12,11 @@ class Data() : Parcelable {
     var join_multiple_teams = false
     var total_winners = ""
     var teams_joined = ""
-    var is_joined =false
+    var is_joined = false
     var my_team_ids: ArrayList<String>? = null
     var joined_team_list: ArrayList<Team>? = null
     var breakup_detail: ArrayList<PriceBreakUp>? = null
+    var match_status:String=""
 
     constructor(parcel: Parcel) : this() {
         prize_money = parcel.readString()

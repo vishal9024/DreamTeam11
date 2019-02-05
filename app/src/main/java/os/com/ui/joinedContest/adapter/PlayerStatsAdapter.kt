@@ -55,9 +55,8 @@ class PlayerStatsAdapter(
                     bottomSheetDialogFragment.show(mContext.supportFragmentManager, "Bottom Sheet Dialog Fragment")
                 }
             }
-
 //
-//            holder.itemView.img_starPlayer.isSelected = true
+            holder.itemView.img_starPlayer.isSelected = playerPoints[position].in_dream_team
         } catch (e: Exception) {
 //            holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }

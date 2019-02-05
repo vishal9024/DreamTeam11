@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.OnClickRecyclerView
@@ -65,6 +66,12 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     )
             }
             R.id.btn_dreamTeam -> {
+                callDreamTeamApi(
+                    "DreamTeam",
+                    pref!!.userdata!!.user_id,
+                    "",
+                    "Dream Team"
+                )
 //                startActivity(Intent(this, TeamPreviewActivity::class.java).putExtra("show", 1))
             }
             R.id.btn_ViewTeams -> {
@@ -88,12 +95,44 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                         ), 10
                     )
                 } else {
-                    DownloadTeam()
+                    callViewTeamsApi()
+
                 }
 
             }
             R.id.btn_InviteFriends -> {
                 tellUrFriends()
+            }
+        }
+    }
+
+
+    private fun callViewTeamsApi() {
+//        callApi = false
+        val loginRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.contest_id] = joinedContest!!.contest_id
+        loginRequest[Tags.match_id] = match!!.match_id
+        loginRequest[Tags.series_id] = match!!.series_id
+
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .leaderboard(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
+                if (response.response!!.status) {
+                    if (!response.response!!.data!!.url.isEmpty())
+                        DownloadTeam(response.response!!.data!!.url)
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
             }
         }
     }
@@ -140,12 +179,12 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         AppDelegate.prepareShareIntent(shareCode, this, getString(R.string.share))
     }
 
-    fun DownloadTeam() {
+    fun DownloadTeam(url: String) {
         var name =
             localTeamName + getString(R.string.vs) + visitorTeamName + "-" + data!!.invite_code + "-" + System.currentTimeMillis()
         //
         val request =
-            DownloadManager.Request(Uri.parse("http://unec.edu.az/application/uploads/2014/12/pdf-sample.pdf"))
+            DownloadManager.Request(Uri.parse(url))
         //                request.setDescription("ritioSome descn")
         request.setTitle(name)
         // in order for this if to run, you must use the android 3.2 to compile your app
@@ -169,7 +208,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) == PackageManager.PERMISSION_GRANTED
         ) {
-            DownloadTeam()
+            callViewTeamsApi()
         }
     }
 
@@ -264,11 +303,9 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
-                    scrollView.visibility = View.VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
-
                 } else {
                 }
             } catch (exception: Exception) {
@@ -349,35 +386,36 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             txt_localTeamScore.text = getString(R.string.match_not_started)
         }
     }
+
     fun selectorRank(p: Team): Int = p.rank.toInt()
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
 //        joined_team_list.sortWith(Comparator  { t,  -> t.user_id.compareTo(pref!!.userdata!!.user_id) })
         joined_team_list.sortedWith(Comparator { t: Team, u: Team -> t.user_id.compareTo(pref!!.userdata!!.user_id) })
-        var teams=joined_team_list.filter { it.user_id.equals(pref!!.userdata!!.user_id)}as ArrayList
-        var newTeam=joined_team_list.filter { !it.user_id.equals(pref!!.userdata!!.user_id)} as ArrayList
-        newTeam. sortBy { selectorRank(it) }
-          joined_team_list.clear()
+        var teams = joined_team_list.filter { it.user_id.equals(pref!!.userdata!!.user_id) } as ArrayList
+        var newTeam = joined_team_list.filter { !it.user_id.equals(pref!!.userdata!!.user_id) } as ArrayList
+        newTeam.sortBy { selectorRank(it) }
+        joined_team_list.clear()
         joined_team_list.addAll(teams)
         joined_team_list.addAll(newTeam)
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, joined_team_list, this, matchType)
+        rv_Contest!!.adapter = LeaderShipTeamsAdapter(this, data!!.match_status, joined_team_list, this, matchType)
     }
 
     override fun onClickItem(tag: String, position: Int) {
-        if (tag.equals("Preview")) {
+        if (tag.equals("Preview") || tag.equals("substitute")) {
             callGetTeamListApi(
+                tag,
                 joined_team_list[position].user_id,
                 joined_team_list[position].team_no,
                 joined_team_list[position].team_name
             )
         }
     }
-
-    private fun callGetTeamListApi(user_id: String, teamNo: String, team_name: String) {
-        val loginRequest = HashMap<String, String>()
+    private fun callDreamTeamApi(tag: String, user_id: String, teamNo: String, team_name: String) {
+        val loginRequest = java.util.HashMap<String, String>()
         loginRequest[Tags.user_id] = user_id
         loginRequest[Tags.team_no] = teamNo
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
@@ -388,27 +426,82 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
-                    .player_team_list(loginRequest)
+                    .dream_team(loginRequest)
                 val response = request.await()
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
-                    var teamName = getString(R.string.team) + teamNo
-                    if (!team_name.isEmpty()) {
-                        teamName = team_name + "(T" + teamNo + ")"
-                    }
                     startActivity(
                         Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
                             "show",
                             1
-                        ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
+                        ).putExtra(IntentConstant.DATA, response.response!!.data!!).putParcelableArrayListExtra(
                             IntentConstant.SELECT_PLAYER,
-                            response.response!!.data!![0].player_details
+                            response.response!!.data!!.player_details
                         )
-                            .putExtra("substitute", response.response!!.data!![0].substitute_detail)
-                            .putExtra("teamName", teamName)
+                            .putExtra("substitute", response.response!!.data!!.substitute_detail)
+                            .putExtra("teamName", team_name)
                             .putExtra("points", true)
+                            .putExtra("DreamTeam", true)
                     )
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
+            }
+        }
+    }
+    private fun callGetTeamListApi(tag: String, user_id: String, teamNo: String, team_name: String) {
+        val loginRequest = HashMap<String, String>()
+        loginRequest[Tags.user_id] = user_id
+        loginRequest[Tags.team_no] = teamNo
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.match_id] = match!!.match_id
+        loginRequest[Tags.series_id] = match!!.series_id
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
+            try {
+                var request=
+                    ApiClient.client
+                        .getRetrofitService()
+                        .player_team_list(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
+                if (response.response!!.status) {
+                    if (tag.equals("Preview")) {
+                        var teamName = getString(R.string.team) + teamNo
+                        if (!team_name.isEmpty()) {
+                            teamName = team_name + "(T" + teamNo + ")"
+                        }
+                        startActivity(
+                            Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
+                                "show",
+                                1
+                            ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
+                                IntentConstant.SELECT_PLAYER,
+                                response.response!!.data!![0].player_details
+                            )
+                                .putExtra("substitute", response.response!!.data!![0].substitute_detail)
+                                .putExtra("teamName", teamName)
+                                .putExtra("points", true)
+                        )
+                    }  else if (tag.equals("substitute")) {
+                        startActivityForResult(
+                            Intent(
+                                this@LeaderShipBoardActivity,
+                                ReplaceWithSubstituteActivity::class.java
+                            ).putParcelableArrayListExtra(
+                                IntentConstant.SELECT_PLAYER,
+                                response.response!!.data!![0].player_details
+                            ).putExtra("substitute", response.response!!.data!![0].substitute_detail)
+                                .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                                .putExtra(IntentConstant.CONTEST_ID, joinedContest!!.contest_id)
+                                .putExtra(IntentConstant.TEAM_ID, teamNo)
+                            ,
+                            AppRequestCodes.EDIT
+                        )
+                    }
                 } else {
                 }
             } catch (exception: Exception) {

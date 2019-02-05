@@ -15,13 +15,17 @@ import os.com.ui.createTeam.apiRequest.SwitchTeamRequest
 import os.com.ui.createTeam.apiResponse.createTeamResponse.CreateTeamResponse
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
+import os.com.ui.dashboard.home.apiResponse.bannerList.GetBannerResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
+import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.ApplyCouponCodeResponse
 import os.com.ui.dashboard.profile.apiResponse.AvtarListResponse
 import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 import os.com.ui.invite.apiResponse.getContestInviteResponse.GetContestInviteResponse
+import os.com.ui.joinedContest.apiResponse.DreamTeamResponse.DreamTeamResponse
 import os.com.ui.joinedContest.apiResponse.getSeriesPlayerListResponse.GetSeriesPlayerListResponse
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedFixtureListResponse
+import os.com.ui.joinedContest.apiResponse.viewTeamsResponse.ViewTeamResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -100,6 +104,11 @@ interface ApiInterface {
     fun player_team_list(@Body request: Map<String, String>): Deferred<GetTeamListResponse>
 
     @Headers("Content-Type: application/json")
+    @POST(ApiConstant.dream_team)
+    fun dream_team(@Body request: Map<String, String>): Deferred<DreamTeamResponse>
+
+
+    @Headers("Content-Type: application/json")
     @POST(ApiConstant.join_contest_wallet_amount)
     fun join_contest_wallet_amount(@Body request: Map<String, String>): Deferred<JoinContestWalletAmountResponse>
 
@@ -144,7 +153,6 @@ interface ApiInterface {
     @POST(ApiConstant.update_transactions)
     fun update_transactions(@Body request: UpdateTransactionRequest): Deferred<GeneratePaytmChecksumResponse>
 
-
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.avetar_list)
     fun avetar_list(@Body request: Map<String, String>): Deferred<AvtarListResponse>
@@ -153,4 +161,16 @@ interface ApiInterface {
     @POST(ApiConstant.update_user_image)
     fun update_user_image(@Body request: Map<String, String>): Deferred<AvtarListResponse>
 
+    @POST(ApiConstant.apply_coupon_code)
+    fun apply_coupon_code(@Body request: Map<String, String>): Deferred<ApplyCouponCodeResponse>
+
+    @POST(ApiConstant.leaderboard)
+    fun leaderboard(@Body request: Map<String, String>): Deferred<ViewTeamResponse>
+
+    @POST(ApiConstant.replace_player)
+    fun replace_player(@Body request: Map<String, String>): Deferred<BaseResponse>
+
+
+    @POST(ApiConstant.banner_list)
+    fun banner_list(@Body request: Map<String, String>): Deferred<GetBannerResponse>
 }

@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+    <include layout="@layout/app_toolbar"/>
+    <RelativeLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+                android:background="@color/textColorOffWhite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rlHeader"
+        >
+            <ImageView
+                    android:id="@+id/imvUserProfile"
+                    android:layout_width="@dimen/_60sdp"
+                    android:layout_height="@dimen/_70sdp"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/com_facebook_profile_picture_blank_square"
+            />
+            <LinearLayout
+
+                    android:orientation="vertical"
+                    android:id="@+id/llName"
+                    android:layout_toRightOf="@+id/imvUserProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:paddingTop="@dimen/_15sdp"
+                        android:id="@+id/txt_label"
+                        android:layout_below="@+id/ll_title"
+                        android:paddingBottom="@dimen/_7sdp"
+                        android:paddingStart="@dimen/_5sdp"
+                        style="@style/TextStyleSemiBold"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:textSize="@dimen/_14sdp"
+                        android:textColor="@color/textColorLightBlack"
+                        android:text="Anam Amin"
+                        android:layout_height="wrap_content"/>
+                /><LinearLayout
+                    android:paddingStart="@dimen/_5sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:id="@+id/ll_headerView"
+                    android:layout_below="@+id/llName"
+                    android:layout_toRightOf="@+id/imvUserProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:orientation="horizontal"
+                              android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txtPoints"
+                            style="@style/TextStyleSemiBold"
+                            android:gravity="start"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/textColorGray"
+                            android:text="23"
+                            android:layout_height="wrap_content"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:paddingStart="@dimen/_5sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:textSize="@dimen/_14sdp"
+                            android:textColor="@color/textColorGray"
+                            android:text="@string/points"
+                            android:textAllCaps="true"
+                            android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <View
+                android:id="@+id/view1"
+                android:layout_below="@+id/rlHeader"
+                android:background="@color/GrayColorOTP"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"/>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_below="@+id/view1"
+                android:id="@+id/txt_TeamName"
+                style="@style/TextStyleNormal"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:textSize="@dimen/_11sdp"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                android:background="@color/colorSecondary"
+                android:text="Select a player to be replaced"
+                android:padding="@dimen/_7sdp"
+                android:layout_height="wrap_content"/>
+        <View
+                android:id="@+id/view2"
+                android:layout_below="@+id/txt_TeamName"
+                android:background="@color/GrayColorOTP"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_1sdp"/>
+        <androidx.recyclerview.widget.RecyclerView
+                android:layout_above="@+id/btn_replaceSubstitute"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_below="@+id/view2"
+                android:id="@+id/rv_players"
+                android:layout_width="match_parent"
+                tools:listitem="@layout/item_teamplayer"
+                android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+        <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="visible"
+                android:layout_alignParentBottom="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/btn_replaceSubstitute"
+                android:layout_width="match_parent"
+                style="@style/ButtonStyle"
+                android:text="@string/replace_with_substitute"
+                android:gravity="center"
+                android:paddingTop="@dimen/_5sdp"
+                android:paddingBottom="@dimen/_5sdp"
+                android:enabled="false"
+                android:background="@drawable/substitute_color_selector"
+                android:layout_height="@dimen/_40sdp"/>
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

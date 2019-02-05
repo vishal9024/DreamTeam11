@@ -1,15 +1,15 @@
-package os.com.ui.createTeam.apiResponse.myTeamListResponse
+package os.com.ui.joinedContest.apiResponse.DreamTeamResponse
 
 import android.os.Parcel
 import android.os.Parcelable
 
 class PlayerRecord() : Parcelable {
-    var name :String?=null
-    var player_id:String?=null
-    var image :String?=null
-    var role :String?=null
-    var credits :String?=null
-    var point :String?=null
+    var name :String?=StringUtils.toNull("")
+    var player_id:String?=StringUtils.toNull("")
+    var image :String?=StringUtils.toNull("")
+    var role :String?=StringUtils.toNull("")
+    var credits :String?=StringUtils.toNull("")
+    var point :String?=StringUtils.toNull("")
     var in_dream_team = false
 
     constructor(parcel: Parcel) : this() {
@@ -23,12 +23,12 @@ class PlayerRecord() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeString(player_id)
-        parcel.writeString(image)
-        parcel.writeString(role)
-        parcel.writeString(credits)
-        parcel.writeString(point)
+        parcel.writeString((if (name == null) "" else name))
+        parcel.writeString((if (player_id == null) "" else player_id))
+        parcel.writeString((if (image == null) "" else image))
+        parcel.writeString((if (role == null) "" else role))
+        parcel.writeString((if (credits == null) "" else credits))
+        parcel.writeString((if (point == null) "" else point))
         parcel.writeByte(if (in_dream_team) 1 else 0)
     }
 
@@ -47,4 +47,10 @@ class PlayerRecord() : Parcelable {
     }
 
 
+}
+
+object StringUtils {
+    fun toNull(value: String?): String? {
+        return if (value == null || value.isEmpty()) null else value
+    }
 }

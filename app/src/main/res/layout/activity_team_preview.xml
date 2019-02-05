@@ -51,9 +51,7 @@
             android:padding="@dimen/_5sdp"/>
     <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_marginTop="@dimen/_60sdp"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:layout_below="@+id/txt_Appname"
-            android:layout_above="@+id/rl_bottom"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:gravity="center_horizontal"
@@ -127,12 +125,10 @@
                         android:background="@drawable/rounded_square_count"
                         android:visibility="gone"
                         android:id="@+id/img_dreamTeam_wk"
-                        android:padding="@dimen/_1sdp"
                         android:layout_toEndOf="@+id/cimg_wk1"
-                        android:src="@mipmap/top_player_selected"
-                        android:tint="@color/colorSecondary"
-                        android:layout_width="@dimen/_13sdp"
-                        android:layout_height="@dimen/_13sdp"/>
+                        android:src="@mipmap/star_icon"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"/>
                 <TextView
                         android:id="@+id/txt_wk_cvc"
                         android:layout_width="wrap_content"
@@ -227,13 +223,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bat1"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bat1"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:id="@+id/txt_bat1_cvc"
                                 android:layout_width="wrap_content"
@@ -306,13 +299,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bat2"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bat2"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bat2_cvc"
@@ -384,13 +374,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bat3"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bat3"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bat3_cvc"
@@ -460,15 +447,12 @@
                                 android:textSize="@dimen/_7sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
                                 android:background="@drawable/rounded_square_count"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:id="@+id/img_dreamTeam_bat4"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bat4"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:id="@+id/txt_bat4_cvc"
                                 android:layout_width="wrap_content"
@@ -540,13 +524,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bat5"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bat5"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:id="@+id/txt_bat5_cvc"
                                 android:layout_width="wrap_content"
@@ -653,13 +634,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_ar1"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_ar1"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_ar1_cvc"
@@ -731,13 +709,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_ar2"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_ar2"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_ar2_cvc"
@@ -809,13 +784,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_ar3"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_ar3"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:id="@+id/txt_ar3_cvc"
                                 android:layout_width="wrap_content"
@@ -921,13 +893,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bowler1"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bowler1"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bowler1_cvc"
@@ -999,13 +968,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bowler2"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bowler2"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bowler2_cvc"
@@ -1078,13 +1044,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bowler3"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bowler3"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bowler3_cvc"
@@ -1156,13 +1119,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bowler4"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bowler4"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bowler4_cvc"
@@ -1234,13 +1194,10 @@
                                 android:background="@drawable/rounded_square_count"
                                 android:visibility="gone"
                                 android:id="@+id/img_dreamTeam_bowler5"
-                                android:padding="@dimen/_1sdp"
                                 android:layout_toEndOf="@+id/cimg_bowler5"
-                                android:src="@mipmap/top_player_selected"
-                                android:tint="@color/colorSecondary"
-                               
-                                android:layout_width="@dimen/_13sdp"
-                                android:layout_height="@dimen/_13sdp"/>
+                                android:src="@mipmap/star_icon"
+                                android:layout_width="@dimen/_15sdp"
+                                android:layout_height="@dimen/_15sdp"/>
                         <TextView
                                 android:visibility="gone"
                                 android:id="@+id/txt_bowler5_cvc"
@@ -1392,9 +1349,7 @@
                 android:layout_width="@dimen/_18sdp"
                 android:layout_height="@dimen/_18sdp"
                 android:text="213.25"
-                android:background="@drawable/rounded_square_count"
-                app:srcCompat="@mipmap/top_player_selected"
-                android:tint="@color/colorSecondary"
+                app:srcCompat="@mipmap/star_icon"
                 android:padding="@dimen/_2sdp"
                 android:id="@+id/txt_points"
                 android:singleLine="true"

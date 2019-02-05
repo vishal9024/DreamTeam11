@@ -1,12 +1,17 @@
 package os.com.ui.addCash.activity
 
+import android.app.Activity
 import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.View.VISIBLE
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
@@ -23,17 +28,24 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.dialogue_add_cash_option.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
+import os.com.constant.IntentConstant
+import os.com.constant.IntentConstant.OFFER
+import os.com.constant.IntentConstant.TO_JOIN
+import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
 import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
+import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.Data
 import os.com.utils.AppDelegate
 import java.util.*
+import kotlin.random.Random
 
 
 class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListener {
@@ -233,6 +245,10 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@AddCashActivity)
             try {
+                if (AddTYPE.equals(OFFER)) {
+                    updateTransactionRequest.coupon_id = data!!.coupon_id
+                    updateTransactionRequest.discount_amount = discountedValue.toString()
+                }
                 val request = ApiClient.client
                     .getRetrofitService()
                     .update_transactions(updateTransactionRequest)
@@ -241,14 +257,28 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
                 AppDelegate.showToast(this@AddCashActivity, response.response!!.message)
                 if (response.response!!.status) {
-                    et_addCash.setText("")
-                    finish()
+                    if (AddTYPE == TO_JOIN) {
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    } else {
+                        et_addCash.setText("")
+                        finish()
+                    }
                 } else {
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
             }
         }
+    }
+
+    override fun onBackPressed() {
+        if (AddTYPE == TO_JOIN) {
+            val intent = Intent()
+            setResult(Activity.RESULT_CANCELED, intent)
+        }
+        super.onBackPressed()
     }
 
     private fun getRendomOrderID(): String {
@@ -281,7 +311,6 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 .show()
             e.printStackTrace()
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -290,18 +319,70 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         initViews()
     }
 
+    var currentBalance = "0.0"
+    var AddTYPE = IntentConstant.ADD
+    var data: Data? = null
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.add_cash)
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         btn_addCash.setOnClickListener(this)
         txt_100.setOnClickListener(this)
         txt_200.setOnClickListener(this)
         txt_500.setOnClickListener(this)
+        if (intent != null) {
+            currentBalance = intent.getStringExtra(IntentConstant.currentBalance)
+            txt_amount.setText(getString(R.string.Rs) + " " + currentBalance)
+            AddTYPE = intent.getIntExtra(IntentConstant.AddType, IntentConstant.ADD)
+            if (AddTYPE.equals(IntentConstant.OFFER)) {
+                data = intent.getParcelableExtra(Tags.DATA)
+                ll_offer.visibility = VISIBLE
+                AddTextChangeListener()
+                et_addCash.setText("100")
+            } else if (AddTYPE.equals(IntentConstant.TO_JOIN)) {
+                var toPay = intent.getStringExtra(IntentConstant.AMOUNT_TO_ADD)
+                et_addCash.setText(toPay)
+            }
+        }
+    }
 
+    private fun AddTextChangeListener() {
+        et_addCash.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                if (!et_addCash.text.toString().isEmpty() && et_addCash.text.toString().toFloat() >= 20) {
+                    GlobalScope.launch(Dispatchers.Main) {
+                        delay(100)
+                        applyOffer()
+                    }
+                } else {
+                    txt_offer.text = getString(R.string.Rs) + " 0.0"
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+    }
+
+    var discountedValue = 0f
+    private fun applyOffer() {
+        if (data != null) {
+            discountedValue = 0f
+            var discountAmount = data!!.discount_amount.toFloat()
+            if (data!!.in_percentage) {
+                discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
+                if (discountedValue > 50)
+                    discountedValue = 50f
+            } else
+                discountedValue = discountAmount
+            txt_offer.text = getString(R.string.Rs) + " " + discountedValue
+        }
     }
 
     private fun getRendomBankTxnID(): String {

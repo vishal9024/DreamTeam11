@@ -11,4 +11,6 @@ class UpdateTransactionRequest {
     var currency = ""
     var gateway_name=""
     var checksum = ""
+    var coupon_id=""
+    var discount_amount=""
 }

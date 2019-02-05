@@ -1,4 +1,4 @@
-package os.com.ui.createTeam.apiResponse.myTeamListResponse
+package os.com.ui.joinedContest.apiResponse.DreamTeamResponse
 
 import android.os.Parcel
 import android.os.Parcelable

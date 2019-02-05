@@ -162,6 +162,7 @@
         <activity android:name=".ui.createTeam.activity.myTeam.MyTeamSelectActivity"/>
         <activity android:name=".ui.addCash.activity.AddCashActivity"/>
         <activity android:name=".ui.createTeam.activity.ChooseSubstituteActivity"/>
+        <activity android:name=".ui.joinedContest.activity.ReplaceWithSubstituteActivity"/>
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"

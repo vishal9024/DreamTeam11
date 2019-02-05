@@ -46,5 +46,8 @@
 
         <item name="android:fontFamily">@font/faktpro_semibold</item>
     </style>
-
+    <style name="myCustomMenuTextAppearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+    </style>
 </resources>

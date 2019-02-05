@@ -23,6 +23,7 @@ import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.IAdapterClick
 import os.com.networkCall.ApiClient
@@ -64,6 +65,10 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 R.id.btn_InviteFriends -> {
                     startActivity(Intent(activity, InviteFriendsActivity::class.java))
                 }
+                R.id.txt_ApplyCode -> {
+                    if (!et_email.text.toString().isEmpty())
+                        ApplyOfferCodeApi()
+                }
                 R.id.imvEditImage -> {
                     showDialog();
                 }
@@ -75,7 +80,55 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
 //                activity!!.finish()
                 }
                 R.id.txt_AddCash -> {
-                    startActivity(Intent(activity, AddCashActivity::class.java))
+                    var currentBalance = "0.0"
+                    if (mData != null)
+                        currentBalance =
+                                (mData!!.getCash_bonus_amount().toFloat() + mData!!.total_cash_amount.toFloat() + mData!!.total_winning_amount.toFloat()).toString()
+                    startActivity(
+                        Intent(activity, AddCashActivity::class.java).putExtra(
+                            IntentConstant.currentBalance,
+                            currentBalance
+                        ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
+                    )
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun ApplyOfferCodeApi() {
+        try {
+            GlobalScope.launch(Dispatchers.Main) {
+                if (activity != null)
+                    AppDelegate.showProgressDialog(activity!!)
+                try {
+                    val map = HashMap<String, String>()
+                    map[Tags.user_id] = pref!!.userdata!!.user_id
+                    map[Tags.language] = FantasyApplication.getInstance().getLanguage()
+                    map[Tags.coupon_code] = et_email.text.toString()
+                    val request = ApiClient.client
+                        .getRetrofitService()
+                        .apply_coupon_code(map)
+                    val response = request.await()
+                    AppDelegate.LogT("Response=>" + response);
+                    AppDelegate.hideProgressDialog(activity)
+                    if (response.response!!.status) {
+                        var currentBalance = "0.0"
+                        if (mData != null)
+                            currentBalance =
+                                    (mData!!.getCash_bonus_amount().toFloat() + mData!!.total_cash_amount.toFloat() + mData!!.total_winning_amount.toFloat()).toString()
+                        startActivity(
+                            Intent(activity, AddCashActivity::class.java).putExtra(
+                                Tags.DATA,
+                                response.response!!.data
+                            ).putExtra("currentBalance", currentBalance).putExtra("AddType", IntentConstant.OFFER)
+                        )
+                    } else {
+                        AppDelegate.showToast(context, response.response!!.message)
+                    }
+                } catch (exception: Exception) {
+                    AppDelegate.hideProgressDialog(activity)
                 }
             }
         } catch (e: Exception) {
@@ -109,7 +162,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             }
             dialogue!!.btnSave.setOnClickListener {
                 //            joinContest(match_id, series_id, contest_id, team_id, onClickDialogue)
-                if (selectedImageId!=null)
+                if (selectedImageId != null)
                     getUpdateTeamImage(selectedImageId!!)
                 dialogue!!.dismiss()
             }
@@ -153,7 +206,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             txtLogout.setOnClickListener(this)
             txt_AddCash.setOnClickListener(this)
             imvEditImage.setOnClickListener(this)
-
+            txt_ApplyCode.setOnClickListener(this)
             setData()
             if (pref!!.isLogin) {
                 if (!pref!!.userdata!!.fb_id.isEmpty() || !pref!!.userdata!!.google_id.isEmpty()) {
@@ -260,7 +313,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 try {
                     var map = HashMap<String, String>()
                     map[Tags.user_id] = pref!!.userdata!!.user_id
-                    map[Tags.img_id] = ""+selectedImageId
+                    map[Tags.img_id] = "" + selectedImageId
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
                     val request = ApiClient.client
                         .getRetrofitService()
@@ -272,7 +325,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                         if (NetworkUtils.isConnected()) {
                             getProfileData()
                         } else
-                            Toast.makeText(context!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                            Toast.makeText(
+                                context!!,
+                                getString(R.string.error_network_connection),
+                                Toast.LENGTH_LONG
+                            ).show()
 //                        AppDelegate.showToast(context, response.response!!.message)
                     } else {
                         if (response.response!!.message != null)
@@ -304,10 +361,10 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         }
     }
 
-    private var selectedImageId: Int?=null
+    private var selectedImageId: Int? = null
 
     override fun onClick(position: Int) {
-        selectedImageId=avtarList[position].id
+        selectedImageId = avtarList[position].id
         avtarImageAdapter!!.selectImageId(avtarList[position].id)
         avtarImageAdapter!!.notifyDataSetChanged()
     }

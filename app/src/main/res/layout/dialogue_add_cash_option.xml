@@ -93,6 +93,7 @@
                     android:layout_height="wrap_content"/>
         </LinearLayout>
         <LinearLayout
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:id="@+id/ll_paypal"
                 card_view:layout_constraintTop_toBottomOf="@+id/ll_rajorpay"

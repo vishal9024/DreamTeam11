@@ -1,5 +1,6 @@
 package os.com.AppBase
 
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
@@ -7,6 +8,8 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.PopupWindow
 import android.widget.RelativeLayout
@@ -22,6 +25,7 @@ import kotlinx.coroutines.launch
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
+import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
 import os.com.interfaces.OnClickDialogue
@@ -34,6 +38,7 @@ import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBre
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
+import kotlin.math.roundToInt
 
 
 /**
@@ -95,6 +100,18 @@ open class BaseActivity : AppCompatActivity() {
 //        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            val spanString = SpannableString(menu.getItem(i).title.toString())
+            spanString.setSpan(
+                ForegroundColorSpan(resources.getColor(R.color.whiteTab)),
+                0,
+                spanString.length,
+                0
+            ) //fix the color to white
+            item.title = spanString
+        }
+
         getViewOfCartMenuItem(menu)
         /* se click listener of toolbar cart icon*/
         notificationView.setOnClickListener {
@@ -104,7 +121,7 @@ open class BaseActivity : AppCompatActivity() {
         return true
     }
 
-    fun setMenu(notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean,guru:Boolean) {
+    fun setMenu(notif: Boolean, wallet: Boolean, filter: Boolean, edit: Boolean, guru: Boolean) {
         this.notif = notif
         this.wallet = wallet
         this.filter = filter
@@ -203,6 +220,11 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    var match_idBase: String = ""
+    var series_idBase: String = ""
+    var contest_idBase: String = ""
+    var team_idBase: String = ""
+    var onClickDialogueBase: OnClickDialogue? = null
     fun checkAmountWallet(
         match_id: String,
         series_id: String,
@@ -234,14 +256,17 @@ open class BaseActivity : AppCompatActivity() {
                     if (!response.response!!.data!!.entry_fee.isEmpty())
                         entryFee = response.response!!.data!!.entry_fee.toFloat()
                     if (!response.response!!.data!!.usable_bonus.isEmpty())
-                        bonus = response.response!!.data!!.usable_bonus.toFloat()+ response.response!!.data!!.winning_balance.toFloat()+ response.response!!.data!!.cash_balance.toFloat()
+                        bonus = response.response!!.data!!.usable_bonus.toFloat() +
+                                response.response!!.data!!.winning_balance.toFloat() +
+                                response.response!!.data!!.cash_balance.toFloat()
                     toPay = entryFee - bonus
                     if (entryFee > 0 && toPay > 0) {
-                        startActivityForResult(
-                            Intent(this@BaseActivity, AddCashActivity::class.java),
-                            AppRequestCodes.ADD_CASH
-                        )
-//                        onClickDialogue.onClick(Tags.fail,false)
+                        match_idBase = match_id
+                        series_idBase = series_id
+                        contest_idBase = contest_id
+                        team_idBase = team_id
+                        onClickDialogueBase = onClickDialogue
+                        showAddCashDialog(bonus, toPay, onClickDialogue)
                     } else
                         showJoinContestDialogue(
                             response.response!!.data!!,
@@ -263,7 +288,17 @@ open class BaseActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        /**/
+        if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_OK)
+            checkAmountWallet(
+                match_idBase,
+                series_idBase,
+                contest_idBase,
+                team_idBase,
+                onClickDialogueBase!!
+            )
+        else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED){
+            onClickDialogueBase!!.onClick(Tags.fail, false)
+        }
     }
 
     fun showJoinContestDialogue(
@@ -294,7 +329,7 @@ open class BaseActivity : AppCompatActivity() {
         if (!data.entry_fee.isEmpty())
             entryFee = data.entry_fee.toFloat()
         if (!data.usable_bonus.isEmpty())
-            bonus = data!!.usable_bonus.toFloat()+ data!!.winning_balance.toFloat()+ data!!.cash_balance.toFloat()
+            bonus = data!!.usable_bonus.toFloat() + data!!.winning_balance.toFloat() + data!!.cash_balance.toFloat()
 
         toPay = entryFee - bonus
         if (bonus >= entryFee)
@@ -306,7 +341,7 @@ open class BaseActivity : AppCompatActivity() {
                     total
                 )
         dialogue.txt_EntryFee.text = getString(R.string.Rs) + String.format("%.2f", entryFee)
-        dialogue.txt_bonus.text = getString(R.string.Rs) + String.format("%.2f", bonus)
+        dialogue.txt_bonus.text = getString(R.string.Rs) + String.format("%.2f", data!!.usable_bonus.toFloat())
         dialogue.txt_topay.text = getString(R.string.Rs) + String.format("%.2f", toPay)
         dialogue.img_Close.setOnClickListener {
             onClickDialogue.onClick(Tags.cancel, false)
@@ -358,6 +393,36 @@ open class BaseActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    public fun showAddCashDialog(bonus: Float, toPay: Float, onClickDialogue: OnClickDialogue) {
+      var message=  "Low balance! Please add ₹ "+String.format("%.2f", toPay)+" to join contest."
+
+        val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
+        logoutAlertDialog.setTitle(getString(R.string.app_name))
+        logoutAlertDialog.setMessage(message)
+        logoutAlertDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE,
+            getString(R.string.add_cash)
+        ) { dialog, id ->
+            logoutAlertDialog.dismiss()
+            startActivityForResult(
+                Intent(this@BaseActivity, AddCashActivity::class.java).putExtra(
+                    IntentConstant.currentBalance,
+                    bonus.toString()
+                ).putExtra(IntentConstant.AddType, IntentConstant.TO_JOIN)
+                    .putExtra(IntentConstant.AMOUNT_TO_ADD, toPay.roundToInt().toString()),
+                AppRequestCodes.ADD_CASH
+            )
+        }
+        logoutAlertDialog.setButton(
+            AlertDialog.BUTTON_NEGATIVE,
+            getString(R.string.cancel)
+        ) { dialog, id ->
+            onClickDialogue.onClick(Tags.fail, false)
+            logoutAlertDialog.dismiss()
+        }
+        logoutAlertDialog.show()
     }
 
     public fun showLogoutDialog() {
@@ -423,7 +488,7 @@ open class BaseActivity : AppCompatActivity() {
         val bottomSheetDialogFragment = BottomSheetWinningListFragment()
         var bundle = Bundle()
         bundle.putParcelableArrayList(Tags.contest_id, breakup_detail)
-        bundle.putString(Tags.winning_prize,prize_money)
+        bundle.putString(Tags.winning_prize, prize_money)
         bottomSheetDialogFragment.arguments = bundle
         bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
 

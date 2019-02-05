@@ -66,6 +66,7 @@
         <item name="colorControlNormal">@color/textColorBlack</item>
     </style>
     <style name="myCustomMenuTextAppearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
-        <item name="android:textColor">@color/textColorLightBlack</item>
+        <item name="actionMenuTextColor">@color/textColorLightBlack</item>
+        <item name="android:actionMenuTextColor">@color/textColorLightBlack</item>
     </style>
 </resources>

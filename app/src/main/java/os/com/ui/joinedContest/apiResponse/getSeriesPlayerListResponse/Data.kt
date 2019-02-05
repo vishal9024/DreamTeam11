@@ -13,6 +13,7 @@ class Data() : Parcelable {
     var in_contest: Boolean = false
     var player_breckup: PriceBreakUp? = null
     var team_number: ArrayList<String>? = null
+   var  in_dream_team:Boolean=false
 
     constructor(parcel: Parcel) : this() {
         player_id = parcel.readString()
@@ -24,6 +25,7 @@ class Data() : Parcelable {
         in_contest = parcel.readByte() != 0.toByte()
         player_breckup = parcel.readParcelable(PriceBreakUp::class.java.classLoader)
         team_number = parcel.createStringArrayList()
+        in_dream_team = parcel.readByte() != 0.toByte()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -36,6 +38,7 @@ class Data() : Parcelable {
         parcel.writeByte(if (in_contest) 1 else 0)
         parcel.writeParcelable(player_breckup, flags)
         parcel.writeStringList(team_number)
+        parcel.writeByte(if (in_dream_team) 1 else 0)
     }
 
     override fun describeContents(): Int {

@@ -28,7 +28,6 @@
             android:visible="false"
             app:showAsAction="always"/>
     <item
-            app:itemTextColor="@color/whiteTab"
             android:id="@+id/menu_guru"
             android:title="@string/guru"
             android:visible="false"

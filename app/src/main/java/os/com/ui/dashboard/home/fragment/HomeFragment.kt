@@ -28,6 +28,7 @@ import os.com.ui.dashboard.home.adapter.MatchCompletedAdapter
 import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
 import os.com.ui.dashboard.home.adapter.MatchLiveAdapter
 import os.com.ui.dashboard.home.adapter.PagerAdapter
+import os.com.ui.dashboard.home.apiResponse.bannerList.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.AppDelegate.isNetworkAvailable
@@ -40,17 +41,17 @@ import kotlin.collections.ArrayList
  */
 class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
-        if (verticalOffset == 0) {
-            if (txt_Fixtures.isSelected)
-                if (!pref!!.isLogin) {
-                    ll_matchSelector.visibility = GONE
-                    txt_title.visibility = GONE
-                    txt_toolbartitle.visibility = VISIBLE
-                } else
-                    txt_title.visibility = VISIBLE
-        } else {
-            txt_title.visibility = GONE
-        }
+//        if (verticalOffset == 0) {
+//            if (txt_Fixtures.isSelected)
+//                if (!pref!!.isLogin) {
+//                    ll_matchSelector.visibility = GONE
+//                    txt_title.visibility = GONE
+//                    txt_toolbartitle.visibility = VISIBLE
+//                } else
+//                    txt_title.visibility = VISIBLE
+//        } else {
+//            txt_title.visibility = GONE
+//        }
     }
 
     override fun onClick(view: View?) {
@@ -75,35 +76,37 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     }
 
     private fun initViews() {
-        if (!pref!!.isLogin) {
-            tabLayout.visibility = GONE
-            txt_toolbartitle.visibility = View.VISIBLE
-            ll_matchSelector.visibility = View.GONE
-            txt_title.visibility = View.GONE
-        } else {
-            txt_toolbartitle.visibility = View.GONE
-            cl_main.visibility = View.VISIBLE
-            txt_title.visibility = View.VISIBLE
-        }
+        toolbar.visibility = GONE
+        txt_title.visibility = GONE
+//        if (!pref!!.isLogin) {
+//            tabLayout.visibility = GONE
+//            txt_toolbartitle.visibility = View.VISIBLE
+//            ll_matchSelector.visibility = View.GONE
+//            txt_title.visibility = View.GONE
+//        } else {
+//            txt_toolbartitle.visibility = View.GONE
+//            cl_main.visibility = View.VISIBLE
+//            txt_title.visibility = View.VISIBLE
+//        }
         app_bar.addOnOffsetChangedListener(this)
-        if (pref!!.isLogin)
-            if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
-//                tabLayoutfsl.visibility = GONE
-                ll_matchSelector.visibility = GONE
-                tabLayout.visibility = VISIBLE
-                initTabLayout(tabLayout)
-            } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
-//                tabLayoutfsl.visibility = VISIBLE
-                ll_matchSelector.visibility = GONE
-                tabLayout.visibility = VISIBLE
-                initTabLayout(tabLayout)
-            } else {
-//                tabLayoutfsl.visibility = GONE
-                ll_matchSelector.visibility = VISIBLE
-                tabLayout.visibility = GONE
-            }
+//        if (pref!!.isLogin)
+//            if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+////                tabLayoutfsl.visibility = GONE
+//                ll_matchSelector.visibility = GONE
+//                tabLayout.visibility = VISIBLE
+//                initTabLayout(tabLayout)
+//            } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+////                tabLayoutfsl.visibility = VISIBLE
+//                ll_matchSelector.visibility = GONE
+//                tabLayout.visibility = VISIBLE
+//                initTabLayout(tabLayout)
+//            } else {
+////                tabLayoutfsl.visibility = GONE
+//                ll_matchSelector.visibility = VISIBLE
+//                tabLayout.visibility = GONE
+//            }
 
-        matchSelector(FIXTURES)
+        matchSelector(RESULTS)
         setFixturesAdapter()
         setCompletedAdapter()
         setLiveAdapter()
@@ -113,7 +116,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
         Handler().postDelayed(Runnable {
-            setBanner()
+            callBannerApi()
         }, 100)
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
@@ -161,36 +164,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     var timer: Timer? = null
     val DELAY_MS: Long = 500//delay in milliseconds before task is to be executed
     val PERIOD_MS: Long = 3000 // time in milliseconds between successive task executions.
-    internal fun setBanner() {
-        if (!isAdded)
-            return
-//        if (newsModelArrayList != null) {
-        for (i in 0..11) {
-            val fragment = BannerFragment()
-            val bundle = Bundle()
-//                bundle.putParcelable(Tags.DATA, newsModelArrayList.get(i))
-            fragment.arguments = bundle
-            bannerFragment.add(fragment)
-        }
-        AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
-        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
-        viewPager_Banner.setAdapter(bannerPagerAdapter)
-        viewPager_Banner.setClipToPadding(false);
-        if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
 
-            viewPager_Banner.setPadding(0, 0, 0, 0)
-        } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
-            viewPager_Banner.setPageMargin(10)
-            viewPager_Banner.setPadding(50, 0, 50, 0)
-        } else {
-            viewPager_Banner.setPageMargin(10)
-            viewPager_Banner.setPadding(50, 0, 50, 0)
-        }
-
-        viewPager_Banner.setCurrentItem(0)
-        viewPager_Banner.startAutoScroll()
-        viewPager_Banner.isCycle = true
-    }
 
 
     private var LIVE = 1
@@ -215,15 +189,15 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                 recyclerView_liveMatch.visibility = VISIBLE
             }
             FIXTURES -> {
-                if (!pref!!.isLogin) {
-//                    tabLayoutfsl.visibility = GONE
-                    tabLayout.visibility = GONE
-                    ll_matchSelector.visibility = GONE
-                    txt_title.visibility = GONE
-                    txt_toolbartitle.visibility = VISIBLE
-                } else
-                    txt_title.visibility = VISIBLE
-                txt_title.setText(R.string.select_a_match)
+//                if (!pref!!.isLogin) {
+////                    tabLayoutfsl.visibility = GONE
+//                    tabLayout.visibility = GONE
+//                    ll_matchSelector.visibility = GONE
+//                    txt_title.visibility = GONE
+//                    txt_toolbartitle.visibility = VISIBLE
+//                } else
+//                    txt_title.visibility = VISIBLE
+//                txt_title.setText(R.string.select_a_match)
                 txt_Fixtures.isSelected = true
                 view1.visibility = View.GONE
                 recyclerView_fixMatch.visibility = VISIBLE
@@ -311,6 +285,94 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         }
     }
 
+    private fun callBannerApi() {
+        val loginRequest = HashMap<String, String>()
+        if (pref!!.isLogin)
+            loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        GlobalScope.launch(Dispatchers.Main) {
+            if (!isAdded)
+                return@launch
+                AppDelegate.showProgressDialog(activity!!)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .banner_list(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(activity)
+                swipeToRefresh.isRefreshing = false
+                if (response.response!!.status) {
+                    updateBannerData(response.response!!.data)
+                } else {
+                }
+            } catch (exception: Exception) {
+                swipeToRefresh.isRefreshing = false
+                AppDelegate.hideProgressDialog(activity)
+            }
+        }
+    }
+
+    private fun updateBannerData(data: ArrayList<Data>?) {
+        if (!isAdded)
+            return
+//        if (data != null) {
+        for (i in data!!.indices) {
+            val fragment = BannerFragment()
+            val bundle = Bundle()
+                bundle.putParcelable(Tags.DATA, data.get(i))
+            fragment.arguments = bundle
+            bannerFragment.add(fragment)
+        }
+        AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
+        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
+        viewPager_Banner.setAdapter(bannerPagerAdapter)
+        viewPager_Banner.setClipToPadding(false);
+        if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+
+            viewPager_Banner.setPadding(0, 0, 0, 0)
+        } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+            viewPager_Banner.setPageMargin(10)
+            viewPager_Banner.setPadding(50, 0, 50, 0)
+        } else {
+            viewPager_Banner.setPageMargin(10)
+            viewPager_Banner.setPadding(50, 0, 50, 0)
+        }
+
+        viewPager_Banner.setCurrentItem(0)
+        viewPager_Banner.startAutoScroll()
+        viewPager_Banner.isCycle = true
+    }
+//    internal fun setBanner() {
+//        if (!isAdded)
+//            return
+////        if (data != null) {
+//        for (i in data!!.) {
+//            val fragment = BannerFragment()
+//            val bundle = Bundle()
+////                bundle.putParcelable(Tags.DATA, newsModelArrayList.get(i))
+//            fragment.arguments = bundle
+//            bannerFragment.add(fragment)
+//        }
+//        AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
+//        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
+//        viewPager_Banner.setAdapter(bannerPagerAdapter)
+//        viewPager_Banner.setClipToPadding(false);
+//        if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
+//
+//            viewPager_Banner.setPadding(0, 0, 0, 0)
+//        } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
+//            viewPager_Banner.setPageMargin(10)
+//            viewPager_Banner.setPadding(50, 0, 50, 0)
+//        } else {
+//            viewPager_Banner.setPageMargin(10)
+//            viewPager_Banner.setPadding(50, 0, 50, 0)
+//        }
+//
+//        viewPager_Banner.setCurrentItem(0)
+//        viewPager_Banner.startAutoScroll()
+//        viewPager_Banner.isCycle = true
+//    }
     override fun onDestroy() {
         super.onDestroy()
         fixturesAdapter!!.stopUpdateTimer()

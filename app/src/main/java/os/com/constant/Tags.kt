@@ -3,11 +3,13 @@ package os.com.constant
 import org.joda.time.DateTimeZone
 
 object Tags {
+    const val player_id="player_id"
     const  val team_no="team_no"
     const val birthday = "birthday"
     const val social_id = "social_id"
     const val payment_mode = "payment_mode"
     const val IS_SHOW_WELCOME = "IS_SHOW_WELCOME"
+    const val coupon_code="coupon_code"
     //    val timeZone = DateTimeZone.UTC!!
     const val Heena = "Heena"
     const val URL = "URL"

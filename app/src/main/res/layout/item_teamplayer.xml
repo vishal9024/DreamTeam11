@@ -73,12 +73,14 @@
                         android:text="India"
                         android:layout_height="wrap_content"/>
                 <View
+                        android:visibility="gone"
                         android:layout_marginEnd="@dimen/_3sdp"
                         android:layout_marginStart="@dimen/_3sdp"
                         android:layout_gravity="center_vertical" android:layout_width="0.5dp"
                         android:background="@color/GrayColor" android:layout_height="@dimen/_15sdp"
                 />
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:visibility="gone"
                         android:id="@+id/txt_Avg"
                         style="@style/TextStyleMedium"
                         android:layout_gravity="center_vertical"

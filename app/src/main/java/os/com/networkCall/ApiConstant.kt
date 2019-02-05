@@ -9,6 +9,7 @@ import os.com.BuildConfig
 object ApiConstant {
     /*Base Url*/
 //    https://72.octallabs.com/real11/WebServices/
+//    var BaseUrl="http://52.39.238.189/webServices/"
     const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/WebServices/"
     const val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val fSLBaseURL = "https://72.octallabs.com/fsl/WebServices/"
@@ -23,7 +24,7 @@ object ApiConstant {
             BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL
             BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL
             BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL
-            BuildConfig.APPLICATION_ID == "os.realbash"-> return realBashBaseURL
+            BuildConfig.APPLICATION_ID == "os.realbash" -> return realBashBaseURL
         }
         return realBashBaseURL
     }
@@ -73,6 +74,7 @@ object ApiConstant {
     const val update_personal_details = "update_personal_details"
     const val change_pasword = "change_pasword"
     const val player_team_list = "player-team-list"
+    const val dream_team = "dream-team"
     const val join_contest_wallet_amount = "join-contest-wallet-amount"
     const val join_contest = "joinContest"
     const val contest_price_breakup = "contest-price-breakup"
@@ -84,12 +86,12 @@ object ApiConstant {
     const val joined_contest_matches = "joined-contest-matches"
     const val team_scores = "team-scores"
     const val getSeriesPlayerList = "getSeriesPlayerList"
-    const val generate_paytm_checksum="generate-paytm-checksum"
-
-
-    const val avetar_list="avetar-list"
-    const val update_user_image="update-user-image"
-
-
-const val update_transactions="update-transactions"
+    const val generate_paytm_checksum = "generate-paytm-checksum"
+    const val apply_coupon_code = "apply-coupon-code"
+    const val avetar_list = "avetar-list"
+    const val update_user_image = "update-user-image"
+    const val update_transactions = "update-transactions"
+    const val leaderboard = "leaderboard"
+    const val replace_player = "replace-player"
+    const val banner_list = "banner-list"
 }

@@ -45,7 +45,31 @@
                     android:textColor="@color/textColorGray"
                     android:layout_height="match_parent"/>
         </LinearLayout>
+
         <LinearLayout
+                android:visibility="visible"
+                android:id="@+id/ll_substitute"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/replace_with_substitute"
+                    style="@style/ButtonStyle"
+                    android:background="@drawable/button_rounded_background_dialogue"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/_7sdp"
+                    android:paddingBottom="@dimen/_7sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:textColor="@color/colorSecondary"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_width="wrap_content"
+                    android:text="@string/replace_a_player"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+        <LinearLayout
+                android:id="@+id/ll_Ranking"
                 android:layout_weight="0.3"
                 android:layout_gravity="center_vertical"
                 android:layout_width="0dp"

@@ -1,4 +1,4 @@
-package os.com.ui.dashboard.home.apiResponse.getMatchList
+package os.com.ui.dashboard.home.apiResponse.bannerList
 
 import android.os.Parcel
 import android.os.Parcelable

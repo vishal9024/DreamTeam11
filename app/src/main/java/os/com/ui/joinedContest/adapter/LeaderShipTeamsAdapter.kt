@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_completed_leadershipteams.view.*
+import os.com.BuildConfig
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.data.Prefs
@@ -17,6 +18,7 @@ import os.com.ui.createTeam.activity.PlayerDetailActivity
 
 class LeaderShipTeamsAdapter(
     val mContext: Context,
+    val match_status: String,
     var joined_team_list: ArrayList<Team>,
     val onClickRecyclerView: OnClickRecyclerView,
     var matchType: Int
@@ -75,6 +77,18 @@ class LeaderShipTeamsAdapter(
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
+
+        if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+//            if (matchType == LIVE && match_status == "NOT STARTED") {
+                if (joined_team_list[holder.adapterPosition].substitute_status.equals("0")) {
+                    holder.itemView.ll_substitute.visibility = View.VISIBLE
+                    holder.itemView. ll_Ranking.visibility = View.GONE
+                    holder.itemView.replace_with_substitute.setOnClickListener {
+                        onClickRecyclerView.onClickItem("substitute", position)
+                    }
+                } else holder.itemView.ll_substitute.visibility = View.GONE
+//            } else holder.itemView.ll_substitute.visibility = View.GONE
+        } else holder.itemView.ll_substitute.visibility = View.GONE
     }
 
 

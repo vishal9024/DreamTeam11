@@ -34,6 +34,7 @@ import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Substitute
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
@@ -948,20 +949,22 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_guru -> {
-//                val intent = Intent(this, WebViewActivity::class.java)
-//                intent.putExtra("PAGE_SLUG", getString(R.string.guru))
-//                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.point_system)
-//                startActivity(intent)
-//
-                val viewf = findViewById<View>(R.id.menu_guru)
-                val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
-                val view = snack.getView()
-                view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
-                val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
-                params.gravity = Gravity.TOP
-                view.setLayoutParams(params)
-                snack.show()
-                return true
+                if (!match!!.guru_url.isEmpty()) {
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra("PAGE_SLUG", getString(R.string.guru))
+                    intent.putExtra("URL", match!!.guru_url)
+                    startActivity(intent)
+                } else {
+                    val viewf = findViewById<View>(R.id.menu_guru)
+                    val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
+                    val view = snack.getView()
+                    view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+                    val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+                    params.gravity = Gravity.TOP
+                    view.setLayoutParams(params)
+                    snack.show()
+                    return true
+                }
             }
         }
         return super.onOptionsItemSelected(item)

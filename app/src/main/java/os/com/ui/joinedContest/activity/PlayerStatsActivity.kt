@@ -129,7 +129,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
 
     var isAsc = true
     fun selectorPlayers(p: Data): String = p.player_name
-    fun selectorSelectedBy(p: Data): Int = p.selection_percent.toInt()
+    fun selectorSelectedBy(p: Data):Float =(p.selection_percent).replace("%","") .toFloat()
     fun selectorPoints(p: Data): Double = p.points.toDouble()
     private var Players = 1
     private var SelectedBy = 2

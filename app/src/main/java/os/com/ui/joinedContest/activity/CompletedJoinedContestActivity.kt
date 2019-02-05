@@ -20,6 +20,7 @@ import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.contest.apiResponse.matchScoreResponse.Data
+import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.JoinedCompletedContestAdapter
@@ -39,6 +40,52 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                         match
                     ).putExtra(IntentConstant.CONTEST_TYPE, matchType)
                 )
+            }
+            R.id.btn_dreamTeam -> {
+                callGetTeamListApi(
+                    "DreamTeam",
+                    pref!!.userdata!!.user_id,
+                    "",
+                    "Dream Team"
+                )
+            }
+        }
+    }
+
+    private fun callGetTeamListApi(tag: String, user_id: String, teamNo: String, team_name: String) {
+        val loginRequest = HashMap<String, String>()
+        loginRequest[Tags.user_id] = user_id
+        loginRequest[Tags.team_no] = teamNo
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.match_id] = match!!.match_id
+        loginRequest[Tags.series_id] = match!!.series_id
+        GlobalScope.launch(Dispatchers.Main) {
+            AppDelegate.showProgressDialog(this@CompletedJoinedContestActivity)
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .dream_team(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
+                if (response.response!!.status) {
+                    startActivity(
+                        Intent(this@CompletedJoinedContestActivity, TeamPreviewActivity::class.java).putExtra(
+                            "show",
+                            1
+                        ).putExtra(IntentConstant.DATA, response.response!!.data!!).putParcelableArrayListExtra(
+                            IntentConstant.SELECT_PLAYER,
+                            response.response!!.data!!.player_details
+                        )
+                            .putExtra("substitute", response.response!!.data!!.substitute_detail)
+                            .putExtra("teamName", team_name)
+                            .putExtra("points", true)
+                            .putExtra("DreamTeam", true)
+                    )
+                } else {
+                }
+            } catch (exception: Exception) {
+                AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
             }
         }
     }
@@ -61,7 +108,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.join_Contest)
-            setMenu(false, false, false, false,false)
+            setMenu(false, false, false, false, false)
             txt_ViewPlayerStats.setOnClickListener(this)
             if (intent != null) {
                 match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -94,10 +141,13 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     callGetJoinedContestListApi()
                 } else
                     AppDelegate.showToast(this, getString(R.string.error_network_connection))
+                btn_dreamTeam.setOnClickListener(this)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+
     }
 
     private fun callGetJoinedContestListApi() {
@@ -118,11 +168,11 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                     if (response.response!!.status) {
-                        constraint_layout.visibility= VISIBLE
-                        if(matchType==IntentConstant.COMPLETED)
-                            ll_bottom.visibility= VISIBLE
+                        constraint_layout.visibility = VISIBLE
+                        if (matchType == IntentConstant.COMPLETED)
+                            ll_bottom.visibility = VISIBLE
                         else
-                            ll_bottom.visibility=GONE
+                            ll_bottom.visibility = GONE
                         if (!response.response!!.data!!.joined_contest!!.isEmpty()) {
                             setAdapterJoinedContest(response.response!!.data!!.joined_contest!!)
                             cl_noJoinedContest.visibility = View.GONE
@@ -189,14 +239,14 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun updateScoreBoard(data: Data?) {
-        if(data!!.match_started) {
+        if (data!!.match_started) {
             card_view1.visibility = VISIBLE
             txt_WinBy.visibility = VISIBLE
             ll_visitorTeamScore.visibility = VISIBLE
             txt_localTeamScore.text = localTeamName + "  " + data!!.local_team_score
             txt_visitorTeamScore.text = visitorTeamName + "  " + data.vistor_team_score
             txt_WinBy.text = data.comment
-        }else{
+        } else {
             ll_visitorTeamScore.visibility = GONE
             txt_WinBy.visibility = GONE
             card_view1.visibility = VISIBLE
@@ -257,6 +307,5 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
         if (tmr != null) {
             tmr!!.cancel()
         }
-
     }
 }

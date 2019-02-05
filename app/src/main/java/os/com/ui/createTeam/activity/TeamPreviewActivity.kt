@@ -17,10 +17,11 @@ import os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Substitute
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.more.activity.WebViewActivity
+import os.com.ui.joinedContest.apiResponse.DreamTeamResponse.Data
 
 class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     var playerList: MutableList<PlayerListModel> = ArrayList()
-    var playerListPreview: os.com.ui.createTeam.apiResponse.myTeamListResponse.Data? = null
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.img_Edit -> {
@@ -53,23 +54,41 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     var matchType = IntentConstant.FIXTURE
     var substituteDetail: Substitute? = null
     var points = false
+    var DreamTeam = false
     private fun initViews() {
         isEdit = intent.getIntExtra("show", 0)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         points = intent.getBooleanExtra("points", false)
-        if (points)
-                rl_bottom.visibility = VISIBLE
+        DreamTeam = intent.getBooleanExtra("DreamTeam", false)
+//        if (points)
+//            rl_bottom.visibility = VISIBLE
+        if (DreamTeam)
+            rl_bottom.visibility = VISIBLE
         pts.setOnClickListener(this)
         if (isEdit == 1) {
             img_Edit.visibility = View.GONE
-            playerListPreview = intent.getParcelableExtra(IntentConstant.DATA)
-            teamName = intent.getStringExtra("teamName")
-            txt_TeamName.text = teamName
-            var players: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord> =
-                intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
-            substituteDetail = intent.getParcelableExtra("substitute")
-            setDataPreview(playerListPreview!!, players)
+            if (!DreamTeam) {
+                var playerListPreview =
+                    intent.getParcelableExtra<os.com.ui.createTeam.apiResponse.myTeamListResponse.Data>(IntentConstant.DATA)
+                teamName = intent.getStringExtra("teamName")
+                txt_TeamName.text = teamName
+                var players: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord> =
+                    intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
+                substituteDetail = intent.getParcelableExtra("substitute")
+                txt_totalPoints.setText(playerListPreview!!.total_points)
+                setDataPreview(playerListPreview!!, players)
+            } else {
+                var playerListPreview =
+                    intent.getParcelableExtra<os.com.ui.joinedContest.apiResponse.DreamTeamResponse.Data>(IntentConstant.DATA)
+                teamName = intent.getStringExtra("teamName")
+                txt_TeamName.text = teamName
+                var players: ArrayList<os.com.ui.joinedContest.apiResponse.DreamTeamResponse.PlayerRecord> =
+                    intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
+                substituteDetail = intent.getParcelableExtra("substitute")
+                txt_totalPoints.setText(playerListPreview!!.total_points)
+                setDreamTeamPreview(playerListPreview, players)
+            }
         } else {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
@@ -82,18 +101,24 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
     }
 
     fun getName(name: String): String {
-        var name = name.split(" ")
-        var finalName = StringBuilder()
-        if (!name.isEmpty())
-            for (i in name.indices) {
-                if (name.size > 1 && i != name.lastIndex)
-                    finalName.append(name[i].first()).append(" ")
-                if (i == name.lastIndex)
-                    finalName.append(name.get(i))
-            }
+        if (!name.isNullOrEmpty()) {
+
+            var name = name.split(" ")
+            var finalName = StringBuilder()
+            if (!name.isNullOrEmpty())
+                for (i in name.indices) {
+                    if (name.size > 1 && i != name.lastIndex)
+                        finalName.append(name[i].first()).append(" ")
+                    if (i == name.lastIndex)
+                        finalName.append(name.get(i))
+                }
+            else
+                finalName.append(name)
+
+            return finalName.toString()
+        }
         else
-            finalName.append(name)
-        return finalName.toString()
+             return ""
     }
 
     private var WK = 1
@@ -444,6 +469,419 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             }
     }
 
+    private fun setDreamTeamPreview(
+        playerList: Data,
+        players: ArrayList<os.com.ui.joinedContest.apiResponse.DreamTeamResponse.PlayerRecord>
+    ) {
+        if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
+            substituteDetail != null
+        ) {
+            ll_substitute.visibility = VISIBLE
+            ImageLoader.getInstance().displayImage(
+                substituteDetail!!.image,
+                cimg_substitute,
+                FantasyApplication.getInstance().options
+            )
+            if(!substituteDetail!!.name!!.isNullOrEmpty())
+            txt_substitute.setText(getName(substituteDetail!!.name))
+            if (points)
+                txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
+            else
+                txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Cr))
+
+        }
+        for (data in players)
+            if (data.role!!.contains("Wicketkeeper", true)) {
+                if (data.player_id.equals(playerList.captain_player_id)) {
+                    txt_wk_cvc.setText("C")
+                    txt_wk_cvc.visibility = View.VISIBLE
+                    txt_wk_cvc.setBackgroundResource(R.drawable.captain_selected)
+                } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                    txt_wk_cvc.setText("VC")
+                    txt_wk_cvc.visibility = View.VISIBLE
+                    txt_wk_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                }
+                ImageLoader.getInstance().displayImage(
+                    data.image,
+                    cimg_wk1,
+                    FantasyApplication.getInstance().options
+                )
+                if(!data.name!!.isNullOrEmpty())
+                txt_wk1.setText(getName(data.name!!))
+                if (data.in_dream_team)
+                    img_dreamTeam_wk.visibility = View.VISIBLE
+                if (points)
+                    if (DreamTeam)
+                        txt_wk_points.setText(data.point + " " + getString(R.string.Pts))
+                    else
+                        txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
+                else
+                    txt_wk_points.setText(data.credits + " " + getString(R.string.Cr))
+
+            } else if (data.role!!.contains("Batsman", true)) {
+                if (rl_bat1.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bat1_cvc.setText("C")
+                        txt_bat1_cvc.visibility = View.VISIBLE
+                        txt_bat1_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bat1_cvc.setText("VC")
+                        txt_bat1_cvc.visibility = View.VISIBLE
+                        txt_bat1_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bat1.visibility = VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bat1,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bat1.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat1.visibility = View.VISIBLE
+                    if (points)
+                        if (DreamTeam)
+                            txt_bat1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bat1_points.setText(data.credits + " " + getString(R.string.Cr))
+
+                } else if (rl_bat2.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bat2_cvc.setText("C")
+                        txt_bat2_cvc.visibility = View.VISIBLE
+                        txt_bat2_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bat2_cvc.setText("VC")
+                        txt_bat2_cvc.visibility = View.VISIBLE
+                        txt_bat2_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bat2.visibility = VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bat2,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bat2.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat2.visibility = View.VISIBLE
+                    if (points)
+                        if (DreamTeam)
+                            txt_bat2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bat2_points.setText(data.credits + " " + getString(R.string.Cr))
+
+                } else if (rl_bat3.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bat3_cvc.setText("C")
+                        txt_bat3_cvc.visibility = View.VISIBLE
+                        txt_bat3_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bat3_cvc.setText("VC")
+                        txt_bat3_cvc.visibility = View.VISIBLE
+                        txt_bat3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bat3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat3.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bat3,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bat3.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bat3_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bat4.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bat4_cvc.setText("C")
+                        txt_bat4_cvc.visibility = View.VISIBLE
+                        txt_bat4_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bat4_cvc.setText("VC")
+                        txt_bat4_cvc.visibility = View.VISIBLE
+                        txt_bat4_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bat4.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat4.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bat4,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bat4.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bat4_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bat5.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bat5_cvc.setText("C")
+                        txt_bat5_cvc.visibility = View.VISIBLE
+                        txt_bat5_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bat5_cvc.setText("VC")
+                        txt_bat5_cvc.visibility = View.VISIBLE
+                        txt_bat5_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bat5.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat5.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bat5,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bat5.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bat5_points.setText(data.credits + " " + getString(R.string.Cr))
+                }
+            } else if (data.role!!.contains("Allrounder", true)) {
+                if (rl_ar1.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_ar1_cvc.setText("C")
+                        txt_ar1_cvc.visibility = View.VISIBLE
+                        txt_ar1_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_ar1_cvc.setText("VC")
+                        txt_ar1_cvc.visibility = View.VISIBLE
+                        txt_ar1_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_ar1.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar1.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_ar1,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_ar1.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_ar1_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_ar2.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_ar2_cvc.setText("C")
+                        txt_ar2_cvc.visibility = View.VISIBLE
+                        txt_ar2_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_ar2_cvc.setText("VC")
+                        txt_ar2_cvc.visibility = View.VISIBLE
+                        txt_ar2_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_ar2.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar2.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_ar2,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_ar2.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_ar2_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_ar3.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_ar3_cvc.setText("C")
+                        txt_ar3_cvc.visibility = View.VISIBLE
+                        txt_ar3_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_ar3_cvc.setText("VC")
+                        txt_ar3_cvc.visibility = View.VISIBLE
+                        txt_ar3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_ar3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar3.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_ar3,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_ar3.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_ar3_points.setText(data.credits + " " + getString(R.string.Cr))
+                }
+
+            } else if (data.role!!.contains("Bowler", true)) {
+                if (rl_bowler1.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bowler1_cvc.setText("C")
+                        txt_bowler1_cvc.visibility = View.VISIBLE
+                        txt_bowler1_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bowler1_cvc.setText("VC")
+                        txt_bowler1_cvc.visibility = View.VISIBLE
+                        txt_bowler1_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bowler1.visibility = VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bowler1,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bowler1.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler1.visibility = View.VISIBLE
+                    if (points)
+                        if (DreamTeam)
+                            txt_bowler1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bowler1_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bowler2.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bowler2_cvc.setText("C")
+                        txt_bowler2_cvc.visibility = View.VISIBLE
+                        txt_bowler2_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bowler2_cvc.setText("VC")
+                        txt_bowler2_cvc.visibility = View.VISIBLE
+                        txt_bowler2_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bowler2.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler2.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bowler2,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bowler2.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bowler2_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bowler3.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bowler3_cvc.setText("C")
+                        txt_bowler3_cvc.visibility = View.VISIBLE
+                        txt_bowler3_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bowler3_cvc.setText("VC")
+                        txt_bowler3_cvc.visibility = View.VISIBLE
+                        txt_bowler3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bowler3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler3.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bowler3,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bowler3.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bowler3_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bowler4.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bowler4_cvc.setText("C")
+                        txt_bowler4_cvc.visibility = View.VISIBLE
+                        txt_bowler4_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bowler4_cvc.setText("VC")
+                        txt_bowler4_cvc.visibility = View.VISIBLE
+                        txt_bowler4_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler4.visibility = View.VISIBLE
+                    rl_bowler4.visibility = VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bowler4,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bowler4.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bowler4_points.setText(data.credits + " " + getString(R.string.Cr))
+                } else if (rl_bowler5.visibility == View.GONE) {
+                    if (data.player_id.equals(playerList.captain_player_id)) {
+                        txt_bowler5_cvc.setText("C")
+                        txt_bowler5_cvc.visibility = View.VISIBLE
+                        txt_bowler5_cvc.setBackgroundResource(R.drawable.captain_selected)
+                    } else if (data.player_id.equals(playerList.vice_captain_player_id)) {
+                        txt_bowler5_cvc.setText("VC")
+                        txt_bowler5_cvc.visibility = View.VISIBLE
+                        txt_bowler5_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
+                    }
+                    rl_bowler5.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler5.visibility = View.VISIBLE
+                    ImageLoader.getInstance().displayImage(
+                        data.image,
+                        cimg_bowler5,
+                        FantasyApplication.getInstance().options
+                    )
+                    if(!data.name!!.isNullOrEmpty())
+                    txt_bowler5.setText(getName(data.name!!))
+                    if (points)
+                        if (DreamTeam)
+                            txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
+                    else
+                        txt_bowler5_points.setText(data.credits + " " + getString(R.string.Cr))
+                }
+
+            }
+    }
+
     private fun setDataPreview(
         playerList: os.com.ui.createTeam.apiResponse.myTeamListResponse.Data,
         players: ArrayList<PlayerRecord>
@@ -465,7 +903,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
         }
         for (data in players)
-            if (data.role.contains("Wicketkeeper", true)) {
+            if (data.role!!.contains("Wicketkeeper", true)) {
                 if (data.player_id.equals(playerList.captain_player_id)) {
                     txt_wk_cvc.setText("C")
                     txt_wk_cvc.visibility = View.VISIBLE
@@ -480,13 +918,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     cimg_wk1,
                     FantasyApplication.getInstance().options
                 )
-                txt_wk1.setText(getName(data.name))
+                txt_wk1.setText(getName(data.name!!))
+                if (data.in_dream_team)
+                    img_dreamTeam_wk.visibility = View.VISIBLE
                 if (points)
-                    txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
+                    if (DreamTeam)
+                        txt_wk_points.setText(data.point + " " + getString(R.string.Pts))
+                    else
+                        txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
                 else
                     txt_wk_points.setText(data.credits + " " + getString(R.string.Cr))
 
-            } else if (data.role.contains("Batsman", true)) {
+            } else if (data.role!!.contains("Batsman", true)) {
                 if (rl_bat1.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bat1_cvc.setText("C")
@@ -503,9 +946,14 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat1,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bat1.setText(getName(data.name))
+                    txt_bat1.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat1.visibility = View.VISIBLE
                     if (points)
-                        txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bat1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bat1_points.setText(data.credits + " " + getString(R.string.Cr))
 
@@ -525,9 +973,14 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat2,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bat2.setText(getName(data.name))
+                    txt_bat2.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat2.visibility = View.VISIBLE
                     if (points)
-                        txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bat2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bat2_points.setText(data.credits + " " + getString(R.string.Cr))
 
@@ -542,14 +995,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bat3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bat3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat3.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bat3,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bat3.setText(getName(data.name))
+                    txt_bat3.setText(getName(data.name!!))
                     if (points)
-                        txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bat3_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bat4.visibility == View.GONE) {
@@ -563,14 +1021,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bat4_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bat4.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat4.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bat4,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bat4.setText(getName(data.name))
+                    txt_bat4.setText(getName(data.name!!))
                     if (points)
-                        txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bat4_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bat5.visibility == View.GONE) {
@@ -584,18 +1047,23 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bat5_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bat5.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bat5.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bat5,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bat5.setText(getName(data.name))
+                    txt_bat5.setText(getName(data.name!!))
                     if (points)
-                        txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bat5_points.setText(data.credits + " " + getString(R.string.Cr))
                 }
-            } else if (data.role.contains("Allrounder", true)) {
+            } else if (data.role!!.contains("Allrounder", true)) {
                 if (rl_ar1.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_ar1_cvc.setText("C")
@@ -607,14 +1075,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_ar1_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_ar1.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar1.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_ar1,
                         FantasyApplication.getInstance().options
                     )
-                    txt_ar1.setText(getName(data.name))
+                    txt_ar1.setText(getName(data.name!!))
                     if (points)
-                        txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_ar1_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_ar2.visibility == View.GONE) {
@@ -628,14 +1101,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_ar2_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_ar2.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar2.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_ar2,
                         FantasyApplication.getInstance().options
                     )
-                    txt_ar2.setText(getName(data.name))
+                    txt_ar2.setText(getName(data.name!!))
                     if (points)
-                        txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_ar2_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_ar3.visibility == View.GONE) {
@@ -649,19 +1127,24 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_ar3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_ar3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_ar3.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_ar3,
                         FantasyApplication.getInstance().options
                     )
-                    txt_ar3.setText(getName(data.name))
+                    txt_ar3.setText(getName(data.name!!))
                     if (points)
-                        txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_ar3_points.setText(data.credits + " " + getString(R.string.Cr))
                 }
 
-            } else if (data.role.contains("Bowler", true)) {
+            } else if (data.role!!.contains("Bowler", true)) {
                 if (rl_bowler1.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler1_cvc.setText("C")
@@ -678,9 +1161,14 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler1,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bowler1.setText(getName(data.name))
+                    txt_bowler1.setText(getName(data.name!!))
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler1.visibility = View.VISIBLE
                     if (points)
-                        txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bowler1_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bowler1_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler2.visibility == View.GONE) {
@@ -694,14 +1182,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bowler2_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bowler2.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler2.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bowler2,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bowler2.setText(getName(data.name))
+                    txt_bowler2.setText(getName(data.name!!))
                     if (points)
-                        txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bowler2_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler3.visibility == View.GONE) {
@@ -715,14 +1208,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bowler3_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bowler3.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler3.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bowler3,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bowler3.setText(getName(data.name))
+                    txt_bowler3.setText(getName(data.name!!))
                     if (points)
-                        txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bowler3_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler4.visibility == View.GONE) {
@@ -735,15 +1233,20 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bowler4_cvc.visibility = View.VISIBLE
                         txt_bowler4_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler4.visibility = View.VISIBLE
                     rl_bowler4.visibility = VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bowler4,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bowler4.setText(getName(data.name))
+                    txt_bowler4.setText(getName(data.name!!))
                     if (points)
-                        txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bowler4_points.setText(data.credits + " " + getString(R.string.Cr))
                 } else if (rl_bowler5.visibility == View.GONE) {
@@ -757,14 +1260,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         txt_bowler5_cvc.setBackgroundResource(R.drawable.vicecaptain_selected)
                     }
                     rl_bowler5.visibility = VISIBLE
+                    if (data.in_dream_team)
+                        img_dreamTeam_bowler5.visibility = View.VISIBLE
                     ImageLoader.getInstance().displayImage(
                         data.image,
                         cimg_bowler5,
                         FantasyApplication.getInstance().options
                     )
-                    txt_bowler5.setText(getName(data.name))
+                    txt_bowler5.setText(getName(data.name!!))
                     if (points)
-                        txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
+                        if (DreamTeam)
+                            txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))
+                        else
+                            txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
                         txt_bowler5_points.setText(data.credits + " " + getString(R.string.Cr))
                 }

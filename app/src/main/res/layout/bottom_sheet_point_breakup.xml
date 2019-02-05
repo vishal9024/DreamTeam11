@@ -42,11 +42,7 @@
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_80sdp"
                 android:padding="@dimen/_5sdp"
-<<<<<<< HEAD
-                android:src="@mipmap/logo"
-=======
                 android:src="@drawable/com_facebook_profile_picture_blank_square"
->>>>>>> origin/master
         />
         <LinearLayout
                 android:id="@+id/llName"
@@ -56,13 +52,9 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_label"
                     android:layout_below="@+id/ll_title"
-<<<<<<< HEAD
-                    android:padding="@dimen/_10sdp"
-=======
                     android:paddingTop="@dimen/_10sdp"
                     android:paddingBottom="@dimen/_7sdp"
                     android:paddingStart="@dimen/_5sdp"
->>>>>>> origin/master
                     style="@style/TextStyleMedium"
                     android:background="@color/white"
                     android:gravity="center"
@@ -72,10 +64,7 @@
                     android:text="Anam Amin"
                     android:layout_height="wrap_content"/>
             <ImageView
-<<<<<<< HEAD
-=======
                     android:visibility="gone"
->>>>>>> origin/master
                     android:id="@+id/imvStar"
                     android:layout_width="@dimen/_15sdp"
                     android:layout_height="@dimen/_15sdp"
@@ -84,11 +73,8 @@
             />
         </LinearLayout>
         <LinearLayout
-<<<<<<< HEAD
-=======
                 android:paddingStart="@dimen/_5sdp"
                 android:paddingEnd="@dimen/_10sdp"
->>>>>>> origin/master
                 android:id="@+id/ll_headerView"
                 android:layout_below="@+id/llName"
                 android:layout_toRightOf="@+id/imvUserProfile"
@@ -187,24 +173,13 @@
                 android:layout_width="wrap_content"
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/textColorGray"
-<<<<<<< HEAD
-                android:text="Not in your team"
-=======
                 android:text="@string/not_in_your_team"
->>>>>>> origin/master
                 android:layout_height="wrap_content"/>
     </RelativeLayout>
 
     <View
             android:id="@+id/view1"
             android:layout_below="@+id/rlHeader"
-<<<<<<< HEAD
-            android:background="@color/colorItemBackgroundLightGray"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
-    <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/view1"
-=======
             android:background="@color/GrayColorOTP"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"/>
@@ -260,11 +235,11 @@
                     android:text="@string/Rs20"
                     android:layout_height="match_parent"/>
         </LinearLayout>
-        <!--<View-->
-            <!--android:id="@+id/view3"-->
-            <!--android:background="@color/GrayColorOTP"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="@dimen/_1sdp"/>-->
+        <View
+            android:id="@+id/view3"
+            android:background="@color/GrayColorOTP"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_1sdp"/>
     </LinearLayout>
     <View
             android:id="@+id/view2"
@@ -276,7 +251,6 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_above="@+id/ll_bottom"
 android:layout_below="@+id/ll_main"
->>>>>>> origin/master
             android:id="@+id/rv_rank"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -285,9 +259,6 @@ android:layout_below="@+id/ll_main"
             android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 
-<<<<<<< HEAD
-
-=======
     <LinearLayout
             android:layout_alignParentBottom="true"
             android:paddingStart="@dimen/_5sdp"
@@ -324,5 +295,4 @@ android:layout_below="@+id/ll_main"
                 android:text="Top Players"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
->>>>>>> origin/master
 </RelativeLayout>
