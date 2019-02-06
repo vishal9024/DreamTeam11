@@ -65,6 +65,6 @@
     <!--ChooseCaptainBackgroundColorTop-->
     <color name="colorChooseCaptain">#5e80b0</color>
     <color name="colorChooseViceCaptain">#5e80b0</color>
-
+    <color name="profile_bg_color">#99315487</color>
 
 </resources>

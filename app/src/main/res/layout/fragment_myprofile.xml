@@ -21,12 +21,11 @@
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:contentScrim="@color/colorTransparent">
             <ImageView
+                    android:id="@+id/img"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/profile_background"
-                    android:tint="@color/colorPrimary"
-
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7"
             />

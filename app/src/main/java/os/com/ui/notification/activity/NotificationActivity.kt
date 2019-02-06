@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.channel.NotificationCountChannel
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.notification.adapter.NotificationAdapter
@@ -56,7 +57,7 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
     }
 
     public fun callGetNotificationListApi() {
-//        callApi = false
+/* callApi = false */
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
@@ -72,7 +73,12 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@NotificationActivity)
                 if (response.response!!.status) {
                     setAdapter(response.response!!.data)
+                    GlobalScope.launch {
+                        NotificationCountChannel.getInstance()
+                            .notificationCountChannel.send(response.response!!.data!!.size)
+                    }
                 } else {
+                    AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@NotificationActivity)

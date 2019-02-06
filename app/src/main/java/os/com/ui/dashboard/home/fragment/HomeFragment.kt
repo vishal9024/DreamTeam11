@@ -166,7 +166,6 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     val PERIOD_MS: Long = 3000 // time in milliseconds between successive task executions.
 
 
-
     private var LIVE = 1
     private var FIXTURES = 2
     private var RESULTS = 3
@@ -293,7 +292,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)
                 return@launch
-                AppDelegate.showProgressDialog(activity!!)
+            AppDelegate.showProgressDialog(activity!!)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
@@ -316,20 +315,18 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     private fun updateBannerData(data: ArrayList<Data>?) {
         if (!isAdded)
             return
-//        if (data != null) {
         for (i in data!!.indices) {
             val fragment = BannerFragment()
             val bundle = Bundle()
-                bundle.putParcelable(Tags.DATA, data.get(i))
+            bundle.putParcelable(Tags.DATA, data.get(i))
             fragment.arguments = bundle
             bannerFragment.add(fragment)
         }
         AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
-        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
+        bannerPagerAdapter = PagerAdapter(getChildFragmentManager(), bannerFragment)
         viewPager_Banner.setAdapter(bannerPagerAdapter)
         viewPager_Banner.setClipToPadding(false);
         if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
-
             viewPager_Banner.setPadding(0, 0, 0, 0)
         } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
             viewPager_Banner.setPageMargin(10)
@@ -338,41 +335,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             viewPager_Banner.setPageMargin(10)
             viewPager_Banner.setPadding(50, 0, 50, 0)
         }
-
         viewPager_Banner.setCurrentItem(0)
         viewPager_Banner.startAutoScroll()
         viewPager_Banner.isCycle = true
     }
-//    internal fun setBanner() {
-//        if (!isAdded)
-//            return
-////        if (data != null) {
-//        for (i in data!!.) {
-//            val fragment = BannerFragment()
-//            val bundle = Bundle()
-////                bundle.putParcelable(Tags.DATA, newsModelArrayList.get(i))
-//            fragment.arguments = bundle
-//            bannerFragment.add(fragment)
-//        }
-//        AppDelegate.LogT("bannerFragment. size==>" + bannerFragment.size + "")
-//        bannerPagerAdapter = PagerAdapter(activity!!.getSupportFragmentManager(), bannerFragment)
-//        viewPager_Banner.setAdapter(bannerPagerAdapter)
-//        viewPager_Banner.setClipToPadding(false);
-//        if (BuildConfig.APPLICATION_ID.equals("os.cashfantasy")) {
-//
-//            viewPager_Banner.setPadding(0, 0, 0, 0)
-//        } else if (BuildConfig.APPLICATION_ID.equals("os.fsl")) {
-//            viewPager_Banner.setPageMargin(10)
-//            viewPager_Banner.setPadding(50, 0, 50, 0)
-//        } else {
-//            viewPager_Banner.setPageMargin(10)
-//            viewPager_Banner.setPadding(50, 0, 50, 0)
-//        }
-//
-//        viewPager_Banner.setCurrentItem(0)
-//        viewPager_Banner.startAutoScroll()
-//        viewPager_Banner.isCycle = true
-//    }
+
     override fun onDestroy() {
         super.onDestroy()
         fixturesAdapter!!.stopUpdateTimer()

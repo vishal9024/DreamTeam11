@@ -67,4 +67,5 @@
     <color name="colorChooseCaptain">#f43338</color>
     <color name="colorChooseViceCaptain">#f33438</color>
     <color name="whiteTab">#3c3c3c</color>
+    <color name="profile_bg_color">#99ffffff</color>
 </resources>

@@ -24,8 +24,10 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.channel.NotificationCountChannel
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
+import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
 import os.com.interfaces.OnClickDialogue
@@ -59,6 +61,22 @@ open class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0);
         pref = Prefs(this)
+        GlobalScope.launch {
+            val value = NotificationCountChannel.getInstance().notificationCountChannel.receive()
+            getViewOfCartMenuItem(menu!!)
+            if (notificationView != null) {
+                notificationView.notifItemCountTv.text = value.toString()
+                setDynamicallyParam(value)
+                if (value == 0)
+                    notificationView.notifItemCountTv.visibility = View.GONE
+                else
+                    notificationView.notifItemCountTv.visibility = View.VISIBLE
+
+            } else {
+                pref!!.putIntValue(PrefConstant.UNREAD_COUNT, value)
+                getViewOfCartMenuItem(menu!!)
+            }
+        }
     }
 
     /* */
@@ -186,15 +204,10 @@ open class BaseActivity : AppCompatActivity() {
             if (item.itemId == R.id.menu_notification) {
                 notificationView = item.actionView
                 /* get cart item quantity and set it*/
-//                val cartQuantity = pref!!.getStringValue(PrefConstant.KEY_CART_ITEM_COUNT, "")
-                val cartQuantity = "1"
-                notificationView.notifItemCountTv.text = cartQuantity
+                val cartQuantity = pref!!.getIntValue(PrefConstant.UNREAD_COUNT, 0)
+                notificationView.notifItemCountTv.text = cartQuantity.toString()
                 setDynamicallyParam(cartQuantity)
-//                if (pref!!.storeIdMatch() || !AppDelegate.isValidString(pref!!.getStringValue(PrefConstant.KEY_STORE_ID, "")))
-//                    cartItemView.cartItemCountTv.text = cartQuantity
-//                else
-//                    cartItemView.cartItemCountTv.text = "X"
-                if (cartQuantity == "0" || cartQuantity.isEmpty())
+                if (cartQuantity == 0)
                     notificationView.notifItemCountTv.visibility = View.GONE
                 else
                     notificationView.notifItemCountTv.visibility = View.VISIBLE
@@ -206,8 +219,8 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     /* change height width of cart item count*/
-    private fun setDynamicallyParam(cartItemQuantity: String) {
-        if (cartItemQuantity.length > 2) {
+    private fun setDynamicallyParam(cartItemQuantity: Int) {
+        if (cartItemQuantity.toString().length > 2) {
             notificationView.notifItemCountTv.measure(0, 0)
             val width = notificationView.notifItemCountTv.measuredWidth
 
@@ -296,7 +309,7 @@ open class BaseActivity : AppCompatActivity() {
                 team_idBase,
                 onClickDialogueBase!!
             )
-        else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED){
+        else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED) {
             onClickDialogueBase!!.onClick(Tags.fail, false)
         }
     }
@@ -396,7 +409,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     public fun showAddCashDialog(bonus: Float, toPay: Float, onClickDialogue: OnClickDialogue) {
-      var message=  "Low balance! Please add ₹ "+String.format("%.2f", toPay)+" to join contest."
+        var message = "Low balance! Please add ₹ " + String.format("%.2f", toPay) + " to join contest."
 
         val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
         logoutAlertDialog.setTitle(getString(R.string.app_name))
