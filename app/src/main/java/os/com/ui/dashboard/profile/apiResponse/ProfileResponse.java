@@ -90,9 +90,19 @@ public class ProfileResponse implements Serializable {
             public int team_name_updated;
             public String image;
             public String gender;
+            public String account_verified;
             public String referal_bonus;
             public List<ReferedToFriendBean> refered_to_friend;
-            public List<?> rewards;
+            public List<RewardsBean> rewards;
+            public List<SeriesRanksBean> series_ranks;
+
+            public String getAccount_verified() {
+                return account_verified;
+            }
+
+            public void setAccount_verified(String account_verified) {
+                this.account_verified = account_verified;
+            }
 
             public String getTeam_name() {
                 return team_name;
@@ -222,15 +232,23 @@ public class ProfileResponse implements Serializable {
                 this.refered_to_friend = refered_to_friend;
             }
 
-            public List<?> getRewards() {
+            public List<RewardsBean> getRewards() {
                 return rewards;
             }
 
-            public void setRewards(List<?> rewards) {
+            public void setRewards(List<RewardsBean> rewards) {
                 this.rewards = rewards;
             }
 
-            public static class ReferedToFriendBean implements Serializable{
+            public List<SeriesRanksBean> getSeries_ranks() {
+                return series_ranks;
+            }
+
+            public void setSeries_ranks(List<SeriesRanksBean> series_ranks) {
+                this.series_ranks = series_ranks;
+            }
+
+            public static class ReferedToFriendBean implements Serializable {
                 /**
                  * user_id : 42
                  * team_name : Nidhiiiii
@@ -263,6 +281,88 @@ public class ProfileResponse implements Serializable {
 
                 public void setImage(String image) {
                     this.image = image;
+                }
+            }
+
+            public static class RewardsBean implements Serializable {
+                /**
+                 * date : 2019-02-04
+                 * amount : 10
+                 */
+
+                public String date;
+                public int amount;
+
+                public String getDate() {
+                    return date;
+                }
+
+                public void setDate(String date) {
+                    this.date = date;
+                }
+
+                public int getAmount() {
+                    return amount;
+                }
+
+                public void setAmount(int amount) {
+                    this.amount = amount;
+                }
+            }
+
+            public static class SeriesRanksBean implements Serializable {
+                /**
+                 * points : 0
+                 * rank : 0
+                 * series_name : Australia in India
+                 * series_id : 1003
+                 * previous_rank : 0
+                 */
+
+                public int points;
+                public int rank;
+                public String series_name;
+                public int series_id;
+                public int previous_rank;
+
+                public int getPoints() {
+                    return points;
+                }
+
+                public void setPoints(int points) {
+                    this.points = points;
+                }
+
+                public int getRank() {
+                    return rank;
+                }
+
+                public void setRank(int rank) {
+                    this.rank = rank;
+                }
+
+                public String getSeries_name() {
+                    return series_name;
+                }
+
+                public void setSeries_name(String series_name) {
+                    this.series_name = series_name;
+                }
+
+                public int getSeries_id() {
+                    return series_id;
+                }
+
+                public void setSeries_id(int series_id) {
+                    this.series_id = series_id;
+                }
+
+                public int getPrevious_rank() {
+                    return previous_rank;
+                }
+
+                public void setPrevious_rank(int previous_rank) {
+                    this.previous_rank = previous_rank;
                 }
             }
         }

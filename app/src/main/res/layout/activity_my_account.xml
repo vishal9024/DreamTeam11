@@ -2,7 +2,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:background="@drawable/bg"
         android:layout_height="match_parent">
     <include layout="@layout/app_toolbar"/>
@@ -49,10 +49,11 @@
                             android:layout_gravity="center_horizontal"
                             style="@style/TextStyleSemiBold"
                             android:padding="@dimen/_5sdp"
+                            android:id="@+id/txtTotalAmount"
                             android:gravity="center_vertical"
                             android:textSize="@dimen/_13sdp"
                             android:layout_width="wrap_content"
-                            android:text="@string/Rs20"
+                            android:text=""
                             android:textColor="@color/textColorBlack"
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatButton
@@ -108,8 +109,9 @@
                                         style="@style/TextStyleMedium"
                                         android:gravity="center_vertical"
                                         android:textSize="@dimen/_11sdp"
+                                        android:id="@+id/txtDepositedAmount"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text=""
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
 
@@ -139,10 +141,11 @@
                                         style="@style/TextStyleMedium"
                                         android:gravity="center_vertical"
                                         android:textSize="@dimen/_11sdp"
+                                        android:id="@+id/txtWinningsAmount"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text=""
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -195,10 +198,11 @@
                                         style="@style/TextStyleMedium"
                                         android:gravity="center_vertical"
                                         android:textSize="@dimen/_11sdp"
+                                        android:id="@+id/txtCashBonusAmount"
                                         app:layout_constraintStart_toStartOf="parent"
                                         app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                         android:layout_width="wrap_content"
-                                        android:text="@string/Rs20"
+                                        android:text=""
                                         android:textColor="@color/colorSecondary"
                                         android:layout_height="wrap_content"/>
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -291,23 +295,20 @@
                 card_view:cardPreventCornerOverlap="false"
                 android:backgroundTint="@color/white"
                 card_view:cardUseCompatPadding="true">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:padding="@dimen/_10sdp"
-                    android:orientation="vertical" android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/txt_EntryFee"
+                        android:id="@+id/txtRecTransaction"
                         android:drawableEnd="@mipmap/arrow_setting"
                         app:layout_constraintStart_toStartOf="parent"
                         style="@style/TextStyleMedium"
                         android:textSize="@dimen/_13sdp"
                         android:gravity="start"
+                        android:padding="@dimen/_10sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:text="Transactions"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
                 android:layout_marginStart="@dimen/_5sdp"
@@ -323,10 +324,7 @@
                 card_view:cardPreventCornerOverlap="false"
                 android:backgroundTint="@color/white"
                 card_view:cardUseCompatPadding="true">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                    android:padding="@dimen/_10sdp"
-                    android:orientation="vertical" android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                         android:drawableEnd="@mipmap/arrow_setting"
@@ -334,11 +332,11 @@
                         style="@style/TextStyleMedium"
                         android:textSize="@dimen/_13sdp"
                         android:gravity="start"
+                        android:padding="@dimen/_10sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:text="Manage Payments"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

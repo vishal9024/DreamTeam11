@@ -50,4 +50,14 @@
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>
+
+    <!--Zopim chat -->
+    <style name="ZopimChatTheme" parent="AppTheme">
+        <!--Chat UI uses the toolbar so no need to show ActionBar-->
+        <item name="windowActionBar">false</item>
+        <!-- Customize chat theme here. -->
+        <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
 </resources>

@@ -1,6 +1,8 @@
 package os.com.networkCall
 
 import kotlinx.coroutines.Deferred
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
 import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
@@ -17,10 +19,9 @@ import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
 import os.com.ui.dashboard.home.apiResponse.bannerList.GetBannerResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.GetMatchResponse
+import os.com.ui.dashboard.profile.apiResponse.*
 import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.ApplyCouponCodeResponse
-import os.com.ui.dashboard.profile.apiResponse.AvtarListResponse
-import os.com.ui.dashboard.profile.apiResponse.PersonalDetailResponse
-import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
+import os.com.ui.invite.apiResponse.InviteFreindDetailResponse
 import os.com.ui.invite.apiResponse.getContestInviteResponse.GetContestInviteResponse
 import os.com.ui.joinedContest.apiResponse.DreamTeamResponse.DreamTeamResponse
 import os.com.ui.joinedContest.apiResponse.getSeriesPlayerListResponse.GetSeriesPlayerListResponse
@@ -32,9 +33,7 @@ import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
 import os.com.ui.signup.apiResponse.signup.SignUpResponse
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUpResponse
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.http.*
 
 
 interface ApiInterface {
@@ -160,7 +159,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.update_user_image)
-    fun update_user_image(@Body request: Map<String, String>): Deferred<AvtarListResponse>
+    fun update_user_image(@Body request: Map<String, String>): Deferred<UpdateAvtarResponse>
 
     @POST(ApiConstant.apply_coupon_code)
     fun apply_coupon_code(@Body request: Map<String, String>): Deferred<ApplyCouponCodeResponse>
@@ -177,5 +176,65 @@ interface ApiInterface {
 
     @POST(ApiConstant.notification_list)
     fun notification_list(@Body request: Map<String, String>): Deferred<NotificationResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.edit_user_team_name)
+    fun edit_user_team_name(@Body request: Map<String, String>): Deferred<UpdateAvtarResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.seriesList)
+    fun seriesList(@Body request: Map<String, String>): Deferred<SeriesListResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.series_ranking)
+    fun series_ranking(@Body request: Map<String, String>): Deferred<SeriesRankingListResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.team_states)
+    fun team_states(@Body request: Map<String, String>): Deferred<TeamStatesResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.team_profile_comparision)
+    fun team_profile_comparision(@Body request: Map<String, String>): Deferred<OtherUserProfileResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.friend_referal_detail)
+    fun friend_referal_detail(@Body request: Map<String, String>): Deferred<InviteFreindDetailResponse>
+
+//    rajkumar sir
+    @Multipart
+    @POST(ApiConstant.verify_pan_detail)
+    fun verify_pan_detail(@Part("data") requestBody: RequestBody, @Part file: MultipartBody.Part?): Deferred<VerifyPanResponse>
+
+    @Multipart
+    @POST(ApiConstant.verify_bank_detail)
+    fun verify_bank_detail(@Part("data") requestBody: RequestBody, @Part file: MultipartBody.Part?): Deferred<VerifyBankAccountResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.verify_email)
+    fun verify_email(@Body request: Map<String, String>): Deferred<VerifyEmailResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.transation_history)
+    fun transation_history(@Body request: Map<String, String>): Deferred<RecentTransactionResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.bank_details)
+    fun bank_details(@Body request: Map<String, String>): Deferred<BankDetailResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.withdraw_cash)
+    fun withdraw_cash(@Body request: Map<String, String>): Deferred<WithdrawCashResponse>
+
+    @Headers("Content-Type: application/json")
+    @GET
+    fun ifsc_code(@Url url: String): Deferred<IfscCodeReponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.user_account_datail)
+    fun user_account_datail(@Body request: Map<String, String>): Deferred<MyAccountResponse>
+
 
 }

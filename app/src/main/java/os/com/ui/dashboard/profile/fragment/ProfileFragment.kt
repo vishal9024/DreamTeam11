@@ -11,8 +11,10 @@ import android.view.View.GONE
 import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.nostra13.universalimageloader.core.ImageLoader
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.content_myprofile.*
 import kotlinx.android.synthetic.main.dailog_team_image.*
 import kotlinx.android.synthetic.main.fragment_myprofile.*
@@ -27,11 +29,12 @@ import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.IAdapterClick
 import os.com.networkCall.ApiClient
+import os.com.networkCall.ApiConstant
 import os.com.ui.addCash.activity.AddCashActivity
-import os.com.ui.dashboard.profile.activity.ChangePasswordActivity
-import os.com.ui.dashboard.profile.activity.FullProfileActivity
-import os.com.ui.dashboard.profile.activity.MyAccountActivity
-import os.com.ui.dashboard.profile.activity.RankingActivity
+import os.com.ui.dashboard.more.activity.WebViewActivity
+import os.com.ui.dashboard.profile.activity.*
+import os.com.ui.dashboard.profile.adapter.ReferralFriendAdapter
+import os.com.ui.dashboard.profile.adapter.RewardAdapter
 import os.com.ui.dashboard.profile.adapter.TeamImageAdapter
 import os.com.ui.dashboard.profile.apiResponse.AvtarListResponse
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
@@ -45,6 +48,9 @@ import os.com.utils.networkUtils.NetworkUtils
 class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffsetChangedListener,
     IAdapterClick.IItemClick {
 
+
+    private var mSeriesRankList = ArrayList<ProfileResponse.ResponseBean.DataBean.SeriesRanksBean>()
+    private var accountVerified= false
 
     override fun onClick(view: View?) {
         try {
@@ -68,15 +74,12 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     if (!et_email.text.toString().isEmpty())
                         ApplyOfferCodeApi()
                 }
-                R.id.imvEditImage -> {
-                    showDialog();
-                }
-                R.id.txtLogout -> {
-                    (activity as BaseActivity).showLogoutDialog()
-//                val intent = Intent(activity, LoginActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//                startActivity(intent)
-//                activity!!.finish()
+                R.id.txt_Withdraw -> {
+                    if(accountVerified){
+                        startActivity(Intent(activity, WithdrawRequestActivity::class.java))
+                    }else{
+                        startActivity(Intent(activity, WithdrawCashActivity::class.java))
+                    }
                 }
                 R.id.txt_AddCash -> {
                     var currentBalance = "0.0"
@@ -90,6 +93,80 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                         ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
                     )
                 }
+
+                R.id.imvTeamNameEdit -> {
+                    startActivity(Intent(activity, ChangeTeamNameActivity::class.java))
+                }
+                R.id.imvJoinInfo -> {
+                    val intent = Intent(activity, WebViewActivity::class.java)
+                    intent.putExtra(
+                        "PAGE_SLUG",
+                        activity!!.resources.getString(R.string.app_name) + "_champions"
+                    )
+                    intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.dream11_champions)
+                    startActivity(intent)
+                }
+                R.id.ll_Ranking1 -> {
+                    if (mSeriesRankList != null && mSeriesRankList.size > 0) {
+                        if (mSeriesRankList[0].series_id != null) {
+                            var intent = Intent(activity, RankingActivity::class.java)
+                            intent.putExtra("data", mSeriesRankList[0].series_id)
+                            startActivity(intent)
+                        }
+                    }
+                }
+                R.id.ll_Ranking2 -> {
+                    if (mSeriesRankList != null && mSeriesRankList.size > 1) {
+                        if (mSeriesRankList[1].series_id != null) {
+                            var intent = Intent(activity, RankingActivity::class.java)
+                            intent.putExtra("data", mSeriesRankList[1].series_id)
+                            startActivity(intent)
+                        }
+                    }
+                }
+                R.id.ll_Ranking3 -> {
+                    if (mSeriesRankList != null && mSeriesRankList.size > 2) {
+                        if (mSeriesRankList[2].series_id != null) {
+                            var intent = Intent(activity, RankingActivity::class.java)
+                            intent.putExtra("data", mSeriesRankList[2].series_id)
+                            startActivity(intent)
+                        }
+                    }
+                }
+                R.id.ll_Ranking4 -> {
+                    if (mSeriesRankList != null && mSeriesRankList.size > 3) {
+                        if (mSeriesRankList[3].series_id != null) {
+                            var intent = Intent(activity, RankingActivity::class.java)
+                            intent.putExtra("data", mSeriesRankList[3].series_id)
+                            startActivity(intent)
+                        }
+                    }
+                }
+                R.id.imvEditImage -> {
+                    if (avtarList.size > 0) {
+                        if (dialogue != null && !dialogue!!.isShowing)
+                            dialogue!!.show()
+                        else showDialog()
+                    }
+                }
+                R.id.txtLogout -> {
+                    (activity as BaseActivity).showLogoutDialog()
+//                val intent = Intent(activity, LoginActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                startActivity(intent)
+//                activity!!.finish()
+                }
+                R.id.imvOfferInfo -> {
+                    SimpleTooltip.Builder(context)
+                        .anchorView(view)
+                        .text("Texto do Tooltip")
+                        .gravity(Gravity.END)
+                        .animated(true)
+                        .transparentOverlay(false)
+                        .build()
+                        .show()
+                }
+
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -150,12 +227,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             dialogue!!.setCancelable(false)
             dialogue!!.setCanceledOnTouchOutside(false)
             dialogue!!.setTitle(null)
-            if (NetworkUtils.isConnected()) {
-                getTeamImageData()
-            } else
-                Toast.makeText(context!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
-
+            if (dialogue != null)
+                setDialogAdapter()
             dialogue!!.img_Close.setOnClickListener {
                 dialogue!!.dismiss()
             }
@@ -174,6 +247,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
     }
 
     private var mIsTheTitleVisible = false
+
     private var mIsTheTitleContainerVisible = true
 
     private var appBarExpanded = true
@@ -206,6 +280,17 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             txt_AddCash.setOnClickListener(this)
             imvEditImage.setOnClickListener(this)
             txt_ApplyCode.setOnClickListener(this)
+            imvTeamNameEdit.setOnClickListener(this)
+            imvJoinInfo.setOnClickListener(this)
+            imvOfferInfo.setOnClickListener(this)
+            txt_Withdraw.setOnClickListener(this)
+
+
+            ll_Ranking1.setOnClickListener(this)
+            ll_Ranking2.setOnClickListener(this)
+            ll_Ranking3.setOnClickListener(this)
+            ll_Ranking4.setOnClickListener(this)
+
             setData()
             if (pref!!.isLogin) {
                 if (!pref!!.userdata!!.fb_id.isEmpty() || !pref!!.userdata!!.google_id.isEmpty()) {
@@ -213,6 +298,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 }
                 if (NetworkUtils.isConnected()) {
                     getProfileData()
+                    getTeamImageData()
                 } else
                     Toast.makeText(context!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }
@@ -287,8 +373,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     if (response.response!!.status) {
                         if (response.response.data != null) {
                             avtarList = response.response.data as ArrayList<AvtarListResponse.ResponseBean.DataBean>
-                            if (dialogue != null)
-                                setDialogAdapter()
                         }
 //                        AppDelegate.showToast(context, response.response!!.message)
                     } else {
@@ -372,6 +456,12 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         try {
             mData = data
             if (mData != null) {
+
+                if(mData!!.account_verified.equals("true")){
+                    accountVerified= true
+                }else{
+                    accountVerified= false
+                }
                 if (mData!!.team_name != null && mData!!.team_name != "") {
                     txt_name.setText(mData!!.team_name)
                     main_textview_title.setText(mData!!.team_name)
@@ -379,7 +469,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 if (mData!!.contest_level != null) {
                     txt_StartValue.setText("" + mData!!.contest_level)
                     txt_EndValue.setText("" + (mData!!.contest_level + 1))
-                    main_textview_subtitle.setText("" + mData!!.contest_level)
+                    main_textview_subtitle.setText("level " + mData!!.contest_level)
                     tvUnlockLevel.setText("Unlock these rewards at level " + (mData!!.contest_level + 1))
 
                 }
@@ -389,6 +479,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                         imvTeamImage,
                         FantasyApplication.getInstance().options
                     )
+                if (mData!!.team_name_updated != null && mData!!.team_name_updated == 1)
+                    imvTeamNameEdit.visibility = View.GONE
+                else
+                    imvTeamNameEdit.visibility = View.VISIBLE
+
                 if (mData!!.total_cash_amount != null && mData!!.total_cash_amount != "")
                     txtCashDeposited.setText("\u20B9 " + mData!!.total_cash_amount)
                 if (mData!!.total_winning_amount != null && mData!!.total_winning_amount != "")
@@ -400,6 +495,15 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     txtContest.setText("" + mData!!.contest_finished)
                     var contest = mData!!.contest_finished % 20
                     tvRemianContest.setText("" + (20 - contest))
+                    try {
+                        crs_Progress.setMinValue(0f)
+                        crs_Progress.setMaxValue(20f)
+                        crs_Progress.setMinStartValue(0f)
+                        crs_Progress.setMaxStartValue(contest.toFloat())
+                        crs_Progress.apply()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 if (mData!!.total_match != null)
                     txtMatch.setText("" + mData!!.total_match)
@@ -409,12 +513,141 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     txtWins.setText("" + mData!!.series_wins)
 
                 if (mData!!.referal_bonus != null && mData!!.referal_bonus != "")
-                    btn_InviteFriends.setText(context!!.resources.getString(R.string.invite_friends) + " & get ₹ " + mData!!.series_wins)
+                    btn_InviteFriends.setText(context!!.resources.getString(R.string.invite_friends) + " & get ₹ " + mData!!.referal_bonus)
+
+                if (mData!!.series_ranks != null && mData!!.series_ranks.size > 0) {
+                    mSeriesRankList =
+                        mData!!.series_ranks as ArrayList<ProfileResponse.ResponseBean.DataBean.SeriesRanksBean>
+                    if (mSeriesRankList.size > 0)
+                        setRankData(mSeriesRankList)
+                    ll_RankingUp.visibility = View.VISIBLE
+                    ll_RankingDown.visibility = View.VISIBLE
+                } else {
+                    ll_RankingUp.visibility = View.GONE
+                    ll_RankingDown.visibility = View.GONE
+                }
+                if (mData!!.refered_to_friend != null && mData!!.refered_to_friend.size > 0) {
+                    mSeriesRankList =
+                        mData!!.series_ranks as ArrayList<ProfileResponse.ResponseBean.DataBean.SeriesRanksBean>
+                    txt_InviteFriends.visibility = View.GONE
+                    rv_FriendList.visibility = View.VISIBLE
+                    setFriendListAdapter(mData!!.refered_to_friend);
+                } else {
+                    txt_InviteFriends.visibility = View.VISIBLE
+                    rv_FriendList.visibility = View.GONE
+                }
+                if (mData!!.rewards != null && mData!!.rewards.size > 0) {
+                    txt_pointsDistribution.visibility = View.GONE
+                    rv_RewardList.visibility = View.VISIBLE
+                    setRewardListAdapter(mData!!.rewards);
+                } else {
+                    txt_pointsDistribution.visibility = View.VISIBLE
+                    rv_RewardList.visibility = View.GONE
+                }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
+    }
+
+    private fun setRankData(series_ranks: List<ProfileResponse.ResponseBean.DataBean.SeriesRanksBean>) {
+        try {
+            if (series_ranks.size == 1) {
+                ll_Ranking1.visibility = View.VISIBLE
+                ll_Ranking2.visibility = View.INVISIBLE
+                ll_Ranking3.visibility = View.INVISIBLE
+                ll_Ranking4.visibility = View.INVISIBLE
+                if (series_ranks[0].rank != null)
+                    txt_ranking1.text = "#" + series_ranks[0].rank
+                if (series_ranks[0].series_name != null)
+                    txt_teamvs1.text = "" + series_ranks[0].series_name
+            } else if (series_ranks.size == 2) {
+                ll_Ranking1.visibility = View.VISIBLE
+                ll_Ranking2.visibility = View.VISIBLE
+                ll_Ranking3.visibility = View.INVISIBLE
+                ll_Ranking4.visibility = View.INVISIBLE
+
+                if (series_ranks[0].rank != null)
+                    txt_ranking1.text = "#" + series_ranks[0].rank
+                if (series_ranks[0].series_name != null)
+                    txt_teamvs1.text = "" + series_ranks[0].series_name
+
+                if (series_ranks[1].rank != null)
+                    txt_ranking2.text = "#" + series_ranks[1].rank
+                if (series_ranks[1].series_name != null)
+                    txt_teamvs2.text = "" + series_ranks[1].series_name
+            } else if (series_ranks.size == 3) {
+                ll_Ranking1.visibility = View.VISIBLE
+                ll_Ranking2.visibility = View.VISIBLE
+                ll_Ranking3.visibility = View.VISIBLE
+                ll_Ranking4.visibility = View.INVISIBLE
+
+                if (series_ranks[0].rank != null)
+                    txt_ranking1.text = "#" + series_ranks[0].rank
+                if (series_ranks[0].series_name != null)
+                    txt_teamvs1.text = "" + series_ranks[0].series_name
+
+                if (series_ranks[1].rank != null)
+                    txt_ranking2.text = "#" + series_ranks[1].rank
+                if (series_ranks[1].series_name != null)
+                    txt_teamvs2.text = "" + series_ranks[1].series_name
+
+                if (series_ranks[2].rank != null)
+                    txt_ranking3.text = "#" + series_ranks[2].rank
+                if (series_ranks[2].series_name != null)
+                    txt_teamvs3.text = "" + series_ranks[2].series_name
+            } else {
+                ll_Ranking1.visibility = View.VISIBLE
+                ll_Ranking2.visibility = View.VISIBLE
+                ll_Ranking3.visibility = View.VISIBLE
+                ll_Ranking4.visibility = View.VISIBLE
+
+                if (series_ranks[0].rank != null)
+                    txt_ranking1.text = "#" + series_ranks[0].rank
+                if (series_ranks[0].series_name != null)
+                    txt_teamvs1.text = "" + series_ranks[0].series_name
+
+                if (series_ranks[1].rank != null)
+                    txt_ranking2.text = "#" + series_ranks[1].rank
+                if (series_ranks[1].series_name != null)
+                    txt_teamvs2.text = "" + series_ranks[1].series_name
+
+                if (series_ranks[2].rank != null)
+                    txt_ranking3.text = "#" + series_ranks[2].rank
+                if (series_ranks[2].series_name != null)
+                    txt_teamvs3.text = "" + series_ranks[2].series_name
+
+                if (series_ranks[3].rank != null)
+                    txt_ranking4.text = "#" + series_ranks[3].rank
+                if (series_ranks[3].series_name != null)
+                    txt_teamvs4.text = "" + series_ranks[3].series_name
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setFriendListAdapter(refered_to_friend: MutableList<ProfileResponse.ResponseBean.DataBean.ReferedToFriendBean>) {
+        try {
+            val llm = LinearLayoutManager(context!!)
+            llm.orientation = LinearLayoutManager.HORIZONTAL
+            rv_FriendList!!.layoutManager = llm
+            rv_FriendList!!.adapter = ReferralFriendAdapter(context!!, refered_to_friend)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun setRewardListAdapter(rewards: MutableList<ProfileResponse.ResponseBean.DataBean.RewardsBean>) {
+        try {
+            val llm = LinearLayoutManager(context!!)
+            llm.orientation = LinearLayoutManager.HORIZONTAL
+            rv_RewardList!!.layoutManager = llm
+            rv_RewardList!!.adapter = RewardAdapter(context!!, rewards)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onOffsetChanged(appBarLayout: AppBarLayout, offset: Int) {

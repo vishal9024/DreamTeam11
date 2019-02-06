@@ -426,4 +426,93 @@
     <string name="cancel">Cancel</string>
     <string name="replace_a_player">Replace Substitute</string>
     <string name="replace_with_substitute">Replace with Substitute</string>
+
+    <string name="enter_your_team_name">Enter your team name eg. XYZ</string>
+    <string name="save_team_name">Save team name</string>
+    <string name="keep_this_in_mind">Keep this in mind</string>
+    <string name="it_permanent">It\'s permanent</string>
+    <string name="your_team_name_never_changed">Your Team Name Can never be edited \nSet it right!</string>
+    <string name="it_your_identity">It\'s your identity:</string>
+    <string name="your_team_name_is_what_you">Your Team Name is what you will be known as on Real11. Choose wisely</string>
+    <string name="choosing_a_name">Choosing a name:</string>
+    <string name="minimum_6_characters">Minimim 6 characters</string>
+    <string name="empty_team_name">Please enter Team Name</string>
+    <string name="short_team_name">Team name must be 6 characters long.</string>
+    <string name="select_your_team_name">Select Your Team Name</string>
+    <string name="cash_bonus_to_be_eraned">Cash bonus to be eraned:</string>
+    <string name="invited_friends">Invited Friends</string>
+    <string name="eranings_through_friends">Earnings through Friends</string>
+    <string name="to_be_earned">To be earned</string>
+    <string name="referral_friend_comment">The more your friends play in cash contests, the more you earn (max Rs 100
+        for each friend)
+    </string>
+    <string name="received">Received:</string>
+    <string name="version">Version</string>
+    <string name="chat_key">YR2Hmx7sa1eFUzjhOK2KNyBMn0ZpDxiY</string>
+    <string name="mobile_email"><![CDATA[MOBILE & EMAIL]]></string>
+    <string name="name_star">Name*</string>
+    <string name="pan_number">PAN number*</string>
+    <string name="date_of_birth_star">Date of birth*</string>
+    <string name="your_pan_details_have_been_submitted_please_submit_your_bank_details_to_begin_kyc_verification">Your
+        Pan details have been submitted.\nPlease submit your bank details to begin KYC\nverification.
+    </string>
+    <string name="your_bank_details_have_been_submitted">Your
+        Bank details have been submitted.
+    </string>
+    <string name="why_should_i_submit_my_pan_card"><u>Why should i submit my PAN Card?</u></string>
+    <string name="upload_pan_card_image">UPLOAD PAN CARD IMAGE</string>
+    <string name="submit_for_verification">SUBMIT FOR VERIFICATION</string>
+    <string name="pan_card_added">PAN Card Added</string>
+    <string name="we_will_send_you_a_verification_link_on_this_email">We will send you a verification link on this
+        email
+    </string>
+    <string name="we_won_t_post_anything_without_your_permision">We won\'t post anything without your permision</string>
+    <string name="or">OR</string>
+    <string name="verify">Verify</string>
+    <string name="verify_your_email">Verify your email</string>
+    <string name="click_on_the_verification_link_in_the_mail_we_sent_you_to_verify_your_email">click on the verification
+        link in the mail\nwe sent you to verify your email
+    </string>
+    <string name="in_case_you_don_t_receive_the_email_be_sure_to_chek_the_spam_junk_promotions_folder_on_your_mailbox">
+        <![CDATA[In case you don\'t receive the email, be sure to\nchek the spam/junk & promotions folder on your\nmailbox]]></string>
+    <string name="not_received_verification_email_yet">Not received verification email yet?,</string>
+    <string name="send_again"><u>Send Again</u></string>
+    <string name="verify_bank_account">VERIFY BANK ACCOUNT</string>
+    <string name="verify_your_account_to_withdraw_winnings">(Verify your account to withdraw winnings)</string>
+    <string name="bank_proof_of_passbook_cheque_book_or_bank_statement">Bank proof of passbook, Cheque book or Bank
+        Statement
+    </string>
+    <string name="which_shows_your">which shows your</string>
+    <string name="name_ifsc_code_account_no"><![CDATA[Name, IFSC Code & Account No.]]></string>
+    <string name="account_number">Account number</string>
+    <string name="retype_account_number">Retype account number</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="bank_name">Bank name</string>
+    <string name="bank_branch">Bank branch</string>
+    <string name="verify_bank_account_txt">VERIFY BANK ACCOUNT</string>
+    <string name="to_transfer_winnings_to_your_bankdetails_account_please_complete_the_steps_mentioned_below">To
+        transfer winnings to your bankDetails account, please complete the steps mentioned below:
+        \n\n 1. Verify your mobile number
+        \n\n 2. Verify your email id
+        \n\n 3. Verify your PAN card
+    </string>
+    <string name="enter_email_to_proceed">please enter email to proceed verifying.</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="from_gallery">Gallery</string>
+    <string name="add_photo">Add Photo</string>
+    <string name="_10_digits_pan_no">10 Digits PAN no.</string>
+    <string name="_12_digits_pan_no">12 Digits Aadhar Card no.</string>
+    <string name="as_on_oan_card">As on OAN card</string>
+    <string name="enter_pan_name">Please enter PAN name to proceed.</string>
+    <string name="enter_pan_number">Please enter PAN number to proceed.</string>
+    <string name="enter_aadhar_card_number">Please enter Aadhar Card number to proceed.</string>
+    <string name="select_dateofbirth">Please select Date of birth to proceed.</string>
+    <string name="select_state_name">Please select state name to proceed.</string>
+    <string name="aadhar_card_number">Aadhar Card Number</string>
+    <string name="enter_account_number">Please enter acount number to proceed.</string>
+    <string name="enter_retypeaccount_number">Please enter retype acount number to proceed.</string>
+    <string name="enter_ifsc_code">Please enter IFSC Code to proceed.</string>
+    <string name="enter_bank_name">Please enter Bank Name to proceed.</string>
+    <string name="enter_bank_branch">Please enter Branch Name to proceed.</string>
+    <string name="min_200_max_2_00_000_allowed_per_day">min. <b>\u20B9 200</b> and max <b>\u20B9 2,00,000</b> allowed per day</string>
 </resources>

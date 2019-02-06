@@ -46,4 +46,7 @@ object AppRequestCodes {
     const val INVITE_CONTEST = 16
     const val SELECT_SUBSTITUTE = 15
 
+    const val CAMERA_REQUEST_CODE=18
+    const val GALARY_REQUEST_CODE=19
+
 }

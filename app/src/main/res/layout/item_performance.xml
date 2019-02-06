@@ -121,9 +121,13 @@
                             android:textColor="@color/dark_yellow"
                             android:layout_height="wrap_content"/>
                     <ImageView
+                            android:id="@+id/imvTrophyLeft"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
+                            android:padding="@dimen/_5sdp"
                             android:layout_gravity="center_vertical"
+                            android:src="@mipmap/trophy_icon"
+                            android:visibility="gone"
                     />
                 </LinearLayout>
                 <LinearLayout android:layout_width="wrap_content"
@@ -152,6 +156,7 @@
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTeamCount"
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleMedium"
                         android:gravity="start"
@@ -183,11 +188,13 @@
                             android:textColor="@color/colorSecondary"
                             android:layout_height="wrap_content"/>
                     <ImageView
+                            android:id="@+id/imvTrophyRight"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:padding="@dimen/_5sdp"
                             android:layout_gravity="center_vertical"
                             android:src="@mipmap/trophy_icon"
+                            android:visibility="gone"
                     />
                 </LinearLayout>
                 <LinearLayout android:layout_width="wrap_content"
@@ -216,6 +223,7 @@
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTeamCountRight"
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleMedium"
                         android:gravity="start"
@@ -235,6 +243,7 @@
                 android:paddingLeft="@dimen/_20sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:text="Good try! You can do better next time!"
                 android:textColor="@color/colorSecondary"

@@ -13,13 +13,14 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType
 import io.fabric.sdk.android.Fabric
 import net.danlew.android.joda.JodaTimeAndroid
-import os.com.R
 import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.Utils
 import retrofit2.Retrofit
+
+
 
 class FantasyApplication : MultiDexApplication() {
 
@@ -49,7 +50,7 @@ class FantasyApplication : MultiDexApplication() {
         JodaTimeAndroid.init(this)
         /* initialize universal image loader*/
         initImageLoader(this)
-        val defaultBitmap1 = AppDelegate.drawableToBitmap(ContextCompat.getDrawable(this, R.mipmap.ic_launcher_round)!!)
+        val defaultBitmap1 = AppDelegate.drawableToBitmap(ContextCompat.getDrawable(this, os.com.R.mipmap.ic_launcher_round)!!)
         options = DisplayImageOptions.Builder()
             .showImageOnLoading(BitmapDrawable(resources, defaultBitmap1))
             .showImageForEmptyUri(BitmapDrawable(resources, defaultBitmap1))
@@ -59,6 +60,7 @@ class FantasyApplication : MultiDexApplication() {
             .considerExifParams(true)
             .build()
         Utils.init(this)
+
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             throwable.printStackTrace()

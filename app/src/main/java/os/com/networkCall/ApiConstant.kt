@@ -57,6 +57,7 @@ object ApiConstant {
     const val how_it_works_tab = "pages/invite-friends-how-it-works.html"
     const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
     const val legality_tab = "pages/legality.html"
+    const val dream11_champions = "pages/dream11_champions"
 
     const val signup = "signup"
     const val verify_otp = "verify-otp"
@@ -95,4 +96,21 @@ object ApiConstant {
     const val replace_player = "replace-player"
     const val banner_list = "banner-list"
     const val notification_list = "notification-list"
+    const val edit_user_team_name="edit-user-team-name"
+    const val seriesList="seriesList"
+    const val series_ranking="series-ranking"
+    const val team_states="team-states"
+    const val team_profile_comparision="team-profile-comparision"
+    const val friend_referal_detail="friend-referal-detail"
+
+
+    const val withdraw_cash = "withdraw-cash"
+    const val verify_email = "verify-email"
+    const val transation_history = "transation-history-new"
+    const val bank_details = "bankDetails"
+    const val verify_pan_detail = "verify-pan-detail"
+    const val verify_bank_detail = "verify-bank-detail"
+    const val user_account_datail = "user-account-datail"
+
+
 }

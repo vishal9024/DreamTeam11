@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                     android:layout_width="match_parent"
+                                                     android:background="@drawable/bg"
+                                                     android:layout_height="match_parent">
+    <include layout="@layout/app_toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    >
+
+    <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+        <LinearLayout
+                android:id="@+id/llTabs"
+                android:background="@color/colorSecondaryLight"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/tabMobileAndEmail"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:background="@drawable/tabs_bg"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/colorSecondary"
+                    android:text="@string/mobile_email"
+                    android:layout_height="match_parent"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/tabPAN"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:background="@drawable/tabs_white_bg"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="PAN"
+                    android:layout_height="match_parent"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_gravity="center_vertical"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center"
+                    android:id="@+id/tabBank"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="0dp"
+                    android:background="@drawable/tabs_white_bg"
+                    android:layout_weight="1"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="BANK"
+                    android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <RelativeLayout
+                android:id="@+id/rlFrames"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/llTabs"
+                android:layout_height="match_parent"
+                android:background="@color/white">
+
+            <FrameLayout
+                    android:id="@+id/frame_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:background="@color/white"></FrameLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

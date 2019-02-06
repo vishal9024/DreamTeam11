@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg"
+        android:layout_height="match_parent">
+    <include layout="@layout/app_toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                          android:orientation="vertical">
+
+                <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_gravity="center_vertical"
+                            style="@style/TextStyleNormal"
+                            android:gravity="center|start"
+                            android:textSize="@dimen/_14sdp"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:textColor="@color/black"
+                            android:text="Your Winnings"
+                            android:layout_height="wrap_content"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_gravity="center_vertical"
+                            style="@style/TextStyleNormal"
+                            android:gravity="center|start"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:id="@+id/txtTotalWonnings"
+                            android:textSize="@dimen/_12sdp"
+                            android:layout_centerInParent="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/black"
+                            android:text="@string/Rs10_cash"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
+
+
+                <androidx.cardview.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:backgroundTint="@color/colorContestItemBackground"
+                        card_view:cardCornerRadius="@dimen/_5sdp"
+                        card_view:cardElevation="@dimen/_3sdp"
+                        card_view:cardPreventCornerOverlap="false"
+                        card_view:cardUseCompatPadding="false">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                  android:orientation="horizontal"
+                                  android:padding="@dimen/_5sdp">
+
+                        <androidx.appcompat.widget.AppCompatImageView android:layout_width="@dimen/_50sdp"
+                                                                      android:layout_height="match_parent"
+                                                                      android:id="@+id/imvBankLogo"
+                                                                      android:src="@mipmap/bankaccounticon"/>
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_gravity="center_vertical"
+                                    style="@style/TextStyleNormal"
+                                    android:gravity="center|start"
+                                    android:id="@+id/txtWithdrawBankName"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:textSize="@dimen/_14sdp"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="HDFC"
+                                    android:layout_height="match_parent"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_gravity="center_vertical"
+                                    style="@style/TextStyleNormal"
+                                    android:gravity="center|start"
+                                    android:id="@+id/txtWithdrawAccountNumber"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="A/C 50100038003256"
+                                    android:layout_height="match_parent"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
+                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:layout_width="match_parent"
+                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:backgroundTint="@color/colorContestItemBackground"
+                        card_view:cardCornerRadius="@dimen/_5sdp"
+                        card_view:cardElevation="@dimen/_3sdp"
+                        card_view:cardPreventCornerOverlap="false"
+                        card_view:cardUseCompatPadding="false">
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="match_parent"
+                                  android:orientation="horizontal"
+                                  android:padding="@dimen/_5sdp">
+
+                        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                                      android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
+                                    android:layout_marginEnd="@dimen/_7sdp"
+                                    android:id="@+id/til_email"
+                                    android:layout_marginTop="@dimen/_10sdp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:theme="@style/EditTextLabel">
+                                <com.google.android.material.textfield.TextInputEditText
+                                        style="@style/EditTextStyle"
+                                        android:id="@+id/edtWithdrawAmount"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Amount"
+                                        android:text=""
+                                        android:maxLength="50"
+                                        android:inputType="number"
+                                        android:imeOptions="actionDone"
+                                        android:textSize="@dimen/_12sdp"/>
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_gravity="center_vertical"
+                                    style="@style/TextStyleNormal"
+                                    android:gravity="center|start"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:layout_marginBottom="@dimen/_5sdp"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_width="match_parent"
+                                    android:textColor="@color/textColorGray"
+                                    android:text="@string/min_200_max_2_00_000_allowed_per_day"
+                                    android:layout_height="match_parent"/>
+
+                            <androidx.appcompat.widget.AppCompatButton android:layout_width="match_parent"
+                                                                       android:layout_height="wrap_content"
+                                                                       android:layout_marginTop="@dimen/_10sdp"
+                                                                       android:layout_marginBottom="@dimen/_10sdp"
+                                                                       android:id="@+id/btWithdrawNow"
+                                                                       android:textColor="@color/white"
+                                                                       android:background="@drawable/button_rounded_background_pan_green"
+                                                                       android:text="Withdraw Now"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+        </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

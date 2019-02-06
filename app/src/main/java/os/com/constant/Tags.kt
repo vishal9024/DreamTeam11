@@ -76,6 +76,10 @@ object Tags {
     const val edit = "edit"
     const  val team_id="team_id"
     const  val img_id="img_id"
+    const  val team_name="team_name"
+    const  val friend_user_id="friend_user_id"
+
+    const val withdraw_amount = "withdraw_amount"
 
 const  val  invite_code="invite_code"
     const val cancel = "cancel"

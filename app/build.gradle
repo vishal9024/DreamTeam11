@@ -121,5 +121,14 @@ dependencies {
     /*RazorPay Plugin*/
     implementation 'com.razorpay:checkout:1.5.2'
 
+//    zopim
+    implementation 'com.zopim.android:sdk:1.4.0'
+
+//    tooltip
+    implementation 'com.github.douglasjunior:android-simple-tooltip:0.2.2'
+
+//    Easy Image
+    implementation 'com.github.jkwiecien:EasyImage:2.1.1'
+
 }
 apply plugin: 'com.google.gms.google-services'

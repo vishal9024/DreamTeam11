@@ -35,7 +35,8 @@
 
                 <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
                     <androidx.appcompat.widget.AppCompatTextView
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleNormal"
@@ -96,7 +97,7 @@
                     <LinearLayout
                             android:orientation="vertical" android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                    android:visibility="gone">
+                            android:visibility="gone">
                         <View
 
                                 android:layout_gravity="center" android:layout_weight="1" android:layout_height="0dp"
@@ -127,15 +128,26 @@
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_gravity="center_horizontal"
-                                style="@style/TextStyleNormal"
-                                android:gravity="center_vertical"
-                                android:textSize="@dimen/_10sdp"
-                                android:layout_width="wrap_content"
-                                android:text="Join"
-                                android:textColor="@color/textColorGray"
-                                android:layout_height="wrap_content"/>
+                        <RelativeLayout android:layout_width="match_parent"
+                                        android:layout_height="wrap_content">
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_gravity="center_horizontal"
+                                    style="@style/TextStyleNormal"
+                                    android:layout_centerHorizontal="true"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/_10sdp"
+                                    android:layout_width="wrap_content"
+                                    android:text="Join"
+                                    android:textColor="@color/textColorGray"
+                                    android:layout_height="wrap_content"/>
+                            <ImageView
+                                    android:id="@+id/imvJoinInfo"
+                                    android:src="@mipmap/info"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_width="@dimen/_15sdp"
+                                    android:layout_height="@dimen/_15sdp"/>
+                        </RelativeLayout>
+
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvRemianContest"
                                 android:layout_gravity="center_horizontal"
@@ -159,6 +171,8 @@
 
 
                     </LinearLayout>
+
+
                 </LinearLayout>
                 <View android:layout_width="match_parent"
                       android:layout_height="@dimen/_1sdp"
@@ -254,6 +268,7 @@
                             android:textColor="@color/textColorBlack"
                             android:layout_height="wrap_content"/>
 
+
                 </LinearLayout>
                 <View android:layout_width="match_parent"
                       android:layout_height="@dimen/_1sdp"
@@ -277,6 +292,14 @@
                         android:text="You have not earned any rewards yet."
                         android:textColor="@color/textColorBlack"
                         android:layout_height="wrap_content"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_RewardList"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/item_ranking"
+                        android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -298,13 +321,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                <LinearLayout
+                <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_gravity="center_vertical"
+
                             style="@style/TextStyleMedium"
                             android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_centerVertical="true"
                             android:gravity="start"
                             android:padding="@dimen/_7sdp"
                             android:textSize="@dimen/_11sdp"
@@ -312,8 +336,16 @@
                             android:text="@string/offers"
                             android:textColor="@color/textColorBlack"
                             android:layout_height="wrap_content"/>
+                    <ImageView
+                            android:id="@+id/imvOfferInfo"
+                            android:src="@mipmap/info"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_width="@dimen/_15sdp"
+                            android:layout_height="@dimen/_15sdp"/>
 
-                </LinearLayout>
+                </RelativeLayout>
                 <View android:layout_width="match_parent"
                       android:layout_height="@dimen/_1sdp"
                       app:layout_constraintStart_toStartOf="parent"
@@ -786,10 +818,12 @@
                       android:background="@color/GrayColorOTP"
                 />
                 <LinearLayout
+                        android:id="@+id/ll_RankingUp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <LinearLayout
+                            android:id="@+id/ll_Ranking1"
                             android:layout_margin="@dimen/_7sdp"
                             android:background="@drawable/button_background_white_black"
                             android:orientation="vertical"
@@ -818,6 +852,7 @@
                                 android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <LinearLayout
+                            android:id="@+id/ll_Ranking2"
                             android:layout_marginEnd="@dimen/_7sdp"
                             android:layout_marginBottom="@dimen/_7sdp"
                             android:layout_marginTop="@dimen/_7sdp"
@@ -828,7 +863,7 @@
                             android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
 
-                                android:id="@+id/txt_ranking"
+                                android:id="@+id/txt_ranking2"
                                 style="@style/TextStyleMedium"
                                 android:gravity="center"
                                 android:paddingTop="@dimen/_7sdp"
@@ -841,7 +876,75 @@
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:gravity="center"
                                 android:padding="@dimen/_7sdp"
-                                android:id="@+id/txt_teamvs"
+                                android:id="@+id/txt_teamvs2"
+                                style="@style/TextStyleLight"
+                                android:textSize="@dimen/_9sdp"
+                                android:layout_width="match_parent"
+                                android:text="IND vs AUS"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                        android:id="@+id/ll_RankingDown"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <LinearLayout
+                            android:id="@+id/ll_Ranking3"
+                            android:layout_margin="@dimen/_7sdp"
+                            android:background="@drawable/button_background_white_black"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txt_ranking3"
+                                style="@style/TextStyleMedium"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_7sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:layout_width="match_parent"
+                                android:text="#451515"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:padding="@dimen/_7sdp"
+                                android:id="@+id/txt_teamvs3"
+                                style="@style/TextStyleLight"
+                                android:gravity="center"
+                                android:textSize="@dimen/_9sdp"
+                                android:layout_width="match_parent"
+                                android:text="IND vs AUS"
+                                android:textColor="@color/textColorBlack"
+                                android:layout_height="wrap_content"/>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:id="@+id/ll_Ranking4"
+                            android:layout_marginEnd="@dimen/_7sdp"
+                            android:layout_marginBottom="@dimen/_7sdp"
+                            android:layout_marginTop="@dimen/_7sdp"
+                            android:background="@drawable/button_background_white_black"
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                                android:id="@+id/txt_ranking4"
+                                style="@style/TextStyleMedium"
+                                android:gravity="center"
+                                android:paddingTop="@dimen/_7sdp"
+                                android:textSize="@dimen/_11sdp"
+                                android:layout_width="match_parent"
+                                android:text="#451515"
+
+                                android:textColor="@color/textColorBlack"
+                                android:layout_height="wrap_content"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:gravity="center"
+                                android:padding="@dimen/_7sdp"
+                                android:id="@+id/txt_teamvs4"
                                 style="@style/TextStyleLight"
                                 android:textSize="@dimen/_9sdp"
                                 android:layout_width="match_parent"
@@ -909,6 +1012,13 @@
                         android:text="You don't invite your friends till now"
                         android:textColor="@color/textColorLightBlack"
                         android:layout_height="wrap_content"/>
+                <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_FriendList"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        tools:listitem="@layout/item_ranking"
+                        android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
                 <androidx.appcompat.widget.AppCompatButton
                         android:layout_gravity="center_horizontal"
                         android:id="@+id/btn_InviteFriends"

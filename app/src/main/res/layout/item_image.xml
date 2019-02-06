@@ -10,7 +10,7 @@
             android:layout_height="@dimen/_100sdp"
             android:layout_centerInParent="true"
             android:padding="@dimen/_10sdp"
-            android:src="@mipmap/cricketer"/>
+            android:src="@mipmap/avatar"/>
     <ImageView android:id="@+id/imvCheck"
             android:layout_width="@dimen/_100sdp"
                android:layout_height="@dimen/_100sdp"
