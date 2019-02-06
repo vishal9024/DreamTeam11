@@ -56,7 +56,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         try {
             when (view!!.id) {
                 R.id.txt_MyAccount -> {
-                    startActivity(Intent(activity, MyAccountActivity::class.java))
+                    if(accountVerified){
+                        startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("accountVerified",true))
+                    }else{
+                        startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("accountVerified",false))
+                    }
                 }
                 R.id.txt_fullProfile -> {
                     startActivity(Intent(activity, FullProfileActivity::class.java))

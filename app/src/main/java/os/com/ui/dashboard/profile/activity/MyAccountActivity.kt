@@ -17,15 +17,30 @@ import os.com.utils.AppDelegate
 import java.util.*
 
 class MyAccountActivity : BaseActivity(), View.OnClickListener {
+
+    private var accountVerified= false
+
     override fun onClick(view: View?) {
-        when (view!!.id) {
-            R.id.txtRecTransaction -> {
-            startActivity(Intent(this, RecentTansActivity::class.java))
-        }
-            R.id.cv_payments -> {
+          try{
+              when (view!!.id) {
+                  R.id.txtRecTransaction -> {
+                      startActivity(Intent(this, RecentTansActivity::class.java))
+                  }
+                  R.id.cv_payments -> {
 //                startActivity(Intent(this, SignUpActivity::class.java))
-            }
-        }
+                  }
+                  R.id.txt_Withdraw -> {
+                      if(accountVerified){
+                          startActivity(Intent(this, WithdrawRequestActivity::class.java))
+                      }else{
+                          startActivity(Intent(this, WithdrawCashActivity::class.java))
+                      }
+                  }
+              }
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +57,11 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.my_account)
         setMenu(false,false,false,false,false)
+            if (intent.hasExtra("accountVerified"))
+                accountVerified = intent.getBooleanExtra("accountVerified", false)
             txtRecTransaction.setOnClickListener(this)
         cv_payments.setOnClickListener(this)
+            txt_Withdraw.setOnClickListener(this)
             my_account_call()
         } catch (e: Exception) {
             e.printStackTrace()

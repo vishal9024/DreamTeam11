@@ -170,7 +170,7 @@
                                     android:textColor="@color/colorSecondary"
                                     android:layout_width="wrap_content"
                                     android:layout_gravity="center"
-                                    android:text="@string/add_balance"
+                                    android:text="@string/withdraw"
                                     android:layout_height="@dimen/_21sdp"/>
                             <androidx.appcompat.widget.AppCompatImageView
                                     android:layout_marginStart="@dimen/_5sdp"
