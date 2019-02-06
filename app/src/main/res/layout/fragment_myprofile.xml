@@ -25,6 +25,8 @@
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/profile_background"
+                    android:tint="@color/colorPrimary"
+
                     app:layout_collapseMode="parallax"
                     app:layout_collapseParallaxMultiplier="0.7"
             />

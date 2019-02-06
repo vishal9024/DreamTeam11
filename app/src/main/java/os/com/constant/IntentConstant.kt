@@ -29,6 +29,7 @@ object IntentConstant {
     const val currentBalance="currentBalance"
     const val ADD = 1001
     const val OFFER = 1003
+    const val OFFER_BANNER = 1004
     const val TO_JOIN = 1002
     const val AMOUNT_TO_ADD="AMOUNT_TO_ADD"
 }

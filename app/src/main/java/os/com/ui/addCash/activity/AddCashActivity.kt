@@ -37,11 +37,13 @@ import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.IntentConstant.OFFER
+import os.com.constant.IntentConstant.OFFER_BANNER
 import os.com.constant.IntentConstant.TO_JOIN
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
 import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
+import os.com.ui.dashboard.home.apiResponse.bannerList.Offer
 import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.Data
 import os.com.utils.AppDelegate
 import java.util.*
@@ -249,6 +251,10 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                     updateTransactionRequest.coupon_id = data!!.coupon_id
                     updateTransactionRequest.discount_amount = discountedValue.toString()
                 }
+                else  if (AddTYPE.equals(OFFER_BANNER)) {
+                    updateTransactionRequest.coupon_id = data_OFFER!!.coupon_id
+                    updateTransactionRequest.discount_amount = discountedValue.toString()
+                }
                 val request = ApiClient.client
                     .getRetrofitService()
                     .update_transactions(updateTransactionRequest)
@@ -322,6 +328,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
     var currentBalance = "0.0"
     var AddTYPE = IntentConstant.ADD
     var data: Data? = null
+    var data_OFFER: Offer? = null
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -339,6 +346,11 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
             AddTYPE = intent.getIntExtra(IntentConstant.AddType, IntentConstant.ADD)
             if (AddTYPE.equals(IntentConstant.OFFER)) {
                 data = intent.getParcelableExtra(Tags.DATA)
+                ll_offer.visibility = VISIBLE
+                AddTextChangeListener()
+                et_addCash.setText("100")
+            } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
+                data_OFFER = intent.getParcelableExtra(Tags.DATA)
                 ll_offer.visibility = VISIBLE
                 AddTextChangeListener()
                 et_addCash.setText("100")
@@ -372,16 +384,30 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
 
     var discountedValue = 0f
     private fun applyOffer() {
-        if (data != null) {
-            discountedValue = 0f
-            var discountAmount = data!!.discount_amount.toFloat()
-            if (data!!.in_percentage) {
-                discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
-                if (discountedValue > 50)
-                    discountedValue = 50f
-            } else
-                discountedValue = discountAmount
-            txt_offer.text = getString(R.string.Rs) + " " + discountedValue
+        if (AddTYPE == OFFER) {
+            if (data != null) {
+                discountedValue = 0f
+                val discountAmount = data!!.discount_amount.toFloat()
+                if (data!!.in_percentage) {
+                    discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
+                    if (discountedValue > 50)
+                        discountedValue = 50f
+                } else
+                    discountedValue = discountAmount
+                txt_offer.text = getString(R.string.Rs) + " " + discountedValue
+            }
+        } else if (AddTYPE == OFFER_BANNER) {
+            if (data_OFFER != null) {
+                discountedValue = 0f
+                val discountAmount = data_OFFER!!.discount_amount.toFloat()
+                if (data_OFFER!!.in_percentage) {
+                    discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
+                    if (discountedValue > 50)
+                        discountedValue = 50f
+                } else
+                    discountedValue = discountAmount
+                txt_offer.text = getString(R.string.Rs) + " " + discountedValue
+            }
         }
     }
 

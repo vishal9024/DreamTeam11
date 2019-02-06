@@ -39,7 +39,6 @@ import os.com.ui.invite.activity.InviteFriendsActivity
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 
-
 /**
  * Created by heenas on 3/5/2018.
  */

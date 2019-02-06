@@ -12,7 +12,9 @@ import kotlinx.android.synthetic.main.bannerlayout_cashfantasy.*
 import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
 import os.com.constant.Tags
+import os.com.ui.addCash.activity.AddCashActivity
 import os.com.ui.dashboard.home.apiResponse.bannerList.Data
 import os.com.ui.invite.activity.InviteFriendsActivity
 
@@ -35,16 +37,20 @@ class BannerFragment : Fragment() {
         } else if (banner!!.type.equals("2")) {
             startActivity(Intent(activity, InviteFriendsActivity::class.java))
         } else if (banner!!.type.equals("3")) {
-//            var currentBalance = "0.0"
+            var currentBalance = "0.0"
 //            if (banner!!.offer != null)
 //                currentBalance =
 //                        (banner!!.offer!!.().toFloat() + mData!!.total_cash_amount.toFloat() + mData!!.total_winning_amount.toFloat()).toString()
-//            startActivity(
-//                Intent(activity, AddCashActivity::class.java).putExtra(
-//                    IntentConstant.currentBalance,
-//                    currentBalance
-//                ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
-//            )
+            startActivity(
+                Intent(activity, AddCashActivity::class.java)
+                    .putExtra(
+                        Tags.DATA,
+                        banner!!.offer
+                    ).putExtra(
+                        IntentConstant.currentBalance,
+                        currentBalance
+                    ).putExtra(IntentConstant.AddType, IntentConstant.OFFER_BANNER)
+            )
         }
         return rootview
     }

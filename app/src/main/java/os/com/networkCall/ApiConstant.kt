@@ -94,4 +94,5 @@ object ApiConstant {
     const val leaderboard = "leaderboard"
     const val replace_player = "replace-player"
     const val banner_list = "banner-list"
+    const val notification_list = "notification-list"
 }

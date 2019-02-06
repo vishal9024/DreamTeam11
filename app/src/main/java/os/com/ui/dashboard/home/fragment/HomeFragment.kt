@@ -106,7 +106,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 //                tabLayout.visibility = GONE
 //            }
 
-        matchSelector(RESULTS)
+        matchSelector(FIXTURES)
         setFixturesAdapter()
         setCompletedAdapter()
         setLiveAdapter()

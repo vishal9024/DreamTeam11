@@ -26,6 +26,7 @@ import os.com.ui.joinedContest.apiResponse.DreamTeamResponse.DreamTeamResponse
 import os.com.ui.joinedContest.apiResponse.getSeriesPlayerListResponse.GetSeriesPlayerListResponse
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedFixtureListResponse
 import os.com.ui.joinedContest.apiResponse.viewTeamsResponse.ViewTeamResponse
+import os.com.ui.notification.apiResponse.notificationResponse.NotificationResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
@@ -173,4 +174,8 @@ interface ApiInterface {
 
     @POST(ApiConstant.banner_list)
     fun banner_list(@Body request: Map<String, String>): Deferred<GetBannerResponse>
+
+    @POST(ApiConstant.notification_list)
+    fun notification_list(@Body request: Map<String, String>): Deferred<NotificationResponse>
+
 }
