@@ -55,7 +55,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                     startActivity(Intent(this, InviteCodeActivity::class.java))
                 }
                 R.id.btn_CreateTeam -> {
-//                    callApi = true
                     startActivityForResult(
                         Intent(this, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                             IntentConstant.CONTEST_TYPE,
@@ -66,7 +65,15 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                     )
                 }
                 R.id.rl_createContest -> {
-                    startActivity(Intent(this, CreateContestActivity::class.java))
+
+                    startActivityForResult(
+                        Intent(this, CreateContestActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            IntentConstant.CONTEST_TYPE,
+                            matchType
+                        ).putExtra(IntentConstant.CONTEST_ID, "")
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
+                        AppRequestCodes.CREATE_CONTEST
+                    )
                 }
                 R.id.ll_joinedContests -> {
                     startActivity(
@@ -126,11 +133,6 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         }
         txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
-//        if (callApi)
-//            if (NetworkUtils.isConnected()) {
-//                callGetContestListApi()
-//            } else
-//                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
     }
 

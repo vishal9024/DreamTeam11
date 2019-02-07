@@ -83,6 +83,7 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@MyAccountActivity)
                     if (response.response!!.isStatus) {
+                        accountVerified=response.response.data.isAccount_verified
                         txtTotalAmount.setText("₹ "+response.response.data.total_balance)
                         txtDepositedAmount.setText("₹ "+response.response.data.deposit_amount)
                         txtWinningsAmount.setText("₹ "+response.response.data.winngs_amount)

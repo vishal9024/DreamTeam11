@@ -24,6 +24,7 @@
                     android:textColor="@color/textColorGray"
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtTotalAmount"
                     android:layout_gravity="center_horizontal"
                     style="@style/TextStyleSemiBold"
                     android:padding="@dimen/_5sdp"
@@ -71,6 +72,17 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtDepositedAmount"
+                                android:layout_gravity="start"
+                                style="@style/TextStyleMedium"
+                                android:gravity="center_vertical"
+                                android:textSize="@dimen/_11sdp"
+                                android:layout_width="wrap_content"
+                                android:text="@string/Rs20"
+                                android:textColor="@color/colorSecondary"
+                                android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_gravity="start"
                                 style="@style/TextStyleNormal"
@@ -82,16 +94,6 @@
                                 android:text="Deposited"
                                 android:textColor="@color/textColorLightBlack"
                                 android:layout_height="wrap_content"/>
-                        <androidx.appcompat.widget.AppCompatTextView
-                                android:layout_gravity="start"
-                                style="@style/TextStyleMedium"
-                                android:gravity="center_vertical"
-                                android:textSize="@dimen/_11sdp"
-                                android:layout_width="wrap_content"
-                                android:text="@string/Rs20"
-                                android:textColor="@color/colorSecondary"
-                                android:layout_height="wrap_content"/>
-
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_gravity="center" android:layout_width="wrap_content"
@@ -146,7 +148,7 @@
                             android:textColor="@color/colorSecondary"
                             android:layout_width="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/add_balance"
+                            android:text="@string/withdraw"
                             android:layout_height="@dimen/_21sdp"/>
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_marginStart="@dimen/_5sdp"
@@ -169,6 +171,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtCashBonusAmount"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_gravity="start"
                                 style="@style/TextStyleMedium"
@@ -181,6 +184,7 @@
                                 android:textColor="@color/colorSecondary"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtWinningsAmount"
                                 android:layout_gravity="start"
                                 style="@style/TextStyleNormal"
                                 android:gravity="center_vertical"

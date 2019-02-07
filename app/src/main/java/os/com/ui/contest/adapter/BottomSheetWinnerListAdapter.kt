@@ -9,9 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_winners_list_bottomsheet.view.*
 import os.com.R
+import os.com.interfaces.OnClickRecyclerView
+import os.com.ui.contest.apiResponse.contestSizePriceBreakUp.Data
+import java.util.*
 
 
-class BottomSheetWinnerListAdapter(val mContext: Context) :
+class BottomSheetWinnerListAdapter(
+    val mContext: Context,
+    var data: ArrayList<Data>?,
+    var winning_amount: String,
+    val clickRecyclerView: OnClickRecyclerView
+) :
     RecyclerView.Adapter<BottomSheetWinnerListAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -21,42 +29,36 @@ class BottomSheetWinnerListAdapter(val mContext: Context) :
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
-//            if (position%2==0){
-//                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
-//            }else{
-//                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
-//            }
-            setAdapter(holder.itemView.rv_rank)
-
+            if (position == 0)
+                holder.itemView.txt_team.text = data!![position].title + " " + mContext.getString(R.string.recommended)
+            else
+                holder.itemView.txt_team.text = data!![position].title
+            holder.itemView.img_check.isSelected = data!![position].isSelected
+            holder.itemView.ll.setOnClickListener {
+                clickRecyclerView.onClickItem("click", position)
+            }
+            holder.contestAdapter.infoList(data!![position].info!!, winning_amount)
+            holder.contestAdapter.notifyDataSetChanged()
         } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
-        }
-
-//        holder.itemView.txt_Join.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
-//        }
-    }
-
-    @SuppressLint("WrongConstant")
-    private fun setAdapter(rv_rank: RecyclerView) {
-        try {
-            val llm = LinearLayoutManager(mContext)
-            llm.orientation = LinearLayoutManager.VERTICAL
-            rv_rank!!.layoutManager = llm
-            rv_rank!!.adapter = BottomSheetWinnerRankListAdapter(mContext!!)
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
     }
 
     override fun getItemCount(): Int {
-        return 5;
+        return data!!.size;
     }
 
+    @SuppressLint("WrongConstant")
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val contestAdapter = BottomSheetWinnerRankListAdapter(mContext)
 
-
+        /* init method call itself when class call & set layout manger for recycler view*/
+        init {
+            val llm = LinearLayoutManager(mContext)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            itemView.rv_rank.layoutManager = llm
+            itemView.rv_rank.adapter = contestAdapter
+        }
     }
-
 
 }

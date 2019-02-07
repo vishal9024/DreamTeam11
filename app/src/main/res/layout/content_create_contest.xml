@@ -99,7 +99,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/winning_amount"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:imeOptions="actionNext"
                         android:textSize="@dimen/_12sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -119,7 +119,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/contest_size"
-                        android:inputType="numberDecimal"
+                        android:inputType="number"
                         android:textSize="@dimen/_12sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -213,7 +213,13 @@ android:orientation="horizontal">
     android:layout_width="match_parent"
     style="@style/ButtonStyle"
     android:text="@string/create_contest"
-    android:background="@color/colorASPrimary"
-    android:layout_height="wrap_content"/>
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:paddingTop="@dimen/_5sdp"
+    android:paddingBottom="@dimen/_5sdp"
+    android:enabled="false"
+    android:background="@drawable/substitute_color_selector"
+
+    />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

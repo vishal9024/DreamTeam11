@@ -10,6 +10,7 @@ object ApiConstant {
     /*Base Url*/
 //    https://72.octallabs.com/real11/WebServices/
 //    var BaseUrl="http://52.39.238.189/webServices/"
+//    var BaseUrl="http://52.39.238.189/webServices/"
     const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/WebServices/"
     const val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val fSLBaseURL = "https://72.octallabs.com/fsl/WebServices/"
@@ -96,12 +97,12 @@ object ApiConstant {
     const val replace_player = "replace-player"
     const val banner_list = "banner-list"
     const val notification_list = "notification-list"
-    const val edit_user_team_name="edit-user-team-name"
-    const val seriesList="seriesList"
-    const val series_ranking="series-ranking"
-    const val team_states="team-states"
-    const val team_profile_comparision="team-profile-comparision"
-    const val friend_referal_detail="friend-referal-detail"
+    const val edit_user_team_name = "edit-user-team-name"
+    const val seriesList = "seriesList"
+    const val series_ranking = "series-ranking"
+    const val team_states = "team-states"
+    const val team_profile_comparision = "team-profile-comparision"
+    const val friend_referal_detail = "friend-referal-detail"
 
 
     const val withdraw_cash = "withdraw-cash"
@@ -111,6 +112,6 @@ object ApiConstant {
     const val verify_pan_detail = "verify-pan-detail"
     const val verify_bank_detail = "verify-bank-detail"
     const val user_account_datail = "user-account-datail"
-
-
+    const val entryPerTeam = "entryPerTeam"
+    const val contest_prize_breakup = "contest-prize-breakup"
 }

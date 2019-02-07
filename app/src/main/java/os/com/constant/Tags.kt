@@ -3,6 +3,8 @@ package os.com.constant
 import org.joda.time.DateTimeZone
 
 object Tags {
+    const val contest_size="contest_size"
+    const val winning_amount="winning_amount"
     const val player_id="player_id"
     const  val team_no="team_no"
     const val birthday = "birthday"

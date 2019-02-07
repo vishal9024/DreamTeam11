@@ -27,14 +27,19 @@ import android.util.Base64
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.snackbar_layout.view.*
 import os.com.R
 import os.com.constant.Tags
 import os.com.utils.networkUtils.NetworkUtils
@@ -77,7 +82,7 @@ object AppDelegate {
     private var mInstance: AppDelegate? = null
 
 
-//fun getHourDifferenceBetweenTwoDate(createdTime: String): Int {
+    //fun getHourDifferenceBetweenTwoDate(createdTime: String): Int {
 //
 //    val dtCurrentTime = DateTime(Tags.timeZone)
 //
@@ -87,6 +92,28 @@ object AppDelegate {
 //    val hoursDifference = Hours.hoursBetween(dtCreatedTime, dtCurrentTime)
 //    return hoursDifference.hours
 //}
+    fun showSnackBar(view: View, mContext: AppCompatActivity, msg: String) {
+        val snackbar = Snackbar.make(view, "", Snackbar.LENGTH_LONG)
+        // Get the Snackbar's layout view
+        val layout = snackbar.getView() as Snackbar.SnackbarLayout
+        // Hide the text
+        val textView = layout.findViewById(R.id.snackbar_text) as TextView
+        textView.setVisibility(View.GONE)
+        // Inflate our custom view
+        val snackView = mContext.layoutInflater.inflate(R.layout.snackbar_layout, null)
+        // Configure the view
+        snackView.txt_message.text = msg
+        //If the view is not covering the whole snackbar layout, add this line
+        layout.setPadding(0, 0, 0, 0)
+        val params = snackView.getLayoutParams() as CoordinatorLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        snackView.setLayoutParams(params)
+        // Add the view to the Snackbar's layout
+        layout.addView(snackView, 0)
+
+        // Show the Snackbar
+        snackbar.show()
+    }
 
     fun isAppIsInBackground(context: Context): Boolean {
 
@@ -115,12 +142,14 @@ object AppDelegate {
         }
         return isInBackground
     }
-    public fun prepareShareIntent(shareCode: String,context: Context,title:String) {
+
+    public fun prepareShareIntent(shareCode: String, context: Context, title: String) {
         val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
         sharingIntent.putExtra(Intent.EXTRA_TEXT, shareCode)
         sharingIntent.type = "text/plain";
-        context. startActivity(Intent.createChooser(sharingIntent, title))
+        context.startActivity(Intent.createChooser(sharingIntent, title))
     }
+
     fun setLocale(lang: String?, mContext: Context) {
 
         val locale = Locale(lang, "IND")
@@ -132,6 +161,7 @@ object AppDelegate {
             mContext.resources.displayMetrics
         )
     }
+
     fun getTimeStampFromDate(date1: String): Long? {
         var date: Date? = null
         try {
@@ -668,12 +698,14 @@ object AppDelegate {
         }
 
     }
+
     fun convertTimestampToDate(time: Long): String {
         val stamp = Timestamp(time)
         val date = Date(stamp.getTime())
         val dateFormat = SimpleDateFormat("dd MMM, yyyy")
         return dateFormat.format(date)
     }
+
     fun showToast(mContext: Context?, Message: String, type: Int) {
         try {
             if (mContext != null)
@@ -688,7 +720,7 @@ object AppDelegate {
         }
     }
 
-    fun showProgressDialog(  mContext: Activity) {
+    fun showProgressDialog(mContext: Activity) {
         hideKeyBoard(mContext)
         try {
             FantasySportProgressDialog.getProgressDialog(mContext)!!.showDialog()
@@ -696,7 +728,8 @@ object AppDelegate {
 
         }
     }
-    fun showProgressDialogCancelable(  mContext: Activity) {
+
+    fun showProgressDialogCancelable(mContext: Activity) {
         hideKeyBoard(mContext)
         try {
             FantasySportProgressDialog.getProgressDialog(mContext)!!.showCancelableDialog()

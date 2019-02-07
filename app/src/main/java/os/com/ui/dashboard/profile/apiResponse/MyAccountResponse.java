@@ -65,7 +65,7 @@ public class MyAccountResponse implements Serializable {
             private String deposit_amount;
             private String winngs_amount;
             private double total_balance;
-
+private boolean account_verified;
             public String getBonus() {
                 return bonus;
             }
@@ -92,6 +92,14 @@ public class MyAccountResponse implements Serializable {
 
             public double getTotal_balance() {
                 return total_balance;
+            }
+
+            public boolean isAccount_verified() {
+                return account_verified;
+            }
+
+            public void setAccount_verified(boolean account_verified) {
+                this.account_verified = account_verified;
             }
 
             public void setTotal_balance(double total_balance) {

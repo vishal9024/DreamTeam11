@@ -1,6 +1,7 @@
 package os.com.ui.contest.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import os.com.R
 import os.com.data.Prefs
 import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.apiResponse.getContestDetail.Team
+import os.com.ui.dashboard.profile.activity.OtherUserProfileActivity
 
 class TeamsAdapter(
     val mContext: Context,
@@ -33,7 +35,7 @@ class TeamsAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
         holder.itemView.cimg_player.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+            mContext.startActivity(Intent(mContext, OtherUserProfileActivity::class.java).putExtra("data", "" + joined_team_list[position].user_id))
         }
 //        ImageLoader.getInstance().displayImage(
 //            joined_team_list[position].image,

@@ -2,7 +2,7 @@
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:layout_width="match_parent" xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/ll_main"
         android:background="@color/white"
         android:orientation="vertical"
@@ -17,25 +17,38 @@
             android:padding="@dimen/_10sdp"
             android:background="@drawable/button_rounded_background_gender_selected"
             android:orientation="vertical">
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 >
+            <androidx.appcompat.widget.AppCompatImageView
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="@+id/txt_team"
+                    android:padding="@dimen/_2sdp"
+                    android:id="@+id/img_check"
+                    card_view:srcCompat="@drawable/checked_selector"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"/>
             <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/txt_winnersTitle"
-                    style="@style/TextStyleMedium"
-                    android:layout_centerVertical="true"
-                    android:layout_width="wrap_content"
-                    android:textSize="@dimen/_14sdp"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/txt_team"
+                    style="@style/TextStyleNormal"
+                    card_view:layout_constraintStart_toEndOf="@id/img_check"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="start|center"
+                    android:paddingTop="@dimen/_5sdp"
+                    android:paddingBottom="@dimen/_5sdp"
+                    android:paddingStart="@dimen/_10sdp"
+                    android:paddingEnd="@dimen/_10sdp"
+                    android:textSize="@dimen/_11sdp"
+                    android:layout_width="0dp"
                     android:textColor="@color/textColorLightBlack"
-                    android:text="5 winners"
+                    android:text="Team 1"
                     android:layout_height="wrap_content"/>
-            <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"/>
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_rank"
                 android:layout_width="match_parent"

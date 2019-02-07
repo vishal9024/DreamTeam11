@@ -93,7 +93,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                     )
             }
             R.id.txt_Join -> {
-
                 joinContest()
             }
         }
@@ -118,7 +117,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                     .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
                 AppRequestCodes.UPDATE_ACTIVITY
             )
-        } else if (FantasyApplication.getInstance().teamCount == 1) {
+        } else if ( !data!!.is_joined && FantasyApplication.getInstance().teamCount == 1) {
             if (NetworkUtils.isConnected()) {
                 checkAmountWallet(
                     match!!.match_id,

@@ -32,4 +32,8 @@ object IntentConstant {
     const val OFFER_BANNER = 1004
     const val TO_JOIN = 1002
     const val AMOUNT_TO_ADD="AMOUNT_TO_ADD"
+    const val CONTEST_SIZE="CONTEST_SIZE"
+    const val WINNING_AMOUNT="WINNING_AMOUNT"
+     const  val TEAM_NAME="TEAM_NAME"
+    const val ALLOW_MULTIPLE_TEAMS="ALLOW_MULTIPLE_TEAMS"
 }

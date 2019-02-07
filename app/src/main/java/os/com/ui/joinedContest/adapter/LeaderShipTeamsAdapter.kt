@@ -10,10 +10,11 @@ import kotlinx.android.synthetic.main.item_completed_leadershipteams.view.*
 import os.com.BuildConfig
 import os.com.R
 import os.com.constant.IntentConstant
+import os.com.constant.IntentConstant.LIVE
 import os.com.data.Prefs
 import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.apiResponse.getContestDetail.Team
-import os.com.ui.createTeam.activity.PlayerDetailActivity
+import os.com.ui.dashboard.profile.activity.OtherUserProfileActivity
 
 
 class LeaderShipTeamsAdapter(
@@ -40,7 +41,8 @@ class LeaderShipTeamsAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
         holder.itemView.cimg_player.setOnClickListener {
-            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+            mContext.startActivity(Intent(mContext, OtherUserProfileActivity::class.java).putExtra("data", "" + joined_team_list[position].user_id))
+
         }
 //        ImageLoader.getInstance().displayImage(
 //            joined_team_list[position].image,
@@ -79,7 +81,7 @@ class LeaderShipTeamsAdapter(
 //        }
 
         if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-//            if (matchType == LIVE && match_status == "NOT STARTED") {
+            if (matchType == LIVE && match_status == "NOT STARTED") {
                 if (joined_team_list[holder.adapterPosition].substitute_status.equals("0")) {
                     holder.itemView.ll_substitute.visibility = View.VISIBLE
                     holder.itemView. ll_Ranking.visibility = View.GONE
@@ -87,7 +89,7 @@ class LeaderShipTeamsAdapter(
                         onClickRecyclerView.onClickItem("substitute", position)
                     }
                 } else holder.itemView.ll_substitute.visibility = View.GONE
-//            } else holder.itemView.ll_substitute.visibility = View.GONE
+            } else holder.itemView.ll_substitute.visibility = View.GONE
         } else holder.itemView.ll_substitute.visibility = View.GONE
     }
 

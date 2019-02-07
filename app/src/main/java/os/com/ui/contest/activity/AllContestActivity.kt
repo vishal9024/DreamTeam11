@@ -53,7 +53,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
                     ).putExtra(IntentConstant.CONTEST_ID, contests!![position].contest_id)
                         .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN), AppRequestCodes.UPDATE_ACTIVITY
                 )
-            } else if (FantasyApplication.getInstance().teamCount== 1) {
+            } else if (FantasyApplication.getInstance().teamCount == 1) {
                 if (NetworkUtils.isConnected()) {
                     checkAmountWallet(
                         match!!.match_id,
@@ -91,12 +91,13 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
         }
     }
 
-override    fun onAttachFragment(fragment: Fragment) {
+    override fun onAttachFragment(fragment: Fragment) {
         if (fragment is BottomSheetFilterFragment) {
             val headlinesFragment = fragment as BottomSheetFilterFragment
             headlinesFragment.setOnFilterListener(this)
         }
     }
+
     override fun onResume() {
         super.onResume()
         if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
@@ -186,18 +187,18 @@ override    fun onAttachFragment(fragment: Fragment) {
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.all_contest)
         if (FROM == 1) {
-            setMenu(false, true, true, false,false)
+            setMenu(false, true, true, false, false)
             filterContests = intent.getParcelableArrayListExtra(IntentConstant.CONTEST)
         } else
-            setMenu(false, true, false, false,false)
-        var localTeamName=match!!.local_team_name
-        var visitorTeamName=match!!.visitor_team_name
-        if (match!!.local_team_name.length>5)
-             localTeamName=match!!.local_team_name.substring(0,4)
-        if (match!!.visitor_team_name.length>5)
-            visitorTeamName=match!!.visitor_team_name.substring(0,4)
+            setMenu(false, true, false, false, false)
+        var localTeamName = match!!.local_team_name
+        var visitorTeamName = match!!.visitor_team_name
+        if (match!!.local_team_name.length > 5)
+            localTeamName = match!!.local_team_name.substring(0, 4)
+        if (match!!.visitor_team_name.length > 5)
+            visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-        txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+        txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
         if (matchType == IntentConstant.FIXTURE) {
             if (!match!!.star_date.isEmpty()) {
                 val strt_date = match!!.star_date.split("T")

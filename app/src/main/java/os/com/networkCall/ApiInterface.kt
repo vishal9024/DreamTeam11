@@ -7,6 +7,8 @@ import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
 import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
 import os.com.ui.addCash.apiResponse.generatePaytmChecksumResponse.GeneratePaytmChecksumResponse
+import os.com.ui.contest.apiResponse.contestSizePriceBreakUp.ContestSizePriceBreakup
+import os.com.ui.contest.apiResponse.entryFeeResponse.EntryFeeResponse
 import os.com.ui.contest.apiResponse.getContestDetail.GetContestDetailResponse
 import os.com.ui.contest.apiResponse.getContestList.GetContestResponse
 import os.com.ui.contest.apiResponse.joinContestResponse.JoinContestResponse
@@ -32,7 +34,6 @@ import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
 import os.com.ui.signup.apiResponse.signup.SignUpResponse
-import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUpResponse
 import retrofit2.http.*
 
 
@@ -121,9 +122,6 @@ interface ApiInterface {
     fun switch_team(@Body request: SwitchTeamRequest): Deferred<JoinContestResponse>
 
 
-    @Headers("Content-Type: application/json")
-    @POST(ApiConstant.contest_price_breakup)
-    fun contest_price_breakup(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.logout)
@@ -236,5 +234,12 @@ interface ApiInterface {
     @POST(ApiConstant.user_account_datail)
     fun user_account_datail(@Body request: Map<String, String>): Deferred<MyAccountResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.entryPerTeam)
+    fun entryPerTeam(@Body request: Map<String, String>): Deferred<EntryFeeResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.contest_price_breakup)
+    fun contest_price_breakup(@Body request: Map<String, String>): Deferred<ContestSizePriceBreakup>
 
 }

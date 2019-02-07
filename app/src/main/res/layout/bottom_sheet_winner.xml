@@ -21,9 +21,8 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-
                 android:textColor="@color/textColorOffWhite"
-                android:text="@string/winning_list"
+                android:text="@string/choose_total_winners"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_Close"
@@ -31,29 +30,10 @@
                 app:srcCompat="@mipmap/close"
                 android:layout_width="wrap_content"
                 android:textColor="@color/textColorOffWhite"
-                android:text="Rank"
                 android:layout_height="match_parent"/>
     </LinearLayout>
-    <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_label"
-            android:layout_below="@+id/ll_title"
-            android:padding="@dimen/_10sdp"
-            style="@style/TextStyleMedium"
-            android:background="@color/white"
-            android:gravity="center"
-            android:layout_width="match_parent"
-            android:textSize="@dimen/_14sdp"
-            android:textColor="@color/textColorLightBlack"
-            android:text="@string/choose_total_no_of_winners"
-            android:layout_height="wrap_content"/>
-    <View
-            android:id="@+id/view1"
-            android:layout_below="@+id/txt_label"
-            android:background="@color/colorItemBackgroundLightGray"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
     <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/view1"
+            android:layout_below="@+id/ll_title"
             android:id="@+id/rv_rank"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +41,6 @@
             tools:listitem="@layout/item_winners_list_bottomsheet"
             android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
-
 
 
 </RelativeLayout>

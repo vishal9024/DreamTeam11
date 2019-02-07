@@ -94,7 +94,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.replace_a_player)
         btn_replaceSubstitute.setOnClickListener(this)
-        setMenu(false, false, false, false, true)
+        setMenu(false, false, false, false, false)
         getIntentData()
         if (NetworkUtils.isConnected()) {
             if (match != null)

@@ -4,12 +4,13 @@
         android:layout_width="match_parent"
         android:id="@+id/ll_main"
         android:background="@color/white"
+        android:padding="@dimen/_2sdp"
         android:orientation="vertical"
         android:layout_height="wrap_content">
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_TeamName"
+                android:id="@+id/txt_rank"
                 style="@style/TextStyleNormal"
                 android:gravity="center_vertical"
                 android:paddingStart="@dimen/_5sdp"
@@ -21,6 +22,7 @@
                 android:text="Rank 1"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txt_percent"
                 style="@style/TextStyleSemiBold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
@@ -32,7 +34,7 @@
                 android:text="7.5%"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_rank"
+                android:id="@+id/txt_amount"
                 style="@style/TextStyleSemiBold"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"

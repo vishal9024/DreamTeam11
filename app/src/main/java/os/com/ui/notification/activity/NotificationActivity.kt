@@ -73,10 +73,12 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@NotificationActivity)
                 if (response.response!!.status) {
                     setAdapter(response.response!!.data)
-                    GlobalScope.launch {
+                    if (!response.response!!.data!!.isEmpty())
                         NotificationCountChannel.getInstance()
                             .notificationCountChannel.send(response.response!!.data!!.size)
-                    }
+                    else
+                        NotificationCountChannel.getInstance()
+                            .notificationCountChannel.send(151)
                 } else {
                     AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
                 }

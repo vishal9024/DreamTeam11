@@ -34,6 +34,9 @@ import os.com.interfaces.OnClickDialogue
 import os.com.networkCall.ApiClient
 import os.com.ui.addCash.activity.AddCashActivity
 import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.Data
+import os.com.ui.dashboard.profile.activity.WithdrawCashActivity
+import os.com.ui.dashboard.profile.activity.WithdrawRequestActivity
+import os.com.ui.dashboard.profile.apiResponse.MyAccountResponse
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.notification.activity.NotificationActivity
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
@@ -63,18 +66,21 @@ open class BaseActivity : AppCompatActivity() {
         pref = Prefs(this)
         GlobalScope.launch {
             val value = NotificationCountChannel.getInstance().notificationCountChannel.receive()
-            getViewOfCartMenuItem(menu!!)
-            if (notificationView != null) {
-                notificationView.notifItemCountTv.text = value.toString()
-                setDynamicallyParam(value)
-                if (value == 0)
-                    notificationView.notifItemCountTv.visibility = View.GONE
-                else
-                    notificationView.notifItemCountTv.visibility = View.VISIBLE
-
-            } else {
-                pref!!.putIntValue(PrefConstant.UNREAD_COUNT, value)
+            AppDelegate.LogT("value is=>"+value)
+            if (menu!=null) {
                 getViewOfCartMenuItem(menu!!)
+                if (notificationView != null) {
+                    notificationView.notifItemCountTv.text = value.toString()
+                    setDynamicallyParam(value)
+                    if (value == 0)
+                        notificationView.notifItemCountTv.visibility = View.GONE
+                    else
+                        notificationView.notifItemCountTv.visibility = View.VISIBLE
+
+                } else {
+                    pref!!.putIntValue(PrefConstant.UNREAD_COUNT, value)
+                    getViewOfCartMenuItem(menu!!)
+                }
             }
         }
     }
@@ -93,7 +99,8 @@ open class BaseActivity : AppCompatActivity() {
                 if (walletPopupWindow == null)
                     initWalletPopUp(view)
                 else
-                    showWalletPopUp(view)
+                    my_account_call(view)
+//                    showWalletPopUp(view, response.response!!.data)
                 return true
             }
             android.R.id.home -> {
@@ -171,13 +178,16 @@ open class BaseActivity : AppCompatActivity() {
                 walletPopupWindow!!.dismiss()
             }
             /* show popup window*/
-            showWalletPopUp(anchorView)
+            my_account_call(anchorView)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun showWalletPopUp(anchorView: View) {
+    private fun showWalletPopUp(
+        anchorView: View,
+        data: MyAccountResponse.ResponseBean.DataBean
+    ) {
         walletPopupWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
         walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
         walletPopupWindow!!.isOutsideTouchable = true
@@ -188,6 +198,27 @@ open class BaseActivity : AppCompatActivity() {
 //                Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
 //            )
 //        )
+        popupWindowView.txtTotalAmount.setText("₹ " + data.total_balance)
+        popupWindowView.txtDepositedAmount.setText("₹ " + data.deposit_amount)
+        popupWindowView.txtWinningsAmount.setText("₹ " + data.winngs_amount)
+        popupWindowView.txtCashBonusAmount.setText("₹ " + data.bonus)
+        popupWindowView.txt_Withdraw.setOnClickListener {
+            if (data.isAccount_verified) {
+                startActivity(Intent(this, WithdrawRequestActivity::class.java))
+            } else {
+                startActivity(Intent(this, WithdrawCashActivity::class.java))
+            }
+        }
+        popupWindowView.txt_Add.setOnClickListener {
+            var currentBalance = "0.0"
+            currentBalance = data!!.total_balance!!.toString()
+            startActivity(
+                Intent(this, AddCashActivity::class.java).putExtra(
+                    IntentConstant.currentBalance,
+                    currentBalance
+                ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
+            )
+        }
         var background = ColorDrawable(android.graphics.Color.BLACK)
         background.alpha = 10
         walletPopupWindow!!.setBackgroundDrawable(background);
@@ -489,6 +520,35 @@ open class BaseActivity : AppCompatActivity() {
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@BaseActivity)
             }
+        }
+    }
+
+    private fun my_account_call(anchorView: View) {
+        try {
+            GlobalScope.launch(Dispatchers.Main) {
+                AppDelegate.showProgressDialog(this@BaseActivity)
+                try {
+                    var map = java.util.HashMap<String, String>()
+                    map[Tags.user_id] = pref!!.userdata!!.user_id
+                    map[Tags.language] = FantasyApplication.getInstance().getLanguage()
+                    val request = ApiClient.client
+                        .getRetrofitService()
+                        .user_account_datail(map)
+                    val response = request.await()
+                    AppDelegate.LogT("Response=>" + response)
+                    AppDelegate.hideProgressDialog(this@BaseActivity)
+                    if (response.response!!.isStatus) {
+                        showWalletPopUp(anchorView, response.response!!.data)
+//
+                    } else {
+                        AppDelegate.showToast(this@BaseActivity, response.response!!.message)
+                    }
+                } catch (exception: Exception) {
+                    AppDelegate.hideProgressDialog(this@BaseActivity)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

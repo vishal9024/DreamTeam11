@@ -515,4 +515,7 @@
     <string name="enter_bank_name">Please enter Bank Name to proceed.</string>
     <string name="enter_bank_branch">Please enter Branch Name to proceed.</string>
     <string name="min_200_max_2_00_000_allowed_per_day">min. <b>\u20B9 200</b> and max <b>\u20B9 2,00,000</b> allowed per day</string>
+    <string name="entryFeeValidation">Entry Fee cannot be less than Rs. 5</string>
+    <string name="choose_total_winners">CHOOSE TOTAL WINNERS</string>
+    <string name="recommended">(Recommended)</string>
 </resources>
