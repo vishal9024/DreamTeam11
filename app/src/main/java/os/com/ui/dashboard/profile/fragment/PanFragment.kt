@@ -68,6 +68,10 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                   selectImage()
               }
           }
+          R.id.txtWhySubmitPANCard->{
+              val str="Since " +  getString(R.string.app_name)+ " involves money related transactions. It is mandatory for us to verify your PAN card"
+              Toast.makeText(context!!, str, Toast.LENGTH_LONG).show()
+          }
           R.id.btnSubmitForVerifyPAN->{
               if(TextUtils.isEmpty(edtPanName.text.toString().trim())){
                   Toast.makeText(context!!, getString(R.string.enter_pan_name), Toast.LENGTH_LONG).show()
@@ -118,6 +122,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             btn_uploadPanCard.setOnClickListener(this)
             btnSubmitForVerifyPAN.setOnClickListener(this)
             edtDateOfBirth.setOnClickListener(this)
+            txtWhySubmitPANCard.setOnClickListener(this)
             initState()
             withdraw_cash()
         } catch (e: Exception) {
