@@ -34,6 +34,7 @@ import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
 import os.com.ui.signup.apiResponse.signup.SignUpResponse
+import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUpResponse
 import retrofit2.http.*
 
 
@@ -243,8 +244,21 @@ interface ApiInterface {
     @POST(ApiConstant.entryPerTeam)
     fun entryPerTeam(@Body request: Map<String, String>): Deferred<EntryFeeResponse>
 
+
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.contest_prize_breakup)
+    fun contest_prize_breakup(@Body request: Map<String, String>): Deferred<ContestSizePriceBreakup>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.create_contest)
+    fun create_contest(@Body request: Map<String, String>): Deferred<JoinContestResponse>
+
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_price_breakup)
-    fun contest_price_breakup(@Body request: Map<String, String>): Deferred<ContestSizePriceBreakup>
+    fun contest_price_breakup(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
+
+
 
 }

@@ -25,6 +25,8 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
+import os.com.constant.AppRequestCodes.CREATE_CONTEST
+import os.com.constant.AppRequestCodes.UPDATE_ACTIVITY
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.SelectPlayerInterface
@@ -382,6 +384,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 addSubstituteData()
             }
             R.id.btn_Next -> {
+                var requestCode = UPDATE_ACTIVITY
+                if (createOrJoin == CREATE_CONTEST)
+                    requestCode = CREATE_CONTEST
                 startActivityForResult(
                     Intent(this, Choose_C_VC_Activity::class.java)
                         .putExtra(IntentConstant.MATCH, match)
@@ -402,7 +407,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         )
 //                        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
                         .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>)
-                    , AppRequestCodes.UPDATE_ACTIVITY
+                    , requestCode
                 )
             }
         }
@@ -452,9 +457,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     selectPlayer!!.substitute_id = substitute_id
                     txt_substitute.setText("1 Substitute")
                     updateUi()
-//                    }
                 }
             }
+        } else if (requestCode == AppRequestCodes.CREATE_CONTEST && resultCode == Activity.RESULT_OK) {
+            val intent = Intent()
+            intent.putExtra(IntentConstant.TEAM_ID, data!!.getStringExtra(IntentConstant.TEAM_ID))
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         } else if (requestCode == AppRequestCodes.UPDATE_ACTIVITY || requestCode == AppRequestCodes.EDIT || requestCode == AppRequestCodes.CLONE)
             if (resultCode == Activity.RESULT_OK) {
                 val intent = Intent()

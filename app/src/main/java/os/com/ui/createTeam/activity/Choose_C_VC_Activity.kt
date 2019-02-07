@@ -138,7 +138,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(getString(R.string.choose_c_vc_title))
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         getData()
         btn_CreateTeam.setOnClickListener(this)
         btn_preview.setOnClickListener(this)
@@ -349,7 +349,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                         if (NetworkUtils.isConnected()) {
                             checkAmountWallet(
                                 match!!.match_id,
-                                match!!.series_id, contest_id, response.response!!.data!!.team_id, object : OnClickDialogue {
+                                match!!.series_id,
+                                contest_id,
+                                response.response!!.data!!.team_id,
+                                object : OnClickDialogue {
                                     override fun onClick(tag: String, success: Boolean) {
                                         val intent = Intent()
                                         setResult(Activity.RESULT_OK, intent)
@@ -369,6 +372,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                         }
                     } else {
                         val intent = Intent()
+                        intent.putExtra(IntentConstant.TEAM_ID, response.response!!.data!!.team_id)
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                     }

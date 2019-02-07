@@ -171,7 +171,6 @@
         android:gravity="center"
 android:orientation="horizontal">
     <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txt_EntryFee"
             style="@style/TextStyleMedium"
             android:textSize="@dimen/_13sdp"
             android:gravity="center"

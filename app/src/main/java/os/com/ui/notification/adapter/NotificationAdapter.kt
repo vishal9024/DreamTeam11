@@ -27,19 +27,58 @@ class NotificationAdapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.card_view.setOnClickListener {
-            //            if (data!![position].nitification_type.equals("signup"))
-//            mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-//            else if (data!![position].nitification_type.equals("account"))
-//                mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-//            else if (data!![position].nitification_type.equals("free contest"))
-//                mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-//            else if (data!![position].nitification_type.equals("signup"))
-//                mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-//            else if (data!![position].nitification_type.equals("signup"))
-//                mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-//            else if (data!![position].nitification_type.equals("signup"))
-//                mContext.startActivity(Intent(mContext, SignUpActivity::class.java))
-
+//            try {
+//                if (data != null) {
+//                    if (data!![position].nitification_type.equals("1")) {
+//                        Log.e("title: ", data.title)
+//                        startActivity(Intent(this@DashBoardActivity, NotificationActivity::class.java))
+//                    } else if (data.type.equals("2")) {
+//                        Log.e("title: ", data.title)
+//                        startActivity(Intent(this@DashBoardActivity, MyProfileActivity::class.java))
+//                    } else if (data.type.equals("3")) {
+//                        Log.e("title: ", data.title)
+//                        startActivity(Intent(this@DashBoardActivity, MyAccountActivity::class.java))
+//                    } else if (data!![position].nitification_type.equals("4") || data!![position].nitification_type.equals("5") || data!![position].nitification_type.equals("6")) {
+//                        Log.e("title: ", data.title)
+//                        var contest_id = ""
+//                        var match: Match = Match()
+//                        var jsonObject = JSONObject(data.matchData)
+//                        if (jsonObject.has("contestId"))
+//                            contest_id = jsonObject.optString("contestId")
+//                        if (jsonObject.has("visitor_team_name"))
+//                            match.visitor_team_name = jsonObject.optString("visitor_team_name")
+//                        if (jsonObject.has("match_id"))
+//                            match.match_id = jsonObject.optString("match_id")
+//                        if (jsonObject.has("visitor_team_id"))
+//                            match.visitor_team_id = jsonObject.optString("visitor_team_id")
+//                        if (jsonObject.has("strTime"))
+//                            match.star_time = jsonObject.optString("strTime")
+//                        if (jsonObject.has("strDate"))
+//                            match.star_date = jsonObject.optString("strDate")
+//                        if (jsonObject.has("local_team_id"))
+//                            match.local_team_id = jsonObject.optString("local_team_id")
+//                        if (jsonObject.has("series_id"))
+//                            match.series_id = jsonObject.optString("series_id")
+//                        if (jsonObject.has("local_team_name"))
+//                            match.local_team_name = jsonObject.optString("local_team_name")
+//
+//                        startActivity(
+//                            Intent(this, LeaderShipBoardActivity::class.java).putExtra(
+//                                IntentConstant.MATCH,
+//                                match
+//                            ).putExtra(
+//                                IntentConstant.CONTEST_TYPE, IntentConstant.LIVE
+//                            ).putExtra(IntentConstant.CONTEST_ID, contest_id)
+//                                .putExtra(
+//                                    IntentConstant.FROM, AppRequestCodes.JOINED
+//                                )
+//                        )
+//                    }
+//
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
         }
 //        holder.itemView.ll_totalWinners.setOnClickListener {
 //            //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))

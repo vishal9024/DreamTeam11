@@ -172,7 +172,7 @@
 
                                 />
                                 <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/txt_EntryFee"
+                                        android:id="@+id/txt_EntryFees"
                                         android:gravity="end"
                                         style="@style/TextStyleSemiBold"
                                         android:textSize="@dimen/_11sdp"
@@ -215,6 +215,7 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                     style="@style/TextStyleNormal"
+                                    android:id="@+id/txt_winners"
                                     android:gravity="center_vertical"
                                     android:textSize="@dimen/_12sdp"
                                     android:layout_marginLeft="@dimen/_5sdp"

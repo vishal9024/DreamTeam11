@@ -10,7 +10,9 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.item_ranking.view.*
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.data.Prefs
 import os.com.ui.dashboard.profile.activity.MatchStatesActivity
+import os.com.ui.dashboard.profile.activity.MyProfileActivity
 import os.com.ui.dashboard.profile.activity.OtherUserProfileActivity
 import os.com.ui.dashboard.profile.apiResponse.SeriesRankingListResponse
 
@@ -53,17 +55,22 @@ class RankingAdapter(
                     holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.light_pink))
                     holder.itemView.img_kingflag.visibility = View.VISIBLE
                     holder.itemView.txt_rank.setTextColor(mContext.resources.getColor(R.color.orange))
-                }
-                else {
+                } else {
                     holder.itemView.img_kingflag.visibility = View.INVISIBLE
                     try {
-                    if (position % 2 == 0) {
-                        if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(user_id) && rankingList[position].rank != 1)
-                            holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.lightWhite))
-                    } else {
-                        if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(user_id) && rankingList[position].rank != 1)
-                        holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
-                    }
+                        if (position % 2 == 0) {
+                            if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(
+                                    user_id
+                                ) && rankingList[position].rank != 1
+                            )
+                                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.lightWhite))
+                        } else {
+                            if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(
+                                    user_id
+                                ) && rankingList[position].rank != 1
+                            )
+                                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
+                        }
 
                     } catch (e: Exception) {
                         holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
@@ -82,10 +89,18 @@ class RankingAdapter(
             }
 
             holder.itemView.cimg_player.setOnClickListener {
+
                 if (rankingList[position].user_id != null) {
-                    var intent = Intent(mContext, OtherUserProfileActivity::class.java)
-                    intent.putExtra("data", "" + rankingList[position].user_id)
-                    mContext.startActivity(intent)
+                    if (rankingList[position].user_id.equals(Prefs(mContext).userdata!!.user_id)) {
+                        var intent = Intent(mContext, MyProfileActivity::class.java)
+                        intent.putExtra("data", "" + rankingList[position].user_id)
+                        mContext.startActivity(intent)
+                    } else {
+                        var intent = Intent(mContext, OtherUserProfileActivity::class.java)
+                        intent.putExtra("data", "" + rankingList[position].user_id)
+                        mContext.startActivity(intent)
+
+                    }
                 }
             }
 

@@ -15,13 +15,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
+import org.json.JSONObject
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.constant.AppRequestCodes
+import os.com.constant.IntentConstant
+import os.com.constant.IntentConstant.LIVE
 import os.com.firebase.PNModel
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.home.fragment.HomeFragment
 import os.com.ui.dashboard.more.fragment.MoreFragment
 import os.com.ui.dashboard.myContest.fragment.MyContestFragment
+import os.com.ui.dashboard.profile.activity.MyAccountActivity
+import os.com.ui.dashboard.profile.activity.MyProfileActivity
 import os.com.ui.dashboard.profile.fragment.ProfileFragment
+import os.com.ui.joinedContest.activity.LeaderShipBoardActivity
 import os.com.ui.notification.activity.NotificationActivity
 
 /**
@@ -45,7 +53,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 if (supportFragmentManager.findFragmentById(R.id.container) !is HomeFragment) {
                     toolbar.visibility = View.VISIBLE
                     setTitleVisibility(false, true)
-                    setMenu(true, false, false, false,false)
+                    setMenu(true, false, false, false, false)
                     setTitleText(getString(R.string.home))
                     setFragment(HomeFragment(), R.id.container)
                 }
@@ -55,10 +63,10 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             R.id.navigation_mycontest -> {
                 if (supportFragmentManager.findFragmentById(R.id.container) !is MyContestFragment) {
                     toolbar.visibility = View.VISIBLE
-                    setMenu(true, false, false, false,false)
+                    setMenu(true, false, false, false, false)
                     setTitleVisibility(true, false)
                     setTitleText(getString(R.string.my_contest))
-                    setFragment(MyContestFragment(),R.id.container)
+                    setFragment(MyContestFragment(), R.id.container)
                 }
                 return true
             }
@@ -67,7 +75,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 if (supportFragmentManager.findFragmentById(R.id.container) !is ProfileFragment) {
                     toolbar.visibility = View.GONE
                     setTitleVisibility(true, false)
-                    setMenu(false, false, false, true,false)
+                    setMenu(false, false, false, true, false)
                     setTitleText(getString(R.string.profile))
                     setFragment(ProfileFragment(), R.id.container)
                 }
@@ -76,7 +84,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             R.id.navigation_more -> {
                 if (supportFragmentManager.findFragmentById(R.id.container) !is MoreFragment) {
                     toolbar.visibility = View.VISIBLE
-                    setMenu(true, false, false, false,false)
+                    setMenu(true, false, false, false, false)
                     setTitleText(getString(R.string.more))
                     setFragment(MoreFragment(), R.id.container)
                 }
@@ -109,52 +117,89 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun initView() {
-          try{
-              setSupportActionBar(toolbar)
-              supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-              supportActionBar!!.setDisplayShowHomeEnabled(false)
-              supportActionBar!!.setDisplayShowTitleEnabled(false)
-              supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
-              setTitleVisibility(false, true)
-              setMenu(true, false, false, false,false)
-              bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
-              bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
-              removeShiftMode(bottomNavigationView)
-              setFragment(HomeFragment(), R.id.container)
-              if (intent.hasExtra("notification_Data")) {
-                  var data = intent.getSerializableExtra("notification_Data" ) as PNModel
-                  if (data!=null)
-                      manageNotification(data)
-              }
-          } catch (e: Exception) {
-              e.printStackTrace()
-          }
+        try {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+            supportActionBar!!.setDisplayShowHomeEnabled(false)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
+            setTitleVisibility(false, true)
+            setMenu(true, false, false, false, false)
+            bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
+            bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+            removeShiftMode(bottomNavigationView)
+            setFragment(HomeFragment(), R.id.container)
+            if (intent.hasExtra("notification_Data")) {
+                var data = intent.getSerializableExtra("notification_Data") as PNModel
+                if (data != null)
+                    manageNotification(data)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun manageNotification(data: PNModel) {
-
 //       const val admin = "1" go notification Activity
-//        const val signup = "2"
-//        const val bonus = "3"
-//        const val match_start = "4"
-//        const val match_end = "5"
-//        const val winning_amount = "6"
-          try{
-               if (data!=null){
-                   if (data.type.equals("1")){
-                       Log.e("title: ",data.title)
-                       startActivity(Intent(this@DashBoardActivity, NotificationActivity::class.java))
-                   }
-               }
-              } catch (e: Exception) {
-                      e.printStackTrace()
-              }
+//        const val signup = "2" go profile
+//        const val bonus = "3" account
+//        const val match_start = "4" joined contest detail
+//        const val match_end = "5" joined contest detail
+//        const val winning_amount = "6" account
+        try {
+            if (data != null) {
+                if (data.type.equals("1")) {
+                    Log.e("title: ", data.title)
+                    startActivity(Intent(this@DashBoardActivity, NotificationActivity::class.java))
+                } else if (data.type.equals("2")) {
+                    Log.e("title: ", data.title)
+                    startActivity(Intent(this@DashBoardActivity, MyProfileActivity::class.java))
+                } else if (data.type.equals("3")) {
+                    Log.e("title: ", data.title)
+                    startActivity(Intent(this@DashBoardActivity, MyAccountActivity::class.java))
+                } else if (data.type.equals("4") || data.type.equals("5") || data.type.equals("6")) {
+                    Log.e("title: ", data.title)
+                    var contest_id = ""
+                    var match: Match = Match()
+                    var jsonObject = JSONObject(data.matchData)
+                    if (jsonObject.has("contestId"))
+                        contest_id = jsonObject.optString("contestId")
+                    if (jsonObject.has("visitor_team_name"))
+                        match.visitor_team_name = jsonObject.optString("visitor_team_name")
+                    if (jsonObject.has("match_id"))
+                        match.match_id = jsonObject.optString("match_id")
+                    if (jsonObject.has("visitor_team_id"))
+                        match.visitor_team_id = jsonObject.optString("visitor_team_id")
+                    if (jsonObject.has("strTime"))
+                        match.star_time = jsonObject.optString("strTime")
+                    if (jsonObject.has("strDate"))
+                        match.star_date = jsonObject.optString("strDate")
+                    if (jsonObject.has("local_team_id"))
+                        match.local_team_id = jsonObject.optString("local_team_id")
+                    if (jsonObject.has("series_id"))
+                        match.series_id = jsonObject.optString("series_id")
+                    if (jsonObject.has("local_team_name"))
+                        match.local_team_name = jsonObject.optString("local_team_name")
+
+                    startActivity(
+                        Intent(this, LeaderShipBoardActivity::class.java).putExtra(
+                            IntentConstant.MATCH,
+                            match
+                        ).putExtra(
+                            IntentConstant.CONTEST_TYPE, LIVE
+                        ).putExtra(IntentConstant.CONTEST_ID, contest_id)
+                            .putExtra(
+                                IntentConstant.FROM, AppRequestCodes.JOINED
+                            )
+                    )
+                }
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
-//    fun updateNavigationView() {
-//        nav_view.getHeaderView(0).txt_username.setText(Prefs.getInstance(this).userdata!!.first_name + " " + Prefs.getInstance(this).userdata!!.last_name)
-//        ImageLoader.getInstance().displayImage(Prefs.getInstance(this).userdata!!.img, nav_view.getHeaderView(0).cimg_user, FantasyApplication.getInstance().options)
-//    }
 
     fun setTitleVisibility(title: Boolean, icon: Boolean) {
         if (icon)
@@ -175,7 +220,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             super.onBackPressed()
         }
     }
-//    private fun setFragment(fragment: Fragment) {
+
+    //    private fun setFragment(fragment: Fragment) {
 //        val backStateName = fragment.javaClass.name
 //
 //        val manager = supportFragmentManager
@@ -188,7 +234,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
 //            ft.commitAllowingStateLoss()
 //        }
 //    }
-    private fun setFragment(fragment: Fragment, container: Int ) {
+    private fun setFragment(fragment: Fragment, container: Int) {
         val fragmentManager = supportFragmentManager
         fragmentManager
             .beginTransaction()

@@ -137,6 +137,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationsModel.body = data["body"]
         notificationsModel.title = data["title"]
         notificationsModel.badge_count = data["badge_count"]
+        if (!data["matchData"]!!.isEmpty())
+        notificationsModel.badge_count = data["matchData"]
+
         Log.e("Notification==>", notificationsModel.toString())
         return notificationsModel
     }

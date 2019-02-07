@@ -17,6 +17,7 @@ import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
+import os.com.constant.AppRequestCodes.CREATE_CONTEST
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.interfaces.OnClickDialogue
@@ -42,7 +43,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
 
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
         when (FOR) {
-            AppRequestCodes.JOIN -> {
+            AppRequestCodes.JOIN or AppRequestCodes.CREATE_CONTEST-> {
                 for (i in data.indices) {
                     data[i].isSelected = false
                 }
@@ -97,7 +98,15 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
             }
             R.id.btn_joinContest -> {
                 when (FOR) {
-                    AppRequestCodes.JOIN -> {
+                    AppRequestCodes.CREATE_CONTEST->{
+                        if (!team_id.isEmpty()){
+                            val intent = Intent()
+                            intent.putExtra(IntentConstant.TEAM_ID,team_id)
+                            setResult(Activity.RESULT_OK, intent)
+                            finish()
+                        }
+                    }
+                    AppRequestCodes.JOIN  -> {
                         if (!team_id.isEmpty())
                             if (NetworkUtils.isConnected()) {
                                 checkAmountWallet(
@@ -223,8 +232,10 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
         if (intent != null) {
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             match = intent.getParcelableExtra(IntentConstant.MATCH)
-            contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
+
             FOR = intent.getIntExtra(IntentConstant.FOR, AppRequestCodes.JOIN)
+            if (FOR != CREATE_CONTEST)
+                contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
             if (FOR == AppRequestCodes.JOIN_PLUS || FOR == AppRequestCodes.SWITCH)
                 my_team_ids = intent.getStringArrayListExtra(IntentConstant.TEAM_ID)
             var localTeamName = match!!.local_team_name
@@ -248,7 +259,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
 
 
         }
-        setMenu(true, false, false, false,false)
+        setMenu(true, false, false, false, false)
         if (NetworkUtils.isConnected()) {
             callGetTeamListApi()
         } else

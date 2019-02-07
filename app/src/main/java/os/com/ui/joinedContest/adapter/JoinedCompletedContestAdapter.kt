@@ -33,7 +33,7 @@ class JoinedCompletedContestAdapter(
             mContext.startActivity(
                 Intent(mContext, LeaderShipBoardActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                     IntentConstant.CONTEST_TYPE, matchType
-                ).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putExtra(
+                ).putExtra(IntentConstant.CONTEST_ID, data[holder.adapterPosition].contest_id).putExtra(
                     IntentConstant.FROM,
                     AppRequestCodes.JOINED
                 )

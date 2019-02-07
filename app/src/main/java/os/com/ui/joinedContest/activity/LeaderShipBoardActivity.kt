@@ -36,7 +36,6 @@ import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.LeaderShipTeamsAdapter
-import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedContestData
 import os.com.utils.AppDelegate
 import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
@@ -60,7 +59,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             R.id.ll_winners -> {
                 if (!data!!.total_winners.isEmpty() && data!!.total_winners.toInt() > 0)
                     callWinningBreakupApi(
-                        joinedContest!!.contest_id,
+                        contest_id,
                         data!!.breakup_detail!!,
                         data!!.prize_money
                     )
@@ -113,7 +112,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.contest_id] = joinedContest!!.contest_id
+        loginRequest[Tags.contest_id] = contest_id
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
 
@@ -224,12 +223,12 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var contest_id = ""
-    var joinedContest: JoinedContestData? = null
+//    var joinedContest: JoinedContestData? = null
     private fun initViews() {
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-            joinedContest = intent.getParcelableExtra(IntentConstant.DATA)
+            contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         }
         localTeamName = match!!.local_team_name
         visitorTeamName = match!!.visitor_team_name
@@ -289,7 +288,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.contest_id] = joinedContest!!.contest_id
+        loginRequest[Tags.contest_id] = contest_id
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
 
@@ -496,7 +495,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                                 response.response!!.data!![0].player_details
                             ).putExtra("substitute", response.response!!.data!![0].substitute_detail)
                                 .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                                .putExtra(IntentConstant.CONTEST_ID, joinedContest!!.contest_id)
+                                .putExtra(IntentConstant.CONTEST_ID, contest_id)
                                 .putExtra(IntentConstant.TEAM_ID, teamNo)
                             ,
                             AppRequestCodes.EDIT

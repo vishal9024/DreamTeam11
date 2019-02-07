@@ -27,15 +27,22 @@ import java.util.*
 class MatchStatesActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         try {
-        when (view!!.id) {
-            R.id.cimg_player -> {
-                if (!userId.equals("")) {
-                    var intent = Intent(this, OtherUserProfileActivity::class.java)
-                    intent.putExtra("data",  userId)
-                    startActivity(intent)
+            when (view!!.id) {
+                R.id.cimg_player -> {
+                    if (!userId.isEmpty()) {
+                        if (userId.equals(pref!!.userdata!!.user_id)) {
+                            val intent = Intent(this, MyProfileActivity::class.java)
+                            intent.putExtra("data", userId)
+                            startActivity(intent)
+                        } else {
+                            val intent = Intent(this, OtherUserProfileActivity::class.java)
+                            intent.putExtra("data", userId)
+                            startActivity(intent)
+
+                        }
+                    }
                 }
             }
-        }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -66,7 +73,7 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
                 userId = intent.getStringExtra("user_id")
             if (NetworkUtils.isConnected()) {
                 if (seriesId != null && !seriesId.equals("") && userId != null && !userId.equals(""))
-                    getMatchStatesData(seriesId,userId)
+                    getMatchStatesData(seriesId, userId)
             } else
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 //        btn_CreateTeam.setOnClickListener(this)
@@ -113,33 +120,33 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setData(data: TeamStatesResponse.ResponseBean.DataBean) {
-          try{
+        try {
 
-              ll_match.visibility=View.VISIBLE
-              ll_Series.visibility=View.VISIBLE
-              ll_AllContest.visibility=View.VISIBLE
-              if (data.team_name != null)
-                  txt_TeamName.text = data.team_name
+            ll_match.visibility = View.VISIBLE
+            ll_Series.visibility = View.VISIBLE
+            ll_AllContest.visibility = View.VISIBLE
+            if (data.team_name != null)
+                txt_TeamName.text = data.team_name
 
-              if (data.image != null && !data.image.equals(""))
-                  ImageLoader.getInstance().displayImage(
-                      data.image,
-                      cimg_player,
-                      FantasyApplication.getInstance().options
-                  )
-              if (data.series_name != null)
-                  txtSeriesName.text = data.series_name
-              if (data.totalRank != null)
-                  txt_Rank.text = "#" + data.totalRank
-              if (data.total_points != null)
-                  txtPoints.text = "" + data.total_points
-              if (data.point_detail!=null && data.point_detail.size>0) {
-                  txt_team.text="match("+data.point_detail.size+")"
-                  setAdapter(data.point_detail)
-              }
-          } catch (e: Exception) {
-              e.printStackTrace()
-          }
+            if (data.image != null && !data.image.equals(""))
+                ImageLoader.getInstance().displayImage(
+                    data.image,
+                    cimg_player,
+                    FantasyApplication.getInstance().options
+                )
+            if (data.series_name != null)
+                txtSeriesName.text = data.series_name
+            if (data.totalRank != null)
+                txt_Rank.text = "#" + data.totalRank
+            if (data.total_points != null)
+                txtPoints.text = "" + data.total_points
+            if (data.point_detail != null && data.point_detail.size > 0) {
+                txt_team.text = "match(" + data.point_detail.size + ")"
+                setAdapter(data.point_detail)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 

@@ -10,6 +10,8 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.item_refferral_friend.view.*
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.data.Prefs
+import os.com.ui.dashboard.profile.activity.MyProfileActivity
 import os.com.ui.dashboard.profile.activity.OtherUserProfileActivity
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 
@@ -34,13 +36,19 @@ class ReferralFriendAdapter(
                 )
             if (data[position].team_name != null)
                 holder.itemView.txt_InviteFriends.text = data[position].team_name
-            holder.itemView.setOnClickListener(View.OnClickListener {
+            holder.itemView.setOnClickListener {
                 if (data[position].user_id != null) {
-                    var intent = Intent(mContext, OtherUserProfileActivity::class.java)
-                    intent.putExtra("data", "" + data[position].user_id)
-                    mContext.startActivity(intent)
+                    if (data[position].user_id.equals(Prefs(mContext)!!.userdata!!.user_id)) {
+                        var intent = Intent(mContext, MyProfileActivity::class.java)
+                        intent.putExtra("data", "" + data[position].user_id)
+                        mContext.startActivity(intent)
+                    } else {
+                        var intent = Intent(mContext, OtherUserProfileActivity::class.java)
+                        intent.putExtra("data", "" + data[position].user_id)
+                        mContext.startActivity(intent)
+                    }
                 }
-            })
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
