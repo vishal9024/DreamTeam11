@@ -328,6 +328,7 @@
     <string name="spots_left">spots left</string>
     <string name="view_all">More Contests</string>
     <string name="vs"> VS </string>
+    <string name="vs_small"> vs </string>
     <string name="select_captain">Please select Captain.</string>
     <string name="select_vc">Please select Vice Captain.</string>
     <string name="select_match">Select Match</string>
@@ -518,4 +519,19 @@
     <string name="entryFeeValidation">Entry Fee cannot be less than Rs. 5</string>
     <string name="choose_total_winners">CHOOSE TOTAL WINNERS</string>
     <string name="recommended">(Recommended)</string>
+
+    <string name="select_series">Select Series</string>
+    <string name="verify_your_pan">VERIFY YOUR PAN</string>
+    <string name="update_account_proof">UPLOAD ACCOUNT PROOF</string>
+    <string name="you_have_not_invited">You haven\'t invited any friends yet!</string>
+    <string name="withdraw_now">Withdraw Now</string>
+    <string name="enter_amount_to_proceed">please enter amount to proceed withdraw.</string>
+    <string name="valid_amount_to_proceed">please enter valid amount to proceed withdraw.</string>
+    <string name="offer_info_text">Each code can be redeemed for Cash Bonus once. Code can be earned on 3rd Party Apps
+        or through exclusive.
+    </string>
+    <string name="deposited_info_text">Money deposited by you can use to join any contests but can\'t withdraw </string>
+    <string name="winning_info_text">Money that you can withdraw or re-use to join any contests</string>
+    <string name="bonus_info_text">Money that can you use to join any public contes</string>
+    <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for the matches your friendshave jioned cash contest in.</string>
 </resources>

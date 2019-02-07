@@ -1,11 +1,15 @@
 package os.com.ui.dashboard.profile.activity
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.Selection
 import android.text.TextUtils
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.android.synthetic.main.activity_withraw_request.*
+import kotlinx.android.synthetic.main.content_signup.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,9 +27,12 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
             when (view!!.id) {
                 R.id.btWithdrawNow -> {
                     if(TextUtils.isEmpty(edtWithdrawAmount.text.toString().trim())){
-                        Toast.makeText(this@WithdrawRequestActivity!!, getString(R.string.enter_email_to_proceed), Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@WithdrawRequestActivity!!, getString(R.string.enter_amount_to_proceed), Toast.LENGTH_LONG).show()
                     }else{
-                        withdraw_request_call(edtWithdrawAmount.text.toString().trim())
+                        val amount=edtWithdrawAmount.text.toString().replace("₹","").trim().toInt()
+                        if (amount>=200 && amount<=200000) {
+                            withdraw_request_call(edtWithdrawAmount.text.toString().replace("₹", "").trim())
+                        }else Toast.makeText(this@WithdrawRequestActivity!!, getString(R.string.valid_amount_to_proceed), Toast.LENGTH_LONG).show()
                     }
                 }
             }
@@ -48,6 +55,31 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.withdraw)
             setMenu(false, false, false, false, false)
+            et_Mobile.setText("₹")
+
+            et_Mobile.addTextChangedListener(object : TextWatcher {
+
+                override fun afterTextChanged(s: Editable) {
+                    if (!s.toString().startsWith("₹")) {
+                        et_Mobile.setText("₹")
+                        Selection.setSelection(et_Mobile.text, et_Mobile.text!!.length);
+                    }
+                }
+
+                override fun beforeTextChanged(
+                    s: CharSequence, start: Int,
+                    count: Int, after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(
+                    s: CharSequence, start: Int,
+                    before: Int, count: Int
+                ) {
+
+                }
+            })
             bank_details()
             btWithdrawNow.setOnClickListener(this)
 
@@ -97,7 +129,7 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
                     map[Tags.withdraw_amount] = amount
                     val request = ApiClient.client
                         .getRetrofitService()
-                        .transation_history(map)
+                        .add_withdraw_request(map)
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@WithdrawRequestActivity)

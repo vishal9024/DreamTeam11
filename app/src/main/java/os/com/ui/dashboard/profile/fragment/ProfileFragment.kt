@@ -163,10 +163,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 R.id.imvOfferInfo -> {
                     SimpleTooltip.Builder(context)
                         .anchorView(view)
-                        .text("Texto do Tooltip")
-                        .gravity(Gravity.END)
-                        .animated(true)
-                        .transparentOverlay(false)
+                        .text(context!!.resources.getString(R.string.offer_info_text))
                         .build()
                         .show()
                 }
@@ -473,7 +470,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 if (mData!!.contest_level != null) {
                     txt_StartValue.setText("" + mData!!.contest_level)
                     txt_EndValue.setText("" + (mData!!.contest_level + 1))
-                    main_textview_subtitle.setText("level " + mData!!.contest_level)
+                    main_textview_subtitle.setText("Level " + mData!!.contest_level)
                     tvUnlockLevel.setText("Unlock these rewards at level " + (mData!!.contest_level + 1))
 
                 }

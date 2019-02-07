@@ -67,11 +67,11 @@ class PerformanceAdapter(
             if (recent_performance[position].my_points != null)
                 holder.itemView.tvPointValueLeft.text = recent_performance[position].my_points
             if (recent_performance[position].my_team != null)
-                holder.itemView.tvTeamCount.text = "team " + recent_performance[position].my_team
+                holder.itemView.tvTeamCount.text = "Team " + recent_performance[position].my_team
             if (recent_performance[position].friend_points != null)
                 holder.itemView.tvPointValueRight.text = "" + recent_performance[position].friend_points
             if (recent_performance[position].friend_team != null)
-                holder.itemView.tvTeamCountRight.text = "team " + recent_performance[position].friend_team
+                holder.itemView.tvTeamCountRight.text = "Team " + recent_performance[position].friend_team
             if (recent_performance[position].my_points != null && !recent_performance[position].my_points.equals("")
                 && recent_performance[position].friend_points!= null && !recent_performance[position].friend_points.equals("")){
                 var myPoints= recent_performance[position].my_points.toInt()

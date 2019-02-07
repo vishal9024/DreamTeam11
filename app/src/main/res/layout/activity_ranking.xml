@@ -39,7 +39,7 @@
                         android:textSize="@dimen/_12sdp"
                         android:layout_width="wrap_content"
                         android:textColor="@color/textColorLightBlack"
-                        android:text="@string/select_match"
+                        android:text="@string/select_series"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spn_match"
@@ -89,7 +89,7 @@
                         android:id="@+id/txt_team"
                         style="@style/TextStyleSemiBold"
                         android:gravity="start"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_12sdp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:paddingStart="@dimen/_8sdp"
@@ -103,7 +103,7 @@
                         android:gravity="end"
                         android:paddingEnd="@dimen/_10sdp"
                         android:layout_weight="1"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_12sdp"
                         android:layout_width="wrap_content"
                         android:textColor="@color/sort_allcontest_color_selector"
                         android:text="@string/rank"

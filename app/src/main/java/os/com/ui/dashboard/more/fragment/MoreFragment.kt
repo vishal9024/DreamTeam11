@@ -9,7 +9,6 @@ import com.zopim.android.sdk.api.ZopimChat
 import com.zopim.android.sdk.model.VisitorInfo
 import com.zopim.android.sdk.prechat.ZopimChatActivity
 import kotlinx.android.synthetic.main.fragment_more.*
-import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.BuildConfig
 import os.com.R
@@ -46,7 +45,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
                   R.id.tv_helpDesk -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "Helpdesk")
-                      intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.index)
+                      intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.help)
                       startActivity(intent)
                   }
                   R.id.tv_work_with_us -> {
@@ -67,9 +66,9 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.legality_tab)
                       startActivity(intent)
                   }
-                  R.id.tv_logout -> {
-                      (activity as BaseActivity).showLogoutDialog()
-                  }
+//                  R.id.tv_logout -> {
+//                      (activity as BaseActivity).showLogoutDialog()
+//                  }
                   R.id.llZendeskChat -> {
                       val config = ZopimChat.SessionConfig()
                           .department("A department")
@@ -116,7 +115,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
             tv_work_with_us.setOnClickListener(this)
             tv_about.setOnClickListener(this)
             tv_rules.setOnClickListener(this)
-            tv_logout.setOnClickListener(this)
+//            tv_logout.setOnClickListener(this)
             llZendeskChat.setOnClickListener(this)
             if (BuildConfig.VERSION_CODE != 0) {
                 tv_version_code.visibility = View.VISIBLE

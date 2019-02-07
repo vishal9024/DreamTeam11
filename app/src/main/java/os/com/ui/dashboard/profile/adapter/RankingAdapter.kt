@@ -35,8 +35,12 @@ class RankingAdapter(
                     FantasyApplication.getInstance().options
                 )
 
-            if (rankingList[position].user_id != null && ("" + rankingList[position].user_id).equals(user_id))
-                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorSecondaryLight))
+            if (rankingList[position].user_id != null && ("" + rankingList[position].user_id).equals(user_id)) {
+                holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorASPrimary))
+                holder.itemView.txt_TeamName.setTextColor(mContext.resources.getColor(R.color.textColorWhite))
+                holder.itemView.txt_Points.setTextColor(mContext.resources.getColor(R.color.textColorWhite))
+                holder.itemView.txt_rank.setTextColor(mContext.resources.getColor(R.color.textColorWhite))
+            }
             if (rankingList[position].team_name != null)
                 holder.itemView.txt_TeamName.text = rankingList[position].team_name
 
@@ -45,9 +49,27 @@ class RankingAdapter(
 
             if (rankingList[position].rank != null) {
                 holder.itemView.txt_rank.text = "#" + rankingList[position].rank
-                if (rankingList[position].rank == 1)
+                if (rankingList[position].rank == 1) {
+                    holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.light_pink))
                     holder.itemView.img_kingflag.visibility = View.VISIBLE
-                else holder.itemView.img_kingflag.visibility = View.INVISIBLE
+                    holder.itemView.txt_rank.setTextColor(mContext.resources.getColor(R.color.orange))
+                }
+                else {
+                    holder.itemView.img_kingflag.visibility = View.INVISIBLE
+                    try {
+                    if (position % 2 == 0) {
+                        if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(user_id) && rankingList[position].rank != 1)
+                            holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.lightWhite))
+                    } else {
+                        if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(user_id) && rankingList[position].rank != 1)
+                        holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
+                    }
+
+                    } catch (e: Exception) {
+                        holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
+                    }
+                }
+
             }
 
             if (rankingList[position].rank != null && rankingList[position].previous_rank != null) {

@@ -87,7 +87,7 @@
                             android:gravity="start"
                             android:textSize="@dimen/_11sdp"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/textColorBlack"
+                            android:textColor="@color/textColorLightBlack"
                             android:text="@string/rank"
                             android:textAllCaps="true"
                             android:layout_height="wrap_content"/>
@@ -97,7 +97,7 @@
                             android:gravity="start"
                             android:textSize="@dimen/_11sdp"
                             android:layout_width="wrap_content"
-                            android:textColor="@color/textColorLightBlack"
+                            android:textColor="@color/textColorBlack"
                             android:text="#1"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>

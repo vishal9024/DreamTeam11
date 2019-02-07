@@ -109,7 +109,7 @@ class OtherUserProfileActivity : BaseActivity(), View.OnClickListener {
             }
 
             if (data.contest_level != null)
-                tvsubtitle.text = "level "+data.contest_level
+                tvsubtitle.text = "Level "+data.contest_level
 
 
 

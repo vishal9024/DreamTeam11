@@ -133,8 +133,10 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
                   txt_Rank.text = "#" + data.totalRank
               if (data.total_points != null)
                   txtPoints.text = "" + data.total_points
-              if (data.point_detail!=null && data.point_detail.size>0)
+              if (data.point_detail!=null && data.point_detail.size>0) {
+                  txt_team.text="match("+data.point_detail.size+")"
                   setAdapter(data.point_detail)
+              }
           } catch (e: Exception) {
               e.printStackTrace()
           }

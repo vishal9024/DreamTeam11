@@ -15,7 +15,7 @@ import os.com.constant.IntentConstant
 import os.com.constant.PrefConstant
 import os.com.data.Prefs
 import os.com.ui.dashboard.DashBoardActivity
-import os.com.ui.notification.activity.NotificationActivity
+import os.com.ui.splash.activity.SplashActivity
 import kotlin.random.Random
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -41,13 +41,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     object NotificationType {
         const val admin = "1"
-        const val orderPlaced = "orderPlaced"
-        const val orderCancelled = "orderCancelled"
-        const val productAvailable = "productAvailable"
-        const val general = "general"
-        const val deliveryStatusChange = "deliveryStatusChange"
-        const val deliveryBoyAssigned = "deliveryBoyAssigned"
-        const val OrderDelivered="OrderDelivered"
+        const val signup = "2"
+        const val bonus = "3"
+        const val match_start = "4"
+        const val match_end = "5"
+        const val winning_amount = "6"
     }
 //
     private fun generateNotification(data: PNModel) {
@@ -90,8 +88,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //
     private fun setNotificationIntent(data: PNModel): PendingIntent {
         var notificationIntent: Intent? = null
-        if (data.type.equals(NotificationType.admin)) {
-            notificationIntent = Intent(this, NotificationActivity::class.java)
+//        if (data.type.equals(NotificationType.admin)) {
+            notificationIntent = Intent(this, DashBoardActivity::class.java)
+            notificationIntent.putExtra("notification_Data",data)
+//            notificationIntent = Intent(this, NotificationActivity::class.java)
 //        } else if (data.notification_type.equals(NotificationType.orderPlaced)) {
 //            notificationIntent = Intent(this, MyOrderDetailActivity::class.java)
 //            notificationIntent.putExtra(IntentConstant.ORDER_ID, data.item_id)
@@ -113,15 +113,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 //        } else if (data.notification_type.equals(NotificationType.general)) {
 ////          notificationIntent!!.putExtra(IntentConstant.ORDER_ID, data.item_id)
 //            notificationIntent = Intent(this, NotificationActivity2::class.java)
-        }
+//        }
 
 //      val notificationIntent = Intent(this, ProductDetailActivity::class.java)
         notificationIntent!!.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-        val parentIntent = Intent(this, DashBoardActivity::class.java)
+        val parentIntent = Intent(this, SplashActivity::class.java)
         parentIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         /* create stack builder if you want to open parent activty on notification click*/
         val stackBuilder = TaskStackBuilder.create(this)
-        stackBuilder.addParentStack(DashBoardActivity::class.java)
+        stackBuilder.addParentStack(SplashActivity::class.java)
 //        notificationIntent.putExtra(IntentConstant.ORDER_ID, data.item_id)
         notificationIntent.putExtra(IntentConstant.FROM, 1)
         /* add all notification to stack*/

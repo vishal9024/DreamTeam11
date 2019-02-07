@@ -278,8 +278,14 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 //                    AppDelegate.showToast(activity, response.response!!.message)
                 }
             } catch (exception: Exception) {
-                swipeToRefresh.isRefreshing = false
-                AppDelegate.hideProgressDialog(activity)
+                  try{
+                      if (swipeToRefresh!=null)
+                      swipeToRefresh.isRefreshing = false
+                      AppDelegate.hideProgressDialog(activity)
+                      } catch (e: Exception) {
+                              e.printStackTrace()
+                      }
+
             }
         }
     }

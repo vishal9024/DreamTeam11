@@ -19,8 +19,20 @@ class RecentTransactionChildListAdapter(val mContext: Context, val info: Mutable
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
-            holder.itemView.txt_amount.text = info[position].amount!!
+            holder.itemView.txt_amount.text = ""+info[position].amount!!
             holder.itemView.txtAmountType.text = info[position].txn_type!!
+            holder.itemView.txt_TransID.text = info[position].transaction_id!!
+            holder.itemView.txt_TransDate.text = info[position].txn_date!!
+            holder.itemView.txt_TeamName.text = info[position].team_name!!
+            holder.itemView.txt_info.setOnClickListener(View.OnClickListener {
+                if (holder.itemView.ll_info.visibility==View.GONE)
+                    holder.itemView.ll_info.visibility=View.VISIBLE
+                else holder.itemView.ll_info.visibility=View.GONE
+            })
+
+
+
+
         }catch (e:Exception){
             e.printStackTrace()
         }

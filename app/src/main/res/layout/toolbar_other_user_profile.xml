@@ -12,7 +12,8 @@
             android:id="@+id/toolbar"
             android:layout_height="@dimen/_80sdp"
             android:layout_width="match_parent"
-            android:background="@mipmap/toolbar_background"
+            android:background="@mipmap/profile_banner"
+            app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
         <LinearLayout
                 android:layout_width="match_parent"
@@ -30,7 +31,6 @@
             />
             <LinearLayout
                     android:id="@+id/llToolbarTitle"
-                    android:layout_marginStart="@dimen/_10sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"

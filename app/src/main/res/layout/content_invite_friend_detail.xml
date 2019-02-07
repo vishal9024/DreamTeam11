@@ -15,13 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/_10sdp"
+            android:background="@color/whiteTab"
             android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_label"
                 style="@style/TextStyleNormal"
                 android:textSize="@dimen/_14sdp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColorBlack"
+                android:textColor="@color/textColorLightBlack"
                 android:text="@string/eranings_through_friends"
                 android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
@@ -40,7 +41,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/llEraningFriends"
-            android:background="@color/textColorGray"
+            android:background="@color/GrayColorOTP"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"/>
     <RelativeLayout
@@ -50,6 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/whiteTab"
             android:padding="@dimen/_10sdp"
             android:orientation="horizontal">
         <androidx.appcompat.widget.AppCompatTextView
@@ -57,11 +59,12 @@
                 style="@style/TextStyleNormal"
                 android:textSize="@dimen/_14sdp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColorBlack"
+                android:textColor="@color/textColorLightBlack"
                 android:layout_centerVertical="true"
                 android:text="@string/to_be_earned"
                 android:layout_height="wrap_content"/>
         <ImageView
+                android:id="@+id/imvEarnedInfo"
                 android:layout_width="@dimen/_15sdp"
                 android:layout_height="@dimen/_15sdp"
                 android:layout_toRightOf="@+id/txt_label2"
@@ -84,7 +87,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rlToBeEarn"
-            android:background="@color/textColorGray"
+            android:background="@color/GrayColorOTP"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"/>
     <androidx.cardview.widget.CardView
@@ -95,9 +98,9 @@
             android:id="@+id/card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
-            card_view:cardCornerRadius="@dimen/_6sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            card_view:cardCornerRadius="@dimen/_3sdp"
             card_view:cardElevation="@dimen/_3sdp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true">
@@ -133,8 +136,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_view"
-            android:background="@color/textColorGray"
+            android:background="@color/GrayColorOTP"
             android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/_3sdp"
             android:layout_height="@dimen/_1sdp"/>
     <androidx.cardview.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -142,10 +146,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view2"
             android:id="@+id/card_view2"
-            android:layout_marginLeft="@dimen/_3sdp"
-            android:layout_marginRight="@dimen/_3sdp"
+            android:layout_marginLeft="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            card_view:cardCornerRadius="@dimen/_3sdp"
+            card_view:cardElevation="@dimen/_3sdp"
             card_view:cardPreventCornerOverlap="false"
             card_view:cardUseCompatPadding="true">
         <RelativeLayout

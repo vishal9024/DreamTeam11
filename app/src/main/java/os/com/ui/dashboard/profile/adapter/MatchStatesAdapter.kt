@@ -32,7 +32,7 @@ class MatchStatesAdapter(
                 visitor_team=data[position].visitor_team
             if (data[position].team_count!= null)
                 team_count=data[position].team_count
-            holder.itemView.txt_matchVS.text=local_team+" VS "+visitor_team+"("+team_count+")"
+            holder.itemView.txt_matchVS.text=local_team+" "+mContext.getString(R.string.vs_small)+" "+visitor_team+"("+team_count+")"
 
             if (data[position].points!= null)
                 holder.itemView.txt_points.text = data[position].points

@@ -1,6 +1,7 @@
 package os.com.ui.dashboard
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -16,10 +17,12 @@ import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.firebase.PNModel
 import os.com.ui.dashboard.home.fragment.HomeFragment
 import os.com.ui.dashboard.more.fragment.MoreFragment
 import os.com.ui.dashboard.myContest.fragment.MyContestFragment
 import os.com.ui.dashboard.profile.fragment.ProfileFragment
+import os.com.ui.notification.activity.NotificationActivity
 
 /**
  * Created by heenas on 3/12/2018.
@@ -106,18 +109,46 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
     }
 
     private fun initView() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-        supportActionBar!!.setDisplayShowHomeEnabled(false)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
-        setTitleVisibility(false, true)
-        setMenu(true, false, false, false,false)
+          try{
+              setSupportActionBar(toolbar)
+              supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+              supportActionBar!!.setDisplayShowHomeEnabled(false)
+              supportActionBar!!.setDisplayShowTitleEnabled(false)
+              supportActionBar!!.setHomeAsUpIndicator(R.mipmap.menu)
+              setTitleVisibility(false, true)
+              setMenu(true, false, false, false,false)
+              bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
+              bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+              removeShiftMode(bottomNavigationView)
+              setFragment(HomeFragment(), R.id.container)
+              if (intent.hasExtra("notification_Data")) {
+                  var data = intent.getSerializableExtra("notification_Data" ) as PNModel
+                  if (data!=null)
+                      manageNotification(data)
+              }
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
+    }
 
-        bottomNavigationView!!.setOnNavigationItemSelectedListener(this)
-        bottomNavigationView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
-        removeShiftMode(bottomNavigationView)
-        setFragment(HomeFragment(), R.id.container)
+    private fun manageNotification(data: PNModel) {
+
+//       const val admin = "1" go notification Activity
+//        const val signup = "2"
+//        const val bonus = "3"
+//        const val match_start = "4"
+//        const val match_end = "5"
+//        const val winning_amount = "6"
+          try{
+               if (data!=null){
+                   if (data.type.equals("1")){
+                       Log.e("title: ",data.title)
+                       startActivity(Intent(this@DashBoardActivity, NotificationActivity::class.java))
+                   }
+               }
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
     }
 
 //    fun updateNavigationView() {

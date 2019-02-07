@@ -5,10 +5,7 @@
         android:id="@+id/ll_headerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_3sdp"
         android:backgroundTint="@color/colorContestItemBackground"
-        card_view:cardCornerRadius="@dimen/_3sdp"
-        card_view:cardElevation="@dimen/_3sdp"
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="false">
     <LinearLayout
@@ -18,10 +15,11 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_5sdp">
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
-                          android:layout_margin="@dimen/_2sdp">
+                          android:layout_margin="@dimen/_5sdp">
                 <LinearLayout android:layout_width="0dp"
                               android:layout_weight="1"
                               android:layout_height="match_parent">
@@ -53,14 +51,15 @@
                 <LinearLayout android:layout_width="0dp"
                               android:layout_weight="1"
                               android:layout_height="match_parent"
-                              android:gravity="center">
+                              android:gravity="center"
+                android:padding="@dimen/_5sdp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvTeamName"
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
-                            android:padding="@dimen/_5sdp"
+                            android:padding="@dimen/_3sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_width="wrap_content"
                             android:text="SYS vs DHD"
@@ -74,7 +73,7 @@
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
-                            android:padding="@dimen/_5sdp"
+                            android:padding="@dimen/_3sdp"
                             android:textSize="@dimen/_10sdp"
                             android:layout_width="wrap_content"
                             android:text="Jan 18,2019"
@@ -101,7 +100,8 @@
         </LinearLayout>
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:layout_margin="@dimen/_10sdp">
+                      android:background="@color/whiteTab"
+                      android:padding="@dimen/_10sdp">
             <LinearLayout android:layout_width="0dp"
                           android:layout_weight="1"
                           android:layout_height="wrap_content"
@@ -138,8 +138,8 @@
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleSemiBold"
                             android:gravity="start"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:textSize="@dimen/_14sdp"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:textSize="@dimen/_16sdp"
                             android:layout_width="wrap_content"
                             android:text="181"
                             android:textColor="@color/textColorBlack"
@@ -148,7 +148,7 @@
                             android:layout_gravity="bottom"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
-                            android:paddingLeft="@dimen/_2sdp"
+                            android:paddingLeft="@dimen/_5sdp"
                             android:textSize="@dimen/_11sdp"
                             android:layout_width="wrap_content"
                             android:text="@string/small_points"
@@ -164,7 +164,7 @@
                         android:textSize="@dimen/_11sdp"
                         android:layout_width="wrap_content"
                         android:text="Team1"
-                        android:textColor="@color/textColorBlack"
+                        android:textColor="@color/textColorLightBlack"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
             <View android:layout_width="@dimen/_1sdp"
@@ -205,8 +205,8 @@
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleSemiBold"
                             android:gravity="start"
-                            android:paddingLeft="@dimen/_10sdp"
-                            android:textSize="@dimen/_14sdp"
+                            android:paddingLeft="@dimen/_5sdp"
+                            android:textSize="@dimen/_16sdp"
                             android:layout_width="wrap_content"
                             android:text="276.25"
                             android:textColor="@color/textColorBlack"
@@ -215,7 +215,7 @@
                             android:layout_gravity="bottom"
                             style="@style/TextStyleMedium"
                             android:gravity="start"
-                            android:paddingLeft="@dimen/_2sdp"
+                            android:paddingLeft="@dimen/_5sdp"
                             android:textSize="@dimen/_11sdp"
                             android:layout_width="wrap_content"
                             android:text="@string/small_points"
@@ -231,7 +231,7 @@
                         android:textSize="@dimen/_11sdp"
                         android:layout_width="wrap_content"
                         android:text="Team 1"
-                        android:textColor="@color/textColorBlack"
+                        android:textColor="@color/textColorLightBlack"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>

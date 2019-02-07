@@ -117,6 +117,7 @@
 
                             </LinearLayout>
                             <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/imvDepositedInfo"
                                     android:layout_gravity="center" android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:srcCompat="@mipmap/info"
@@ -173,6 +174,7 @@
                                     android:text="@string/withdraw"
                                     android:layout_height="@dimen/_21sdp"/>
                             <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/imvWinningInfo"
                                     android:layout_marginStart="@dimen/_5sdp"
                                     android:layout_gravity="center" android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -219,6 +221,7 @@
 
                             </LinearLayout>
                             <androidx.appcompat.widget.AppCompatImageView
+                                    android:id="@+id/imvBonusInfo"
                                     android:layout_gravity="center"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"

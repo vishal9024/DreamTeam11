@@ -3,6 +3,7 @@ package os.com.ui.dashboard.profile.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.activity_my_account.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,27 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
                           startActivity(Intent(this, WithdrawCashActivity::class.java))
                       }
                   }
+                  R.id.imvBonusInfo -> {
+                      SimpleTooltip.Builder(this)
+                          .anchorView(view)
+                          .text(resources.getString(R.string.bonus_info_text))
+                          .build()
+                          .show()
+                  }
+                  R.id.imvWinningInfo -> {
+                      SimpleTooltip.Builder(this)
+                          .anchorView(view)
+                          .text(resources.getString(R.string.winning_info_text))
+                          .build()
+                          .show()
+                  }
+                  R.id.imvDepositedInfo -> {
+                      SimpleTooltip.Builder(this)
+                          .anchorView(view)
+                          .text(resources.getString(R.string.deposited_info_text))
+                          .build()
+                          .show()
+                  }
               }
               } catch (e: Exception) {
                       e.printStackTrace()
@@ -62,6 +84,9 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
             txtRecTransaction.setOnClickListener(this)
         cv_payments.setOnClickListener(this)
             txt_Withdraw.setOnClickListener(this)
+            imvBonusInfo.setOnClickListener(this)
+            imvWinningInfo.setOnClickListener(this)
+            imvDepositedInfo.setOnClickListener(this)
             my_account_call()
         } catch (e: Exception) {
             e.printStackTrace()

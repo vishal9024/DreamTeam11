@@ -12,8 +12,18 @@
     <color name="greenlightText">#6bb76b</color>
     <color name="yellow">#ead303</color>
     <color name="dark_yellow">#FF9800</color>
+    <color name="orange">#F59A23</color>F59A23
     <color name="captainColor">#CA2B30</color>
     <color name="vicecaptainColor">#F57E23</color>
+    <color name="light_pink">#FEF8ED</color>
     <color name="whiteTab">#ffffff</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="profile_bg_color">#99211b3c</color>
+    <color name="lightWhite">#FFFAFAFA</color>
+
+
+    <color name="simpletooltip_background">@color/colorASPrimary</color>
+    <color name="simpletooltip_text">@color/whiteTab</color>
+    <color name="simpletooltip_arrow">@color/colorASPrimary</color>
+
 </resources>

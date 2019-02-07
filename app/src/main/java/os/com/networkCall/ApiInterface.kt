@@ -221,6 +221,11 @@ interface ApiInterface {
     @POST(ApiConstant.bank_details)
     fun bank_details(@Body request: Map<String, String>): Deferred<BankDetailResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.add_withdraw_request)
+    fun add_withdraw_request(@Body request: Map<String, String>): Deferred<BankDetailResponse>
+
+
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.withdraw_cash)

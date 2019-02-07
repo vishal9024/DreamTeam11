@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_invite_friend_detail.*
 import os.com.AppBase.BaseActivity
@@ -21,6 +22,13 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
 //                intent.putExtra("URL", ApiConstant.getWebViewUrl()+ ApiConstant.how_it_works_tab)
 //                startActivity(intent)
 //            }
+            R.id.imvEarnedInfo -> {
+                SimpleTooltip.Builder(this)
+                    .anchorView(view)
+                    .text(resources.getString(R.string.earned_info_text))
+                    .build()
+                    .show()
+            }
         }
     }
 
@@ -33,17 +41,23 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
     private var mData: InviteFreindDetailResponse.ResponseBean.DataBean? = null
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.invited_friends)
-        setMenu(false, false, false, false, false)
-        if (intent.hasExtra("data"))
-            mData = intent.getSerializableExtra("data") as InviteFreindDetailResponse.ResponseBean.DataBean?
-        if (mData != null) {
-            setData(mData)
-        }
+          try{
+
+              setSupportActionBar(toolbar)
+              supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+              supportActionBar!!.setDisplayShowHomeEnabled(true)
+              supportActionBar!!.setDisplayShowTitleEnabled(false)
+              toolbarTitleTv.setText(R.string.invited_friends)
+              setMenu(false, false, false, false, false)
+              imvEarnedInfo.setOnClickListener(this)
+              if (intent.hasExtra("data"))
+                  mData = intent.getSerializableExtra("data") as InviteFreindDetailResponse.ResponseBean.DataBean?
+              if (mData != null) {
+                  setData(mData)
+              }
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
     }
 
     private fun setData(data: InviteFreindDetailResponse.ResponseBean.DataBean?) {

@@ -50,13 +50,23 @@ object ApiConstant {
     }
 
 
-    const val index = "pages/index.html"
-    const val point_system = "pages/point_system.html"
-    const val static = "pages/static.html"
-    const val static_tab = "pages/static_tab.html"
-    const val how_to_play_tab = "pages/how_to_play.html"
-    const val how_it_works_tab = "pages/invite-friends-how-it-works.html"
-    const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
+//    const val index = "pages/index.html"
+//    const val point_system = "pages/point_system.html"
+//    const val static = "pages/static.html"
+//    const val static_tab = "pages/static_tab.html"
+//    const val how_to_play_tab = "pages/how_to_play.html"
+//    const val how_it_works_tab = "pages/invite-friends-how-it-works.html"
+//    const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
+//    const val legality_tab = "pages/legality.html"
+//    const val dream11_champions = "pages/dream11_champions"
+
+    const val help = "pages/help.html"
+    const val point_system = "pages/point-system.html"
+    const val static = "pages/about_us.html"
+    const val static_tab = "pages/static-tab.html"
+    const val how_to_play_tab = "pages/how-to-play.html"
+    const val how_it_works_tab = "pages/how-it-works.html"
+    const val how_fair_play_tab = "pages/fair-play.html"
     const val legality_tab = "pages/legality.html"
     const val dream11_champions = "pages/dream11_champions"
 
@@ -114,4 +124,5 @@ object ApiConstant {
     const val user_account_datail = "user-account-datail"
     const val entryPerTeam = "entryPerTeam"
     const val contest_prize_breakup = "contest-prize-breakup"
+    const val add_withdraw_request = "add-withdraw-request"
 }

@@ -119,11 +119,15 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
           try{
               if (data!=null){
                   mData=data
-                  card_view_bottom.visibility=View.VISIBLE
-
                   if (data.total_fields!=null)
-                      if (data.total_fields>0)
-                          txtFriendsCount.text=""+data.total_fields+" Freinds Joined"
+                      if (data.total_fields>0) {
+                          txtFriendsCount.text = "" + data.total_fields + " Freinds Joined"
+                          llInvited.visibility=View.VISIBLE
+                          txtNotInviteFriend.visibility=View.GONE
+                      }else{
+                          llInvited.visibility=View.GONE
+                          txtNotInviteFriend.visibility=View.VISIBLE
+                      }
                   if (data.to_be_earnd!=null)
                       txtEranAmount.text="₹ "+data.to_be_earnd
               } else

@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:id="@+id/ll_main"
-        android:background="@color/colorItemBackgroundGray"
+        android:background="@color/GrayColorOTP"
         android:orientation="vertical"
         android:layout_height="wrap_content">
     <LinearLayout
@@ -15,14 +15,14 @@
                 android:paddingTop="@dimen/_6sdp"
                 android:paddingBottom="@dimen/_6sdp"
                 android:orientation="horizontal"
-                android:background="@color/colorItemBackgroundGray"
+                android:background="@color/colorBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtdate"
                     style="@style/TextStyleSemiBold"
                     android:gravity="start"
-                    android:textSize="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:paddingStart="@dimen/_8sdp"
