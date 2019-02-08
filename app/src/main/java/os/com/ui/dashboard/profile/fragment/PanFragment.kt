@@ -52,12 +52,10 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             dobCalendar.set(Calendar.YEAR, year)
             dobCalendar.set(Calendar.MONTH, monthOfYear)
             dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            edtDateOfBirth.setText("" +dayOfMonth+ "-" + monthOfYear + 1 + "-" + year);
+            edtDateOfBirth.setText("" +dayOfMonth+ "-" + monthOfYear + 1 + "-" + year)
 //            dob = state.toString() + "-" + Util.setZeroBeforeNine(monthOfYear + 1) + "-" +
 //                    Util.setZeroBeforeNine(dayOfMonth)
-
         }
-
 
     override fun onClick(p0: View?) {
       when(p0!!.id){
@@ -97,7 +95,6 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                   )
                   fromDateDialog.datePicker.maxDate = System.currentTimeMillis() - 1000
                   fromDateDialog.show()
-
           }
       }
     }
@@ -128,7 +125,6 @@ class PanFragment : BaseFragment(), View.OnClickListener{
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun withdraw_cash() {
@@ -168,7 +164,6 @@ class PanFragment : BaseFragment(), View.OnClickListener{
         }
     }
 
-
     private var stateList = ArrayList<String>()
     private var state = ""
 
@@ -196,7 +191,6 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             e.printStackTrace()
         }
     }
-
 
     private fun verify_pan_details(pan_name: String,pan_number: String,aadhar_card: String,dob: String) {
         try {
@@ -243,6 +237,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             e.printStackTrace()
         }
     }
+
     private fun prepareFilePart(partName: String, fileUri: Uri?): MultipartBody.Part? {
         if (fileUri != null) {
             val file = File(fileUri.path)
@@ -251,6 +246,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
         }
         return null
     }
+
     private fun selectImage() {
         val items = arrayOf<CharSequence>(getString(R.string.take_photo), getString(R.string.from_gallery), getString(R.string.cancel))
         val builder = AlertDialog.Builder(activity!!)

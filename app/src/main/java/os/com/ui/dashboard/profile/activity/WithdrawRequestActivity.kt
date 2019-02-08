@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_notifications.*
 import kotlinx.android.synthetic.main.activity_withraw_request.*
-import kotlinx.android.synthetic.main.content_signup.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
