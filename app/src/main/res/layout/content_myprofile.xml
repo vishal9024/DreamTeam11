@@ -356,6 +356,7 @@
                         android:padding="@dimen/_7sdp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                     <com.google.android.material.textfield.TextInputLayout
                             app:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
@@ -370,12 +371,14 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/enter_coupon_code"
+                                android:digits="0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZzÁáÂâÃãÀàÇçÉéÊêÍíÓóÔôÕõÚú"
+                                android:singleLine="true"
                                 android:inputType="textEmailAddress"
                                 android:imeOptions="actionDone"
                                 android:textSize="@dimen/_12sdp"/>
                     </com.google.android.material.textfield.TextInputLayout>
-                    <androidx.appcompat.widget.AppCompatButton
 
+                    <androidx.appcompat.widget.AppCompatButton
                             card_view:layout_constraintEnd_toEndOf="parent"
                             android:id="@+id/txt_ApplyCode"
                             style="@style/ButtonStyle"
@@ -387,6 +390,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:text="@string/apply_code"
                             android:layout_height="@dimen/_25sdp"/>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </androidx.cardview.widget.CardView>

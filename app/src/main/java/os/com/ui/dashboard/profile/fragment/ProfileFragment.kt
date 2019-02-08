@@ -163,11 +163,11 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 R.id.imvOfferInfo -> {
                     SimpleTooltip.Builder(context)
                         .anchorView(view)
+                        .margin(10f)
                         .text(context!!.resources.getString(R.string.offer_info_text))
                         .build()
                         .show()
                 }
-
             }
         } catch (e: Exception) {
             e.printStackTrace()

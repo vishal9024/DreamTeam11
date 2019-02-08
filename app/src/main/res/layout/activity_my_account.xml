@@ -118,7 +118,8 @@
                             </LinearLayout>
                             <androidx.appcompat.widget.AppCompatImageView
                                     android:id="@+id/imvDepositedInfo"
-                                    android:layout_gravity="center" android:layout_width="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     app:srcCompat="@mipmap/info"
                                     android:tint="@color/colorSecondary"/>
@@ -238,6 +239,7 @@
                       android:visibility="gone"
                       android:background="@color/GrayColorOTP"/>
                 <LinearLayout
+                        android:id="@+id/llKnowMore"
                         android:background="@drawable/button_rounded_background_white_green"
                         android:layout_margin="@dimen/_5sdp"
                         android:orientation="horizontal"
@@ -263,6 +265,7 @@
                                 android:textColor="@color/textColorGray"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtKnowMore"
                                 android:layout_gravity="center_horizontal"
                                 style="@style/TextStyleNormal"
                                 android:paddingTop="@dimen/_1sdp"
@@ -274,6 +277,7 @@
                                 android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imvCross"
                             android:padding="@dimen/_5sdp"
                             android:layout_gravity="center"
                             android:src="@mipmap/close"

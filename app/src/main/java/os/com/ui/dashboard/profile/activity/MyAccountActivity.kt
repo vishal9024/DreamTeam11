@@ -14,6 +14,8 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
+import os.com.networkCall.ApiConstant
+import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.utils.AppDelegate
 import java.util.*
 
@@ -58,6 +60,18 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
                           .build()
                           .show()
                   }
+                  R.id.imvCross -> {
+                      llKnowMore.visibility=View.GONE
+                  }
+                  R.id.txtKnowMore -> {
+                      val intent = Intent(this, WebViewActivity::class.java)
+                      intent.putExtra(
+                          "PAGE_SLUG",
+                          "Staggered Cashbonus"
+                      )
+                      intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.dream11_champions)
+                      startActivity(intent)
+                  }
               }
               } catch (e: Exception) {
                       e.printStackTrace()
@@ -87,6 +101,8 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
             imvBonusInfo.setOnClickListener(this)
             imvWinningInfo.setOnClickListener(this)
             imvDepositedInfo.setOnClickListener(this)
+            txtKnowMore.setOnClickListener(this)
+            imvCross.setOnClickListener(this)
             my_account_call()
         } catch (e: Exception) {
             e.printStackTrace()
