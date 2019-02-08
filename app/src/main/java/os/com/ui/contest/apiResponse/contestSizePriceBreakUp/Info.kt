@@ -4,8 +4,8 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class Info() : Parcelable {
-    var rank_size :String?=StringUtils.toNull("")
-    var percent:String?=StringUtils.toNull("")
+    var rank_size :String?=null
+    var percent:String?=null
 
     constructor(parcel: Parcel) : this() {
         rank_size = parcel.readString()

@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
-import os.com.channel.NotificationCountChannel
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.notification.adapter.NotificationAdapter
@@ -73,12 +72,12 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@NotificationActivity)
                 if (response.response!!.status) {
                     setAdapter(response.response!!.data)
-                    if (!response.response!!.data!!.isEmpty())
-                        NotificationCountChannel.getInstance()
-                            .notificationCountChannel.send(response.response!!.data!!.size)
-                    else
-                        NotificationCountChannel.getInstance()
-                            .notificationCountChannel.send(151)
+//                    if (!response.response!!.data!!.isEmpty())
+//                        NotificationCountChannel.getInstance()
+//                            .notificationCountChannel.send(response.response!!.data!!.size)
+//                    else
+//                        NotificationCountChannel.getInstance()
+//                            .notificationCountChannel.send(151)
                 } else {
                     AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
                 }

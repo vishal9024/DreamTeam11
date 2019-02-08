@@ -436,7 +436,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
             updateTransactionRequest.txn_date =
                     cal.time.toString()/*AppDelegate.convertTimestampToDate(System.currentTimeMillis())*/
             /*   DateFormat.getDateTimeInstance().format(Date());*/
-            updateTransactionRequest.txn_amount = options!!.getString("amount")
+            updateTransactionRequest.txn_amount = et_addCash.text.toString()
             updateTransactionRequest.currency = options!!.getString("currency")
             updateTransactionRequest.gateway_name = "Razorpay"
             updateTransactionRequest.checksum = getRendomChecksum()

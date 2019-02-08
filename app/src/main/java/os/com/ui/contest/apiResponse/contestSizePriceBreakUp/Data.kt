@@ -17,7 +17,7 @@ class Data() : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(title)
         parcel.writeByte(if (isSelected) 1 else 0)
-        info=parcel.createTypedArrayList(Info)
+        parcel.writeTypedList(info)
     }
 
     override fun describeContents(): Int {

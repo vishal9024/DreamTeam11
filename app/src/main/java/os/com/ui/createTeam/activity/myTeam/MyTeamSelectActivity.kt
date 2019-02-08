@@ -43,7 +43,14 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
 
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
         when (FOR) {
-            AppRequestCodes.JOIN or AppRequestCodes.CREATE_CONTEST-> {
+            AppRequestCodes.JOIN  -> {
+                for (i in data.indices) {
+                    data[i].isSelected = false
+                }
+                data[position].isSelected = true
+                team_id = data[position].teamid
+            }
+            AppRequestCodes.CREATE_CONTEST  -> {
                 for (i in data.indices) {
                     data[i].isSelected = false
                 }

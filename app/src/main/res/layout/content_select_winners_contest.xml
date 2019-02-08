@@ -48,13 +48,12 @@
             android:id="@+id/ll_headerView"
             card_view:layout_constraintTop_toBottomOf="@+id/ll_match"
             android:layout_width="match_parent"
-            android:paddingBottom="@dimen/_8sdp"
             android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-               >
+        >
             <androidx.cardview.widget.CardView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -246,6 +245,7 @@
             app:layout_constraintTop_toBottomOf="@id/ll_headerView"
             app:layout_constraintBottom_toTopOf="@+id/btn_CreateSelectContest"
             android:id="@+id/rv_rank"
+            android:layout_margin="@dimen/_10sdp"
             android:layout_width="match_parent"
             tools:listitem="@layout/item_winners_list"
             android:layout_height="0dp">

@@ -517,7 +517,7 @@
     <string name="enter_bank_branch">Please enter Branch Name to proceed.</string>
     <string name="min_200_max_2_00_000_allowed_per_day">min. <b>\u20B9 200</b> and max <b>\u20B9 2,00,000</b> allowed per day</string>
     <string name="entryFeeValidation">Entry Fee cannot be less than Rs. 5</string>
-    <string name="choose_total_winners">CHOOSE TOTAL WINNERS</string>
+    <string name="choose_total_winners">Choose Total Winners</string>
     <string name="recommended">(Recommended)</string>
 
     <string name="select_series">Select Series</string>
@@ -534,4 +534,5 @@
     <string name="winning_info_text">Money that you can withdraw or re-use to join any contests</string>
     <string name="bonus_info_text">Money that can you use to join any public contes</string>
     <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for the matches your friendshave jioned cash contest in.</string>
+    <string name="choose_winning_breakup">Choose Winning BreakUp</string>
 </resources>

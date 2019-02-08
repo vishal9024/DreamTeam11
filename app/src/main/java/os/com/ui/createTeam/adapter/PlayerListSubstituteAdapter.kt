@@ -1,7 +1,6 @@
 package os.com.ui.createTeam.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.interfaces.SelectPlayerInterface
-import os.com.ui.createTeam.activity.PlayerDetailActivity
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 
@@ -104,7 +102,7 @@ class PlayerListSubstituteAdapter(
                     onClickRecyclerView.onClickItem(5, holder.adapterPosition, true)
         }
         holder.itemView.cimg_player.setOnClickListener {
-            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+//            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
         holder.itemView.ll_main.alpha = 1.0f
         if (playerList!![position].isSubstitute)

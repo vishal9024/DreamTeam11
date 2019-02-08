@@ -49,5 +49,6 @@ object AppRequestCodes {
     const val CAMERA_REQUEST_CODE = 18
     const val GALARY_REQUEST_CODE = 19
     const val CREATE_CONTEST = 21
+    const val ADD_CASH_CONTEST =22
 
 }

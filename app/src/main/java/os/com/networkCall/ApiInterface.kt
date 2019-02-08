@@ -253,7 +253,7 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.create_contest)
-    fun create_contest(@Body request: Map<String, String>): Deferred<JoinContestResponse>
+    fun create_contest(@Body request: Map<String, String>): Deferred<EntryFeeResponse>
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_price_breakup)

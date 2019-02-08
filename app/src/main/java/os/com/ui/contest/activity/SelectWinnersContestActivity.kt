@@ -84,6 +84,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                     val bundle = Bundle()
                     bundle.putParcelableArrayList(Tags.DATA, priceBreakUpList)
                     bundle.putString(IntentConstant.WINNING_AMOUNT, winning_amount)
+                    bottomSheetDialogFragment.arguments = bundle
                     bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
                 }
             }
@@ -122,11 +123,15 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                                 Toast.LENGTH_LONG
                             ).show()
                 }
-            } else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_OK)
+            } else if (requestCode == AppRequestCodes.ADD_CASH_CONTEST && resultCode == Activity.RESULT_OK)
                 checkAmountWallet()
-            else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED) {
+            else if (requestCode == AppRequestCodes.ADD_CASH_CONTEST && resultCode == Activity.RESULT_CANCELED) {
                 val intent = Intent()
                 setResult(Activity.RESULT_CANCELED, intent)
+                finish()
+            }else if (requestCode == AppRequestCodes.INVITE_CONTEST && resultCode == Activity.RESULT_OK) {
+                val intent = Intent()
+                setResult(Activity.RESULT_OK, intent)
                 finish()
             }
         }
@@ -152,11 +157,9 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@SelectWinnersContestActivity)
                 if (response.response!!.status) {
-                    var entryFee = 0f
+                    var entryFee =entry_fee.toFloat()
                     var bonus = 0f
                     var toPay = 0f
-                    if (!response.response!!.data!!.entry_fee.isEmpty())
-                        entryFee = response.response!!.data!!.entry_fee.toFloat()
                     if (!response.response!!.data!!.usable_bonus.isEmpty())
                         bonus = response.response!!.data!!.usable_bonus.toFloat() +
                                 response.response!!.data!!.winning_balance.toFloat() +
@@ -191,15 +194,13 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
         dialogue.setTitle(null)
         var cash = 0f
         var winning = 0f
-        var entryFee = 0f
+        var entryFee = entry_fee.toFloat()
         var bonus = 0f
         var toPay = 0f
         if (!data.cash_balance.isEmpty())
             cash = data.cash_balance.toFloat()
         if (!data.winning_balance.isEmpty())
             winning = data.winning_balance.toFloat()
-        if (!data.entry_fee.isEmpty())
-            entryFee = data.entry_fee.toFloat()
         if (!data.usable_bonus.isEmpty())
             bonus = data.usable_bonus.toFloat() + data!!.winning_balance.toFloat() + data!!.cash_balance.toFloat()
 
@@ -256,10 +257,13 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@SelectWinnersContestActivity)
                 if (response.response!!.status) {
-                    AppDelegate.showToast(this@SelectWinnersContestActivity, response.response!!.message)
-                    val intent = Intent()
-                    setResult(Activity.RESULT_OK, intent)
-                    finish()
+                    startActivityForResult(
+                        Intent(this@SelectWinnersContestActivity, InviteContestToFriendsActivity::class.java)
+                            .putExtra(IntentConstant.MATCH, match)
+                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                            .putExtra(IntentConstant.CONTEST_CODE, response.response!!.data!!.invite_code)
+                        , AppRequestCodes.INVITE_CONTEST
+                    )
                 } else {
                     AppDelegate.showToast(this@SelectWinnersContestActivity, response.response!!.message)
                 }
@@ -287,7 +291,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                     bonus.toString()
                 ).putExtra(IntentConstant.AddType, IntentConstant.TO_JOIN)
                     .putExtra(IntentConstant.AMOUNT_TO_ADD, toPay.roundToInt().toString()),
-                AppRequestCodes.ADD_CASH
+                AppRequestCodes.ADD_CASH_CONTEST
             )
         }
         logoutAlertDialog.setButton(
@@ -332,27 +336,19 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
     var priceBreakUpList: ArrayList<Data> = ArrayList()
     private fun getIntentData() {
         if (intent != null) {
-//           createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE_CONTEST)
-            if (intent.hasExtra(IntentConstant.CONTEST_TYPE))
+            createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE_CONTEST)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-            if (intent.hasExtra(IntentConstant.CONTEST_SIZE))
             contest_size = intent.getStringExtra(IntentConstant.CONTEST_SIZE)
-            if (intent.hasExtra(IntentConstant.WINNING_AMOUNT))
             winning_amount = intent.getStringExtra(IntentConstant.WINNING_AMOUNT)
-            if (intent.hasExtra(IntentConstant.TEAM_NAME))
             team_name = intent.getStringExtra(IntentConstant.TEAM_NAME)
-            if (intent.hasExtra(IntentConstant.ENTRY_FEE))
             entry_fee = intent.getStringExtra(IntentConstant.ENTRY_FEE)
-            if (intent.hasExtra(IntentConstant.ALLOW_MULTIPLE_TEAMS))
             allow_multiple_teams = intent.getBooleanExtra(IntentConstant.ALLOW_MULTIPLE_TEAMS, false)
-            if (intent.hasExtra(IntentConstant.DATA))
             priceBreakUpList = intent.getParcelableArrayListExtra(IntentConstant.DATA)
-            if (intent.hasExtra(IntentConstant.MATCH))
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             if (!team_name.isEmpty()) {
-                toolbarTitleTv.setText(team_name)
+                toolbarTitleTv.text = team_name
             } else {
-                toolbarTitleTv.setText("MY NEW CONTEST")
+                toolbarTitleTv.text = "My New Contest"
             }
             var localTeamName = match!!.local_team_name
             var visitorTeamName = match!!.visitor_team_name
@@ -360,7 +356,6 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 localTeamName = match!!.local_team_name.substring(0, 4)
             if (match!!.visitor_team_name.length > 5)
                 visitorTeamName = match!!.visitor_team_name.substring(0, 4)
-
             txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
             if (matchType == IntentConstant.FIXTURE) {
                 if (!match!!.star_date.isEmpty()) {
@@ -373,8 +368,8 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
             txt_TotalWinnings.setText(contest_size)
-            txt_Winners.text = winning_amount
-            txt_EntryFees.text = entry_fee
+            txt_Winners.text = getString(R.string.Rs)+" "+winning_amount
+            txt_EntryFees.text = getString(R.string.Rs)+" "+entry_fee
             txt_winners.text = priceBreakUpList!![0].title + " " + getString(R.string.recommended)
             winnerListAdapter!!.infoList(priceBreakUpList[0].info!!, winning_amount)
             winnerListAdapter!!.notifyDataSetChanged()
@@ -407,7 +402,6 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                     when (newState) {
                     }
                 }
-
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
         } catch (e: Exception) {

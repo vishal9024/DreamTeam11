@@ -24,8 +24,8 @@ class BottomSheetWinnerRankListAdapter(val mContext: Context) :
         try {
             val calculatePercentageAmount = (info[position].percent!!.toFloat() * winning_amount.toFloat()) / 100
             holder.itemView.txt_rank.text = info[position].rank_size
-            holder.itemView.txt_percent.text = info[position].percent
-            holder.itemView.txt_amount.text = calculatePercentageAmount.toString()
+            holder.itemView.txt_percent.text = info[position].percent +" %"
+            holder.itemView.txt_amount.text = mContext.getString(R.string.Rs)+" "+calculatePercentageAmount.toString()
 
         } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))

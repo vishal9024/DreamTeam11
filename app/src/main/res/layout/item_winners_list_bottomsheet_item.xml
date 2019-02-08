@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:id="@+id/ll_main"
         android:background="@color/white"
-        android:padding="@dimen/_2sdp"
+        android:padding="@dimen/_5sdp"
         android:orientation="vertical"
         android:layout_height="wrap_content">
     <LinearLayout android:layout_width="match_parent"
@@ -24,7 +24,7 @@
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_percent"
                 style="@style/TextStyleSemiBold"
-                android:gravity="center"
+                android:gravity="right"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
@@ -35,13 +35,15 @@
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txt_amount"
-                style="@style/TextStyleSemiBold"
-                android:gravity="center"
+                style="@style/TextStyleMedium"
+                android:gravity="right"
+                android:layout_weight="0.2"
+
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_5sdp"
                 android:textSize="@dimen/_11sdp"
                 android:layout_width="wrap_content"
-                android:textColor="@color/textColorBlack"
+                android:textColor="@color/textColorLightBlack"
                 android:text="@string/Rs20"
                 android:layout_height="match_parent"/>
     </LinearLayout>

@@ -5,5 +5,5 @@
         android:background="@drawable/bg"
         android:layout_height="match_parent">
     <include layout="@layout/app_toolbar"/>
-    <include layout="@layout/content_invite_friends"/>
+    <include layout="@layout/content_invite_contset_friends"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

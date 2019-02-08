@@ -48,7 +48,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         try {
             when (view!!.id) {
                 R.id.btn_CreateContest -> {
-                    if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toInt() == 2 || et_winning_amount.text.toString().toInt()==0) {
+                    if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toInt() == 2 || et_winning_amount.text.toString().toInt() == 0) {
                         if (FantasyApplication.getInstance().teamCount > 0) {
                             startActivityForResult(
                                 Intent(this, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match)
@@ -86,7 +86,6 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_size] = et_contest_size.text.toString()
-
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@CreateContestActivity)
             try {
@@ -107,16 +106,18 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun sendIntent(data: ArrayList<Data>?) {
-        startActivityForResult(Intent(this, SelectWinnersContestActivity::class.java)
+
+        startActivityForResult(
+            Intent(this, SelectWinnersContestActivity::class.java)
                 .putExtra(IntentConstant.MATCH, match)
                 .putExtra(IntentConstant.CONTEST_TYPE, matchType)
                 .putExtra(IntentConstant.CONTEST_SIZE, et_contest_size.text.toString())
                 .putExtra(IntentConstant.WINNING_AMOUNT, et_winning_amount.text.toString())
-//                .putExtra(IntentConstant.ALLOW_MULTIPLE_TEAMS, switch_multipleTeam.isChecked)
+                .putExtra(IntentConstant.ALLOW_MULTIPLE_TEAMS, switch_multipleTeam.isChecked)
                 .putExtra(IntentConstant.TEAM_NAME, et_contestName.text.toString())
                 .putExtra(IntentConstant.ENTRY_FEE, entryFee)
-                .putParcelableArrayListExtra(IntentConstant.DATA,data),
-            AppRequestCodes.CREATE_CONTEST
+                .putParcelableArrayListExtra(IntentConstant.DATA, data)
+            , AppRequestCodes.INVITE_CONTEST
         )
     }
 
@@ -189,15 +190,21 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun checkCall() {
+        btn_CreateContest.text = getString(R.string.create_contest)
         if (!et_winning_amount.text.toString().isEmpty() && !et_contest_size.text.toString().isEmpty()) {
-            if (/*et_winning_amount.text.toString().toInt() >= 5 &&*/ et_contest_size.text.toString().toInt() >= 2) {
+            if (et_winning_amount.text.toString().toInt() == 0 && et_contest_size.text.toString().toInt() >= 2) {
+                txt_EntryFeeAmount.text = getString(R.string.Rs) + " " +
+                        String.format("%.2f", 0.00)
+                entryFee = String.format("%.2f", 0.00)
+                btn_CreateContest.isEnabled = true
+            } else if (et_contest_size.text.toString().toInt() >= 2) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    delay(100)
+                    delay(300)
                     callEntryFeeApi()
                 }
             } else {
                 if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toInt() < 2)
-                    AppDelegate.showSnackBar(toolbar, this@CreateContestActivity, "Contest size should not less than 2")
+                    showToolbar("Contest size should not less than 2")
                 entryFee = ""
                 txt_EntryFeeAmount.text = "-"
                 btn_CreateContest.isEnabled = false
@@ -231,9 +238,11 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                     if (!response.response!!.data!!.entry_fee!!.isEmpty()) {
                         if (response.response!!.data!!.entry_fee!!.toFloat() >= 5) {
                             txt_EntryFeeAmount.text = getString(R.string.Rs) + " " +
-                                    String.format("%.2f",response.response!!.data!!.entry_fee!!.toFloat())
-                            entryFee =String.format("%.2f",response.response!!.data!!.entry_fee!!.toFloat())
+                                    String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
+                            entryFee = String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
                             btn_CreateContest.isEnabled = true
+                            if (et_contest_size.text.toString().toInt() != 2)
+                                btn_CreateContest.text = getString(R.string.choose_winning_breakup)
                         } else {
                             entryFee = ""
                             txt_EntryFeeAmount.text = "-"
@@ -260,7 +269,8 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
             }
         }
     }
-fun showToolbar(msg:String){
+
+    fun showToolbar(msg: String) {
         val snack = Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG)
         val view = snack.getView()
         view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
@@ -273,27 +283,29 @@ fun showToolbar(msg:String){
     var team_id = ""
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == AppRequestCodes.CREATE_CONTEST) {
-                if (data != null) {
-                    team_id = data.getStringExtra(IntentConstant.TEAM_ID)
-                    if (!team_id.isEmpty())
-                        if (NetworkUtils.isConnected()) {
-                            checkAmountWallet()
-                        } else
-                            Toast.makeText(
-                                this,
-                                getString(R.string.error_network_connection),
-                                Toast.LENGTH_LONG
-                            ).show()
-                }
-            } else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_OK)
-                checkAmountWallet()
-            else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED) {
-                val intent = Intent()
-                setResult(Activity.RESULT_CANCELED, intent)
-                finish()
+        if (requestCode == AppRequestCodes.CREATE_CONTEST && (resultCode == Activity.RESULT_OK)) {
+            if (data != null) {
+                team_id = data.getStringExtra(IntentConstant.TEAM_ID)
+                if (!team_id.isEmpty())
+                    if (NetworkUtils.isConnected()) {
+                        checkAmountWallet()
+                    } else
+                        Toast.makeText(
+                            this,
+                            getString(R.string.error_network_connection),
+                            Toast.LENGTH_LONG
+                        ).show()
             }
+        } else if (requestCode == AppRequestCodes.ADD_CASH_CONTEST && resultCode == Activity.RESULT_OK)
+            checkAmountWallet()
+        else if (requestCode == AppRequestCodes.ADD_CASH_CONTEST && resultCode == Activity.RESULT_CANCELED) {
+            val intent = Intent()
+            setResult(Activity.RESULT_CANCELED, intent)
+            finish()
+        } else if (requestCode == AppRequestCodes.INVITE_CONTEST && resultCode == Activity.RESULT_OK) {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
         }
     }
 
@@ -417,10 +429,13 @@ fun showToolbar(msg:String){
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@CreateContestActivity)
                 if (response.response!!.status) {
-                    AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
-                    val intent = Intent()
-                    setResult(Activity.RESULT_OK, intent)
-                    finish()
+                    startActivityForResult(
+                        Intent(this@CreateContestActivity, InviteContestToFriendsActivity::class.java)
+                            .putExtra(IntentConstant.MATCH, match)
+                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                            .putExtra(IntentConstant.CONTEST_CODE, response.response!!.data!!.invite_code)
+                        , AppRequestCodes.INVITE_CONTEST
+                    )
                 } else {
                     AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
                 }
@@ -447,7 +462,7 @@ fun showToolbar(msg:String){
                     bonus.toString()
                 ).putExtra(IntentConstant.AddType, IntentConstant.TO_JOIN)
                     .putExtra(IntentConstant.AMOUNT_TO_ADD, toPay.roundToInt().toString()),
-                AppRequestCodes.ADD_CASH
+                AppRequestCodes.ADD_CASH_CONTEST
             )
         }
         logoutAlertDialog.setButton(

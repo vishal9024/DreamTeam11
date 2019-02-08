@@ -1,12 +1,15 @@
 package os.com.ui.notification.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_notification.view.*
 import os.com.R
+import os.com.ui.dashboard.profile.activity.MyAccountActivity
+import os.com.ui.invite.activity.InviteFriendsActivity
 import os.com.ui.notification.apiResponse.notificationResponse.Data
 
 
@@ -27,22 +30,18 @@ class NotificationAdapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.card_view.setOnClickListener {
-//            try {
-//                if (data != null) {
-//                    if (data!![position].nitification_type.equals("1")) {
-//                        Log.e("title: ", data.title)
-//                        startActivity(Intent(this@DashBoardActivity, NotificationActivity::class.java))
-//                    } else if (data.type.equals("2")) {
-//                        Log.e("title: ", data.title)
-//                        startActivity(Intent(this@DashBoardActivity, MyProfileActivity::class.java))
-//                    } else if (data.type.equals("3")) {
-//                        Log.e("title: ", data.title)
-//                        startActivity(Intent(this@DashBoardActivity, MyAccountActivity::class.java))
-//                    } else if (data!![position].nitification_type.equals("4") || data!![position].nitification_type.equals("5") || data!![position].nitification_type.equals("6")) {
-//                        Log.e("title: ", data.title)
+            try {
+                if (data != null) {
+                    if (data[position].nitification_type.equals("1")) {
+//                       mContext. startActivity(Intent(mContext, NotificationActivity::class.java))
+                    } else if (data!![position].nitification_type.equals("2")) {
+                        mContext. startActivity(Intent(mContext, InviteFriendsActivity::class.java))
+                    } else if (data!![position].nitification_type.equals("3")) {
+                        mContext.  startActivity(Intent(mContext, MyAccountActivity::class.java))
+                    } else if (data!![position].nitification_type.equals("4") || data!![position].nitification_type.equals("5") || data!![position].nitification_type.equals("6")) {
 //                        var contest_id = ""
 //                        var match: Match = Match()
-//                        var jsonObject = JSONObject(data.matchData)
+//                        var jsonObject = JSONObject(data[position].matchData)
 //                        if (jsonObject.has("contestId"))
 //                            contest_id = jsonObject.optString("contestId")
 //                        if (jsonObject.has("visitor_team_name"))
@@ -62,8 +61,8 @@ class NotificationAdapter(
 //                        if (jsonObject.has("local_team_name"))
 //                            match.local_team_name = jsonObject.optString("local_team_name")
 //
-//                        startActivity(
-//                            Intent(this, LeaderShipBoardActivity::class.java).putExtra(
+//                        mContext.startActivity(
+//                            Intent(mContext, LeaderShipBoardActivity::class.java).putExtra(
 //                                IntentConstant.MATCH,
 //                                match
 //                            ).putExtra(
@@ -73,12 +72,12 @@ class NotificationAdapter(
 //                                    IntentConstant.FROM, AppRequestCodes.JOINED
 //                                )
 //                        )
-//                    }
-//
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
+                    }
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 //        holder.itemView.ll_totalWinners.setOnClickListener {
 //            //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))

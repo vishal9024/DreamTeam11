@@ -55,14 +55,14 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.withdraw)
             setMenu(false, false, false, false, false)
-            et_Mobile.setText("₹")
+            edtWithdrawAmount.setText("₹")
 
-            et_Mobile.addTextChangedListener(object : TextWatcher {
+            edtWithdrawAmount.addTextChangedListener(object : TextWatcher {
 
                 override fun afterTextChanged(s: Editable) {
                     if (!s.toString().startsWith("₹")) {
-                        et_Mobile.setText("₹")
-                        Selection.setSelection(et_Mobile.text, et_Mobile.text!!.length);
+                        edtWithdrawAmount.setText("₹")
+                        Selection.setSelection(edtWithdrawAmount.text, edtWithdrawAmount.text!!.length);
                     }
                 }
 

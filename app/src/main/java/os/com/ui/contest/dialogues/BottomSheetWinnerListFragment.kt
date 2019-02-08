@@ -59,7 +59,7 @@ class BottomSheetWinnerListFragment : BottomSheetDialogFragment() {
                 behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
             }
             data = arguments!!.getParcelableArrayList<Data>(Tags.DATA)
-            winning_amount=arguments!!.getString(IntentConstant.WINNING_AMOUNT)
+            winning_amount = arguments!!.getString(IntentConstant.WINNING_AMOUNT)
             setAdapter(data)
             dialog.img_Close.setOnClickListener { dismiss() }
         } catch (e: Exception) {
@@ -74,16 +74,18 @@ class BottomSheetWinnerListFragment : BottomSheetDialogFragment() {
             val llm = LinearLayoutManager(context)
             llm.orientation = LinearLayoutManager.VERTICAL
             dialog.rv_rank!!.layoutManager = llm
-            dialog.rv_rank!!.adapter = BottomSheetWinnerListAdapter(context!!, data,winning_amount, object : OnClickRecyclerView {
-                override fun onClickItem(tag: String, position: Int) {
-                    for (i in data!!.indices) {
-                        data[i].isSelected = false
-                    }
-                    data[position].isSelected = true
-                    dialog.rv_rank!!.adapter!!.notifyDataSetChanged()
-                    onClickFilter!!.onClick("click", position)
-                }
-            })
+            dialog.rv_rank!!.adapter =
+                    BottomSheetWinnerListAdapter(context!!, data, winning_amount, object : OnClickRecyclerView {
+                        override fun onClickItem(tag: String, position: Int) {
+                            for (i in data!!.indices) {
+                                data[i].isSelected = false
+                            }
+                            data[position].isSelected = true
+                            dialog.rv_rank!!.adapter!!.notifyDataSetChanged()
+                            onClickFilter!!.onClick("click", position)
+                            dismiss()
+                        }
+                    })
         } catch (e: Exception) {
             e.printStackTrace()
         }
