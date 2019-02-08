@@ -17,7 +17,6 @@ class Match() : Parcelable {
     var star_time = ""
     var total_contest = ""
     var guru_url = ""
-
     constructor(parcel: Parcel) : this() {
         series_id = parcel.readString()
         match_id = parcel.readString()
