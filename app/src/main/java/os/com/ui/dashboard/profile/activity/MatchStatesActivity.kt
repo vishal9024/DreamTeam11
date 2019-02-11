@@ -91,7 +91,10 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.showProgressDialog(this@MatchStatesActivity)
                 try {
                     var map = HashMap<String, String>()
-                    map[Tags.user_id] = userId
+                    if (pref!!.isLogin)
+                        map[Tags.user_id] = pref!!.userdata!!.user_id
+                    else
+                        map[Tags.user_id]= ""
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
                     map[Tags.series_id] = series_id
                     val request = ApiClient.client

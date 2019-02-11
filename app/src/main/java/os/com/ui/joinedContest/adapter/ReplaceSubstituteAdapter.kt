@@ -16,7 +16,11 @@ import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 class ReplaceSubstituteAdapter(
     val mContext: Context,
     var playerList: MutableList<Data>?,
-    var onClickRecyclerView: SelectPlayerInterface
+    var onClickRecyclerView: SelectPlayerInterface,
+   var localTeamName: String,
+    var visitorTeamName: String,
+    var local_team_id: String,
+    var visitor_team_id: String
 ) : RecyclerView.Adapter<ReplaceSubstituteAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -69,6 +73,12 @@ class ReplaceSubstituteAdapter(
                 )
             }
             holder.itemView.txt_PlayerName.text = playerList!![position].player_record!!.player_name
+
+            if (local_team_id.equals(playerList!![position].team_id))
+                holder.itemView.txt_Country.text = localTeamName
+            else
+                holder.itemView.txt_Country.text = visitorTeamName
+
             holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }

@@ -68,7 +68,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             btn_Register.setOnClickListener(this)
             txt_Login.setOnClickListener(this)
             txt_TC.setOnClickListener(this)
-                    txt_register.text = getString(R.string.by_registering_i_agree_to) + " " +
+            txt_register.text = getString(R.string.by_registering_i_agree_to) + " " +
                     getString(R.string.app_name) + getString(R.string.s)
             try {
                 userData = intent.getParcelableExtra(IntentConstant.DATA)
@@ -140,13 +140,11 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
-
 
     private fun checkValidation() {
         try {
-            if (et_Mobile.text.toString().isEmpty())
+            if (et_Mobile.text.toString().replace("+91", "").isEmpty())
                 AppDelegate.showToast(this, getString(R.string.enter_phone_number))
             else if (!ValidationUtil.isPhoneValid(et_Mobile.text.toString().replace("+91", "")))
                 AppDelegate.showToast(this, getString(R.string.valid_phone_number))
@@ -154,7 +152,9 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.showToast(this, getString(R.string.enter_email))
             else if (!ValidationUtil.isEmailValid(et_Email.text.toString()))
                 AppDelegate.showToast(this, getString(R.string.valid_email))
-            else if (et_Password.text.toString().length < 6)
+            else if (et_Password.text.toString().isEmpty()) {
+                AppDelegate.showToast(this, getString(R.string.enter_password))
+            } else if (et_Password.text.toString().length < 6)
                 AppDelegate.showToast(this, getString(R.string.short_password))
             else if (!(et_Password.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_Password.text.toString().matches(
                     ".*[0-9]+.*[A-Za-z]+.*".toRegex()
@@ -179,7 +179,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             val signUpRequest = SignUpRequest()
             signUpRequest.invite_code = et_EnviteCode.text.toString()
             signUpRequest.name = ""
-            signUpRequest.mobile_number = et_Mobile.text.toString().replace("+91","")
+            signUpRequest.mobile_number = et_Mobile.text.toString().replace("+91", "")
             signUpRequest.email = et_Email.text.toString()
             signUpRequest.password = et_Password.text.toString()
             signUpRequest.language = FantasyApplication.getInstance().getLanguage()
@@ -215,7 +215,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                                 .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
                                 .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                         )
-                        finish()
                     } else {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
                     }
@@ -248,7 +247,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                                 .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
                                 .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                         )
-                        finish()
                     } else {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
                     }

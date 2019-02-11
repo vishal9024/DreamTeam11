@@ -3,7 +3,9 @@
     <string name="facebook_app_id">314582115819242</string>
     <string name="default_notification_channel_id">32000</string>
     <string name="default_notification_channel_name">Default Notification Channel</string>
-    <string name="default_notification_channel_description">It will deliver all notification above Android Oreo. It should be enabled to receive notification.</string>
+    <string name="default_notification_channel_description">It will deliver all notification above Android Oreo. It
+        should be enabled to receive notification.
+    </string>
 
     <string name="login">Login</string>
     <string name="let_s_play">Let\'s Play</string>
@@ -132,8 +134,11 @@
     <string name="teams">Teams</string>
     <string name="all_contest">All Contest</string>
     <string name="winning_list">Winning List</string>
-    <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions"><b>Note:-</b> The actual prize money may be different than the prize money mentioned above if there is a tie for any of
-        the winning positions.</string>
+    <string name="note_the_actual_prize_money_may_be_different_than_the_prize_money_mentioned_above_if_there_is_a_tie_for_any_of_the_winning_positions">
+        <b>Note:-</b>
+        The actual prize money may be different than the prize money mentioned above if there is a tie for any of
+        the winning positions.
+    </string>
     <string name="view_teams">View Teams</string>
     <string name="dummy_text">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
     <string name="legality">Legality</string>
@@ -228,7 +233,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
-    <string name="Rs10_cash"><b>\u20B9 20</b>
+    <string name="Rs10_cash">
+        <b>\u20B9 20</b>
     </string>
     <string name="cash_bonus">Cash Bonus</string>
     <string name="offers">Offers</string>
@@ -261,7 +267,7 @@
     <string name="contest_type">Contest Type</string>
     <string name="_50_001_more"><![CDATA[50,001 & more]]></string>
     <string name="apply">Apply</string>
-    <string name="unutilized_balance_winnings_rs_0">Unutilized balance + Winnings= </string>
+    <string name="unutilized_balance_winnings_rs_0">Unutilized balance + Winnings=</string>
     <string name="confirmation">CONFIRMATION</string>
     <string name="usable_cash_bonus">Usable Cash Bonus</string>
     <string name="Rs_0">\u20B9 0</string>
@@ -271,7 +277,9 @@
     <string name="clear_all">Clear All</string>
     <string name="invite">Invite</string>
     <string name="joined_Contest">Joined Contest</string>
-    <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get \u20B9 100 for free</string>
+    <string name="for_every_friend_that_plays_you_both_get_rs_100_for_free">For every friend that plays, you both get
+        \u20B9 100 for free
+    </string>
     <string name="fantasy_status">Fantasy Status</string>
     <string name="match">Match</string>
     <string name="selected_by">Selected By</string>
@@ -287,7 +295,7 @@
     <string name="valid_phone_number">Please enter valid phone number.</string>
     <string name="enter_email">Please enter email address.</string>
     <string name="valid_email">Please enter valid email address.</string>
-    <string name="enter_password">Please enter password.</string>
+    <string name="enter_password">Password can\'t be empty.</string>
     <string name="short_password">Password must be 6 characters long.</string>
     <string name="invalid_password">Password must contain atleast one alphabet and numeric character</string>
     <string name="resend_otp">Resend OTP</string>
@@ -327,8 +335,8 @@
     <string name="only">Only</string>
     <string name="spots_left">spots left</string>
     <string name="view_all">More Contests</string>
-    <string name="vs"> VS </string>
-    <string name="vs_small"> vs </string>
+    <string name="vs">VS</string>
+    <string name="vs_small">vs</string>
     <string name="select_captain">Please select Captain.</string>
     <string name="select_vc">Please select Vice Captain.</string>
     <string name="select_match">Select Match</string>
@@ -353,7 +361,7 @@
         <item>Gujarat</item>
         <item>Haryana</item>
         <item>Himachal Pradesh</item>
-    <item>Jammu and Kashmir</item>
+        <item>Jammu and Kashmir</item>
         <item>Jharkhand</item>
         <item>Karnataka</item>
         <item>Kerala</item>
@@ -384,18 +392,24 @@
     <string name="coming_soon">Contest for this match will open soon. Stay tuned!</string>
     <string name="contest_detail">Contest Detail</string>
     <string name="mobile_hint_label">You will receive an OTP for verification</string>
-    <string name="email_hint_label">No spam, We promise!</string>
-    <string name="password_hint_label">Minimum 8 characters with 1 number/symbol</string>
+    <string name="email_hint_label">No spam. We promise!</string>
+    <string name="password_hint_label">Minimum 6 characters with 1 number/symbol</string>
     <string name="join_contest">Join Contest</string>
     <string name="prectice_contest">Practice Contest</string>
     <string name="winner_takes_all_the_glory">Winner takes all the glory</string>
     <string name="term_and_condition">
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam,
+        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum
+            tortor quam,
             feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.
-            Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi,
-            condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci,
-            sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus,
-            tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus</p>></string>
+            Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper
+            pharetra. Vestibulum erat wisi,
+            condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum,
+            eros ipsum rutrum orci,
+            sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus,
+            neque id cursus faucibus,
+            tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt
+            quis, accumsan porttitor, facilisis luctus, metus</p>>
+    </string>
     <string name="please_select_any">Please select any</string>
     <string name="you_cant_select_more_than">You can\'t select more than</string>
     <string name="join_Contest">Joined Contest</string>
@@ -434,7 +448,8 @@
     <string name="it_permanent">It\'s permanent</string>
     <string name="your_team_name_never_changed">Your Team Name Can never be edited \nSet it right!</string>
     <string name="it_your_identity">It\'s your identity:</string>
-    <string name="your_team_name_is_what_you">Your Team Name is what you will be known as on Real11. Choose wisely</string>
+    <string name="your_team_name_is_what_you">Your Team Name is what you will be known as on</string>
+    <string name="choose_wisely">. Choose wisely</string>
     <string name="choosing_a_name">Choosing a name:</string>
     <string name="minimum_6_characters">Minimim 6 characters</string>
     <string name="empty_team_name">Please enter Team Name</string>
@@ -460,14 +475,17 @@
     <string name="your_bank_details_have_been_submitted">Your
         Bank details have been submitted.
     </string>
-    <string name="why_should_i_submit_my_pan_card"><u>Why should i submit my PAN Card?</u></string>
+    <string name="why_should_i_submit_my_pan_card">
+        <u>Why should i submit my PAN Card?</u>
+    </string>
     <string name="upload_pan_card_image">UPLOAD PAN CARD IMAGE</string>
     <string name="submit_for_verification">SUBMIT FOR VERIFICATION</string>
     <string name="pan_card_added">PAN Card Added</string>
     <string name="we_will_send_you_a_verification_link_on_this_email">We will send you a verification link on this
         email
     </string>
-    <string name="we_won_t_post_anything_without_your_permision">We won\'t post anything without your permission</string>
+    <string name="we_won_t_post_anything_without_your_permision">We won\'t post anything without your permission
+    </string>
     <string name="or">OR</string>
     <string name="verify">Verify</string>
     <string name="verify_your_email">Verify your email</string>
@@ -477,7 +495,9 @@
     <string name="in_case_you_don_t_receive_the_email_be_sure_to_chek_the_spam_junk_promotions_folder_on_your_mailbox">
         <![CDATA[In case you don\'t receive the email, be sure to\nchek the spam/junk & promotions folder on your\nmailbox]]></string>
     <string name="not_received_verification_email_yet">Not received verification email yet?,</string>
-    <string name="send_again"><u>Send Again</u></string>
+    <string name="send_again">
+        <u>Send Again</u>
+    </string>
     <string name="verify_bank_account">VERIFY BANK ACCOUNT</string>
     <string name="verify_your_account_to_withdraw_winnings">(Verify your account to withdraw winnings)</string>
     <string name="bank_proof_of_passbook_cheque_book_or_bank_statement">Bank proof of passbook, Cheque book or Bank
@@ -515,7 +535,9 @@
     <string name="enter_ifsc_code">Please enter IFSC Code to proceed.</string>
     <string name="enter_bank_name">Please enter Bank Name to proceed.</string>
     <string name="enter_bank_branch">Please enter Branch Name to proceed.</string>
-    <string name="min_200_max_2_00_000_allowed_per_day">min. <b>\u20B9 200</b> and max <b>\u20B9 2,00,000</b> allowed per day</string>
+    <string name="min_200_max_2_00_000_allowed_per_day">min. <b>\u20B9 200</b> and max <b>\u20B9 2,00,000</b> allowed
+        per day
+    </string>
     <string name="entryFeeValidation">Entry Fee cannot be less than Rs. 5</string>
     <string name="choose_total_winners">Choose Total Winners</string>
     <string name="recommended">(Recommended)</string>
@@ -530,9 +552,12 @@
     <string name="offer_info_text">Each code can be redeemed for Cash Bonus once. Code can be earned on 3rd Party Apps
         or through exclusive.
     </string>
-    <string name="deposited_info_text">Money deposited by you can use to join any contests but can\'t withdraw </string>
+    <string name="deposited_info_text">Money deposited by you can use to join any contests but can\'t withdraw</string>
     <string name="winning_info_text">Money that you can withdraw or re-use to join any contests</string>
     <string name="bonus_info_text">Money that can you use to join any public contes</string>
-    <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for the matches your friendshave jioned cash contest in.</string>
+    <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for
+        the matches your friendshave jioned cash contest in.
+    </string>
     <string name="choose_winning_breakup">Choose Winning BreakUp</string>
+    <string name="enterphone_or">Enter phone number or email.</string>
 </resources>

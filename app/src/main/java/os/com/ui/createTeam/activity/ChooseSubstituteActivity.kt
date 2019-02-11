@@ -35,7 +35,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
                     val intent = Intent()
                     intent.putExtra("isSubstitute", true)
                     intent.putExtra("substitute_id", substitute_id)
-                    setResult(Activity.RESULT_OK,intent)
+                    setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
             } else {
@@ -59,7 +59,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
                     val intent = Intent()
                     intent.putExtra("isSubstitute", true)
                     intent.putExtra("substitute_id", substitute_id)
-                    setResult(Activity.RESULT_OK,intent)
+                    setResult(Activity.RESULT_OK, intent)
                     finish()
                 }
             }
@@ -87,6 +87,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
+
     var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
@@ -97,23 +98,25 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.select_substitute)
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         getData()
     }
 
+    var localTeamName = ""
+    var visitorTeamName = ""
     fun getData() {
         btn_SelectSubstitute.setOnClickListener(this)
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-        var localTeamName=match!!.local_team_name
-        var visitorTeamName=match!!.visitor_team_name
-        if (match!!.local_team_name.length>5)
-            localTeamName=match!!.local_team_name.substring(0,4)
-        if (match!!.visitor_team_name.length>5)
-            visitorTeamName=match!!.visitor_team_name.substring(0,4)
+        localTeamName = match!!.local_team_name
+        visitorTeamName = match!!.visitor_team_name
+        if (match!!.local_team_name.length > 5)
+            localTeamName = match!!.local_team_name.substring(0, 4)
+        if (match!!.visitor_team_name.length > 5)
+            visitorTeamName = match!!.visitor_team_name.substring(0, 4)
 
-        txt_matchVS.text = localTeamName+ " " + getString(R.string.vs) + " " + visitorTeamName
+        txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
         from = intent.getIntExtra(IntentConstant.ISEDIT, 0)
 
         if (matchType == IntentConstant.FIXTURE) {
@@ -141,16 +144,23 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
     var arList: MutableList<Data>? = ArrayList()
     var wkList: MutableList<Data>? = ArrayList()
     var batsmenList: MutableList<Data>? = ArrayList()
-
     var playerList: MutableList<Data>? = ArrayList()
-
 
     @SuppressLint("WrongConstant")
     private fun setAdapter(playerlist: MutableList<Data>) {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Player!!.layoutManager = llm
-        rv_Player!!.adapter = PlayerListSubstituteAdapter(this, playerlist, this, selectPlayer)
+        rv_Player!!.adapter = PlayerListSubstituteAdapter(
+            this,
+            playerlist,
+            this,
+            selectPlayer,
+            localTeamName,
+            visitorTeamName,
+            match!!.local_team_id,
+            match!!.visitor_team_id
+        )
     }
 
     var selectPlayer: SelectPlayer? = null

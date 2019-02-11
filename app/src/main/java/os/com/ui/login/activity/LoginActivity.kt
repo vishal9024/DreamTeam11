@@ -2,6 +2,7 @@ package os.com.ui.login.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -35,6 +36,7 @@ import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.signup.activity.OTPActivity
 import os.com.ui.signup.activity.SignUpActivity
 import os.com.utils.AppDelegate
+import os.com.utils.ValidationUtil
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
@@ -63,19 +65,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     fun validation(): Boolean {
         if (et_email.text.toString().isEmpty()) {
-            AppDelegate.showToast(this, getString(R.string.enter_phone_number))
+            AppDelegate.showToast(this, getString(R.string.enterphone_or))
             return false
         }
-//        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
-//            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
-//                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
-//                return false
-//            }
-//        } else
-//            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
-//                AppDelegate.showToast(this, getString(R.string.valid_email))
-//                return false
-//            }
+        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
+            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
+                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+                return false
+            }
+        } else
+            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
+                AppDelegate.showToast(this, getString(R.string.valid_email))
+                return false
+            }
 
         return true
     }
@@ -87,10 +89,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     }
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        if (intent.getBooleanExtra("show", true)) {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowHomeEnabled(true)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+        }
         toolbarTitleTv.setText(R.string.login)
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
@@ -287,9 +291,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 //                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
-                    startActivity(
-                        Intent(this@LoginActivity, DashBoardActivity::class.java)
-                    )
+                    startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java))
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    finish()
                 } else {
                     startActivity(
                         Intent(this@LoginActivity, SignUpActivity::class.java)

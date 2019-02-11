@@ -143,6 +143,8 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id

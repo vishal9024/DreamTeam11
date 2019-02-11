@@ -89,7 +89,10 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.showProgressDialog(this@InviteFriendsActivity)
                 try {
                     var map = HashMap<String, String>()
-                    map[Tags.user_id] = pref!!.userdata!!.user_id
+                    if (pref!!.isLogin)
+                        map[Tags.user_id] = pref!!.userdata!!.user_id
+                    else
+                        map[Tags.user_id]= ""
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
                     val request = ApiClient.client
                         .getRetrofitService()

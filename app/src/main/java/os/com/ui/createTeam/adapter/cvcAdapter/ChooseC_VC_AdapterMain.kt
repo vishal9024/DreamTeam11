@@ -16,7 +16,12 @@ import os.com.ui.createTeam.apiResponse.PlayerListModel
 class ChooseC_VC_AdapterMain(
     val mContext: AppCompatActivity,
     val onClickCVC: OnClickCVC,
-    val playerList: MutableList<PlayerListModel>
+    val playerList: MutableList<PlayerListModel>,
+    val localTeamName: String,
+    val visitorTeamName: String,
+    val local_team_id: String,
+    val visitor_team_id: String
+
 ) :
 
     RecyclerView.Adapter<ChooseC_VC_AdapterMain.AppliedCouponCodeHolder>() {
@@ -43,7 +48,10 @@ class ChooseC_VC_AdapterMain(
             playerList[position].type == BOWLER -> holder.itemView.txt_playerType.text = mContext.getString(R.string.bowler)
             playerList[position].type == SUBSTITUTE -> holder.itemView.txt_playerType.text = mContext.getString(R.string.substitute)
         }
-        holder.contestAdapter.contestList(playerList[position].type!!, playerList[position].playerList!!)
+        holder.contestAdapter.contestList(playerList[position].type!!, playerList[position].playerList!!,   localTeamName,
+            visitorTeamName,
+            local_team_id,
+            visitor_team_id)
         holder.contestAdapter.notifyDataSetChanged()
     }
 

@@ -384,31 +384,41 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 addSubstituteData()
             }
             R.id.btn_Next -> {
-                var requestCode = UPDATE_ACTIVITY
-                if (createOrJoin == CREATE_CONTEST)
-                    requestCode = CREATE_CONTEST
-                startActivityForResult(
-                    Intent(this, Choose_C_VC_Activity::class.java)
-                        .putExtra(IntentConstant.MATCH, match)
-                        .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                        .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
-                        .putExtra(IntentConstant.ISEDIT, from)
-                        .putExtra(IntentConstant.TEAM_ID, team_id)
-                        .putExtra(IntentConstant.CONTEST_ID, contest_id)
-                        .putExtra(IntentConstant.CREATE_OR_JOIN, createOrJoin)
-                        .putParcelableArrayListExtra(IntentConstant.WK, wkList as java.util.ArrayList<out Parcelable>)
-                        .putParcelableArrayListExtra(
-                            IntentConstant.BATSMEN,
-                            batsmenList as java.util.ArrayList<out Parcelable>
-                        )
-                        .putParcelableArrayListExtra(
-                            IntentConstant.BOWLER,
-                            bowlerList as java.util.ArrayList<out Parcelable>
-                        )
+                if (selectPlayer!!.substitute)
+                    AppDelegate.showToast(this, "Please select substitute.")
+                else {
+                    var requestCode = UPDATE_ACTIVITY
+                    if (createOrJoin == CREATE_CONTEST)
+                        requestCode = CREATE_CONTEST
+                    startActivityForResult(
+                        Intent(this, Choose_C_VC_Activity::class.java)
+                            .putExtra(IntentConstant.MATCH, match)
+                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                            .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
+                            .putExtra(IntentConstant.ISEDIT, from)
+                            .putExtra(IntentConstant.TEAM_ID, team_id)
+                            .putExtra(IntentConstant.CONTEST_ID, contest_id)
+                            .putExtra(IntentConstant.CREATE_OR_JOIN, createOrJoin)
+                            .putParcelableArrayListExtra(
+                                IntentConstant.WK,
+                                wkList as java.util.ArrayList<out Parcelable>
+                            )
+                            .putParcelableArrayListExtra(
+                                IntentConstant.BATSMEN,
+                                batsmenList as java.util.ArrayList<out Parcelable>
+                            )
+                            .putParcelableArrayListExtra(
+                                IntentConstant.BOWLER,
+                                bowlerList as java.util.ArrayList<out Parcelable>
+                            )
 //                        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-                        .putParcelableArrayListExtra(IntentConstant.AR, arList as java.util.ArrayList<out Parcelable>)
-                    , requestCode
-                )
+                            .putParcelableArrayListExtra(
+                                IntentConstant.AR,
+                                arList as java.util.ArrayList<out Parcelable>
+                            )
+                        , requestCode
+                    )
+                }
             }
         }
     }
@@ -517,6 +527,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
     }
 
+    var localTeamName = ""
+    var visitorTeamName = ""
     var createOrJoin = AppRequestCodes.CREATE
     private fun getIntentData() {
         if (intent != null) {
@@ -531,8 +543,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
                 substituteDetail = intent.getParcelableExtra("substitute")
             }
-            var localTeamName = match!!.local_team_name
-            var visitorTeamName = match!!.visitor_team_name
+            localTeamName = match!!.local_team_name
+            visitorTeamName = match!!.visitor_team_name
             if (match!!.local_team_name.length > 5)
                 localTeamName = match!!.local_team_name.substring(0, 4)
             if (match!!.visitor_team_name.length > 5)
@@ -566,6 +578,8 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
@@ -583,6 +597,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 AppDelegate.hideProgressDialog(this@ChooseTeamActivity)
                 if (response.response!!.status) {
                     playerList = response.response!!.data!!
+                    AppDelegate.LogT("PlayerList=>"+playerList!!.size)
                     var playerListNull: MutableList<Data>? = ArrayList()
                     for (i in 0 until response.response!!.data!!.size) {
                         if (response.response!!.data!![i].player_record == null) {
@@ -595,7 +610,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         playerList!![i].isCaptain = false
                         playerList!![i].isViceCaptain = false
                         playerList!![i].isSelected = false
-                        if (playerList!![i].player_role.contains("Wicketkeeper", true)) {
+                        if (playerList!![i].player_record!!.playing_role.contains("Wicketkeeper", true)) {
                             wkList!!.add(playerList!![i])
                         }
                     }
@@ -605,11 +620,11 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         playerList!![i].isCaptain = false
                         playerList!![i].isViceCaptain = false
                         playerList!![i].isSelected = false
-                        if (playerList!![i].player_role.contains("Bowler", true)) {
+                        if (playerList!![i].player_record!!.playing_role.contains("Bowler", true)) {
                             bowlerList!!.add(playerList!![i])
-                        } else if (playerList!![i].player_role.contains("Batsman", true)) {
+                        } else if (playerList!![i].player_record!!.playing_role.contains("Batsman", true)) {
                             batsmenList!!.add(playerList!![i])
-                        } else if (playerList!![i].player_role.contains("Allrounder", true)) {
+                        } else if (playerList!![i].player_record!!.playing_role.contains("Allrounder", true)) {
                             arList!!.add(playerList!![i])
                         }
                     }
@@ -787,7 +802,17 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Player!!.layoutManager = llm
-        rv_Player!!.adapter = PlayerListAdapter(this, playerlist, type, this, selectPlayer)
+        rv_Player!!.adapter = PlayerListAdapter(
+            this,
+            playerlist,
+            type,
+            this,
+            selectPlayer,
+            localTeamName,
+            visitorTeamName,
+            match!!.local_team_id,
+            match!!.visitor_team_id
+        )
     }
 
     private var WK = 1
@@ -850,7 +875,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
             txt_substitute.isEnabled = selectPlayer!!.selectedPlayer == 11
             txt_substitute.setOnClickListener(this)
-            btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11 && selectPlayer!!.substitute
+            btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11 /*&& selectPlayer!!.substitute*/
         } else {
             btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11
         }

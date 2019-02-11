@@ -249,6 +249,8 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id/*"13071965317"*/
         GlobalScope.launch(Dispatchers.Main) {

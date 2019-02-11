@@ -158,6 +158,8 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
     var from = 0
     var createOrJoin = AppRequestCodes.CREATE
     var substitute_id = ""
+    var localTeamName =""
+    var visitorTeamName=""
     fun getData() {
 //      contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE)
@@ -166,8 +168,8 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-        var localTeamName = match!!.local_team_name
-        var visitorTeamName = match!!.visitor_team_name
+         localTeamName = match!!.local_team_name
+         visitorTeamName = match!!.visitor_team_name
         if (match!!.local_team_name.length > 5)
             localTeamName = match!!.local_team_name.substring(0, 4)
         if (match!!.visitor_team_name.length > 5)
@@ -316,6 +318,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             this,
             this,
             playerListCVC
+            , localTeamName,
+            visitorTeamName,
+            match!!.local_team_id,
+            match!!.visitor_team_id
         )
         rv_Players!!.adapter = adapter
     }
@@ -324,6 +330,8 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         var creteTeamRequest: CreateTeamRequest = CreateTeamRequest()
         if (pref!!.isLogin)
             creteTeamRequest.user_id = pref!!.userdata!!.user_id
+        else
+            creteTeamRequest.user_id = ""
         creteTeamRequest.language = FantasyApplication.getInstance().getLanguage()
         creteTeamRequest.match_id = match!!.match_id
         creteTeamRequest.series_id = match!!.series_id

@@ -47,6 +47,7 @@ import os.com.ui.dashboard.home.apiResponse.bannerList.Offer
 import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.Data
 import os.com.utils.AppDelegate
 import java.util.*
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 
@@ -61,7 +62,8 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_addCash -> {
-                checkPermission()
+                if (!et_addCash.text.toString().isEmpty())
+                    checkPermission()
             }
             R.id.txt_500 -> {
                 et_addCash.setText("500")
@@ -250,8 +252,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 if (AddTYPE.equals(OFFER)) {
                     updateTransactionRequest.coupon_id = data!!.coupon_id
                     updateTransactionRequest.discount_amount = discountedValue.toString()
-                }
-                else  if (AddTYPE.equals(OFFER_BANNER)) {
+                } else if (AddTYPE.equals(OFFER_BANNER)) {
                     updateTransactionRequest.coupon_id = data_OFFER!!.coupon_id
                     updateTransactionRequest.discount_amount = discountedValue.toString()
                 }
@@ -348,26 +349,44 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 data = intent.getParcelableExtra(Tags.DATA)
                 ll_offer.visibility = VISIBLE
                 AddTextChangeListener()
-                et_addCash.setText("100")
             } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
                 data_OFFER = intent.getParcelableExtra(Tags.DATA)
                 ll_offer.visibility = VISIBLE
                 AddTextChangeListener()
-                et_addCash.setText("100")
             } else if (AddTYPE.equals(IntentConstant.TO_JOIN)) {
                 var toPay = intent.getStringExtra(IntentConstant.AMOUNT_TO_ADD)
                 et_addCash.setText(toPay)
-            }
+            } else
+                et_addCash.setText("100")
         }
     }
 
     private fun AddTextChangeListener() {
+        var min_amount = 0.0
+        var max_discount = 0.0
+        if (AddTYPE.equals(IntentConstant.OFFER)) {
+            if (!data!!.min_amount.isEmpty())
+                min_amount = data!!.min_amount.toDouble()
+            if (!data!!.max_discount.isEmpty())
+                max_discount = data!!.max_discount.toDouble()
+            tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
+                    " is reqired to avail this offer"
+        } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
+            if (!data_OFFER!!.min_amount.isEmpty())
+                min_amount = data_OFFER!!.min_amount.toDouble()
+            if (!data_OFFER!!.max_discount.isEmpty())
+                max_discount = data_OFFER!!.max_discount.toDouble()
+            tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
+                    " is reqired to avail this offer"
+        }
+        et_addCash.setText(min_amount.roundToInt().toString())
+
         et_addCash.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                if (!et_addCash.text.toString().isEmpty() && et_addCash.text.toString().toFloat() >= 20) {
+                if (!et_addCash.text.toString().isEmpty() && et_addCash.text.toString().toFloat() >= min_amount) {
                     GlobalScope.launch(Dispatchers.Main) {
-                        delay(100)
-                        applyOffer()
+                        delay(200)
+                        applyOffer(max_discount)
                     }
                 } else {
                     txt_offer.text = getString(R.string.Rs) + " 0.0"
@@ -382,28 +401,34 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
         })
     }
 
-    var discountedValue = 0f
-    private fun applyOffer() {
+    var discountedValue = 0.0
+    private fun applyOffer(max_discount: Double) {
         if (AddTYPE == OFFER) {
             if (data != null) {
-                discountedValue = 0f
-                val discountAmount = data!!.discount_amount.toFloat()
+                discountedValue = 0.0
+                val discountAmount = data!!.discount_amount.toDouble()
                 if (data!!.in_percentage) {
-                    discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
-                    if (discountedValue > 50)
-                        discountedValue = 50f
+                    if (!et_addCash.text.toString().isEmpty())
+                        discountedValue = (et_addCash.text.toString().toDouble().times(discountAmount)) / 100
+                    else
+                        discountedValue = 0.0
+                    if (discountedValue > max_discount)
+                        discountedValue = max_discount
                 } else
-                    discountedValue = discountAmount
+                    discountedValue = discountAmount.toDouble()
                 txt_offer.text = getString(R.string.Rs) + " " + discountedValue
             }
         } else if (AddTYPE == OFFER_BANNER) {
             if (data_OFFER != null) {
-                discountedValue = 0f
-                val discountAmount = data_OFFER!!.discount_amount.toFloat()
+                discountedValue = 0.0
+                val discountAmount = data_OFFER!!.discount_amount.toDouble()
                 if (data_OFFER!!.in_percentage) {
-                    discountedValue = (et_addCash.text.toString().toFloat().times(discountAmount)) / 100
-                    if (discountedValue > 50)
-                        discountedValue = 50f
+                    if (!et_addCash.text.toString().isEmpty())
+                        discountedValue = (et_addCash.text.toString().toDouble().times(discountAmount)) / 100
+                    else
+                        discountedValue = 0.0
+                    if (discountedValue > max_discount)
+                        discountedValue = max_discount
                 } else
                     discountedValue = discountAmount
                 txt_offer.text = getString(R.string.Rs) + " " + discountedValue

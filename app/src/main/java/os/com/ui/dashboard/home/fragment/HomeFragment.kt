@@ -248,6 +248,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)
@@ -294,6 +296,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id]= ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)

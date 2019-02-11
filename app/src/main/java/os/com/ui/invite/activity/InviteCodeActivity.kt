@@ -62,6 +62,8 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
               val loginRequest = HashMap<String, String>()
               if (pref!!.isLogin)
                   loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+              else
+                  loginRequest[Tags.user_id]= ""
               loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
               loginRequest[Tags.invite_code] = et_inviteCode.text.toString()
 

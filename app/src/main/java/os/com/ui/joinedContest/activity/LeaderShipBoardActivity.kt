@@ -111,6 +111,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id]= ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_id] = contest_id
         loginRequest[Tags.match_id] = match!!.match_id
@@ -287,6 +289,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_id] = contest_id
         loginRequest[Tags.match_id] = match!!.match_id
@@ -345,6 +349,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
+            else
+                map[Tags.user_id]= ""
             map[Tags.language] = FantasyApplication.getInstance().getLanguage()
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/

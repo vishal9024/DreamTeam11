@@ -129,7 +129,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 val intent = Intent()
                 setResult(Activity.RESULT_CANCELED, intent)
                 finish()
-            }else if (requestCode == AppRequestCodes.INVITE_CONTEST && resultCode == Activity.RESULT_OK) {
+            } else if (requestCode == AppRequestCodes.INVITE_CONTEST && resultCode == Activity.RESULT_OK) {
                 val intent = Intent()
                 setResult(Activity.RESULT_OK, intent)
                 finish()
@@ -142,6 +142,8 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
         val walletRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            walletRequest[Tags.user_id] = ""
         walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         walletRequest[Tags.match_id] = match!!.match_id
         walletRequest[Tags.contest_id] = contest_id
@@ -157,7 +159,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@SelectWinnersContestActivity)
                 if (response.response!!.status) {
-                    var entryFee =entry_fee.toFloat()
+                    var entryFee = entry_fee.toFloat()
                     var bonus = 0f
                     var toPay = 0f
                     if (!response.response!!.data!!.usable_bonus.isEmpty())
@@ -229,11 +231,11 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
         dialogue.show()
     }
 
-
     fun joinContest() {
         val walletRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else walletRequest[Tags.user_id] = ""
         walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         walletRequest[Tags.match_id] = match!!.match_id
         walletRequest[Tags.series_id] = match!!.series_id
@@ -333,6 +335,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
             e.printStackTrace()
         }
     }
+
     var priceBreakUpList: ArrayList<Data> = ArrayList()
     private fun getIntentData() {
         if (intent != null) {
@@ -368,8 +371,8 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
             } else
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
             txt_TotalWinnings.setText(contest_size)
-            txt_Winners.text = getString(R.string.Rs)+" "+winning_amount
-            txt_EntryFees.text = getString(R.string.Rs)+" "+entry_fee
+            txt_Winners.text = getString(R.string.Rs) + " " + winning_amount
+            txt_EntryFees.text = getString(R.string.Rs) + " " + entry_fee
             txt_winners.text = priceBreakUpList!![0].title + " " + getString(R.string.recommended)
             winnerListAdapter!!.infoList(priceBreakUpList[0].info!!, winning_amount)
             winnerListAdapter!!.notifyDataSetChanged()
@@ -384,7 +387,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
             val llm = LinearLayoutManager(this)
             llm.orientation = LinearLayoutManager.VERTICAL
             rv_rank!!.layoutManager = llm
-            winnerListAdapter=BottomSheetWinnerRankListAdapter(this)
+            winnerListAdapter = BottomSheetWinnerRankListAdapter(this)
             rv_rank!!.adapter = winnerListAdapter
         } catch (e: Exception) {
             e.printStackTrace()
@@ -402,6 +405,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                     when (newState) {
                     }
                 }
+
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
         } catch (e: Exception) {

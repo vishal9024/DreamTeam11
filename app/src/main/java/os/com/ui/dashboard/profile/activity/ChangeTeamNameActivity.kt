@@ -56,6 +56,8 @@ class ChangeTeamNameActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.select_your_team_name)
             setMenu(false, false, false, false,false)
+            txt_teamname_info.text= getString( R.string.your_team_name_is_what_you)+" "+getString(R.string.app_name)+getString(R.string.choose_wisely)
+
             btn_ChangeTeamName.setOnClickListener(this)
         } catch (e: Exception) {
             e.printStackTrace()

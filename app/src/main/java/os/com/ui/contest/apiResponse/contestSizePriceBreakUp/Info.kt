@@ -30,8 +30,6 @@ class Info() : Parcelable {
             return arrayOfNulls(size)
         }
     }
-
-
 }
 
 object StringUtils {

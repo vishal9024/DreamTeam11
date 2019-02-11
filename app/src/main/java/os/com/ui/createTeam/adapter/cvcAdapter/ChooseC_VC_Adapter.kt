@@ -20,6 +20,10 @@ class ChooseC_VC_Adapter(
     val onClickCVC: OnClickCVC
 ) :
     RecyclerView.Adapter<ChooseC_VC_Adapter.AppliedCouponCodeHolder>() {
+    var localTeamName: String = ""
+    var visitorTeamName: String = ""
+    var local_team_id: String = ""
+    var visitor_team_id: String = ""
     var type: Int = 0
     var playerList: List<Data> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -28,11 +32,9 @@ class ChooseC_VC_Adapter(
     }
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
-
         holder.itemView.cimg_player.setOnClickListener {
             mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
-
         if (playerList[position].player_record != null) {
             ImageLoader.getInstance().displayImage(
                 playerList[position].player_record!!.image,
@@ -40,7 +42,11 @@ class ChooseC_VC_Adapter(
                 FantasyApplication.getInstance().options
             )
             holder.itemView.txt_PlayerName.text = playerList[position].player_record!!.player_name
-            holder.itemView.txt_Country.text = playerList[position].player_record!!.country
+            if (local_team_id.equals(playerList[position].team_id))
+                holder.itemView.txt_Country.text = localTeamName
+            else
+                holder.itemView.txt_Country.text = visitorTeamName
+//            holder.itemView.txt_Country.text = playerList[position].player_record!!.country
 //          holder.itemView. txt_Avg.text=playerList!![position].player_record!!
         }
         holder.itemView.img_captain.isSelected = playerList[position].isCaptain
@@ -70,7 +76,18 @@ class ChooseC_VC_Adapter(
         return playerList.size
     }
 
-    fun contestList(type: Int, data: ArrayList<Data>) {
+    fun contestList(
+        type: Int,
+        data: ArrayList<Data>,
+        localTeamName: String,
+        visitorTeamName: String,
+        local_team_id: String,
+        visitor_team_id: String
+    ) {
+        this.localTeamName = localTeamName
+        this.visitorTeamName = visitorTeamName
+        this.local_team_id = local_team_id
+        this.visitor_team_id = visitor_team_id
         this.type = type
         playerList = data
         notifyDataSetChanged()

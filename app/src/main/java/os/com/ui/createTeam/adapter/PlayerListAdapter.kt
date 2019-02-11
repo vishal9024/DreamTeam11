@@ -20,7 +20,11 @@ class PlayerListAdapter(
     var playerList: MutableList<Data>?,
     var type: Int,
     var onClickRecyclerView: SelectPlayerInterface,
-    var selectPlayer: SelectPlayer?
+    var selectPlayer: SelectPlayer?,
+    var localTeamName: String,
+    var visitorTeamName: String,
+    var local_team_id: String,
+    var visitor_team_id: String
 ) : RecyclerView.Adapter<PlayerListAdapter.AppliedCouponCodeHolder>() {
     private var WK = 1
     private var BAT = 2
@@ -79,7 +83,10 @@ class PlayerListAdapter(
             }
 
             holder.itemView.txt_PlayerName.text = playerList!![position].player_record!!.player_name
-            holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
+            if (local_team_id.equals(playerList!![position].team_id))
+                holder.itemView.txt_Country.text = localTeamName
+            else
+                holder.itemView.txt_Country.text = visitorTeamName
 //        holder.itemView. txt_Avg.text=playerList!![position].player_record!!
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
@@ -98,7 +105,7 @@ class PlayerListAdapter(
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
         }
         holder.itemView.cimg_player.setOnClickListener {
-//            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+            //            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
         }
         holder.itemView.ll_main.alpha = 1.0f
         if (type == WK) {

@@ -291,6 +291,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         if (from == AppRequestCodes.JOINED)
             loginRequest[Tags.contest_id] = joinedContest!!.contest_id

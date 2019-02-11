@@ -84,6 +84,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_size] = et_contest_size.text.toString()
         GlobalScope.launch(Dispatchers.Main) {
@@ -221,6 +222,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_size] = et_contest_size.text.toString()
         loginRequest[Tags.winning_amount] = et_winning_amount.text.toString()
@@ -314,6 +316,8 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         val walletRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            walletRequest[Tags.user_id] = ""
         walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         walletRequest[Tags.match_id] = match!!.match_id
         walletRequest[Tags.contest_id] = Tags.contest_id
@@ -406,6 +410,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         val walletRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else walletRequest[Tags.user_id] = ""
         walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         walletRequest[Tags.match_id] = match!!.match_id
         walletRequest[Tags.series_id] = match!!.series_id

@@ -80,8 +80,8 @@ class PlayerRecord() :Parcelable {
         bowling_t20sAverage = parcel.readString()
         teams = parcel.readString()
         player_credit = parcel.readString()
-//        created = parcel.readString()
-//        modified = parcel.readString()
+//      created = parcel.readString()
+//      modified = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

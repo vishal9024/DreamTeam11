@@ -87,6 +87,8 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
+            else
+                map[Tags.user_id] = ""
             map[Tags.language] = FantasyApplication.getInstance().getLanguage()
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/

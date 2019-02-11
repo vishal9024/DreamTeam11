@@ -410,6 +410,8 @@ open class BaseActivity : AppCompatActivity() {
         val walletRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             walletRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            walletRequest[Tags.user_id] = ""
         walletRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         walletRequest[Tags.match_id] = match_id
         walletRequest[Tags.contest_id] = contest_id
@@ -512,6 +514,7 @@ open class BaseActivity : AppCompatActivity() {
                     Prefs(this@BaseActivity).clearSharedPreference()
                     val intent = Intent(this@BaseActivity, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.putExtra("show",false)
                     startActivity(intent)
                     finish()
                 } else {

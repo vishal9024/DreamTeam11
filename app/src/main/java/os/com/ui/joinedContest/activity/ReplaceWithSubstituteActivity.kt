@@ -107,6 +107,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
@@ -134,6 +136,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         }
     }
 
+    var localTeamName = ""
+    var visitorTeamName = ""
     private fun getIntentData() {
         if (intent != null) {
             contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
@@ -142,8 +146,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
             substituteDetail = intent.getParcelableExtra("substitute")
-            var localTeamName = match!!.local_team_name
-            var visitorTeamName = match!!.visitor_team_name
+             localTeamName = match!!.local_team_name
+             visitorTeamName = match!!.visitor_team_name
             if (match!!.local_team_name.length > 5)
                 localTeamName = match!!.local_team_name.substring(0, 4)
             if (match!!.visitor_team_name.length > 5)
@@ -178,6 +182,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+        else
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.match_id] = match!!.match_id
         loginRequest[Tags.series_id] = match!!.series_id
@@ -229,7 +235,12 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_players!!.layoutManager = llm
-        rv_players!!.adapter = ReplaceSubstituteAdapter(this, playerlist, this)
+        rv_players!!.adapter = ReplaceSubstituteAdapter(
+            this, playerlist, this, localTeamName,
+            visitorTeamName,
+            match!!.local_team_id,
+            match!!.visitor_team_id
+        )
     }
 
 }

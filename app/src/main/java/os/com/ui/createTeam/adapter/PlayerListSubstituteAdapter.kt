@@ -18,7 +18,11 @@ class PlayerListSubstituteAdapter(
     val mContext: Context,
     var playerList: MutableList<Data>?,
     var onClickRecyclerView: SelectPlayerInterface,
-    var selectPlayer: SelectPlayer?
+    var selectPlayer: SelectPlayer?,
+    var localTeamName: String,
+    var visitorTeamName: String,
+    var local_team_id: String,
+    var visitor_team_id: String
 ) : RecyclerView.Adapter<PlayerListSubstituteAdapter.AppliedCouponCodeHolder>() {
     private var WK = 1
     private var BAT = 2
@@ -77,7 +81,10 @@ class PlayerListSubstituteAdapter(
             }
 
             holder.itemView.txt_PlayerName.text = playerList!![position].player_record!!.player_name
-            holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
+            if (local_team_id.equals(playerList!![position].team_id))
+                holder.itemView.txt_Country.text = localTeamName
+            else
+                holder.itemView.txt_Country.text = visitorTeamName
 //        holder.itemView. txt_Avg.text=playerList!![position].player_record!!
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
