@@ -21,18 +21,21 @@ import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
+import os.com.utils.otpReceiver.OTPListener
+import os.com.utils.otpReceiver.OtpReader
 
-class OTPActivity : BaseActivity(), View.OnClickListener {
+
+class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Submit -> {
                 if (otp_view.text.toString().isNotEmpty() && otp_view.text.toString().length == 6) {
                     var getOtp = otp_view.text.toString()
-                    if (getOtp == otp) {
-                        if (AppDelegate.isNetworkAvailable(this))
-                            prepareData()
-                    } else
-                        AppDelegate.showToast(this, getString(R.string.invalid_otp))
+//                    if (getOtp == otp) {
+                    if (AppDelegate.isNetworkAvailable(this))
+                        prepareData()
+//                    } else
+//                        AppDelegate.showToast(this, getString(R.string.invalid_otp))
                 } else
                     AppDelegate.showToast(this, getString(R.string.invalid_otp))
 
@@ -50,13 +53,12 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
     private fun prepareData() {
         val verifyOtpRequest = VerifyOtpRequest()
         verifyOtpRequest.device_id = pref!!.fcMtokeninTemp
-        verifyOtpRequest.otp = otp
+        verifyOtpRequest.otp = otp_view.text.toString()
         verifyOtpRequest.language = FantasyApplication.getInstance().getLanguage()
         verifyOtpRequest.device_type = Tags.device_type
         verifyOtpRequest.user_id = user_id
         callVarifyOtpApi(verifyOtpRequest)
     }
-
     var otp = ""
     var user_id = ""
     var phone = ""
@@ -64,6 +66,12 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
         initViews()
+    }
+
+    override fun otpReceived(smsText: String) {
+        //Do whatever you want to do with the text
+//        Toast.makeText(this, "Got $smsText", Toast.LENGTH_LONG).show()
+        otp_view.setText(smsText)
     }
 
     private fun initViews() {
@@ -76,9 +84,13 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
         otp = intent.getStringExtra(IntentConstant.OTP)
         phone = intent.getStringExtra(IntentConstant.MOBILE)
         user_id = intent.getStringExtra(IntentConstant.USER_ID)
-        txt_VerifyNumberLabel.text=getString(R.string.otp_has_been_sent_to_your_mobile_number)+" "+phone
+        txt_VerifyNumberLabel.text = getString(R.string.otp_has_been_sent_to_your_mobile_number) + " " + phone
         resendOTPLayout.setOnClickListener(this)
-        otp_view.setText(otp)
+        if (phone.contains("+91"))
+            OtpReader.bind(this, phone.replace("+91", ""))
+        else
+            OtpReader.bind(this, phone)
+//      otp_view.setText(otp)
         resendOTPLayout.isEnabled = false
 //      showOTPDialog(otp)
 //      setTimerForOTP()
@@ -128,8 +140,8 @@ class OTPActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideProgressDialog(this@OTPActivity)
                 if (response.response!!.status) {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)
-                    otp = response.response!!.data!!.otp
-                    showOTPDialog(response.response!!.data!!.otp)
+//                    otp = response.response!!.data!!.otp
+//                    showOTPDialog(response.response!!.data!!.otp)
                     resendOTPLayout.isEnabled = false
                     setTimerForOTP()
                 } else {

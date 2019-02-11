@@ -172,7 +172,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun prepareData(isSocial: Boolean) {
@@ -180,7 +179,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
             val signUpRequest = SignUpRequest()
             signUpRequest.invite_code = et_EnviteCode.text.toString()
             signUpRequest.name = ""
-            signUpRequest.mobile_number = et_Mobile.text.toString()
+            signUpRequest.mobile_number = et_Mobile.text.toString().replace("+91","")
             signUpRequest.email = et_Email.text.toString()
             signUpRequest.password = et_Password.text.toString()
             signUpRequest.language = FantasyApplication.getInstance().getLanguage()

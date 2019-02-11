@@ -196,8 +196,7 @@
                                                                 android:textColor="@color/white"
                                                                 android:textAllCaps="false"
                                                                 android:text="Google"/>
-
-                 </LinearLayout>-->
+                                                                </LinearLayout>-->
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleNormal"
@@ -257,7 +256,7 @@
                             android:maxLength="50"
                             android:inputType="textEmailAddress"
                             android:imeOptions="actionDone"
-                            android:textSize="@dimen/_14sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView

@@ -2,7 +2,6 @@ package os.com.ui.login.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -36,7 +35,6 @@ import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.signup.activity.OTPActivity
 import os.com.ui.signup.activity.SignUpActivity
 import os.com.utils.AppDelegate
-import os.com.utils.ValidationUtil
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
@@ -68,16 +66,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
             AppDelegate.showToast(this, getString(R.string.enter_phone_number))
             return false
         }
-        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
-            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
-                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
-                return false
-            }
-        } else
-            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
-                AppDelegate.showToast(this, getString(R.string.valid_email))
-                return false
-            }
+//        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
+//            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
+//                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+//                return false
+//            }
+//        } else
+//            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
+//                AppDelegate.showToast(this, getString(R.string.valid_email))
+//                return false
+//            }
 
         return true
     }
@@ -182,7 +180,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                                     if (NetworkUtils.isConnected()) {
                                         checkUserVerify(socialModel)
                                     } else
-                                        Toast.makeText(this@LoginActivity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            this@LoginActivity,
+                                            getString(R.string.error_network_connection),
+                                            Toast.LENGTH_LONG
+                                        ).show()
 
 
                                 }
@@ -246,7 +248,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     if (NetworkUtils.isConnected()) {
                         checkUserVerify(socialModel)
                     } else
-                        Toast.makeText(this@LoginActivity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            getString(R.string.error_network_connection),
+                            Toast.LENGTH_LONG
+                        ).show()
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)

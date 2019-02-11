@@ -375,7 +375,7 @@
                                 android:singleLine="true"
                                 android:inputType="textEmailAddress"
                                 android:imeOptions="actionDone"
-                                android:textSize="@dimen/_12sdp"/>
+                                android:textSize="@dimen/_11sdp"/>
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <androidx.appcompat.widget.AppCompatButton

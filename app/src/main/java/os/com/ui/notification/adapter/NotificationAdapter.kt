@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_notification.view.*
 import os.com.R
+import os.com.constant.IntentConstant
+import os.com.constant.IntentConstant.COMPLETED
+import os.com.constant.IntentConstant.LIVE
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.profile.activity.MyAccountActivity
 import os.com.ui.invite.activity.InviteFriendsActivity
+import os.com.ui.joinedContest.activity.CompletedJoinedContestActivity
 import os.com.ui.notification.apiResponse.notificationResponse.Data
 
 
@@ -35,45 +40,42 @@ class NotificationAdapter(
                     if (data[position].nitification_type.equals("1")) {
 //                       mContext. startActivity(Intent(mContext, NotificationActivity::class.java))
                     } else if (data!![position].nitification_type.equals("2")) {
-                        mContext. startActivity(Intent(mContext, InviteFriendsActivity::class.java))
+                        mContext.startActivity(Intent(mContext, InviteFriendsActivity::class.java))
                     } else if (data!![position].nitification_type.equals("3")) {
-                        mContext.  startActivity(Intent(mContext, MyAccountActivity::class.java))
-                    } else if (data!![position].nitification_type.equals("4") || data!![position].nitification_type.equals("5") || data!![position].nitification_type.equals("6")) {
-//                        var contest_id = ""
-//                        var match: Match = Match()
-//                        var jsonObject = JSONObject(data[position].matchData)
-//                        if (jsonObject.has("contestId"))
-//                            contest_id = jsonObject.optString("contestId")
-//                        if (jsonObject.has("visitor_team_name"))
-//                            match.visitor_team_name = jsonObject.optString("visitor_team_name")
-//                        if (jsonObject.has("match_id"))
-//                            match.match_id = jsonObject.optString("match_id")
-//                        if (jsonObject.has("visitor_team_id"))
-//                            match.visitor_team_id = jsonObject.optString("visitor_team_id")
-//                        if (jsonObject.has("strTime"))
-//                            match.star_time = jsonObject.optString("strTime")
-//                        if (jsonObject.has("strDate"))
-//                            match.star_date = jsonObject.optString("strDate")
-//                        if (jsonObject.has("local_team_id"))
-//                            match.local_team_id = jsonObject.optString("local_team_id")
-//                        if (jsonObject.has("series_id"))
-//                            match.series_id = jsonObject.optString("series_id")
-//                        if (jsonObject.has("local_team_name"))
-//                            match.local_team_name = jsonObject.optString("local_team_name")
-//
-//                        mContext.startActivity(
-//                            Intent(mContext, LeaderShipBoardActivity::class.java).putExtra(
-//                                IntentConstant.MATCH,
-//                                match
-//                            ).putExtra(
-//                                IntentConstant.CONTEST_TYPE, IntentConstant.LIVE
-//                            ).putExtra(IntentConstant.CONTEST_ID, contest_id)
-//                                .putExtra(
-//                                    IntentConstant.FROM, AppRequestCodes.JOINED
-//                                )
-//                        )
+                        mContext.startActivity(Intent(mContext, MyAccountActivity::class.java))
+                    } else if (data!![position].nitification_type.equals("4") || data!![position].nitification_type.equals(
+                            "5"
+                        ) || data!![position].nitification_type.equals("6")
+                    ) {
+                        var contest_id = data[position].match_data!!.contestId
+                        val match: Match = Match()
+                        match.series_id = data[position].match_data!!.series_id!!
+                        match.match_id = data[position].match_data!!.match_id!!
+                        match.local_team_id = data[position].match_data!!.local_team_id!!
+                        match.local_team_name = data[position].match_data!!.local_team_name!!
+                        match.visitor_team_id = data[position].match_data!!.visitor_team_id!!
+                        match.visitor_team_name = data[position].match_data!!.visitor_team_name!!
+                        match.star_date = data[position].match_data!!.strDate!!
+                        match.star_time = data[position].match_data!!.strTime!!
+                        match.series_name = ""
+                        match.local_team_flag = ""
+                        match.visitor_team_flag = ""
+                        match.total_contest = ""
+                        match.guru_url = ""
+                        var type = LIVE
+                        type = if (data[position].nitification_type.equals("4"))
+                            LIVE
+                        else
+                            COMPLETED
+                        mContext.startActivity(
+                            Intent(mContext, CompletedJoinedContestActivity::class.java).putExtra(
+                                IntentConstant.MATCH,
+                                match
+                            ).putExtra(
+                                IntentConstant.CONTEST_TYPE, type
+                            ).putExtra(IntentConstant.CONTEST_ID, contest_id)
+                        )
                     }
-
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

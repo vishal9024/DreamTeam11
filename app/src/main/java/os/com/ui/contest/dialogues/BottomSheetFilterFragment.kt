@@ -202,35 +202,35 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         var finalArrayList: ArrayList<Contest> = ArrayList()
 
         if (dialog.contestsize_2.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() == 2 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong().equals(2)}
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_3_10.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 3..10 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 3..10 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_11_20.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 11..20 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 11..20 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_21_100.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 21..100 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 21..100 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_101_1000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 101..1000 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 101..1000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_1001_10000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 1001..10000 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 1001..10000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_10001_50000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() in 10001..50000 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() in 10001..50000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_50000_more.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toInt() > 50000 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong() > 50000 }
             finalArrayList.addAll(filterContestList)
         }
         finalArrayList.distinct()

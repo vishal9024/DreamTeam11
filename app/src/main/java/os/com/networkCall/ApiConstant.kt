@@ -11,42 +11,51 @@ object ApiConstant {
 //    https://72.octallabs.com/real11/WebServices/
 //    var BaseUrl="http://52.39.238.189/webServices/"
 //    var BaseUrl="http://52.39.238.189/webServices/"
-    const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/WebServices/"
-    const val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
-    const val fSLBaseURL = "https://72.octallabs.com/fsl/WebServices/"
-    const val playing11BaseURL = "https://72.octallabs.com/playing11/WebServices/"
+//    const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/WebServices/"
+//    const val CricsetBaseURL = "http://192.168.1.67/real_11/WebServices/"
+//    const val fSLBaseURL = "https://72.octallabs.com/fsl/WebServices/"
+//    const val playing11BaseURL = "https://72.octallabs.com/playing11/WebServices/"
+//    // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
+//    const val real11BaseURL = "http://real11.com/WebServices/"
+//    const val realBashBaseURL = "https://72.octallabs.com/realBash/WebServices/"
+
+
+    const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/"
+    const val CricsetBaseURL = "http://192.168.1.67/real_11/"
+    const val fSLBaseURL = "http://fansuperleague.com/"
+    const val playing11BaseURL = "https://72.octallabs.com/playing11/"
     // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
-    const val real11BaseURL = "https://72.octallabs.com/real11/WebServices/"
-    const val realBashBaseURL = "https://72.octallabs.com/realBash/WebServices/"
+    const val real11BaseURL = "http://real11.com/"
+    const val realBashBaseURL = "https://72.octallabs.com/realBash/"
     fun getBaseUrl(): String {
+        when {
+            BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.cricset" -> return CricsetBaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.realbash" -> return realBashBaseURL + "WebServices/"
+        }
+        return realBashBaseURL
+    }
+
+    //    const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
+//    const val CricsetWebViewURL = "https://72.octallabs.com/dreamstock11/"
+//    const val fSLWebViewURL = "https://72.octallabs.com/fsl/"
+//    const val playing11WebViewURL = "https://72.octallabs.com/playing11/"
+//    //    const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
+//    const val real11WebViewURL = "https://72.octallabs.com/real11/"
+//    const val realBashWebViewURL = "https://72.octallabs.com/realBash/"
+    fun getWebViewUrl(): String {
         when {
             BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL
             BuildConfig.APPLICATION_ID == "os.cricset" -> return CricsetBaseURL
             BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL
             BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL
             BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL
-            BuildConfig.APPLICATION_ID == "os.realbash" -> return realBashBaseURL
-        }
-        return realBashBaseURL
-    }
-
-    const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
-    const val CricsetWebViewURL = "https://72.octallabs.com/dreamstock11/"
-    const val fSLWebViewURL = "https://72.octallabs.com/fsl/"
-    const val playing11WebViewURL = "https://72.octallabs.com/playing11/"
-    //    const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
-    const val real11WebViewURL = "https://72.octallabs.com/real11/"
-    const val realBashWebViewURL = "https://72.octallabs.com/realBash/"
-    fun getWebViewUrl(): String {
-        when {
-            BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyWebViewURL
-            BuildConfig.APPLICATION_ID == "os.cricset" -> return CricsetWebViewURL
-            BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLWebViewURL
-            BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11WebViewURL
-            BuildConfig.APPLICATION_ID == "os.real11" -> return real11WebViewURL
             else -> BuildConfig.APPLICATION_ID == "os.realbash"
         }
-        return realBashWebViewURL
+        return realBashBaseURL
     }
 
 
@@ -60,15 +69,26 @@ object ApiConstant {
 //    const val legality_tab = "pages/legality.html"
 //    const val dream11_champions = "pages/dream11_champions"
 
-    const val help = "pages/help.html"
-    const val point_system = "pages/point-system.html"
-    const val static = "pages/about_us.html"
-    const val static_tab = "pages/static-tab.html"
-    const val how_to_play_tab = "pages/how-to-play.html"
-    const val how_it_works_tab = "pages/how-it-works.html"
-    const val how_fair_play_tab = "pages/fair-play.html"
-    const val legality_tab = "pages/legality.html"
+//    const val help = "pages/help.html"
+//    const val point_system = "pages/point-system.html"
+//    const val static = "pages/about_us.html"
+//    const val static_tab = "pages/static-tab.html"
+//    const val how_to_play_tab = "pages/how-to-play.html"
+//    const val how_it_works_tab = "pages/how-it-works.html"
+//    const val how_fair_play_tab = "pages/fair-play.html"
+//    const val legality_tab = "pages/legality.html"
+//    const val dream11_champions = "pages/dream11_champions"
+
+    const val help = "pages/help"
+    const val point_system = "pages/point-system"
+    const val static = "pages/about_us"
+    const val static_tab = "pages/static-tab"
+    const val how_to_play_tab = "pages/how-to-play"
+    const val how_it_works_tab = "pages/how-it-works"
+    const val how_fair_play_tab = "pages/fair-play"
+    const val legality_tab = "pages/legality"
     const val dream11_champions = "pages/dream11_champions"
+
 
     const val signup = "signup"
     const val verify_otp = "verify-otp"
@@ -125,5 +145,5 @@ object ApiConstant {
     const val entryPerTeam = "entryPerTeam"
     const val contest_prize_breakup = "contest-prize-breakup"
     const val add_withdraw_request = "add-withdraw-request"
-    const val create_contest="create-contest"
+    const val create_contest = "create-contest"
 }

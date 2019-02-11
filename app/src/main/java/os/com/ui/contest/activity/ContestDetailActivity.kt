@@ -274,7 +274,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
 
         if (!data.total_teams.isEmpty() && !data.teams_joined.isEmpty()) {
             val strtValue =
-                data.total_teams.toInt() - data.teams_joined.toInt()
+                data.total_teams.toLong() - data.teams_joined.toInt()
             txt_StartValue.text = getString(R.string.only) + " " + strtValue.toString() + " " +
                     getString(R.string.spots_left)
             crs_Progress.setMinValue(0f)
@@ -357,7 +357,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
             if (data.is_joined) {
                 cl_join.visibility = GONE
                 cl_viewJoined.visibility = VISIBLE
-                val total_teams = data.total_teams.toInt() - data.teams_joined.toInt()
+                val total_teams = data.total_teams.toLong() - data.teams_joined.toInt()
                 if (total_teams > 0) {
                     ll_bottom.visibility = VISIBLE
                     btn_InviteFriends.visibility = VISIBLE
@@ -381,7 +381,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 cl_join.visibility = GONE
                 cl_viewJoined.visibility = VISIBLE
                 txt_Join.text = getString(R.string.join_plus)
-                val total_teams = data.total_teams.toInt() - data.teams_joined.toInt()
+                val total_teams = data.total_teams.toLong() - data.teams_joined.toInt()
                 if (total_teams > 0) {
                     ll_bottom.visibility = VISIBLE
                     btn_InviteFriends.visibility = VISIBLE

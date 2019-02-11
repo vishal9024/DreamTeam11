@@ -21,9 +21,8 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
                 startActivity(Intent(this, LoginActivity::class.java))
             }
             R.id.btn_LetsPlay -> {
-                var intent=(Intent(this, DashBoardActivity::class.java))
-//                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, img_AppIcon , "img_logo")
-                startActivity(intent/*, options.toBundle()*/)
+                val intent=(Intent(this, DashBoardActivity::class.java))
+                startActivity(intent)
                 finish()
             }
         }

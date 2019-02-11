@@ -2,7 +2,6 @@ package os.com.ui.notification.apiResponse.notificationResponse
 
 import android.os.Parcel
 import android.os.Parcelable
-import os.com.ui.dashboard.home.apiResponse.bannerList.Match
 
 class Data() : Parcelable {
     var id: String? = null

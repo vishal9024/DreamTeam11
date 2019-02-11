@@ -38,7 +38,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionNext"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="@dimen/_10sdp"
@@ -59,7 +59,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:inputType="textEmailAddress"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <RelativeLayout
@@ -85,7 +85,7 @@
                                 android:singleLine="true"
                                 android:maxLines="1"
                                 android:inputType="textPassword"
-                                android:textSize="@dimen/_13sdp"/>
+                                android:textSize="@dimen/_11sdp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -120,7 +120,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="@string/your_favourite_teams"
-                                android:textSize="@dimen/_13sdp"/>
+                                android:textSize="@dimen/_11sdp"/>
 
                     </com.google.android.material.textfield.TextInputLayout>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -152,7 +152,7 @@
                             android:maxLines="1"
                             android:editable="false"
                             android:focusable="false"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleNormal"
@@ -238,7 +238,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionNext"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.SwitchCompat
                         android:layout_width="match_parent"
@@ -247,7 +247,7 @@
                         android:layout_marginLeft="@dimen/_15sdp"
                         android:textColor="@color/textColorGray"
                         android:layout_marginTop="@dimen/_5sdp"
-                        android:textSize="@dimen/_13sdp"
+                        android:textSize="@dimen/_11sdp"
                         android:checked="true"
                         android:visibility="gone"
                         style="@style/TextStyleNormal">
@@ -269,7 +269,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionNext"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="@dimen/_15sdp"
@@ -286,7 +286,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionNext"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                         android:layout_marginTop="@dimen/_15sdp"
@@ -303,7 +303,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionDone"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spn_state"
@@ -331,7 +331,7 @@
                             android:singleLine="true"
                             android:maxLines="1"
                             android:imeOptions="actionDone"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <androidx.appcompat.widget.AppCompatButton

@@ -285,7 +285,7 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
     fun selectorWINNERS(p: Contest): Int = p.total_winners.toInt()
     fun selectorWINNING(p: Contest): Int = p.prize_money.toInt()
     fun selectorENTRY_FEE(p: Contest): Double = p.entry_fee.toDouble()
-    fun selectorTEAMS(p: Contest): Int = p.total_teams.toInt()
+    fun selectorTEAMS(p: Contest): Long = p.total_teams.toLong()
     private var WINNERS = 1
     private var WINNING = 2
     private var ENTRY_FEE = 3

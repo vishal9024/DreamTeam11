@@ -467,12 +467,12 @@
     <string name="we_will_send_you_a_verification_link_on_this_email">We will send you a verification link on this
         email
     </string>
-    <string name="we_won_t_post_anything_without_your_permision">We won\'t post anything without your permision</string>
+    <string name="we_won_t_post_anything_without_your_permision">We won\'t post anything without your permission</string>
     <string name="or">OR</string>
     <string name="verify">Verify</string>
     <string name="verify_your_email">Verify your email</string>
     <string name="click_on_the_verification_link_in_the_mail_we_sent_you_to_verify_your_email">click on the verification
-        link in the mail\nwe sent you to verify your email
+        link in the mail\n we sent you to verify your email
     </string>
     <string name="in_case_you_don_t_receive_the_email_be_sure_to_chek_the_spam_junk_promotions_folder_on_your_mailbox">
         <![CDATA[In case you don\'t receive the email, be sure to\nchek the spam/junk & promotions folder on your\nmailbox]]></string>

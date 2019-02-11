@@ -140,12 +140,12 @@
                             android:hint="@string/enter_your_team_name"
                             android:inputType="textEmailAddress"
                             android:imeOptions="actionNext"
-                            android:textSize="@dimen/_13sdp"/>
+                            android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextStyleMedium"
                         android:gravity="center_vertical"
-                        android:textSize="@dimen/_14sdp"
+                        android:textSize="@dimen/_11sdp"
                         android:layout_width="wrap_content"
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:text="Min. 6 characters."
