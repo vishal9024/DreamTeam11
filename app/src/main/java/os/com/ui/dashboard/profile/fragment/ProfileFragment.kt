@@ -23,6 +23,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
@@ -513,18 +514,40 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                 txtCashBonus.setText("\u20B9 " + mData!!.cash_bonus_amount)
 
             if (mData!!.contest_finished != null) {
-                txtContest.setText("" + mData!!.contest_finished)
-                var contest = mData!!.contest_finished % 20
-                tvRemianContest.setText("" + (20 - contest))
-                try {
-                    crs_Progress.setMinValue(0f)
-                    crs_Progress.setMaxValue(20f)
-                    crs_Progress.setMinStartValue(0f)
-                    crs_Progress.setMaxStartValue(contest.toFloat())
-                    crs_Progress.apply()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
+                  try{
+                      if (BuildConfig.APPLICATION_ID == "os.realbash") {
+                          cimg_user.setImageResource(R.mipmap.cashbonus25)
+                          txtContest.setText("" + mData!!.contest_finished)
+                          var contest = mData!!.contest_finished % 25
+                          tvRemianContest.setText("" + (25 - contest))
+                          try {
+                              crs_Progress.setMinValue(0f)
+                              crs_Progress.setMaxValue(25f)
+                              crs_Progress.setMinStartValue(0f)
+                              crs_Progress.setMaxStartValue(contest.toFloat())
+                              crs_Progress.apply()
+                          } catch (e: Exception) {
+                              e.printStackTrace()
+                          }
+                      }else{
+                          txtContest.setText("" + mData!!.contest_finished)
+                          var contest = mData!!.contest_finished % 20
+                          tvRemianContest.setText("" + (20 - contest))
+                          try {
+                              crs_Progress.setMinValue(0f)
+                              crs_Progress.setMaxValue(20f)
+                              crs_Progress.setMinStartValue(0f)
+                              crs_Progress.setMaxStartValue(contest.toFloat())
+                              crs_Progress.apply()
+                          } catch (e: Exception) {
+                              e.printStackTrace()
+                          }
+                      }
+                      } catch (e: Exception) {
+                              e.printStackTrace()
+                      }
+
+
             }
             if (mData!!.total_match != null)
                 txtMatch.setText("" + mData!!.total_match)

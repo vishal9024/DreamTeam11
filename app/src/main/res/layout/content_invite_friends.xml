@@ -82,7 +82,7 @@
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:textColor="@color/colorSecondary"
-                android:text="Rules for fair play"
+                android:text="Rules of FairPlay"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
     <androidx.cardview.widget.CardView
@@ -139,6 +139,7 @@
                     card_view:layout_constraintEnd_toEndOf="parent"
                     android:gravity="center"
                     android:background="@drawable/button_rounded_background"
+                    android:paddingTop="@dimen/_5sdp"
                     android:paddingBottom="@dimen/_5sdp"
                     android:paddingStart="@dimen/_10sdp"
                     android:layout_marginStart="@dimen/_40sdp"

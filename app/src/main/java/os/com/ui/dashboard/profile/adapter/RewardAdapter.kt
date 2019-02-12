@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_reward.view.*
+import os.com.BuildConfig
 import os.com.R
 import os.com.ui.dashboard.profile.apiResponse.ProfileResponse
 
@@ -22,6 +23,9 @@ class RewardAdapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
+            if (BuildConfig.APPLICATION_ID == "os.realbash") {
+                holder.itemView.cimg_user.setImageResource(R.mipmap.cashbonus25)
+            }
             if (data[position].date!=null)
             holder.itemView.txt_InviteFriends.text=data[position].date
         } catch (e: Exception) {

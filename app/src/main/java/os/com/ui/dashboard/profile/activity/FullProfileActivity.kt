@@ -125,7 +125,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
-            toolbarTitleTv.setText(R.string.update_profile)
+            toolbarTitleTv.setText(R.string.personal_detail)
             setMenu(false, false, false, false,false)
             initState()
             ll_male.setOnClickListener(this)
@@ -185,19 +185,19 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                     var map = HashMap<String, String>()
                     map[Tags.user_id] = pref!!.userdata!!.user_id
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
-                    map[Tags.name] = et_Name.text.toString()
-                    map[Tags.email] = et_Email.text.toString()
-                    map[Tags.mobile] = et_Mobile.text.toString()
-                    map[Tags.date_of_birth] = et_dob.text.toString()
+                    map[Tags.name] = et_Name.text.toString().trim()
+                    map[Tags.email] = et_Email.text.toString().trim()
+                    map[Tags.mobile] = et_Mobile.text.toString().trim()
+                    map[Tags.date_of_birth] = et_dob.text.toString().trim()
                     if (genderType)
                         map[Tags.gender] = "Male"
                     else
                         map[Tags.gender] = "Female"
-                    map[Tags.address] = et_Address.text.toString()
-                    map[Tags.city] = et_City.text.toString()
+                    map[Tags.address] = et_Address.text.toString().trim()
+                    map[Tags.city] = et_City.text.toString().trim()
                     map[Tags.state] = state
-                    map[Tags.pincode] = et_Pincode.text.toString()
-                    map[Tags.country] = et_Country.text.toString()
+                    map[Tags.pincode] = et_Pincode.text.toString().trim()
+                    map[Tags.country] = et_Country.text.toString().trim()
                     val request = ApiClient.client
                         .getRetrofitService()
                         .update_personal_details(map)

@@ -128,11 +128,13 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
 
     private fun initViews() {
         try {
-            btnEmailVerify.setOnClickListener(this);
-            facebookLoginButton.setOnClickListener(this);
-            googleLoginButton.setOnClickListener(this);
-            txtSendAgain.setOnClickListener(this);
-            withdraw_cash();
+            btnEmailVerify.setOnClickListener(this)
+            facebookLoginButton.setOnClickListener(this)
+            googleLoginButton.setOnClickListener(this)
+            txtSendAgain.setOnClickListener(this)
+            if ( pref!!.userdata!!.email !=null && !pref!!.userdata!!.email.isEmpty())
+                edtEmail.setText(""+pref!!.userdata!!.email)
+            withdraw_cash()
         } catch (e: Exception) {
             e.printStackTrace()
         }

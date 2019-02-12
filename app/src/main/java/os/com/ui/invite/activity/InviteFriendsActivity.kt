@@ -49,10 +49,8 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                 sharingIntent.type = "text/plain"
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name))
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TITLE, getString(R.string.app_name))
-                sharingIntent.putExtra(
-                    android.content.Intent.EXTRA_TEXT,
-                    "share with using referral code: " + txt_code!!.text
-                )
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Download the app and use my invite code  "
+                        +txt_code!!.text.toString().toUpperCase()+ " to get a Cash Bonus of Rs100")
                 startActivity(Intent.createChooser(sharingIntent, "share using"))
             }
         }
