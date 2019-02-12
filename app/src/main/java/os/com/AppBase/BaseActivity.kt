@@ -16,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -66,8 +67,8 @@ open class BaseActivity : AppCompatActivity() {
         pref = Prefs(this)
         GlobalScope.launch {
             val value = NotificationCountChannel.getInstance().notificationCountChannel.receive()
-            AppDelegate.LogT("value is=>"+value)
-            if (menu!=null) {
+            AppDelegate.LogT("value is=>" + value)
+            if (menu != null) {
                 getViewOfCartMenuItem(menu!!)
                 if (notificationView != null) {
                     notificationView.notifItemCountTv.text = value.toString()
@@ -177,6 +178,27 @@ open class BaseActivity : AppCompatActivity() {
             popupWindowView.ll_bottom.setOnClickListener {
                 walletPopupWindow!!.dismiss()
             }
+            popupWindowView.imvBonusInfo.setOnClickListener {
+                SimpleTooltip.Builder(baseContext)
+                    .anchorView(it)
+                    .text(resources.getString(R.string.bonus_info_text))
+                    .build()
+                    .show()
+            }
+            popupWindowView.imvWinningInfo.setOnClickListener {
+                SimpleTooltip.Builder(baseContext)
+                    .anchorView(it)
+                    .text(resources.getString(R.string.winning_info_text))
+                    .build()
+                    .show()
+            }
+            popupWindowView.imvDepositedInfo.setOnClickListener {
+                SimpleTooltip.Builder(baseContext)
+                    .anchorView(it)
+                    .text(resources.getString(R.string.deposited_info_text))
+                    .build()
+                    .show()
+            }
             /* show popup window*/
             my_account_call(anchorView)
         } catch (e: Exception) {
@@ -192,12 +214,9 @@ open class BaseActivity : AppCompatActivity() {
         walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
         walletPopupWindow!!.isOutsideTouchable = true
         walletPopupWindow!!.isFocusable = true
-//        walletPopupWindow!!.setBackgroundDrawable(
-//            BitmapDrawable(
-//                resources,
-//                Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
-//            )
-//        )
+
+
+
         popupWindowView.txtTotalAmount.setText("₹ " + data.total_balance)
         popupWindowView.txtDepositedAmount.setText("₹ " + data.deposit_amount)
         popupWindowView.txtWinningsAmount.setText("₹ " + data.winngs_amount)
@@ -321,6 +340,7 @@ open class BaseActivity : AppCompatActivity() {
                             onClickDialogue
                         )
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@BaseActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -431,6 +451,7 @@ open class BaseActivity : AppCompatActivity() {
                     AppDelegate.showToast(this@BaseActivity, response.response!!.message)
                     onClickDialogue.onClick(Tags.success, true)
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     onClickDialogue.onClick(Tags.fail, false)
                     AppDelegate.showToast(this@BaseActivity, response.response!!.message)
                 }
@@ -511,13 +532,15 @@ open class BaseActivity : AppCompatActivity() {
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@BaseActivity)
                 if (response.response!!.status!!) {
-                    Prefs(this@BaseActivity).clearSharedPreference()
-                    val intent = Intent(this@BaseActivity, LoginActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                    intent.putExtra("show",false)
-                    startActivity(intent)
-                    finish()
+                    logout()
+//                    Prefs(this@BaseActivity).clearSharedPreference()
+//                    val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//                    intent.putExtra("show",false)
+//                    startActivity(intent)
+//                    finish()
                 } else {
+                    logoutIfDeactivate(response.response!!.message!!)
                     AppDelegate.showToast(this@BaseActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {
@@ -544,6 +567,7 @@ open class BaseActivity : AppCompatActivity() {
                         showWalletPopUp(anchorView, response.response!!.data)
 //
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@BaseActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -598,6 +622,22 @@ open class BaseActivity : AppCompatActivity() {
 //                AppDelegate.hideProgressDialog(this@BaseActivity)
 //            }
 //        }
+    }
+
+    public fun logoutIfDeactivate(msg: String) {
+        if (!msg.isEmpty()) {
+            if (msg.equals("Invalid user id.", true))
+                logout()
+        }
+    }
+
+    fun logout() {
+        Prefs(this@BaseActivity).clearSharedPreference()
+        val intent = Intent(this@BaseActivity, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.putExtra("show", false)
+        startActivity(intent)
+        finish()
     }
 }
 

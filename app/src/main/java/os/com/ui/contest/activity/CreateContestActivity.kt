@@ -99,6 +99,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 if (response.response!!.status) {
                     sendIntent(response.response!!.data)
                 } else {
+                   logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CreateContestActivity)
@@ -262,6 +263,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                         )
                     }
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     txt_EntryFeeAmount.text = "-"
                     entryFee = ""
                     btn_CreateContest.isEnabled = false
@@ -348,6 +350,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                             response.response!!.data!!
                         )
                 } else {
+                   logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -442,6 +445,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                         , AppRequestCodes.INVITE_CONTEST
                     )
                 } else {
+                   logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {

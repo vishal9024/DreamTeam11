@@ -164,6 +164,7 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
                     btn_CreateTeam.setText(getString(R.string.create_team) + " " + count)
                     setAdapter()
                 } else {
+                   logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@MyTeamActivity)

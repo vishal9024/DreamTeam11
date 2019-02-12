@@ -81,6 +81,7 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
 //                        NotificationCountChannel.getInstance()
 //                            .notificationCountChannel.send(151)
                 } else {
+                   logoutIfDeactivate(response.response!!.message!!)
                     AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {

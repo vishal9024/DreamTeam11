@@ -106,6 +106,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
                         initSeries(mSeriesList!!)
 //                        finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         if (response.response!!.message != null)
                             AppDelegate.showToast(this@RankingActivity, response.response!!.message)
                     }
@@ -144,6 +145,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
                             setAdapter(rankingList!!)
 //                        finish()
                     } else {
+                       logoutIfDeactivate(response.response!!.message)
                         if (response.response!!.message != null)
                             AppDelegate.showToast(this@RankingActivity, response.response!!.message)
                     }

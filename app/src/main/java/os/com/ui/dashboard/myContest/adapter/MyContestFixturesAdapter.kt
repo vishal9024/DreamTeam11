@@ -133,7 +133,7 @@ class MyContestFixturesAdapter(val mContext: Context, var matchList: List<Match>
                                 itemView.txt_Countdown.setText(hours.toString() + "h " + minutes + "m " + seconds + "s")
                             }
                         } else {
-                            itemView.txt_Countdown.setText("Expired!!")
+                            itemView.txt_Countdown.setText("0 sec")
                         }
                     }
                 }

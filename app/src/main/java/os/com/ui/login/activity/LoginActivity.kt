@@ -116,7 +116,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LoginActivity)
                 if (response.response!!.status) {
-                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+//                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
                     startActivity(
                         Intent(this@LoginActivity, OTPActivity::class.java)
                             .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
@@ -285,7 +285,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     .getRetrofitService()
                     .social_login(loginRequest)
                 val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LoginActivity)
                 if (response.response!!.status) {
 //                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)

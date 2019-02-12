@@ -83,6 +83,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                             .putExtra("DreamTeam", true)
                     )
                 } else {
+                    logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
@@ -183,6 +184,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                             setAdapterUpcomingContest(response.response!!.data!!.upcoming_match!!)
                         }
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
@@ -232,6 +234,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     if (response.response!!.status) {
                         updateScoreBoard(response.response!!.data)
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)

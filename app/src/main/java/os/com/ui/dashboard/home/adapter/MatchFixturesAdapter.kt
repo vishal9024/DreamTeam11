@@ -73,8 +73,8 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
                                 matchList.get(position)
                             ).putExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
                         )
-                else
-                        AppDelegate.showAlert(mContext,mContext.getString(R.string.coming_soon))
+                    else
+                        AppDelegate.showAlert(mContext, mContext.getString(R.string.coming_soon))
             }
             holder.itemView.txt_Title.text = matchList.get(position).series_name
             holder.itemView.txt_Team1.text = matchList.get(position).local_team_name
@@ -125,7 +125,7 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
                                 itemView.txt_Countdown.setText(hours.toString() + "h " + minutes + "m " + seconds + "s")
                             }
                         } else {
-                            itemView.txt_Countdown.setText("Expired!!")
+                            itemView.txt_Countdown.setText("0 sec")
                         }
                     }
                 }

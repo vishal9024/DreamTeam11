@@ -477,8 +477,7 @@
                 android:paddingStart="@dimen/_15sdp"
                 android:paddingEnd="@dimen/_15sdp"
                 android:textColor="@color/textColorWhite"
-                android:enabled="false"
-                android:background="@drawable/botton_backgroundteam_selector"
+                android:background="@drawable/button_backgroundteam"
                 android:layout_height="wrap_content"/>
 
     </RelativeLayout>

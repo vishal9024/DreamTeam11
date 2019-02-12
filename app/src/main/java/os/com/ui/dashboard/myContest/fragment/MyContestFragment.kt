@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.BuildConfig
 import os.com.R
@@ -202,6 +203,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
                                 recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
                                 recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
                             } else {
+                                (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
 //                    AppDelegate.showToast(activity, response.response!!.message)
                             }
                         } catch (exception: Exception) {

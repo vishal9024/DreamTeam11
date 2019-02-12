@@ -112,6 +112,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                         AppDelegate.showToast(this@ChangePasswordActivity, response.response!!.message)
                         finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@ChangePasswordActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

@@ -18,6 +18,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.BuildConfig
 import os.com.R
@@ -277,6 +278,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                     recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
 
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
 //                    AppDelegate.showToast(activity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -314,6 +316,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                 if (response.response!!.status) {
                     updateBannerData(response.response!!.data)
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 swipeToRefresh.isRefreshing = false

@@ -41,10 +41,12 @@
                 android:id="@+id/imvUserProfile"
                 android:layout_width="@dimen/_60sdp"
                 android:layout_height="@dimen/_80sdp"
+                android:layout_marginRight="@dimen/_5sdp"
                 android:padding="@dimen/_5sdp"
                 android:src="@drawable/com_facebook_profile_picture_blank_square"
         />
         <LinearLayout
+
                 android:id="@+id/llName"
                 android:layout_toRightOf="@+id/imvUserProfile"
                 android:layout_width="match_parent"
@@ -204,8 +206,8 @@
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:textColor="@color/textColorBlack"
-                    android:text="Rank 1"
+                    android:textColor="@color/textColorGray"
+                    android:text="Event"
                     android:layout_height="match_parent"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_actual"
@@ -219,7 +221,7 @@
                     android:layout_weight="0.3"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorGray"
-                    android:text="7.5%"
+                    android:text="Actual"
                     android:layout_height="match_parent"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_rank"
@@ -231,8 +233,8 @@
                     android:paddingBottom="@dimen/_10sdp"
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
-                    android:textColor="@color/textColorBlack"
-                    android:text="@string/Rs20"
+                    android:textColor="@color/textColorGray"
+                    android:text="Points"
                     android:layout_height="match_parent"/>
         </LinearLayout>
         <View

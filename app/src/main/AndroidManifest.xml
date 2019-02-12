@@ -168,7 +168,10 @@
         <!--<meta-data-->
                 <!--android:name="com.google.android.geo.API_KEY"-->
                 <!--android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" />-->
-
+        <meta-data
+                android:name="io.fabric.ApiKey"
+                android:value="b56459f19c9162c72a127d9e031fcc8f00bee5b2"
+        />
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/facebook_app_id" />

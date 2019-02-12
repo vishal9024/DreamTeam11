@@ -96,6 +96,7 @@
                                 android:layout_height="wrap_content"/>
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imvDepositedInfo"
                             android:layout_gravity="center" android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@mipmap/info"
@@ -115,6 +116,7 @@
                             android:layout_weight="1"
                             android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtWinningsAmount"
                                 android:layout_marginTop="@dimen/_10sdp"
                                 android:layout_gravity="start"
                                 style="@style/TextStyleMedium"
@@ -123,7 +125,6 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                 android:layout_width="wrap_content"
-                                android:text="@string/Rs20"
                                 android:textColor="@color/colorSecondary"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
@@ -151,6 +152,7 @@
                             android:text="@string/withdraw"
                             android:layout_height="@dimen/_21sdp"/>
                     <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imvWinningInfo"
                             android:layout_marginStart="@dimen/_5sdp"
                             android:layout_gravity="center" android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -184,7 +186,7 @@
                                 android:textColor="@color/colorSecondary"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/txtWinningsAmount"
+
                                 android:layout_gravity="start"
                                 style="@style/TextStyleNormal"
                                 android:gravity="center_vertical"
@@ -198,6 +200,7 @@
 
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imvBonusInfo"
                             android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -214,6 +217,7 @@
               android:visibility="gone"
               android:background="@color/GrayColorOTP"/>
         <LinearLayout
+                android:visibility="gone"
                 android:background="@drawable/button_rounded_background_white_green"
                 android:layout_margin="@dimen/_5sdp"
                 android:orientation="horizontal"

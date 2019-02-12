@@ -104,6 +104,7 @@ class FixtureJoinedContestActivity : BaseActivity(), View.OnClickListener {
                     if (response.response!!.status) {
                         setAdapter(response.response!!.data!!.joined_contest!!)
                     } else {
+                      logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@FixtureJoinedContestActivity)

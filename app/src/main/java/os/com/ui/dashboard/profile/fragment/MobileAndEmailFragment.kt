@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.R
 import os.com.application.FantasyApplication
@@ -112,6 +113,7 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                             cardViewBeforeEmailVerify.visibility = View.VISIBLE
                         }
                     } else {
+                        (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -321,6 +323,7 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                         cardViewBeforeEmailVerify.visibility = View.GONE
                         cardViewAfterEmailVerify.visibility = View.VISIBLE
                     } else {
+                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {

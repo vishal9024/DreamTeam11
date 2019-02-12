@@ -83,6 +83,7 @@ class ChangeTeamNameActivity : BaseActivity(), View.OnClickListener {
                         AppDelegate.showToast(this@ChangeTeamNameActivity, response.response!!.message)
                         finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@ChangeTeamNameActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

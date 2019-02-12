@@ -317,8 +317,8 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
-
                 } else {
+                    logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
@@ -458,6 +458,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                             .putExtra("points",true)
                     )
                 } else {
+               logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)

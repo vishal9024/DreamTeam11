@@ -174,6 +174,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                             response.response!!.data!!
                         )
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@SelectWinnersContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -267,6 +268,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                         , AppRequestCodes.INVITE_CONTEST
                     )
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@SelectWinnersContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {

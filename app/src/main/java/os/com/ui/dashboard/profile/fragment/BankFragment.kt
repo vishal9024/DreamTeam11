@@ -24,6 +24,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.R
 import os.com.application.FantasyApplication
@@ -129,7 +130,7 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(activity!!)
-                    if (response.response!!.isStatus) {0
+                    if (response.response!!.isStatus) {
                         if(response.response.data.pen_verify==2){
                             cardviewBankBeforeVerify.visibility=View.GONE
                             cardViewAfterBankVerify.visibility=View.VISIBLE
@@ -149,6 +150,7 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                             activity!!.finish()
                         }
                     } else {
+                        (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -176,6 +178,7 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                         edtBankname.setText(response.data.bank)
                         edtBankbranch.setText(response.data.branch)
                     } else {
+//                        (activity as  BaseActivity).logoutIfDeactivate(response.message)
                         AppDelegate.showToast(activity!!, response!!.message)
                         edtBankname.setText("")
                         edtBankbranch.setText("")
@@ -214,6 +217,7 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                         AppDelegate.showToast(activity!!, response.response!!.message)
                         withdraw_cash()
                     } else {
+                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {

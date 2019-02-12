@@ -175,6 +175,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
 //                    generatePayTmCheckSumRequest.CHECKSUMHASH = response.response!!.data!!.checksum
                     startPaytmTransaction(generatePayTmCheckSumRequest, response.response!!.data!!.checksum)
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
@@ -273,6 +274,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                         finish()
                     }
                 } else {
+                   logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
@@ -370,14 +372,18 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
             if (!data!!.max_discount.isEmpty())
                 max_discount = data!!.max_discount.toDouble()
             tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
-                    " is reqired to avail this offer"
+                    " is required to avail this offer"
+            et_addCash.setText(min_amount.roundToInt().toString())
+            applyOffer(max_discount)
         } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
             if (!data_OFFER!!.min_amount.isEmpty())
                 min_amount = data_OFFER!!.min_amount.toDouble()
             if (!data_OFFER!!.max_discount.isEmpty())
                 max_discount = data_OFFER!!.max_discount.toDouble()
             tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
-                    " is reqired to avail this offer"
+                    " is required to avail this offer"
+            et_addCash.setText(min_amount.roundToInt().toString())
+            applyOffer(max_discount)
         }
         et_addCash.setText(min_amount.roundToInt().toString())
 
@@ -415,7 +421,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                     if (discountedValue > max_discount)
                         discountedValue = max_discount
                 } else
-                    discountedValue = discountAmount.toDouble()
+                    discountedValue = discountAmount
                 txt_offer.text = getString(R.string.Rs) + " " + discountedValue
             }
         } else if (AddTYPE == OFFER_BANNER) {

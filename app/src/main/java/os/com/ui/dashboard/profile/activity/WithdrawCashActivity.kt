@@ -39,9 +39,9 @@ class WithdrawCashActivity : BaseActivity(), View.OnClickListener {
                     tabMobileAndEmail.setTextColor(resources.getColor(R.color.colorSecondary))
                     tabPAN.setTextColor(resources.getColor(R.color.black))
                     tabBank.setTextColor(resources.getColor(R.color.black))
-                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_bg))
-                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
-                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
+                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_bg))
+                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
+                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
                     selectedFragment = MobileAndEmailFragment()
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -52,9 +52,9 @@ class WithdrawCashActivity : BaseActivity(), View.OnClickListener {
                     tabMobileAndEmail.setTextColor(resources.getColor(R.color.black))
                     tabPAN.setTextColor(resources.getColor(R.color.colorSecondary))
                     tabBank.setTextColor(resources.getColor(R.color.black))
-                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
-                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_bg))
-                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
+                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
+                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_bg))
+                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
                     selectedFragment = PanFragment()
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -65,9 +65,9 @@ class WithdrawCashActivity : BaseActivity(), View.OnClickListener {
                     tabMobileAndEmail.setTextColor(resources.getColor(R.color.black))
                     tabPAN.setTextColor(resources.getColor(R.color.black))
                     tabBank.setTextColor(resources.getColor(R.color.colorSecondary))
-                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
-                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_white_bg))
-                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this,R.drawable.tabs_bg))
+                    tabMobileAndEmail.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
+                    tabPAN.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_white_bg))
+                    tabBank.setBackgroundDrawable(ContextCompat.getDrawable(this, R.drawable.tabs_bg))
                     selectedFragment = BankFragment()
                     val transaction = supportFragmentManager.beginTransaction()
                     transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -109,7 +109,6 @@ class WithdrawCashActivity : BaseActivity(), View.OnClickListener {
     }
 
 
-
     //0 false 1 true 2 verifying
 
     private fun withdraw_cash() {
@@ -127,12 +126,13 @@ class WithdrawCashActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@WithdrawCashActivity)
                     if (response.response!!.isStatus) {
-                        emailVerify=response.response.data.isEmail_verify
-                        panVerify=response.response.data.pen_verify
-                        bankVerify=response.response.data.bank_account_verify
+                        emailVerify = response.response.data.isEmail_verify
+                        panVerify = response.response.data.pen_verify
+                        bankVerify = response.response.data.bank_account_verify
                         //AppDelegate.showToast(this@WithdrawCashActivity, response.response!!.message)
                         //finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@WithdrawCashActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

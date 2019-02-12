@@ -130,6 +130,7 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
                         txtWinningsAmount.setText("₹ "+response.response.data.winngs_amount)
                         txtCashBonusAmount.setText("₹ "+response.response.data.bonus)
                     } else {
+                      logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@MyAccountActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatTextView
-        android:background="@color/vicecaptainColor"
-        android:id="@+id/txt_message"
-        style="@style/TextStyleMedium"
-        android:textColor="@color/white"
-        android:text="@string/withdraw"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp"
-        android:paddingBottom="@dimen/_15sdp"
-        android:paddingTop="@dimen/_15sdp"
-        android:textSize="@dimen/_13sdp"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:android="http://schemas.android.com/apk/res/android"/>
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.appcompat.widget.AppCompatTextView
+            android:background="@color/vicecaptainColor"
+            android:id="@+id/txt_message"
+            style="@style/TextStyleMedium"
+            android:textColor="@color/white"
+            android:text="@string/withdraw"
+            android:gravity="center_vertical"
+            android:paddingStart="@dimen/_10sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_15sdp"
+            android:paddingTop="@dimen/_15sdp"
+            android:textSize="@dimen/_13sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

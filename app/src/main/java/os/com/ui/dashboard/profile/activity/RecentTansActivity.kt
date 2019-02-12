@@ -77,6 +77,7 @@ class RecentTansActivity : BaseActivity(), View.OnClickListener {
                     if (response.response!!.isStatus) {
                         setAdapter(response.response!!.data)
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@RecentTansActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

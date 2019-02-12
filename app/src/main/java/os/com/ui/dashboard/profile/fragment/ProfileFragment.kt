@@ -218,6 +218,7 @@ private fun ApplyOfferCodeApi() {
                             .putExtra("AddType", IntentConstant.OFFER)
                     )
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(context, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -359,6 +360,7 @@ private fun getProfileData() {
                         initData(response.response.data)
 //                        AppDelegate.showToast(context, response.response!!.message)
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(context, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -393,6 +395,7 @@ private fun getTeamImageData() {
                     }
 //                        AppDelegate.showToast(context, response.response!!.message)
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                     if (response.response!!.message != null)
                         AppDelegate.showToast(context, response.response!!.message)
                 }
@@ -432,6 +435,7 @@ private fun getUpdateTeamImage(selectedImageId: Int) {
                         ).show()
 //                        AppDelegate.showToast(context, response.response!!.message)
                 } else {
+                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                     if (response.response!!.message != null)
                         AppDelegate.showToast(context, response.response!!.message)
                 }

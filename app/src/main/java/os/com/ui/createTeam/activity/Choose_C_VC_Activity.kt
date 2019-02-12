@@ -385,6 +385,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
                         finish()
                     }
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message)
                 }
             } catch (exception: Exception) {

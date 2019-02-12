@@ -110,6 +110,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                         setAdapter()
                         sortBySelector(Players)
                     } else {
+                       logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@PlayerStatsActivity)

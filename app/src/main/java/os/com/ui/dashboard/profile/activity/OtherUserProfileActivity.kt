@@ -91,6 +91,7 @@ class OtherUserProfileActivity : BaseActivity(), View.OnClickListener {
 //                        initSeries(mSeriesList!!)
 //                        finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         if (response.response!!.message != null)
                             AppDelegate.showToast(this@OtherUserProfileActivity, response.response!!.message)
                     }

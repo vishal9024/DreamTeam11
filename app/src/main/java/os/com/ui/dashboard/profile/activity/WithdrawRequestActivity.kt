@@ -106,6 +106,7 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
                         txtWithdrawAccountNumber.setText("A/C "+response.response.data.account_no)
                         txtTotalWonnings.setText("₹ "+response.response.data.winning_amount)
                     } else {
+                       logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@WithdrawRequestActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -139,6 +140,7 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
                         AppDelegate.showToast(this@WithdrawRequestActivity, response.response!!.message)
                         finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@WithdrawRequestActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

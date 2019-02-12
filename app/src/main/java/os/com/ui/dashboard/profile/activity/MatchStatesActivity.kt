@@ -110,6 +110,7 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
 //                        initSeries(mSeriesList!!)
 //                        finish()
                     } else {
+                       logoutIfDeactivate(response.response!!.message)
                         if (response.response!!.message != null)
                             AppDelegate.showToast(this@MatchStatesActivity, response.response!!.message)
                     }

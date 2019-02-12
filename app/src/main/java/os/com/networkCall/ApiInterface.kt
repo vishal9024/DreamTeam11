@@ -245,8 +245,6 @@ interface ApiInterface {
     fun entryPerTeam(@Body request: Map<String, String>): Deferred<EntryFeeResponse>
 
 
-
-
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_prize_breakup)
     fun contest_prize_breakup(@Body request: Map<String, String>): Deferred<ContestSizePriceBreakup>
@@ -258,7 +256,5 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.contest_price_breakup)
     fun contest_price_breakup(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
-
-
 
 }

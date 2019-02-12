@@ -56,13 +56,14 @@ class BottomSheetPriceBreakUpFragment() : BottomSheetDialogFragment() {
             dialog.imvUserProfile,
             FantasyApplication.getInstance().options
         )
+        dialog.txtPoints.text=data.points
         dialog.txt_label.text = data.player_name
         dialog.txtSelectedBy.text = data.selection_percent
         dialog.txtCredits.text = data.player_credit
         if (!data.team_number !!.isEmpty()) {
             var name = StringBuilder()
             for (dat in data.team_number!!)
-                name.append(dat).append(", ")
+                name.append("T"+dat).append(", ")
 
             var finalName = name.toString()
             if (finalName.length > 3)

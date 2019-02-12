@@ -131,6 +131,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     if (!response.response!!.data!!.url.isEmpty())
                         DownloadTeam(response.response!!.data!!.url)
                 } else {
+                   logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
@@ -310,6 +311,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     setdata(data!!)
                     UpdateView(data!!)
                 } else {
+                    logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
@@ -366,6 +368,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     if (response.response!!.status) {
                         updateScoreBoard(response.response!!.data)
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
@@ -508,6 +511,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                         )
                     }
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)

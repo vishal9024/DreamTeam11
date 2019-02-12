@@ -189,6 +189,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                 if (response.response!!.status) {
                     finish()
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@MyTeamSelectActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -318,6 +319,7 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
                     }
                     setAdapter()
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@MyTeamSelectActivity)

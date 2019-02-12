@@ -86,6 +86,7 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
                       if (response.response!!.status) {
                           getData(response.response!!.data!!)
                       } else {
+                         logoutIfDeactivate(response.response!!.message)
                           AppDelegate.showToast(this@InviteCodeActivity, response.response!!.message)
                       }
                   } catch (exception: Exception) {

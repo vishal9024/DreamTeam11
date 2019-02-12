@@ -302,6 +302,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                     }
 
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestActivity)

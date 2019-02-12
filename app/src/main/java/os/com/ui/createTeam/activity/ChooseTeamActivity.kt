@@ -384,43 +384,68 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 addSubstituteData()
             }
             R.id.btn_Next -> {
-                if (selectPlayer!!.substitute)
-                    AppDelegate.showToast(this, "Please select substitute.")
-                else {
-                    var requestCode = UPDATE_ACTIVITY
-                    if (createOrJoin == CREATE_CONTEST)
-                        requestCode = CREATE_CONTEST
-                    startActivityForResult(
-                        Intent(this, Choose_C_VC_Activity::class.java)
-                            .putExtra(IntentConstant.MATCH, match)
-                            .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                            .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
-                            .putExtra(IntentConstant.ISEDIT, from)
-                            .putExtra(IntentConstant.TEAM_ID, team_id)
-                            .putExtra(IntentConstant.CONTEST_ID, contest_id)
-                            .putExtra(IntentConstant.CREATE_OR_JOIN, createOrJoin)
-                            .putParcelableArrayListExtra(
-                                IntentConstant.WK,
-                                wkList as java.util.ArrayList<out Parcelable>
-                            )
-                            .putParcelableArrayListExtra(
-                                IntentConstant.BATSMEN,
-                                batsmenList as java.util.ArrayList<out Parcelable>
-                            )
-                            .putParcelableArrayListExtra(
-                                IntentConstant.BOWLER,
-                                bowlerList as java.util.ArrayList<out Parcelable>
-                            )
-//                        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
-                            .putParcelableArrayListExtra(
-                                IntentConstant.AR,
-                                arList as java.util.ArrayList<out Parcelable>
-                            )
-                        , requestCode
-                    )
+                val remainingPlayer = selectPlayer!!.selectedPlayer
+                if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
+                    if (selectPlayer!!.selectedPlayer != 11)
+                        showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")
+                    else if (!selectPlayer!!.substitute) {
+                        showSnackBar(toolbar, "Please select substitute.")
+                    } else {
+                        gotoNext()
+                    }
+                } else {
+                    if (selectPlayer!!.selectedPlayer != 11)
+                        showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")
+                    else {
+                        gotoNext()
+                    }
                 }
             }
         }
+    }
+
+    fun showSnackBar(view: View, msg: String) {
+        val snack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+        val view = snack.getView()
+        view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+        val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+        params.gravity = Gravity.TOP
+        view.setLayoutParams(params)
+        snack.show()
+    }
+
+    fun gotoNext() {
+        var requestCode = UPDATE_ACTIVITY
+        if (createOrJoin == CREATE_CONTEST)
+            requestCode = CREATE_CONTEST
+        startActivityForResult(
+            Intent(this, Choose_C_VC_Activity::class.java)
+                .putExtra(IntentConstant.MATCH, match)
+                .putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer)
+                .putExtra(IntentConstant.ISEDIT, from)
+                .putExtra(IntentConstant.TEAM_ID, team_id)
+                .putExtra(IntentConstant.CONTEST_ID, contest_id)
+                .putExtra(IntentConstant.CREATE_OR_JOIN, createOrJoin)
+                .putParcelableArrayListExtra(
+                    IntentConstant.WK,
+                    wkList as java.util.ArrayList<out Parcelable>
+                )
+                .putParcelableArrayListExtra(
+                    IntentConstant.BATSMEN,
+                    batsmenList as java.util.ArrayList<out Parcelable>
+                )
+                .putParcelableArrayListExtra(
+                    IntentConstant.BOWLER,
+                    bowlerList as java.util.ArrayList<out Parcelable>
+                )
+//                        .addFlags(Intent.FLAG_ACTIVITY_FORWARD_RESULT)
+                .putParcelableArrayListExtra(
+                    IntentConstant.AR,
+                    arList as java.util.ArrayList<out Parcelable>
+                )
+            , requestCode
+        )
     }
 
     private fun addSubstituteData() {
@@ -597,7 +622,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 AppDelegate.hideProgressDialog(this@ChooseTeamActivity)
                 if (response.response!!.status) {
                     playerList = response.response!!.data!!
-                    AppDelegate.LogT("PlayerList=>"+playerList!!.size)
+                    AppDelegate.LogT("PlayerList=>" + playerList!!.size)
                     var playerListNull: MutableList<Data>? = ArrayList()
                     for (i in 0 until response.response!!.data!!.size) {
                         if (response.response!!.data!![i].player_record == null) {
@@ -632,6 +657,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         updateData()
                     else playerTypeSelector(WK, wkList)
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ChooseTeamActivity)
@@ -875,9 +901,16 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
             txt_substitute.isEnabled = selectPlayer!!.selectedPlayer == 11
             txt_substitute.setOnClickListener(this)
-            btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11 /*&& selectPlayer!!.substitute*/
+            if (selectPlayer!!.selectedPlayer == 11 && selectPlayer!!.substitute)
+                btn_Next.setBackgroundResource(R.drawable.button_selected)
+            else
+                btn_Next.setBackgroundResource(R.drawable.button_backgroundteam)
         } else {
-            btn_Next.isEnabled = selectPlayer!!.selectedPlayer == 11
+            if (selectPlayer!!.selectedPlayer == 11)
+                btn_Next.setBackgroundResource(R.drawable.button_selected)
+            else
+                btn_Next.setBackgroundResource(R.drawable.button_backgroundteam)
+//            btn_Next.isActivated = selectPlayer!!.selectedPlayer == 11
         }
         txt_player.text = selectPlayer!!.selectedPlayer.toString() + "/11"
         txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"

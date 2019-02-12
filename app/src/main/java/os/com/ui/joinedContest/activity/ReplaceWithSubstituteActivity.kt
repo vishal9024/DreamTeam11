@@ -129,6 +129,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
                     setResult(Activity.RESULT_OK, intent)
                     finish()
                 } else {
+                    logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ReplaceWithSubstituteActivity)
@@ -211,6 +212,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
                     AppDelegate.LogT("Size b4==>" + playerList!!.size)
                     updateData()
                 } else {
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ReplaceWithSubstituteActivity)

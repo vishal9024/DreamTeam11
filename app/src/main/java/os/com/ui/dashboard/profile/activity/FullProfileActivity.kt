@@ -165,6 +165,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                             initData(response.response.data)
 //                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -210,6 +211,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                         finish()
                     } else {
+                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                     }
                 } catch (exception: Exception) {

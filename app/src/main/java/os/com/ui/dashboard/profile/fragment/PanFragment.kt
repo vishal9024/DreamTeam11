@@ -28,6 +28,7 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
+import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
 import os.com.R
 import os.com.application.FantasyApplication
@@ -153,6 +154,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                         }
                         txtVerifiedMobileNumber.setText(response.response.data.mobile_no)
                     } else {
+                        (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -227,6 +229,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                         //AppDelegate.showToast(activity!!, response.response!!.message)
                         //finish()
                     } else {
+                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {
