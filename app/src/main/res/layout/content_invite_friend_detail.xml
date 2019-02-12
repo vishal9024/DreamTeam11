@@ -69,6 +69,7 @@
                 android:layout_height="@dimen/_15sdp"
                 android:layout_toRightOf="@+id/txt_label2"
                 android:layout_marginLeft="@dimen/_5sdp"
+                android:layout_centerVertical="true"
         android:src="@mipmap/info"/>
         <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtToBeEarnAmount"

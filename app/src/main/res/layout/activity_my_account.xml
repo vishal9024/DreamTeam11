@@ -245,6 +245,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:padding="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatImageView
                             android:layout_gravity="center"

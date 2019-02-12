@@ -19,7 +19,6 @@ import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.ui.invite.activity.InviteCodeActivity
 import os.com.ui.invite.activity.InviteFriendsActivity
 
-
 /**
  * Created by heenas on 3/5/2018.
  */
@@ -40,7 +39,6 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
                       intent.putExtra("PAGE_SLUG", "How to Play")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.how_to_play_tab)
                       startActivity(intent)
-
                   }
                   R.id.tv_helpDesk -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
@@ -78,7 +76,6 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
           } catch (e: Exception) {
               e.printStackTrace()
           }
-
     }
     /* show logout confirmation popup to user*/
 
@@ -104,7 +101,6 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
 
     private fun initViews() {
         try {
-
             if (activity is DashBoardActivity)
                 (activity as DashBoardActivity).setMenu(true, false, false, false, false)
             tv_invite_friends.setOnClickListener(this)
@@ -125,10 +121,6 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
-
 //        startActivity(Intent(this, WebViewActivity::class.java).putExtra(IntentConstant.PAGE_SLUG, "terms-of-use"))
     }
-
-
 }

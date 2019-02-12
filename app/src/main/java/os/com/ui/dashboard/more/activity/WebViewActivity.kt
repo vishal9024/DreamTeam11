@@ -2,6 +2,7 @@ package os.com.ui.dashboard.more.activity
 
 
 import android.os.Bundle
+import android.util.Log
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -21,6 +22,7 @@ class WebViewActivity : BaseActivity() {
         setContentView(R.layout.activity_webview)
         slug = if (intent.hasExtra("PAGE_SLUG")) intent.getStringExtra("PAGE_SLUG") else ""
         url = if (intent.hasExtra("URL")) intent.getStringExtra("URL") else ""
+
         initView()
     }
 
@@ -35,12 +37,12 @@ class WebViewActivity : BaseActivity() {
             toolbarTitleTv.setText(slug);
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
+            Log.e("url",url)
 
 //            // Initialize Link by loading the Link initiaization URL in the Webview
 //            if (url != "")
 //                webView.loadUrl(url)
-
+            AppDelegate.showProgressDialogCancelable(this@WebViewActivity)
             webView.setWebViewClient(object : WebViewClient() {
 
                 //If you will not use this method url links are opeen in new brower not in webview
@@ -52,7 +54,7 @@ class WebViewActivity : BaseActivity() {
                 //Show loader on url load
                 override fun onLoadResource(view: WebView, url: String) {
 //                    progress_bar.visibility= View.VISIBLE
-                    AppDelegate.showProgressDialogCancelable(this@WebViewActivity)
+
 
                 }
 

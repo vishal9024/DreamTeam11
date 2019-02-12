@@ -124,7 +124,9 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                   mData=data
                   if (data.total_fields!=null)
                       if (data.total_fields>0) {
-                          txtFriendsCount.text = "" + data.total_fields + " Freinds Joined"
+                          if (data.total_fields==1)
+                          txtFriendsCount.text = "" + data.total_fields + " Friend Joined"
+                          else txtFriendsCount.text = "" + data.total_fields + " Friends Joined"
                           llInvited.visibility=View.VISIBLE
                           txtNotInviteFriend.visibility=View.GONE
                       }else{

@@ -3,6 +3,7 @@ package os.com.ui.invite.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_invitecode.*
 import kotlinx.coroutines.Dispatchers
@@ -20,6 +21,7 @@ import os.com.ui.contest.activity.ContestDetailActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.invite.apiResponse.getContestInviteResponse.Data
 import os.com.utils.AppDelegate
+import os.com.utils.networkUtils.NetworkUtils
 
 class InviteCodeActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
@@ -28,7 +30,12 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
               when (view!!.id) {
                   R.id.btn_join -> {
                       if (!et_inviteCode.text.toString().isEmpty())
-                          callInviteContestCode()
+                          if (NetworkUtils.isConnected()) {
+                              callInviteContestCode()
+                          } else
+                              Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                      else
+                          Toast.makeText(this, getString(R.string.please_enter_code), Toast.LENGTH_LONG).show()
                   }
               }
           } catch (e: Exception) {
@@ -79,6 +86,7 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
                       if (response.response!!.status) {
                           getData(response.response!!.data!!)
                       } else {
+                          AppDelegate.showToast(this@InviteCodeActivity, response.response!!.message)
                       }
                   } catch (exception: Exception) {
                       AppDelegate.hideProgressDialog(this@InviteCodeActivity)
@@ -108,9 +116,10 @@ class InviteCodeActivity : BaseActivity(), View.OnClickListener {
 
 
               startActivity(
-                  Intent(this, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
-                      IntentConstant.CONTEST_TYPE, FIXTURE
-                  ).putExtra(IntentConstant.DATA, data.contest_id)
+                  Intent(this, ContestDetailActivity::class.java)
+                      .putExtra(IntentConstant.MATCH, match)
+                      .putExtra(IntentConstant.CONTEST_TYPE, FIXTURE)
+                      .putExtra(IntentConstant.DATA, data.contest_id)
                       .putExtra(IntentConstant.FROM, INVITE_CONTEST)
               )
 

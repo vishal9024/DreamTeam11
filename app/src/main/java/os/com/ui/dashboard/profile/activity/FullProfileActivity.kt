@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -42,7 +41,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             dobCalendar.set(Calendar.YEAR, year)
             dobCalendar.set(Calendar.MONTH, monthOfYear)
             dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            et_dob.setText("" +dayOfMonth+ "-" + monthOfYear + 1 + "-" + year);
+            et_dob.setText("" +dayOfMonth+ "-" + (monthOfYear + 1) + "-" + year);
 //            dob = state.toString() + "-" + Util.setZeroBeforeNine(monthOfYear + 1) + "-" +
 //                    Util.setZeroBeforeNine(dayOfMonth)
 
@@ -94,7 +93,6 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_full_profile)
         initViews()
-
     }
 
     private fun initState() {
@@ -114,7 +112,6 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                         state = parent.getItemAtPosition(position).toString()
                     }
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             })
         } catch (e: Exception) {
@@ -128,7 +125,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
-            toolbarTitleTv.setText(R.string.personal_detail)
+            toolbarTitleTv.setText(R.string.update_profile)
             setMenu(false, false, false, false,false)
             initState()
             ll_male.setOnClickListener(this)
@@ -161,7 +158,7 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                         .getRetrofitService()
                         .personal_details(map)
                     val response = request.await()
-                    AppDelegate.LogT("Response=>" + response);
+                    AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@FullProfileActivity)
                     if (response.response!!.status) {
                         if (response.response.data != null)
@@ -204,12 +201,13 @@ class FullProfileActivity : BaseActivity(), View.OnClickListener {
                         .getRetrofitService()
                         .update_personal_details(map)
                     val response = request.await()
-                    AppDelegate.LogT("Response=>" + response);
+                    AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@FullProfileActivity)
                     if (response.response!!.status) {
 //                        if (response.response.data != null)
 //                            initData(response.response.data)
 //                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
+                        AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)
                         finish()
                     } else {
                         AppDelegate.showToast(this@FullProfileActivity, response.response!!.message)

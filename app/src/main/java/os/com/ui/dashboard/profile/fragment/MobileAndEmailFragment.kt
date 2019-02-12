@@ -36,18 +36,19 @@ import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
-class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiClient.OnConnectionFailedListener{
+class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     override fun onConnectionFailed(p0: ConnectionResult) {
 
     }
 
     override fun onClick(p0: View?) {
-        try{
-            when(p0!!.id){
+        try {
+            when (p0!!.id) {
                 R.id.btnEmailVerify -> {
-                    if(TextUtils.isEmpty(edtEmail.text.toString().trim())){
+                    if (TextUtils.isEmpty(edtEmail.text.toString().trim())) {
                         Toast.makeText(context!!, getString(R.string.enter_email_to_proceed), Toast.LENGTH_LONG).show()
-                    }else{
+                    } else {
+
                         verify_email(edtEmail.text.toString().trim())
                     }
                 }
@@ -57,9 +58,14 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                 R.id.googleLoginButton -> {
                     googlePlusLogin()
                 }
+                R.id.txtSendAgain -> {
+                    if (!TextUtils.isEmpty(edtEmail.text.toString().trim()))
+                        verify_email(edtEmail.text.toString().trim())
+                }
+
             }
 
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -96,15 +102,15 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                     if (response.response!!.isStatus) {
                         txtVerifiedMobileNumber.setText(response.response.data.mobile_no)
                         txtVerifiedEmail.setText(response.response.data.email)
-                       if(response.response!!.data.isEmail_verify){
-                           llEmailVerified.visibility = View.VISIBLE
-                           llMobileVerified.visibility = View.VISIBLE
-                           cardViewBeforeEmailVerify.visibility = View.GONE
-                       }else{
-                           llMobileVerified.visibility = View.VISIBLE
-                           cardViewAfterEmailVerify.visibility = View.GONE
-                           cardViewBeforeEmailVerify.visibility = View.VISIBLE
-                       }
+                        if (response.response!!.data.isEmail_verify) {
+                            llEmailVerified.visibility = View.VISIBLE
+                            llMobileVerified.visibility = View.VISIBLE
+                            cardViewBeforeEmailVerify.visibility = View.GONE
+                        } else {
+                            llMobileVerified.visibility = View.VISIBLE
+                            cardViewAfterEmailVerify.visibility = View.GONE
+                            cardViewBeforeEmailVerify.visibility = View.VISIBLE
+                        }
                     } else {
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
@@ -119,16 +125,17 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
 
 
     private fun initViews() {
-        try{
+        try {
             btnEmailVerify.setOnClickListener(this);
             facebookLoginButton.setOnClickListener(this);
             googleLoginButton.setOnClickListener(this);
             txtSendAgain.setOnClickListener(this);
             withdraw_cash();
-        }catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
+
     lateinit var socialModel: SocialModel
     var callbackManager: CallbackManager? = null
     var isCalledOnce: Boolean? = false
@@ -160,9 +167,13 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                                     if (NetworkUtils.isConnected()) {
                                         //checkUserVerify(socialModel)
                                         edtEmail.setText(socialModel!!.email_address)
-                                        edtEmail.isEnabled=false
+                                        edtEmail.isEnabled = false
                                     } else
-                                        Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                                        Toast.makeText(
+                                            activity!!,
+                                            getString(R.string.error_network_connection),
+                                            Toast.LENGTH_LONG
+                                        ).show()
 
 
                                 }
@@ -215,7 +226,7 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
         if (mGoogleApiClient == null || !mGoogleApiClient!!.isConnected) {
             try {
                 mGoogleApiClient = GoogleApiClient.Builder(activity!!)
-                    .enableAutoManage(activity!!,this)
+                    .enableAutoManage(activity!!, this)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                     .build()
             } catch (e: Exception) {
@@ -271,9 +282,13 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                     socialModel.image = user.photoUrl.toString()
                     if (NetworkUtils.isConnected()) {
                         edtEmail.setText(socialModel!!.email_address)
-                        edtEmail.isEnabled=false
+                        edtEmail.isEnabled = false
                     } else
-                        Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            activity!!,
+                            getString(R.string.error_network_connection),
+                            Toast.LENGTH_LONG
+                        ).show()
                     signOut()
                 } else {
                     AppDelegate.LogT("signInWithCredential:failure" + task.exception)
@@ -303,8 +318,8 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                     AppDelegate.hideProgressDialog(activity!!)
                     if (response.response!!.isStatus) {
                         AppDelegate.showToast(activity!!, response.response!!.message)
-                        cardViewBeforeEmailVerify.visibility=View.GONE
-                        cardViewAfterEmailVerify.visibility=View.VISIBLE
+                        cardViewBeforeEmailVerify.visibility = View.GONE
+                        cardViewAfterEmailVerify.visibility = View.VISIBLE
                     } else {
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }

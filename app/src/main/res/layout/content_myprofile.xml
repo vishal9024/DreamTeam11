@@ -386,6 +386,7 @@
                             android:background="@drawable/button_rounded_background_contest"
                             android:gravity="center"
                             android:backgroundTint="@color/colorSecondary"
+                            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                             android:layout_width="wrap_content"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:text="@string/apply_code"

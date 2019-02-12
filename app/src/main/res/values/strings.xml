@@ -296,7 +296,10 @@
     <string name="enter_email">Please enter email address.</string>
     <string name="valid_email">Please enter valid email address.</string>
     <string name="enter_password">Password can\'t be empty.</string>
-    <string name="short_password">Password must be 6 characters long.</string>
+    <string name="short_password">Password must be at least 6 characters long.</string>
+    <string name="old_short_password">Old password must be at least 6 characters long.</string>
+    <string name="new_short_password">New password must be at least 6 characters long</string>
+    <string name="confrim_short_password">Confrim password must be at least 6 characters long.</string>
     <string name="invalid_password">Password must contain atleast one alphabet and numeric character</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="resend_in">Resend in</string>
@@ -305,7 +308,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="want_to_logout">Are you sure you want to logout?</string>
-    <string name="update_profile">update profile</string>
+    <string name="update_profile">Update Profile</string>
     <string name="name">Name</string>
     <string name="personal_detail">PERSONAL DETAIL</string>
     <string name="your_favourite_teams">Your Favourite Teams</string>
@@ -342,7 +345,11 @@
     <string name="select_match">Select Match</string>
     <string name="india">India</string>
     <string name="empty_password">please enter password</string>
-    <string name="not_same_password">password and confirm password does not match</string>
+    <string name="old_empty_password">please enter old password</string>
+    <string name="new_empty_password">please enter new password</string>
+    <string name="confrim_empty_password">please enter confirm password</string>
+    <!--<string name="not_same_password">password and confirm password does not match</string>-->
+    <string name="not_same_password">Passwords do not match</string>
     <string name="work_with_us">Work with Us</string>
     <string name="team">Team</string>
     <string name="choose_total_no_of_winners">Choose total no. of winners</string>
@@ -441,7 +448,6 @@
     <string name="cancel">Cancel</string>
     <string name="replace_a_player">Replace Substitute</string>
     <string name="replace_with_substitute">Replace with Substitute</string>
-
     <string name="enter_your_team_name">Enter your team name eg. XYZ</string>
     <string name="save_team_name">Save team name</string>
     <string name="keep_this_in_mind">Keep this in mind</string>
@@ -455,7 +461,7 @@
     <string name="empty_team_name">Please enter Team Name</string>
     <string name="short_team_name">Team name must be 6 characters long.</string>
     <string name="select_your_team_name">Select Your Team Name</string>
-    <string name="cash_bonus_to_be_eraned">Cash bonus to be eraned:</string>
+    <string name="cash_bonus_to_be_eraned">Cash bonus to be earned:</string>
     <string name="invited_friends">Invited Friends</string>
     <string name="eranings_through_friends">Earnings through Friends</string>
     <string name="to_be_earned">To be earned</string>
@@ -550,14 +556,13 @@
     <string name="enter_amount_to_proceed">please enter amount to proceed withdraw.</string>
     <string name="valid_amount_to_proceed">please enter valid amount to proceed withdraw.</string>
     <string name="offer_info_text">Each code can be redeemed for Cash Bonus once. Code can be earned on 3rd Party Apps
-        or through exclusive.
+        or through exclusive Promotions.
     </string>
     <string name="deposited_info_text">Money deposited by you can use to join any contests but can\'t withdraw</string>
     <string name="winning_info_text">Money that you can withdraw or re-use to join any contests</string>
     <string name="bonus_info_text">Money that can you use to join any public contes</string>
-    <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for
-        the matches your friendshave jioned cash contest in.
-    </string>
+    <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for the matches your friends have joined cash contest in.</string>
     <string name="choose_winning_breakup">Choose Winning BreakUp</string>
     <string name="enterphone_or">Enter phone number or email.</string>
+    <string name="please_enter_code">Please enter code</string>
 </resources>

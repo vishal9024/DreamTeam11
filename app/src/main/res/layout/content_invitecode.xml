@@ -41,6 +41,8 @@
                 android:id="@+id/et_inviteCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                android:singleLine="true"
                 android:hint="@string/invite_code"
                 android:inputType="textEmailAddress"
                 android:imeOptions="actionDone"

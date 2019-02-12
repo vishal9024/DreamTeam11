@@ -25,9 +25,9 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                 R.id.btn_ChangePassword -> {
                     //old password check
                     if (TextUtils.isEmpty(et_OldPassword.text.toString()))
-                        AppDelegate.showToast(this, getString(R.string.empty_password))
+                        AppDelegate.showToast(this, getString(R.string.old_empty_password))
                     else if (et_OldPassword.text.toString().length < 6)
-                        AppDelegate.showToast(this, getString(R.string.short_password))
+                        AppDelegate.showToast(this, getString(R.string.old_short_password))
                     else if (!(et_OldPassword.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_OldPassword.text.toString().matches(
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
@@ -36,9 +36,9 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
 
                     //new password check
                     else if (TextUtils.isEmpty(et_NewPassword.text.toString()))
-                        AppDelegate.showToast(this, getString(R.string.empty_password))
+                        AppDelegate.showToast(this, getString(R.string.new_empty_password))
                     else if (et_NewPassword.text.toString().length < 6)
-                        AppDelegate.showToast(this, getString(R.string.short_password))
+                        AppDelegate.showToast(this, getString(R.string.new_short_password))
                     else if (!(et_NewPassword.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_NewPassword.text.toString().matches(
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
@@ -47,9 +47,9 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
 
                     //confirm password check
                     else if (TextUtils.isEmpty(et_ConfirmPassword.text.toString()))
-                        AppDelegate.showToast(this, getString(R.string.empty_password))
+                        AppDelegate.showToast(this, getString(R.string.confrim_empty_password))
                     else if (et_ConfirmPassword.text.toString().length < 6)
-                        AppDelegate.showToast(this, getString(R.string.short_password))
+                        AppDelegate.showToast(this, getString(R.string.confrim_short_password))
                     else if (!(et_ConfirmPassword.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_ConfirmPassword.text.toString().matches(
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))

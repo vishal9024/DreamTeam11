@@ -41,23 +41,23 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
     private var mData: InviteFreindDetailResponse.ResponseBean.DataBean? = null
 
     private fun initViews() {
-          try{
+        try {
 
-              setSupportActionBar(toolbar)
-              supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-              supportActionBar!!.setDisplayShowHomeEnabled(true)
-              supportActionBar!!.setDisplayShowTitleEnabled(false)
-              toolbarTitleTv.setText(R.string.invited_friends)
-              setMenu(false, false, false, false, false)
-              imvEarnedInfo.setOnClickListener(this)
-              if (intent.hasExtra("data"))
-                  mData = intent.getSerializableExtra("data") as InviteFreindDetailResponse.ResponseBean.DataBean?
-              if (mData != null) {
-                  setData(mData)
-              }
-          } catch (e: Exception) {
-              e.printStackTrace()
-          }
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowHomeEnabled(true)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            toolbarTitleTv.setText(R.string.invited_friends)
+            setMenu(false, false, false, false, false)
+            imvEarnedInfo.setOnClickListener(this)
+            if (intent.hasExtra("data"))
+                mData = intent.getSerializableExtra("data") as InviteFreindDetailResponse.ResponseBean.DataBean?
+            if (mData != null) {
+                setData(mData)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun setData(data: InviteFreindDetailResponse.ResponseBean.DataBean?) {
@@ -75,9 +75,12 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
                     total_earnd = data.total_earnd.toFloat()
                 }
                 if (data.total_fields != null) {
-                    if (data.total_fields > 0)
-                        txtFriendCount.text = "" + data.total_fields + " Freinds Joined!"
-                    total_fields = data.total_fields.toFloat()
+                    if (data.total_fields > 0) {
+                        if (data.total_fields == 1)
+                            txtFriendCount.text = "" + data.total_fields + " Friend Joined!"
+                        else txtFriendCount.text = "" + data.total_fields + " Friends Joined!"
+                        total_fields = data.total_fields.toFloat()
+                    }
                 }
                 try {
                     var result = (to_be_earnd * total_fields) / total_earnd
