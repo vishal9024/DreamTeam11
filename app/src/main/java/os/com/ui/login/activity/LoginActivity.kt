@@ -294,10 +294,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     finish()
                 } else {
-                    startActivity(
-                        Intent(this@LoginActivity, SignUpActivity::class.java)
-                            .putExtra(IntentConstant.DATA, socialModel)
-                    )
+                    if(response.response!!.message.equals("Invalid User id.",true)){
+                        AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+                    }else {
+
+                        startActivity(
+                            Intent(this@LoginActivity, SignUpActivity::class.java)
+                                .putExtra(IntentConstant.DATA, socialModel)
+                        )
+                    }
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LoginActivity)

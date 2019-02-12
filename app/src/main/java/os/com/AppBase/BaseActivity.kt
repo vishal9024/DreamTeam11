@@ -16,7 +16,6 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -179,25 +178,25 @@ open class BaseActivity : AppCompatActivity() {
                 walletPopupWindow!!.dismiss()
             }
             popupWindowView.imvBonusInfo.setOnClickListener {
-                SimpleTooltip.Builder(baseContext)
-                    .anchorView(it)
-                    .text(resources.getString(R.string.bonus_info_text))
-                    .build()
-                    .show()
+//                SimpleTooltip.Builder()
+//                    .anchorView(it)
+//                    .text(resources.getString(R.string.bonus_info_text))
+//                    .build()
+//                    .show()
             }
             popupWindowView.imvWinningInfo.setOnClickListener {
-                SimpleTooltip.Builder(baseContext)
-                    .anchorView(it)
-                    .text(resources.getString(R.string.winning_info_text))
-                    .build()
-                    .show()
+//                SimpleTooltip.Builder(baseContext)
+//                    .anchorView(it)
+//                    .text(resources.getString(R.string.winning_info_text))
+//                    .build()
+//                    .show()
             }
             popupWindowView.imvDepositedInfo.setOnClickListener {
-                SimpleTooltip.Builder(baseContext)
-                    .anchorView(it)
-                    .text(resources.getString(R.string.deposited_info_text))
-                    .build()
-                    .show()
+//                SimpleTooltip.Builder(baseContext)
+//                    .anchorView(it)
+//                    .text(resources.getString(R.string.deposited_info_text))
+//                    .build()
+//                    .show()
             }
             /* show popup window*/
             my_account_call(anchorView)
