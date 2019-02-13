@@ -26,6 +26,7 @@ object ApiConstant {
     const val playing11BaseURL = "https://72.octallabs.com/playing11/"
     // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val real11BaseURL = "http://real11.com/"
+    const val lucky11BaseURL = "http://real11.com/"
     const val realBashBaseURL = "https://72.octallabs.com/realBash/"
     fun getBaseUrl(): String {
         when {
@@ -34,6 +35,7 @@ object ApiConstant {
             BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL + "WebServices/"
             BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL + "WebServices/"
             BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL + "WebServices/"
+            BuildConfig.APPLICATION_ID == "os.lucky11" -> return lucky11BaseURL + "WebServices/"
             BuildConfig.APPLICATION_ID == "os.realbash" -> return realBashBaseURL + "WebServices/"
         }
         return realBashBaseURL
@@ -53,6 +55,7 @@ object ApiConstant {
             BuildConfig.APPLICATION_ID == "os.fsl" -> return fSLBaseURL
             BuildConfig.APPLICATION_ID == "os.playing11" -> return playing11BaseURL
             BuildConfig.APPLICATION_ID == "os.real11" -> return real11BaseURL
+            BuildConfig.APPLICATION_ID == "os.lucky11" -> return lucky11BaseURL
             else -> BuildConfig.APPLICATION_ID == "os.realbash"
         }
         return realBashBaseURL

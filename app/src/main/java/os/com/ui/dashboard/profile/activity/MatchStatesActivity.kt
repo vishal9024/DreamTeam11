@@ -92,7 +92,7 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
                 try {
                     var map = HashMap<String, String>()
                     if (pref!!.isLogin)
-                        map[Tags.user_id] = pref!!.userdata!!.user_id
+                        map[Tags.user_id] = userId
                     else
                         map[Tags.user_id]= ""
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()

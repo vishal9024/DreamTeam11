@@ -51,7 +51,7 @@ class RankingAdapter(
 
             if (rankingList[position].rank != null) {
                 holder.itemView.txt_rank.text = "#" + rankingList[position].rank
-                if (rankingList[position].rank == 1) {
+                if (rankingList[position].rank.toInt() == 1) {
                     holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.light_pink))
                     holder.itemView.img_kingflag.visibility = View.VISIBLE
                     holder.itemView.txt_rank.setTextColor(mContext.resources.getColor(R.color.orange))
@@ -61,13 +61,13 @@ class RankingAdapter(
                         if (position % 2 == 0) {
                             if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(
                                     user_id
-                                ) && rankingList[position].rank != 1
+                                ) && rankingList[position].rank.toInt() != 1
                             )
                                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.lightWhite))
                         } else {
                             if (rankingList[position].user_id != null && !("" + rankingList[position].user_id).equals(
                                     user_id
-                                ) && rankingList[position].rank != 1
+                                ) && rankingList[position].rank.toInt() != 1
                             )
                                 holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.white))
                         }

@@ -60,15 +60,15 @@ public class BankDetailResponse implements Serializable {
              * account_no : 7852014452
              */
 
-            private int winning_amount;
+            private String winning_amount;
             private String bank_name;
             private String account_no;
 
-            public int getWinning_amount() {
+            public String getWinning_amount() {
                 return winning_amount;
             }
 
-            public void setWinning_amount(int winning_amount) {
+            public void setWinning_amount(String winning_amount) {
                 this.winning_amount = winning_amount;
             }
 

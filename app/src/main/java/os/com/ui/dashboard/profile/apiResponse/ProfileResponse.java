@@ -24,7 +24,24 @@ public class ProfileResponse implements Serializable {
         /**
          * status : true
          * message : Success.
-         * data : {"team_name":"Huhuzzz","contest_level":2,"paid_contest_count":21,"total_cash_amount":"306411","total_winning_amount":"0","cash_bonus_amount":"191.4","invite_friend_code":"6DRzVI3O23","contest_finished":22,"total_match":9,"total_series":2,"series_wins":"0","team_name_updated":1,"image":"https://72.octallabs.com/real11/uploads/users/user_154841785241.png","refered_to_friend":[{"user_id":42,"team_name":"Nidhiiiii","image":""},{"user_id":44,"team_name":"USU7AK31J","image":""}],"gender":"Male","rewards":[],"referal_bonus":"100"}
+         * data : {"team_name":"Huhuzzz","
+         * contest_level":2,
+         * "paid_contest_count":21,
+         * "total_cash_amount":"306411",
+         * "total_winning_amount":"0",
+         * "cash_bonus_amount":"191.4",
+         * "invite_friend_code":"6DRzVI3O23",
+         * "contest_finished":22,
+         * "total_match":9,
+         * "total_series":2,
+         * "series_wins":"0",
+         * "team_name_updated":1,
+         * "image":"https://72.octallabs.com/real11/uploads/users/user_154841785241.png",
+         * "refered_to_friend":[{"user_id":42,"team_name":"Nidhiiiii","image":""},
+         * {"user_id":44,"team_name":"USU7AK31J","image":""}],
+         * "gender":"Male",
+         * "rewards":[],
+         * "referal_bonus":"100"}
          */
 
         public boolean status;
@@ -76,6 +93,7 @@ public class ProfileResponse implements Serializable {
              * referal_bonus : 100
              */
 
+
             public String team_name;
             public int contest_level;
             public int paid_contest_count;
@@ -83,7 +101,7 @@ public class ProfileResponse implements Serializable {
             public String total_winning_amount;
             public String cash_bonus_amount;
             public String invite_friend_code;
-            public int contest_finished;
+            public String contest_finished;
             public int total_match;
             public int total_series;
             public String series_wins;
@@ -160,11 +178,11 @@ public class ProfileResponse implements Serializable {
                 this.invite_friend_code = invite_friend_code;
             }
 
-            public int getContest_finished() {
+            public String getContest_finished() {
                 return contest_finished;
             }
 
-            public void setContest_finished(int contest_finished) {
+            public void setContest_finished(String contest_finished) {
                 this.contest_finished = contest_finished;
             }
 
@@ -319,25 +337,25 @@ public class ProfileResponse implements Serializable {
                  * previous_rank : 0
                  */
 
-                public int points;
-                public int rank;
+                public String points;
+                public String rank;
                 public String series_name;
                 public int series_id;
                 public int previous_rank;
 
-                public int getPoints() {
+                public String getPoints() {
                     return points;
                 }
 
-                public void setPoints(int points) {
+                public void setPoints(String points) {
                     this.points = points;
                 }
 
-                public int getRank() {
+                public String getRank() {
                     return rank;
                 }
 
-                public void setRank(int rank) {
+                public void setRank(String rank) {
                     this.rank = rank;
                 }
 

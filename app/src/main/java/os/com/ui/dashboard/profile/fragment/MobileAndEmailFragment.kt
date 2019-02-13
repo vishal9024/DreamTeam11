@@ -63,9 +63,7 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                     if (!TextUtils.isEmpty(edtEmail.text.toString().trim()))
                         verify_email(edtEmail.text.toString().trim())
                 }
-
             }
-
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -124,7 +122,6 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
             e.printStackTrace()
         }
     }
-
 
     private fun initViews() {
         try {
@@ -218,7 +215,6 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                     }
                 }
             })
-
     }
 
     private fun googlePlusLogin() {
@@ -251,7 +247,6 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
         if (mAuth != null)
             mAuth = null
     }
-
 
     fun disconnectFromFacebook() {
         if (AccessToken.getCurrentAccessToken() == null) {
@@ -304,7 +299,6 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
             }
     }
 
-
     private fun verify_email(email: String) {
         try {
             GlobalScope.launch(Dispatchers.Main) {
@@ -325,8 +319,8 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
                         cardViewBeforeEmailVerify.visibility = View.GONE
                         cardViewAfterEmailVerify.visibility = View.VISIBLE
                     } else {
-                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
+                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(activity!!)
@@ -344,7 +338,6 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
             }
         }
     }
-
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -371,8 +364,5 @@ class MobileAndEmailFragment : BaseFragment(), View.OnClickListener, GoogleApiCl
         } else {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }
-
     }
-
-
 }

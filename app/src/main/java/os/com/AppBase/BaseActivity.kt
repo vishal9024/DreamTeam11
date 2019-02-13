@@ -59,6 +59,7 @@ open class BaseActivity : AppCompatActivity() {
     var filter = false
     var edit = false
     var guru = false
+    var activity: Activity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -114,14 +115,14 @@ open class BaseActivity : AppCompatActivity() {
     var menu: Menu? = null
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         /* set layout of menu*/
-        menuInflater.inflate(R.menu.action_menu, menu)
+        menuInflater.inflate(os.com.R.menu.action_menu, menu)
         this.menu = menu
         /* if child activity is product activity then visible filer menu icon*/
-        menu.findItem(R.id.menu_filter).isVisible = filter
-        menu.findItem(R.id.menu_notification).isVisible = notif
-        menu.findItem(R.id.menu_wallet).isVisible = wallet
-        menu.findItem(R.id.menu_edit).isVisible = edit
-        menu.findItem(R.id.menu_guru).isVisible = guru
+        menu.findItem(os.com.R.id.menu_filter).isVisible = filter
+        menu.findItem(os.com.R.id.menu_notification).isVisible = notif
+        menu.findItem(os.com.R.id.menu_wallet).isVisible = wallet
+        menu.findItem(os.com.R.id.menu_edit).isVisible = edit
+        menu.findItem(os.com.R.id.menu_guru).isVisible = guru
 //        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
@@ -129,7 +130,7 @@ open class BaseActivity : AppCompatActivity() {
             val item = menu.getItem(i)
             val spanString = SpannableString(menu.getItem(i).title.toString())
             spanString.setSpan(
-                ForegroundColorSpan(resources.getColor(R.color.whiteTab)),
+                ForegroundColorSpan(resources.getColor(os.com.R.color.whiteTab)),
                 0,
                 spanString.length,
                 0
@@ -153,13 +154,15 @@ open class BaseActivity : AppCompatActivity() {
         this.edit = edit
         this.guru = guru
         if (menu != null) {
-            menu!!.findItem(R.id.menu_filter).isVisible = filter
-            menu!!.findItem(R.id.menu_notification).isVisible = notif
-            menu!!.findItem(R.id.menu_wallet).isVisible = wallet
-            menu!!.findItem(R.id.menu_edit).isVisible = edit
-            menu!!.findItem(R.id.menu_guru).isVisible = guru
+            menu!!.findItem(os.com.R.id.menu_filter).isVisible = filter
+            menu!!.findItem(os.com.R.id.menu_notification).isVisible = notif
+            menu!!.findItem(os.com.R.id.menu_wallet).isVisible = wallet
+            menu!!.findItem(os.com.R.id.menu_edit).isVisible = edit
+            menu!!.findItem(os.com.R.id.menu_guru).isVisible = guru
         }
     }
+
+
 
     private var walletPopupWindow: PopupWindow? = null
 
@@ -168,7 +171,7 @@ open class BaseActivity : AppCompatActivity() {
         try {
             /* set view for filter popup window*/
             walletPopupWindow = PopupWindow(this)
-            popupWindowView = layoutInflater.inflate(R.layout.dialogue_wallet, null) as View
+            popupWindowView = layoutInflater.inflate(os.com.R.layout.dialogue_wallet, null) as View
             walletPopupWindow!!.contentView = popupWindowView
             /* set visibility of brands list*/
             popupWindowView.img_close.setOnClickListener {
@@ -178,11 +181,11 @@ open class BaseActivity : AppCompatActivity() {
                 walletPopupWindow!!.dismiss()
             }
             popupWindowView.imvBonusInfo.setOnClickListener {
-//                SimpleTooltip.Builder()
-//                    .anchorView(it)
-//                    .text(resources.getString(R.string.bonus_info_text))
-//                    .build()
-//                    .show()
+//                    SimpleTooltip.Builder(this)
+//                        .anchorView(it)
+//                        .text("Test")
+//                        .build()
+//                        .show()
             }
             popupWindowView.imvWinningInfo.setOnClickListener {
 //                SimpleTooltip.Builder(baseContext)
@@ -250,7 +253,7 @@ open class BaseActivity : AppCompatActivity() {
     private fun getViewOfCartMenuItem(menu: Menu): View {
         for (i in 0 until menu.size()) {
             val item = menu.getItem(i)
-            if (item.itemId == R.id.menu_notification) {
+            if (item.itemId == os.com.R.id.menu_notification) {
                 notificationView = item.actionView
                 /* get cart item quantity and set it*/
                 val cartQuantity = pref!!.getIntValue(PrefConstant.UNREAD_COUNT, 0)
@@ -277,7 +280,7 @@ open class BaseActivity : AppCompatActivity() {
             val marginInDp = -5
             val marginInPx = marginInDp * resources.displayMetrics.density
             linearPram.setMargins(marginInPx.toInt(), marginInPx.toInt(), 0, 0)
-            linearPram.addRule(RelativeLayout.END_OF, R.id.notif_icon)
+            linearPram.addRule(RelativeLayout.END_OF, os.com.R.id.notif_icon)
             notificationView.notifItemCountTv.layoutParams = linearPram
         }
     }
@@ -374,7 +377,7 @@ open class BaseActivity : AppCompatActivity() {
     ) {
         var dialogue = Dialog(this)
         dialogue.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogue.setContentView(R.layout.dialogue_join_contest)
+        dialogue.setContentView(os.com.R.layout.dialogue_join_contest)
         dialogue.window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)
         dialogue.window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogue.setCancelable(false)
@@ -398,14 +401,14 @@ open class BaseActivity : AppCompatActivity() {
         if (bonus >= entryFee)
             toPay = 0f
         var total = cash + winning
-        dialogue.txt_label.text = getString(R.string.unutilized_balance_winnings_rs_0) + " " + getString(R.string.Rs) +
+        dialogue.txt_label.text = getString(os.com.R.string.unutilized_balance_winnings_rs_0) + " " + getString(os.com.R.string.Rs) +
                 String.format(
                     "%.2f",
                     total
                 )
-        dialogue.txt_EntryFee.text = getString(R.string.Rs) + String.format("%.2f", entryFee)
-        dialogue.txt_bonus.text = getString(R.string.Rs) + String.format("%.2f", data!!.usable_bonus.toFloat())
-        dialogue.txt_topay.text = getString(R.string.Rs) + String.format("%.2f", toPay)
+        dialogue.txt_EntryFee.text = getString(os.com.R.string.Rs) + String.format("%.2f", entryFee)
+        dialogue.txt_bonus.text = getString(os.com.R.string.Rs) + String.format("%.2f", data!!.usable_bonus.toFloat())
+        dialogue.txt_topay.text = getString(os.com.R.string.Rs) + String.format("%.2f", toPay)
         dialogue.img_Close.setOnClickListener {
             onClickDialogue.onClick(Tags.cancel, false)
             dialogue.dismiss()
@@ -464,12 +467,12 @@ open class BaseActivity : AppCompatActivity() {
     public fun showAddCashDialog(bonus: Float, toPay: Float, onClickDialogue: OnClickDialogue) {
         var message = "Low balance! Please add ₹ " + String.format("%.2f", toPay) + " to join contest."
 
-        val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
-        logoutAlertDialog.setTitle(getString(R.string.app_name))
+        val logoutAlertDialog = AlertDialog.Builder(this, os.com.R.style.AppCompatAlertDialogStyle).create()
+        logoutAlertDialog.setTitle(getString(os.com.R.string.app_name))
         logoutAlertDialog.setMessage(message)
         logoutAlertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
-            getString(R.string.add_cash)
+            getString(os.com.R.string.add_cash)
         ) { dialog, id ->
             logoutAlertDialog.dismiss()
             startActivityForResult(
@@ -483,7 +486,7 @@ open class BaseActivity : AppCompatActivity() {
         }
         logoutAlertDialog.setButton(
             AlertDialog.BUTTON_NEGATIVE,
-            getString(R.string.cancel)
+            getString(os.com.R.string.cancel)
         ) { dialog, id ->
             onClickDialogue.onClick(Tags.fail, false)
             logoutAlertDialog.dismiss()
@@ -492,24 +495,24 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     public fun showLogoutDialog() {
-        val logoutAlertDialog = AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle).create()
-        logoutAlertDialog.setTitle(getString(R.string.app_name))
-        logoutAlertDialog.setMessage(getString(R.string.want_to_logout))
+        val logoutAlertDialog = AlertDialog.Builder(this, os.com.R.style.AppCompatAlertDialogStyle).create()
+        logoutAlertDialog.setTitle(getString(os.com.R.string.app_name))
+        logoutAlertDialog.setMessage(getString(os.com.R.string.want_to_logout))
         logoutAlertDialog.setButton(
             AlertDialog.BUTTON_POSITIVE,
-            getString(R.string.yes)
+            getString(os.com.R.string.yes)
         ) { dialog, id ->
             logoutAlertDialog.dismiss()
             if (NetworkUtils.isConnected()) {
                 callLogoutAPI()
             } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(os.com.R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
 
         }
         logoutAlertDialog.setButton(
             AlertDialog.BUTTON_NEGATIVE,
-            getString(R.string.no)
+            getString(os.com.R.string.no)
         ) { dialog, id ->
             logoutAlertDialog.dismiss()
         }
@@ -624,10 +627,14 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     public fun logoutIfDeactivate(msg: String) {
-        if (!msg.isEmpty()) {
-            if (msg.equals("Invalid user id.", true))
-                logout()
-        }
+          try{
+              if (!msg.isEmpty()) {
+                  if (msg.equals("Invalid user id.", true))
+                      logout()
+              }
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
     }
 
     fun logout() {

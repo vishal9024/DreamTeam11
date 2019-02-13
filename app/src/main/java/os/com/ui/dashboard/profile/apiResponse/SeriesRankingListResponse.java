@@ -67,28 +67,28 @@ public class SeriesRankingListResponse implements Serializable {
              * user_image : https://72.octallabs.com/real11/uploads/users/user_154927158041.png
              */
 
-            public int points;
-            public int rank;
+            public String points;
+            public String rank;
             public String series_name;
             public int series_id;
-            public int previous_rank;
+            public String previous_rank;
             public int user_id;
             public String team_name;
             public String user_image;
 
-            public int getPoints() {
+            public String getPoints() {
                 return points;
             }
 
-            public void setPoints(int points) {
+            public void setPoints(String points) {
                 this.points = points;
             }
 
-            public int getRank() {
+            public String getRank() {
                 return rank;
             }
 
-            public void setRank(int rank) {
+            public void setRank(String rank) {
                 this.rank = rank;
             }
 
@@ -108,11 +108,11 @@ public class SeriesRankingListResponse implements Serializable {
                 this.series_id = series_id;
             }
 
-            public int getPrevious_rank() {
+            public String getPrevious_rank() {
                 return previous_rank;
             }
 
-            public void setPrevious_rank(int previous_rank) {
+            public void setPrevious_rank(String previous_rank) {
                 this.previous_rank = previous_rank;
             }
 

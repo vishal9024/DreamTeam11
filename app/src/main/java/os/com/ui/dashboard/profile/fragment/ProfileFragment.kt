@@ -518,7 +518,7 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                       if (BuildConfig.APPLICATION_ID == "os.realbash") {
                           cimg_user.setImageResource(R.mipmap.cashbonus25)
                           txtContest.setText("" + mData!!.contest_finished)
-                          var contest = mData!!.contest_finished % 25
+                          var contest = mData!!.contest_finished.toInt() % 25
                           tvRemianContest.setText("" + (25 - contest))
                           try {
                               crs_Progress.setMinValue(0f)
@@ -531,7 +531,7 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                           }
                       }else{
                           txtContest.setText("" + mData!!.contest_finished)
-                          var contest = mData!!.contest_finished % 20
+                          var contest = mData!!.contest_finished.toInt() % 20
                           tvRemianContest.setText("" + (20 - contest))
                           try {
                               crs_Progress.setMinValue(0f)
@@ -546,8 +546,6 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                       } catch (e: Exception) {
                               e.printStackTrace()
                       }
-
-
             }
             if (mData!!.total_match != null)
                 txtMatch.setText("" + mData!!.total_match)

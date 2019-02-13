@@ -5,19 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.zopim.android.sdk.api.ZopimChat
 import com.zopim.android.sdk.model.VisitorInfo
 import com.zopim.android.sdk.prechat.ZopimChatActivity
 import kotlinx.android.synthetic.main.fragment_more.*
 import os.com.AppBase.BaseFragment
 import os.com.BuildConfig
-import os.com.R
 import os.com.data.Prefs
 import os.com.networkCall.ApiConstant
 import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.ui.invite.activity.InviteCodeActivity
 import os.com.ui.invite.activity.InviteFriendsActivity
+
+
+
+
 
 /**
  * Created by heenas on 3/5/2018.
@@ -26,39 +30,39 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(view: View?) {
           try{
               when (view!!.id) {
-                  R.id.tv_invite_friends -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
-                  R.id.tv_contest_invite_code -> startActivity(Intent(activity, InviteCodeActivity::class.java))
-                  R.id.tv_fantasy_point_system -> {
+                  os.com.R.id.tv_invite_friends -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
+                  os.com.R.id.tv_contest_invite_code -> startActivity(Intent(activity, InviteCodeActivity::class.java))
+                  os.com.R.id.tv_fantasy_point_system -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "Fantasy Point System")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.point_system)
                       startActivity(intent)
                   }
-                  R.id.tv_how_to_play -> {
+                  os.com.R.id.tv_how_to_play -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "How to Play")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.how_to_play_tab)
                       startActivity(intent)
                   }
-                  R.id.tv_helpDesk -> {
+                  os.com.R.id.tv_helpDesk -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "Helpdesk")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.help)
                       startActivity(intent)
                   }
-                  R.id.tv_work_with_us -> {
+                  os.com.R.id.tv_work_with_us -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "Work with Us")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.static_tab)
                       startActivity(intent)
                   }
-                  R.id.tv_about -> {
+                  os.com.R.id.tv_about -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "About Us")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.static)
                       startActivity(intent)
                   }
-                  R.id.tv_rules -> {
+                  os.com.R.id.tv_rules -> {
                       val intent = Intent(activity, WebViewActivity::class.java)
                       intent.putExtra("PAGE_SLUG", "Legality")
                       intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.legality_tab)
@@ -67,10 +71,40 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
 //                  R.id.tv_logout -> {
 //                      (activity as BaseActivity).showLogoutDialog()
 //                  }
-                  R.id.llZendeskChat -> {
-                      val config = ZopimChat.SessionConfig()
-                          .department("A department")
-                      ZopimChatActivity.startActivity(context, config)
+                  os.com.R.id.llZendeskChat -> {
+                        try{
+                            if (BuildConfig.APPLICATION_ID == "os.realbash") {
+                                try {
+                                    val i = Intent(Intent.ACTION_SEND)
+                                    i.type = "message/rfc822"
+                                    i.setPackage("com.google.android.gm")
+                                    i.putExtra(android.content.Intent.EXTRA_EMAIL,arrayOf<String>("info@realbash.com"))
+                                    i.putExtra(Intent.EXTRA_SUBJECT, "")
+                                    i.putExtra(Intent.EXTRA_TEXT, "")
+                                    try {
+                                        startActivity(Intent.createChooser(i, "Send mail..."))
+                                    } catch (ex: android.content.ActivityNotFoundException) {
+                                        Toast.makeText(
+                                            context,
+                                            "There are no email clients installed.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+
+                                } catch (e: Exception) {
+                                    Toast.makeText(context, "There is no email client installed.", Toast.LENGTH_SHORT)
+                                        .show()
+                                    e.printStackTrace()
+                                }
+                            }else {
+                                val config = ZopimChat.SessionConfig()
+                                    .department("A department")
+                                ZopimChatActivity.startActivity(context, config)
+                            }
+
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                        }
                   }
               }
           } catch (e: Exception) {
@@ -81,13 +115,13 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        return inflater.inflate(R.layout.fragment_more, container, false)
+        return inflater.inflate(os.com.R.layout.fragment_more, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
           try{
-              ZopimChat.init(getString(R.string.chat_key))
+              ZopimChat.init(getString(os.com.R.string.chat_key))
               var visitorData = VisitorInfo.Builder()
                   .name(Prefs(activity!!).userdata!!.first_name + " " + Prefs(activity!!).userdata!!.last_name)
 //                            .email("visitor@example.com")
@@ -116,7 +150,7 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
             if (BuildConfig.VERSION_CODE != 0) {
                 tv_version_code.visibility = View.VISIBLE
                 tv_version_code.text =
-                    activity!!.resources.getString(R.string.version) + " " + BuildConfig.VERSION_CODE
+                    activity!!.resources.getString(os.com.R.string.version) + " " + BuildConfig.VERSION_CODE
             }
         } catch (e: Exception) {
             e.printStackTrace()

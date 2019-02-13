@@ -68,8 +68,8 @@ public class TeamStatesResponse implements Serializable {
             public String team_name;
             public String image;
             public String series_name;
-            public int total_points;
-            public int totalRank;
+            public String total_points;
+            public String totalRank;
             public List<PointDetailBean> point_detail;
 
             public String getTeam_name() {
@@ -96,19 +96,19 @@ public class TeamStatesResponse implements Serializable {
                 this.series_name = series_name;
             }
 
-            public int getTotal_points() {
+            public String getTotal_points() {
                 return total_points;
             }
 
-            public void setTotal_points(int total_points) {
+            public void setTotal_points(String total_points) {
                 this.total_points = total_points;
             }
 
-            public int getTotalRank() {
+            public String getTotalRank() {
                 return totalRank;
             }
 
-            public void setTotalRank(int totalRank) {
+            public void setTotalRank(String totalRank) {
                 this.totalRank = totalRank;
             }
 
