@@ -16,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -59,7 +60,7 @@ open class BaseActivity : AppCompatActivity() {
     var filter = false
     var edit = false
     var guru = false
-    var activity: Activity? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -161,6 +162,9 @@ open class BaseActivity : AppCompatActivity() {
             menu!!.findItem(os.com.R.id.menu_guru).isVisible = guru
         }
     }
+
+
+
 
 
 
