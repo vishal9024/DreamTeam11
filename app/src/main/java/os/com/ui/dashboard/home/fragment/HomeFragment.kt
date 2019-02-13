@@ -24,6 +24,7 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
+import os.com.interfaces.OnClickRecyclerView
 import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.home.adapter.MatchCompletedAdapter
 import os.com.ui.dashboard.home.adapter.MatchFixturesAdapter
@@ -40,7 +41,14 @@ import kotlin.collections.ArrayList
 /**
  * Created by heenas on 3/5/2018.
  */
-class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffsetChangedListener {
+class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffsetChangedListener, OnClickRecyclerView {
+    override fun onClickItem(tag: String, position: Int) {
+        if (!isAdded)
+            return
+        fixturesMatchList.removeAt(position)
+        fixturesAdapter!!.notifyDataSetChanged()
+    }
+
     override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
 //        if (verticalOffset == 0) {
 //            if (txt_Fixtures.isSelected)
@@ -221,7 +229,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_fixMatch!!.layoutManager = llm
         recyclerView_fixMatch!!.setHasFixedSize(true)
-        fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList)
+        fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
         recyclerView_fixMatch!!.adapter = fixturesAdapter
     }
 
@@ -278,17 +286,17 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                     recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
 
                 } else {
-                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
+                    (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
 //                    AppDelegate.showToast(activity, response.response!!.message)
                 }
             } catch (exception: Exception) {
-                  try{
-                      if (swipeToRefresh!=null)
-                      swipeToRefresh.isRefreshing = false
-                      AppDelegate.hideProgressDialog(activity)
-                      } catch (e: Exception) {
-                              e.printStackTrace()
-                      }
+                try {
+                    if (swipeToRefresh != null)
+                        swipeToRefresh.isRefreshing = false
+                    AppDelegate.hideProgressDialog(activity)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
             }
         }
@@ -299,7 +307,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         else
-            loginRequest[Tags.user_id]= ""
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)
@@ -316,7 +324,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                 if (response.response!!.status) {
                     updateBannerData(response.response!!.data)
                 } else {
-                    (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
+                    (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 swipeToRefresh.isRefreshing = false

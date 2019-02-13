@@ -108,7 +108,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorBlack"
-                            android:text="@string/Rs1000"
 
                     />
 
@@ -141,7 +140,6 @@
                             android:layout_height="wrap_content"
                             android:drawableEnd="@mipmap/arrowdown"
                             android:textColor="@color/colorSecondary"
-                            android:text="35000"
 
                     />
 
@@ -173,7 +171,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorBlack"
-                            android:text="@string/Rs20"
                     />
 
                 </LinearLayout>
@@ -227,7 +224,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorBlack"
-                            android:text="Only 8,631 spots left"
                     />
                     <androidx.appcompat.widget.AppCompatTextView
                             card_view:layout_constraintEnd_toEndOf="parent"
@@ -241,7 +237,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorLightBlack"
-                            android:text="50,000 Teams"
                     />
                 </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.appcompat.widget.AppCompatTextView

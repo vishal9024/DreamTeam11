@@ -46,7 +46,6 @@
                 android:src="@drawable/com_facebook_profile_picture_blank_square"
         />
         <LinearLayout
-
                 android:id="@+id/llName"
                 android:layout_toRightOf="@+id/imvUserProfile"
                 android:layout_width="match_parent"
@@ -54,14 +53,14 @@
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_label"
                     android:layout_below="@+id/ll_title"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_7sdp"
+                    android:paddingTop="@dimen/_7sdp"
+                    android:paddingBottom="@dimen/_5sdp"
                     android:paddingStart="@dimen/_5sdp"
                     style="@style/TextStyleMedium"
                     android:background="@color/white"
                     android:gravity="center"
                     android:layout_width="wrap_content"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_12sdp"
                     android:textColor="@color/textColorLightBlack"
                     android:text="Anam Amin"
                     android:layout_height="wrap_content"/>
@@ -85,25 +84,25 @@
             <LinearLayout android:layout_width="0dp"
                           android:layout_weight="1"
                           android:layout_height="wrap_content"
-            android:orientation="vertical">
+                          android:orientation="vertical">
                 <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
+                        style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:textColor="@color/textColorGray"
                         android:text="Selected by"
                         android:textAllCaps="true"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtSelectedBy"
-                        android:padding="@dimen/_5sdp"
+                        android:padding="@dimen/_3sdp"
                         style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_13sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:text="3.21%"
                         android:layout_height="wrap_content"/>
@@ -111,26 +110,26 @@
             <LinearLayout android:layout_width="0dp"
                           android:layout_weight="1"
                           android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+                          android:orientation="vertical"
+                          android:gravity="center">
                 <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
+                        style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:textColor="@color/textColorGray"
                         android:text="@string/points"
                         android:textAllCaps="true"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtPoints"
-                        android:padding="@dimen/_5sdp"
+                        android:padding="@dimen/_3sdp"
                         style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_13sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:text="23"
                         android:layout_height="wrap_content"/>
@@ -138,42 +137,42 @@
             <LinearLayout android:layout_width="0dp"
                           android:layout_weight="1"
                           android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="right">
+                          android:orientation="vertical"
+                          android:gravity="right">
                 <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextStyleSemiBold"
+                        style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_11sdp"
+                        android:textSize="@dimen/_10sdp"
                         android:textColor="@color/textColorGray"
                         android:text="@string/credits"
                         android:textAllCaps="true"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtCredits"
-                        android:padding="@dimen/_5sdp"
+                        android:padding="@dimen/_3sdp"
                         style="@style/TextStyleMedium"
                         android:background="@color/white"
                         android:gravity="center"
                         android:layout_width="wrap_content"
-                        android:textSize="@dimen/_16sdp"
+                        android:textSize="@dimen/_13sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:text="8.5"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
-
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatTextView
+                android:layout_marginStart="@dimen/_5sdp"
                 android:id="@+id/txt_status"
                 android:layout_below="@+id/ll_headerView"
                 android:layout_toRightOf="@+id/imvUserProfile"
-                android:padding="@dimen/_5sdp"
+                android:padding="@dimen/_3sdp"
                 style="@style/TextStyleSemiBold"
                 android:background="@color/white"
                 android:gravity="center"
                 android:layout_width="wrap_content"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 android:textColor="@color/textColorGray"
                 android:text="@string/not_in_your_team"
                 android:layout_height="wrap_content"/>
@@ -186,17 +185,19 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_1sdp"/>
     <LinearLayout
-            android:layout_below="@+id/view1"
             xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_below="@+id/view1"
             android:layout_width="match_parent"
-
+            android:paddingBottom="@dimen/_5sdp"
+            android:background="@color/colorSecondaryLight"
+            android:paddingTop="@dimen/_5sdp"
             android:id="@+id/ll_main"
             android:orientation="vertical"
             android:layout_height="wrap_content">
         <LinearLayout
-                android:background="@color/colorItemBackgroundWhite"
+
                 android:layout_width="match_parent"
-                      android:layout_height="wrap_content">
+                android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txt_TeamName"
                     style="@style/TextStyleNormal"
@@ -215,8 +216,6 @@
                     android:gravity="center"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
                     android:textSize="@dimen/_11sdp"
                     android:layout_weight="0.3"
                     android:layout_width="wrap_content"
@@ -229,19 +228,12 @@
                     android:gravity="center"
                     android:paddingStart="@dimen/_10sdp"
                     android:paddingEnd="@dimen/_10sdp"
-                    android:paddingTop="@dimen/_10sdp"
-                    android:paddingBottom="@dimen/_10sdp"
                     android:textSize="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorGray"
                     android:text="Points"
                     android:layout_height="match_parent"/>
         </LinearLayout>
-        <View
-            android:id="@+id/view3"
-            android:background="@color/GrayColorOTP"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_1sdp"/>
     </LinearLayout>
     <View
             android:id="@+id/view2"
@@ -252,7 +244,7 @@
     <androidx.recyclerview.widget.RecyclerView
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_above="@+id/ll_bottom"
-android:layout_below="@+id/ll_main"
+            android:layout_below="@+id/ll_main"
             android:id="@+id/rv_rank"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -262,6 +254,7 @@ android:layout_below="@+id/ll_main"
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
+            android:visibility="gone"
             android:layout_alignParentBottom="true"
             android:paddingStart="@dimen/_5sdp"
             android:id="@+id/ll_bottom"

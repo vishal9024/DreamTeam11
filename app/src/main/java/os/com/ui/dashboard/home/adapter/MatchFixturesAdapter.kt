@@ -15,13 +15,18 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
+import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import java.util.*
 
 
-class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
+class MatchFixturesAdapter(
+    val mContext: Context,
+    var matchList: List<Match>,
+    val onClickRecyclerView: OnClickRecyclerView
+) :
     RecyclerView.Adapter<MatchFixturesAdapter.AppliedCouponCodeHolder>() {
     internal var tmr: Timer? = null
     private val mHandler = Handler()
@@ -125,6 +130,8 @@ class MatchFixturesAdapter(val mContext: Context, var matchList: List<Match>) :
                                 itemView.txt_Countdown.setText(hours.toString() + "h " + minutes + "m " + seconds + "s")
                             }
                         } else {
+                            if (onClickRecyclerView != null)
+                                onClickRecyclerView.onClickItem("remove", adapterPosition)
                             itemView.txt_Countdown.setText("0 sec")
                         }
                     }

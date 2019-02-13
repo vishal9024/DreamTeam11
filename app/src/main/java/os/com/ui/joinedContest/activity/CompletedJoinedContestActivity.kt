@@ -18,6 +18,7 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
+import os.com.interfaces.OnClickRecyclerView
 import os.com.networkCall.ApiClient
 import os.com.ui.contest.apiResponse.matchScoreResponse.Data
 import os.com.ui.createTeam.activity.TeamPreviewActivity
@@ -30,7 +31,10 @@ import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
 
-class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
+class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView {
+    override fun onClickItem(tag: String, position: Int) {
+    }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_ViewPlayerStats -> {
@@ -208,7 +212,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener {
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = MatchFixturesAdapter(this, matchList)
+        rv_Contest!!.adapter = MatchFixturesAdapter(this, matchList,this)
     }
 
     private fun callMatchScoreApi() {

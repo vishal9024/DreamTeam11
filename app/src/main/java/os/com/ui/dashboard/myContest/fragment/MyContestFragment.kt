@@ -20,6 +20,7 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
+import os.com.interfaces.OnClickRecyclerView
 import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.myContest.adapter.MyContestCompletedAdapter
@@ -35,7 +36,13 @@ import kotlin.collections.set
 /**
  * Created by heenas on 3/5/2018.
  */
-class MyContestFragment : BaseFragment(), View.OnClickListener {
+class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecyclerView {
+    override fun onClickItem(tag: String, position: Int) {
+        if (!isAdded)
+            return
+        fixturesMatchList.removeAt(position)
+        fixturesAdapter!!.notifyDataSetChanged()
+    }
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_Fixtures -> matchSelector(FIXTURES)
@@ -207,6 +214,8 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
 //                    AppDelegate.showToast(activity, response.response!!.message)
                             }
                         } catch (exception: Exception) {
+                            if (!isAdded)
+                                return@launch
                             swipeToRefresh.isRefreshing = false
                             AppDelegate.hideProgressDialog(activity)
                         }
@@ -219,7 +228,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener {
         llm.orientation = LinearLayoutManager.VERTICAL
         recyclerView_fixMatch!!.layoutManager = llm
         recyclerView_fixMatch!!.setHasFixedSize(true)
-        fixturesAdapter = MyContestFixturesAdapter(context!!, fixturesMatchList)
+        fixturesAdapter = MyContestFixturesAdapter(context!!, fixturesMatchList,this)
         recyclerView_fixMatch!!.adapter = fixturesAdapter
     }
 
