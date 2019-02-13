@@ -15,7 +15,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import kotlinx.android.synthetic.main.dashboard_activity.*
 import kotlinx.android.synthetic.main.dashboard_fragment.*
-import org.json.JSONObject
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.constant.IntentConstant
@@ -127,7 +126,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             removeShiftMode(bottomNavigationView)
             setFragment(HomeFragment(), R.id.container)
             if (intent.hasExtra("notification_Data")) {
-                val data = intent.getSerializableExtra("notification_Data") as PNModel
+                val data = intent.getParcelableExtra("notification_Data") as PNModel
                 if (data != null)
                     manageNotification(data)
             }
@@ -156,27 +155,41 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     startActivity(Intent(this@DashBoardActivity, MyAccountActivity::class.java))
                 } else if (data.type.equals("4") || data.type.equals("5") || data.type.equals("6")) {
                     Log.e("title: ", data.title)
-                    var contest_id = ""
+                    var contest_id = data.matchData!!.contestId
+                    var local_team_id = ""
+                    var local_team_name = ""
+                    var local_team_flag = ""
+                    var visitor_team_id = ""
+                    var visitor_team_name = ""
+                    var visitor_team_flag = ""
+                    var star_date = ""
+                    var star_time = ""
+                    var total_contest = ""
+                    var guru_url = ""
                     var match: Match = Match()
-                    var jsonObject = JSONObject(data.matchData)
-                    if (jsonObject.has("contestId"))
-                        contest_id = jsonObject.optString("contestId")
-                    if (jsonObject.has("visitor_team_name"))
-                        match.visitor_team_name = jsonObject.optString("visitor_team_name")
-                    if (jsonObject.has("match_id"))
-                        match.match_id = jsonObject.optString("match_id")
-                    if (jsonObject.has("visitor_team_id"))
-                        match.visitor_team_id = jsonObject.optString("visitor_team_id")
-                    if (jsonObject.has("strTime"))
-                        match.star_time = jsonObject.optString("strTime")
-                    if (jsonObject.has("strDate"))
-                        match.star_date = jsonObject.optString("strDate")
-                    if (jsonObject.has("local_team_id"))
-                        match.local_team_id = jsonObject.optString("local_team_id")
-                    if (jsonObject.has("series_id"))
-                        match.series_id = jsonObject.optString("series_id")
-                    if (jsonObject.has("local_team_name"))
-                        match.local_team_name = jsonObject.optString("local_team_name")
+//                    var jsonObject = JSONObject(data.matchData)
+//                    if (jsonObject.has("contestId"))
+//                        contest_id = jsonObject.optString("contestId")
+//                    if (jsonObject.has("visitor_team_name"))
+                    match.series_name = ""
+                    match.local_team_flag = ""
+                    match.visitor_team_flag = ""
+                    match.total_contest = ""
+                    match.visitor_team_name = data.matchData!!.visitor_team_name!!
+//                    if (jsonObject.has("match_id"))
+                    match.match_id = data.matchData!!.match_id!!
+//                    if (jsonObject.has("visitor_team_id"))
+                    match.visitor_team_id = data.matchData!!.visitor_team_id!!
+//                    if (jsonObject.has("strTime"))
+                    match.star_time = data.matchData!!.strTime!!
+//                    if (jsonObject.has("strDate"))
+                    match.star_date = data.matchData!!.strDate!!
+//                    if (jsonObject.has("local_team_id"))
+                    match.local_team_id = data.matchData!!.local_team_id!!
+//                    if (jsonObject.has("series_id"))
+                    match.series_id = data.matchData!!.series_id!!
+//                    if (jsonObject.has("local_team_name"))
+                    match.local_team_name = data.matchData!!.local_team_name!!
                     var type = IntentConstant.LIVE
                     type = if (data.type.equals("4"))
                         IntentConstant.LIVE
@@ -185,7 +198,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                     startActivity(
                         Intent(this, CompletedJoinedContestActivity::class.java).putExtra(
                             IntentConstant.MATCH,
-                            match
+                            data.matchData
                         ).putExtra(
                             IntentConstant.CONTEST_TYPE, type
                         ).putExtra(IntentConstant.CONTEST_ID, contest_id)

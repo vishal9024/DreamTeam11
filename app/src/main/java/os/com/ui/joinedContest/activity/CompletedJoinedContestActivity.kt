@@ -212,7 +212,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = MatchFixturesAdapter(this, matchList,this)
+        rv_Contest!!.adapter = MatchFixturesAdapter(this, matchList, this)
     }
 
     private fun callMatchScoreApi() {
@@ -222,7 +222,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
             else
-                map[Tags.user_id]= ""
+                map[Tags.user_id] = ""
             map[Tags.language] = FantasyApplication.getInstance().getLanguage()
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/
@@ -236,7 +236,16 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                     if (response.response!!.status) {
-                        updateScoreBoard(response.response!!.data)
+//                        if (response.response!!.data != null) {
+                            updateScoreBoard(response.response!!.data)
+//                        } else
+//                        {
+//                            txt_scoreBoard.visibility = GONE
+//                            ll_visitorTeamScore.visibility = GONE
+//                            txt_WinBy.visibility = GONE
+//                            card_view1.visibility = VISIBLE
+//                            txt_localTeamScore.text = getString(R.string.match_not_started)
+//                        }
                     } else {
                         logoutIfDeactivate(response.response!!.message)
                     }
@@ -253,15 +262,21 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
         if (data!!.match_started) {
             card_view1.visibility = VISIBLE
             txt_WinBy.visibility = VISIBLE
+            txt_scoreBoard.visibility = VISIBLE
             ll_visitorTeamScore.visibility = VISIBLE
             txt_localTeamScore.text = localTeamName + "  " + data!!.local_team_score
             txt_visitorTeamScore.text = visitorTeamName + "  " + data.vistor_team_score
             txt_WinBy.text = data.comment
         } else {
+            txt_scoreBoard.visibility = GONE
             ll_visitorTeamScore.visibility = GONE
             txt_WinBy.visibility = GONE
             card_view1.visibility = VISIBLE
-            txt_localTeamScore.text = getString(R.string.match_not_started)
+            if (!data.comment.isEmpty())
+                txt_localTeamScore.text = data.comment
+            else
+                txt_localTeamScore.text = getString(R.string.match_not_started)
+
         }
     }
 

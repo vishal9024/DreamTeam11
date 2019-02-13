@@ -34,19 +34,19 @@ class Match() : Parcelable {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(series_id)
-        parcel.writeString(match_id)
-        parcel.writeString(series_name)
-        parcel.writeString(local_team_id)
-        parcel.writeString(local_team_name)
-        parcel.writeString(local_team_flag)
-        parcel.writeString(visitor_team_id)
-        parcel.writeString(visitor_team_name)
-        parcel.writeString(visitor_team_flag)
-        parcel.writeString(star_date)
-        parcel.writeString(star_time)
-        parcel.writeString(total_contest)
-        parcel.writeString(guru_url)
+        parcel.writeString(if (series_id == null) "" else series_id )
+        parcel.writeString(if (match_id == null) "" else match_id )
+        parcel.writeString(if (series_name == null) "" else series_name )
+        parcel.writeString(if (local_team_id == null) "" else local_team_id )
+        parcel.writeString(if (local_team_name == null) "" else local_team_name )
+        parcel.writeString(if (local_team_flag == null) "" else local_team_flag )
+        parcel.writeString(if (visitor_team_id == null) "" else visitor_team_id )
+        parcel.writeString(if (visitor_team_name == null) "" else visitor_team_name )
+        parcel.writeString(if (visitor_team_flag == null) "" else visitor_team_flag )
+        parcel.writeString(if (star_date == null) "" else star_date )
+        parcel.writeString(if (star_time == null) "" else star_time )
+        parcel.writeString(if (total_contest == null) "" else total_contest )
+        parcel.writeString(if (guru_url == null) "" else guru_url )
     }
 
     override fun describeContents(): Int {

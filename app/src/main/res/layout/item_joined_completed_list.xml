@@ -108,7 +108,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/textColorBlack"
-                                android:text="@string/Rs1000"
 
                         />
 
@@ -141,7 +140,6 @@
                                 android:layout_height="wrap_content"
                                 android:drawableEnd="@mipmap/arrowdown"
                                 android:textColor="@color/colorSecondary"
-                                android:text="35000"
 
                         />
 
@@ -173,7 +171,6 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/textColorBlack"
-                                android:text="@string/Rs20"
                         />
 
                     </LinearLayout>
@@ -248,7 +245,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorBlack"
-                            android:text="167.5"
 
                     />
 
@@ -279,7 +275,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/textColorBlack"
-                            android:text="#11"
                     />
 
                 </LinearLayout>

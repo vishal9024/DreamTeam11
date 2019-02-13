@@ -248,6 +248,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
             }
         } else if (matchType == IntentConstant.COMPLETED) {
+            ll_bottom.visibility= VISIBLE
             txt_CountDownTimer.setText(getString(R.string.completed))
         } else
             txt_CountDownTimer.setText(getString(R.string.in_progress))
@@ -307,6 +308,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
+                    scrollView.visibility= VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
@@ -366,7 +368,17 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                     if (response.response!!.status) {
-                        updateScoreBoard(response.response!!.data)
+                        scrollView.visibility= VISIBLE
+                        if (response.response!!.data != null) {
+                            updateScoreBoard(response.response!!.data)
+                        } else
+                        {
+                            txt_scoreBoard.visibility = GONE
+                            ll_visitorTeamScore.visibility = GONE
+                            txt_WinBy.visibility = GONE
+                            card_view1.visibility = VISIBLE
+                            txt_localTeamScore.text = getString(R.string.match_not_started)
+                        }
                     } else {
                         logoutIfDeactivate(response.response!!.message)
                     }
@@ -383,15 +395,21 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         if (data!!.match_started) {
             card_view1.visibility = VISIBLE
             txt_WinBy.visibility = VISIBLE
+            txt_scoreBoard.visibility = VISIBLE
             ll_visitorTeamScore.visibility = VISIBLE
             txt_localTeamScore.text = localTeamName + "  " + data!!.local_team_score
             txt_visitorTeamScore.text = visitorTeamName + "  " + data.vistor_team_score
             txt_WinBy.text = data.comment
         } else {
+            txt_scoreBoard.visibility = GONE
             ll_visitorTeamScore.visibility = GONE
             txt_WinBy.visibility = GONE
             card_view1.visibility = VISIBLE
-            txt_localTeamScore.text = getString(R.string.match_not_started)
+            if (!data.comment.isEmpty())
+                txt_localTeamScore.text = data.comment
+            else
+                txt_localTeamScore.text = getString(R.string.match_not_started)
+
         }
     }
 

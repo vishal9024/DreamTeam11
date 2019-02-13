@@ -3,7 +3,6 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
                 android:fitsSystemWindows="true"
                 android:background="#13641c"
-
                 android:layout_height="wrap_content">
     <ImageView
             android:alpha="0.5"
@@ -11,12 +10,12 @@
             android:src="@mipmap/bgone" android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     <!--android:background="#14851F"-->
-
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                android:id="@+id/img_Edit"
                android:layout_toStartOf="@+id/img_Close"
                android:src="@mipmap/editwhite"
-               android:padding="@dimen/_10sdp"/>
+               android:paddingStart="@dimen/_8sdp"
+               android:paddingTop="@dimen/_8sdp"/>
     <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/txt_TeamName"
@@ -25,38 +24,42 @@
             android:ellipsize="end"
             style="@style/TextStyleMedium"
             android:textColor="@color/white"
-            android:textSize="@dimen/_15sdp"
-            android:padding="@dimen/_10sdp"/>
+            android:textSize="@dimen/_13sdp"
+            android:paddingTop="@dimen/_8sdp"
+            android:paddingStart="@dimen/_8sdp"/>
     <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content"
                android:id="@+id/img_Close"
                android:src="@mipmap/close"
                android:backgroundTint="@color/white"
-               android:padding="@dimen/_7sdp"
+               android:paddingStart="@dimen/_4sdp"
+               android:paddingTop="@dimen/_4sdp"
                android:layout_alignParentEnd="true"
     />
-    <androidx.appcompat.widget.AppCompatTextView
-            android:layout_below="@+id/img_Close"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/txt_Appname"
-            android:text="@string/app_name"
-            android:textAllCaps="true"
-            android:singleLine="true"
-            android:ellipsize="end"
-            style="@style/TextStyleMedium"
-            android:fontFamily="@font/kirstybold"
-            android:textColor="@color/greenlightText"
-            android:textSize="@dimen/_21sdp"
-            android:padding="@dimen/_5sdp"/>
     <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_marginTop="@dimen/_60sdp"
-            android:layout_below="@+id/txt_Appname"
+            android:paddingTop="@dimen/_20sdp"
+            android:layout_below="@+id/img_Close"
+            android:layout_above="@+id/rl_bottom"
             android:layout_centerVertical="true"
             android:orientation="vertical"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+        <androidx.appcompat.widget.AppCompatTextView
+                android:layout_below="@+id/img_Close"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_Appname"
+                android:text="@string/app_name"
+                android:textAllCaps="true"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="top"
+                style="@style/TextStyleMedium"
+                android:fontFamily="@font/kirstybold"
+                android:textColor="@color/greenlightText"
+                android:textSize="@dimen/_16sdp"
+        />
         <LinearLayout
                 android:layout_weight="1"
                 android:orientation="vertical"
@@ -74,11 +77,10 @@
             <RelativeLayout
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_3sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
             >
-
 
                 <de.hdodenhof.circleimageview.CircleImageView
 
@@ -1263,7 +1265,7 @@
                                 android:id="@+id/img_delete_substitute"
                                 android:layout_toEndOf="@+id/cimg_substitute"
                                 android:src="@mipmap/delete"
-                               
+
                                 android:layout_width="wrap_content"
                                 android:layout_height="@dimen/_10sdp"/>
                         <de.hdodenhof.circleimageview.CircleImageView
@@ -1314,9 +1316,9 @@
         </LinearLayout>
     </androidx.appcompat.widget.LinearLayoutCompat>
     <RelativeLayout
-           android:visibility="visible"
+            android:visibility="invisible"
             android:id="@+id/rl_bottom"
-            android:paddingTop="@dimen/_5sdp"
+            android:paddingTop="@dimen/_2sdp"
             android:paddingStart="@dimen/_10sdp"
             android:paddingEnd="@dimen/_10sdp"
             android:paddingBottom="@dimen/_5sdp"
@@ -1332,7 +1334,7 @@
                 style="@style/TextStyleMedium"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_15sdp"
-               />
+        />
         <androidx.appcompat.widget.AppCompatTextView
                 android:layout_below="@+id/txt_totalPoints"
                 android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -1343,7 +1345,7 @@
                 style="@style/TextStyleMedium"
                 android:textColor="@color/GrayColorOTP"
                 android:textSize="@dimen/_10sdp"
-             />
+        />
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_centerHorizontal="true"
                 android:layout_width="@dimen/_18sdp"

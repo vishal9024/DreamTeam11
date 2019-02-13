@@ -10,11 +10,13 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import org.json.JSONObject
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.constant.PrefConstant
 import os.com.data.Prefs
 import os.com.ui.dashboard.DashBoardActivity
+import os.com.ui.notification.apiResponse.notificationResponse.Match
 import os.com.ui.splash.activity.SplashActivity
 import kotlin.random.Random
 
@@ -25,11 +27,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.e("Remote Message=", remoteMessage!!.data.toString())
         var data = sendNotif(remoteMessage.data)
 
-        unread = Prefs(this).getIntValue(PrefConstant.UNREAD_COUNT,0)
-        unread= data.badge_count!!.toInt()
+        unread = Prefs(this).getIntValue(PrefConstant.UNREAD_COUNT, 0)
+        unread = data.badge_count!!.toInt()
         Prefs(this).putIntValue(PrefConstant.UNREAD_COUNT, unread)
 //        ShortcutBadger.applyCount(this, Prefs(this).getIntValue(PrefConstant.UNREAD_COUNT,0))
-        generateNotification(data)
+        if (isAppIsInBackground(this))
+            generateNotification(data)
     }
     /*pendingCart
     orderPlaced
@@ -47,21 +50,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         const val match_end = "5"
         const val winning_amount = "6"
     }
-//
+
+    //
     private fun generateNotification(data: PNModel) {
 
         val largeIcon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_foreground)
         val notificationManager = getSystemService(
-                Context.NOTIFICATION_SERVICE) as NotificationManager
+            Context.NOTIFICATION_SERVICE
+        ) as NotificationManager
         val mBuilder = NotificationCompat.Builder(this, getString(R.string.default_notification_channel_id))
 
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText(data.title)
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setAutoCancel(true)
-                .setLargeIcon(largeIcon)
-                .setStyle(NotificationCompat.BigTextStyle().bigText(data.title))
-                .setContentIntent(setNotificationIntent(data))
+            .setContentTitle(getString(R.string.app_name))
+            .setContentText(data.title)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setAutoCancel(true)
+            .setLargeIcon(largeIcon)
+            .setStyle(NotificationCompat.BigTextStyle().bigText(data.title))
+            .setContentIntent(setNotificationIntent(data))
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mBuilder.setSmallIcon(R.mipmap.ic_launcher)
             mBuilder.color = ContextCompat.getColor(this, R.color.colorPrimary)
@@ -85,12 +90,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
-//
+    //
     private fun setNotificationIntent(data: PNModel): PendingIntent {
         var notificationIntent: Intent? = null
 //        if (data.type.equals(NotificationType.admin)) {
-            notificationIntent = Intent(this, DashBoardActivity::class.java)
-            notificationIntent.putExtra("notification_Data",data)
+        notificationIntent = Intent(this, DashBoardActivity::class.java)
+        notificationIntent.putExtra("notification_Data", data)
 //            notificationIntent = Intent(this, NotificationActivity::class.java)
 //        } else if (data.notification_type.equals(NotificationType.orderPlaced)) {
 //            notificationIntent = Intent(this, MyOrderDetailActivity::class.java)
@@ -137,18 +142,42 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationsModel.body = data["body"]
         notificationsModel.title = data["title"]
         notificationsModel.badge_count = data["badge_count"]
-        if (!data["matchData"]!!.isEmpty())
-        notificationsModel.badge_count = data["matchData"]
+        val match = Match()
+        if (!data["matchData"]!!.isEmpty()) {
+            val jsonObject = JSONObject(data["matchData"])
+            if (jsonObject.has("contestId"))
+                match.contestId = jsonObject.optString("contestId")
+            if (jsonObject.has("visitor_team_name"))
+                match.visitor_team_name = jsonObject.optString("visitor_team_name")
+            if (jsonObject.has("match_id"))
+                match.match_id = jsonObject.optString("match_id")
+            if (jsonObject.has("visitor_team_id"))
+                match.visitor_team_id = jsonObject.optString("visitor_team_id")
+            if (jsonObject.has("strTime"))
+                match.strTime = jsonObject.optString("strTime")
+            if (jsonObject.has("strDate"))
+                match.strDate = jsonObject.optString("strDate")
+            if (jsonObject.has("local_team_id"))
+                match.local_team_id = jsonObject.optString("local_team_id")
+            if (jsonObject.has("series_id"))
+                match.series_id = jsonObject.optString("series_id")
+            if (jsonObject.has("local_team_name"))
+                match.local_team_name = jsonObject.optString("local_team_name")
+        }
+        notificationsModel.matchData = match
+//        notificationsModel.matchData = data["matchData"]
 
         Log.e("Notification==>", notificationsModel.toString())
         return notificationsModel
     }
-//
+
+    //
     fun getRandomNumer(): Int {
         val r = Random
         return r.nextInt(80 - 65) + 65
     }
-//
+
+    //
     private fun isAppIsInBackground(context: Context): Boolean {
         var isInBackground = true
         val am = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager

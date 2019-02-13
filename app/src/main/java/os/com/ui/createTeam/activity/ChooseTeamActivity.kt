@@ -384,7 +384,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 addSubstituteData()
             }
             R.id.btn_Next -> {
-                val remainingPlayer = selectPlayer!!.selectedPlayer
+                val remainingPlayer = 11-selectPlayer!!.selectedPlayer
                 if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
                     if (selectPlayer!!.selectedPlayer != 11)
                         showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")

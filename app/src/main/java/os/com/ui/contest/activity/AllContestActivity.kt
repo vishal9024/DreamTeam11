@@ -358,5 +358,4 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
             }
         }
     }
-
 }

@@ -3,6 +3,7 @@ package os.com.ui.createTeam.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.activity_team_preview.*
@@ -116,9 +117,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 finalName.append(name)
 
             return finalName.toString()
-        }
-        else
-             return ""
+        } else
+            return ""
     }
 
     private var WK = 1
@@ -476,14 +476,14 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
             substituteDetail != null
         ) {
-            ll_substitute.visibility = VISIBLE
+            ll_substitute.visibility = GONE
             ImageLoader.getInstance().displayImage(
                 substituteDetail!!.image,
                 cimg_substitute,
                 FantasyApplication.getInstance().options
             )
-            if(!substituteDetail!!.name!!.isNullOrEmpty())
-            txt_substitute.setText(getName(substituteDetail!!.name))
+            if (!substituteDetail!!.name!!.isNullOrEmpty())
+                txt_substitute.setText(getName(substituteDetail!!.name))
             if (points)
                 txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
             else
@@ -506,8 +506,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     cimg_wk1,
                     FantasyApplication.getInstance().options
                 )
-                if(!data.name!!.isNullOrEmpty())
-                txt_wk1.setText(getName(data.name!!))
+                if (!data.name!!.isNullOrEmpty())
+                    txt_wk1.setText(getName(data.name!!))
                 if (data.in_dream_team)
                     img_dreamTeam_wk.visibility = View.VISIBLE
                 if (points)
@@ -535,8 +535,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat1,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bat1.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bat1.setText(getName(data.name!!))
                     if (data.in_dream_team)
                         img_dreamTeam_bat1.visibility = View.VISIBLE
                     if (points)
@@ -563,8 +563,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat2,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bat2.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bat2.setText(getName(data.name!!))
                     if (data.in_dream_team)
                         img_dreamTeam_bat2.visibility = View.VISIBLE
                     if (points)
@@ -593,8 +593,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat3,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bat3.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bat3.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -620,8 +620,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat4,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bat4.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bat4.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
@@ -647,8 +647,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bat5,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bat5.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bat5.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
@@ -676,8 +676,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_ar1,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_ar1.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_ar1.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
@@ -703,8 +703,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_ar2,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_ar2.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_ar2.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
@@ -730,8 +730,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_ar3,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_ar3.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_ar3.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -758,8 +758,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler1,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bowler1.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bowler1.setText(getName(data.name!!))
                     if (data.in_dream_team)
                         img_dreamTeam_bowler1.visibility = View.VISIBLE
                     if (points)
@@ -787,8 +787,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler2,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bowler2.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bowler2.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
@@ -814,8 +814,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler3,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bowler3.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bowler3.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -841,8 +841,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler4,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bowler4.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bowler4.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
@@ -868,8 +868,8 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_bowler5,
                         FantasyApplication.getInstance().options
                     )
-                    if(!data.name!!.isNullOrEmpty())
-                    txt_bowler5.setText(getName(data.name!!))
+                    if (!data.name!!.isNullOrEmpty())
+                        txt_bowler5.setText(getName(data.name!!))
                     if (points)
                         if (DreamTeam)
                             txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))
@@ -889,7 +889,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         if ((BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") &&
             substituteDetail != null
         ) {
-            ll_substitute.visibility = VISIBLE
+            if (points)
+                ll_substitute.visibility = GONE
+            else
+                ll_substitute.visibility = VISIBLE
             ImageLoader.getInstance().displayImage(
                 substituteDetail!!.image,
                 cimg_substitute,

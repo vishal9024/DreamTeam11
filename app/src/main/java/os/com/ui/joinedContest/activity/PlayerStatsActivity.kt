@@ -108,7 +108,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                         txt_Points.isEnabled = true
                         playerPoints = response.response!!.data!!
                         setAdapter()
-                        sortBySelector(Players)
+                        sortBySelector(Points)
                     } else {
                        logoutIfDeactivate(response.response!!.message)
                     }
