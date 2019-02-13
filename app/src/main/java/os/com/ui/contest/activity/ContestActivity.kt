@@ -157,6 +157,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.contest)
+
             setMenu(false, true, true, false,false)
             setAdapter()
             var localTeamName = match!!.local_team_name
