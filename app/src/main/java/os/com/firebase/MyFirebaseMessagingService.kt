@@ -10,13 +10,11 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.json.JSONObject
 import os.com.R
 import os.com.constant.IntentConstant
 import os.com.constant.PrefConstant
 import os.com.data.Prefs
 import os.com.ui.dashboard.DashBoardActivity
-import os.com.ui.notification.apiResponse.notificationResponse.Match
 import os.com.ui.splash.activity.SplashActivity
 import kotlin.random.Random
 
@@ -142,29 +140,30 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationsModel.body = data["body"]
         notificationsModel.title = data["title"]
         notificationsModel.badge_count = data["badge_count"]
-        val match = Match()
-        if (!data["matchData"]!!.isEmpty()) {
-            val jsonObject = JSONObject(data["matchData"])
-            if (jsonObject.has("contestId"))
-                match.contestId = jsonObject.optString("contestId")
-            if (jsonObject.has("visitor_team_name"))
-                match.visitor_team_name = jsonObject.optString("visitor_team_name")
-            if (jsonObject.has("match_id"))
-                match.match_id = jsonObject.optString("match_id")
-            if (jsonObject.has("visitor_team_id"))
-                match.visitor_team_id = jsonObject.optString("visitor_team_id")
-            if (jsonObject.has("strTime"))
-                match.strTime = jsonObject.optString("strTime")
-            if (jsonObject.has("strDate"))
-                match.strDate = jsonObject.optString("strDate")
-            if (jsonObject.has("local_team_id"))
-                match.local_team_id = jsonObject.optString("local_team_id")
-            if (jsonObject.has("series_id"))
-                match.series_id = jsonObject.optString("series_id")
-            if (jsonObject.has("local_team_name"))
-                match.local_team_name = jsonObject.optString("local_team_name")
-        }
-        notificationsModel.matchData = match
+        notificationsModel.matchData = data["matchData"]
+//        val match = Match()
+//        if (!data["matchData"]!!.isEmpty()) {
+//            val jsonObject = JSONObject(data["matchData"])
+//            if (jsonObject.has("contestId"))
+//                match.contestId = jsonObject.optString("contestId")
+//            if (jsonObject.has("visitor_team_name"))
+//                match.visitor_team_name = jsonObject.optString("visitor_team_name")
+//            if (jsonObject.has("match_id"))
+//                match.match_id = jsonObject.optString("match_id")
+//            if (jsonObject.has("visitor_team_id"))
+//                match.visitor_team_id = jsonObject.optString("visitor_team_id")
+//            if (jsonObject.has("strTime"))
+//                match.strTime = jsonObject.optString("strTime")
+//            if (jsonObject.has("strDate"))
+//                match.strDate = jsonObject.optString("strDate")
+//            if (jsonObject.has("local_team_id"))
+//                match.local_team_id = jsonObject.optString("local_team_id")
+//            if (jsonObject.has("series_id"))
+//                match.series_id = jsonObject.optString("series_id")
+//            if (jsonObject.has("local_team_name"))
+//                match.local_team_name = jsonObject.optString("local_team_name")
+//        }
+//        notificationsModel.matchData = match!!
 //        notificationsModel.matchData = data["matchData"]
 
         Log.e("Notification==>", notificationsModel.toString())

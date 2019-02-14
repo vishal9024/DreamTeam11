@@ -9,14 +9,14 @@ class PNModel() : Parcelable  {
     var body:String?= null
     var title:String?= null
     var badge_count:String?= null
-    var matchData :Match?= null
+    var matchData :String?= null
 
     constructor(parcel: Parcel) : this() {
         type = parcel.readString()
         body = parcel.readString()
         title = parcel.readString()
         badge_count = parcel.readString()
-        matchData = parcel.readParcelable(Match::class.java.classLoader)
+        matchData = parcel.readString()
     }
 
 
@@ -52,13 +52,12 @@ class PNModel() : Parcelable  {
 //        var local_team_id: String? = null
 //        var series_id: Int = 0
 //        var local_team_name: String? = null
-//    }
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(type)
         parcel.writeString(body)
         parcel.writeString(title)
         parcel.writeString(badge_count)
-        parcel.writeParcelable(matchData, flags)
+        parcel.writeString(matchData)
     }
 
     override fun describeContents(): Int {
