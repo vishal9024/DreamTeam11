@@ -568,4 +568,5 @@
     <string name="time_out">Match has been started you cannot join any contest of this match now.</string>
     <string name="delete">Delete</string>
     <string name="delete_notificaions">Are you sure you want to delete?</string>
+    <string name="notification_not_fount">Notification Not Fount</string>
 </resources>

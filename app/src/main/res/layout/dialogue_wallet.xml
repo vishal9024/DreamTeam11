@@ -162,15 +162,15 @@
                 <View android:layout_width="match_parent"
                       android:layout_height="0.5dp"
                       android:background="@color/GrayColorOTP"/>
-                <LinearLayout
+                <RelativeLayout
                         android:padding="@dimen/_5sdp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <LinearLayout
+                            android:id="@+id/llBonusView"
                             android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content">
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/txtCashBonusAmount"
@@ -201,12 +201,28 @@
                     </LinearLayout>
                     <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/imvBonusInfo"
-                            android:layout_gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@mipmap/info"
+                            android:layout_marginRight="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_alignParentRight="true"
                             android:tint="@color/colorSecondary"/>
-                </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/infoTip"
+                            style="@style/TextStyleNormal"
+                            android:gravity="center_vertical"
+                            android:layout_below="@id/imvBonusInfo"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_width="wrap_content"
+                            android:visibility="gone"
+                            android:text="@string/bonus_info_text"
+                            android:background="@drawable/patch"
+                            android:layout_alignParentRight="true"
+
+                            android:textColor="@color/whiteTab"
+                            android:layout_height="wrap_content"/>
+                </RelativeLayout>
 
             </LinearLayout>
         </LinearLayout>

@@ -6,7 +6,14 @@
                 android:orientation="vertical"
                 android:background="@drawable/bg"
                 android:layout_height="300dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
     <androidx.core.widget.NestedScrollView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_CreateTeam"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/btn_CreateTeam"
             android:layout_width="match_parent"
@@ -447,6 +454,9 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
     <androidx.appcompat.widget.AppCompatButton
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:id="@+id/btn_CreateTeam"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
@@ -454,4 +464,5 @@
             android:text="@string/apply"
             android:background="@color/colorASPrimary"
             android:layout_height="wrap_content"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

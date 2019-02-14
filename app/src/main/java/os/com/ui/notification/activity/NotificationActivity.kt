@@ -104,7 +104,14 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@NotificationActivity)
                 if (response.response!!.status) {
-                    setAdapter(response.response!!.data)
+                    if (response.response!!.data!=null && response.response!!.data!!.size>0) {
+                        setAdapter(response.response!!.data)
+                        rv_Notifications.visibility=View.VISIBLE
+                        txt_NotFoundData.visibility=View.GONE
+                    }else{
+                        rv_Notifications.visibility=View.GONE
+                        txt_NotFoundData.visibility=View.VISIBLE
+                    }
 //                    if (!response.response!!.data!!.isEmpty())
 //                        NotificationCountChannel.getInstance()
 //                            .notificationCountChannel.send(response.response!!.data!!.size)

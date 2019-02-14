@@ -41,6 +41,10 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                     finish()
                 }
                 R.id.txt_TC -> {
+//                    val intent = Intent(activity, WebViewActivity::class.java)
+//                    intent.putExtra("PAGE_SLUG", "Fantasy Point System")
+//                    intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.point_system)
+//                    startActivity(intent)
                     startActivity(Intent(this, TermsConditionActivity::class.java))
                 }
             }

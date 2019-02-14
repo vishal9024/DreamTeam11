@@ -185,7 +185,9 @@ open class BaseActivity : AppCompatActivity() {
                 walletPopupWindow!!.dismiss()
             }
             popupWindowView.imvBonusInfo.setOnClickListener { view ->
-
+                    if(popupWindowView.infoTip.visibility== View.VISIBLE)
+                        popupWindowView.infoTip.visibility=View.GONE
+                        else popupWindowView.infoTip.visibility=View.VISIBLE
 //                SimpleTooltip.Builder(this)
 //                    .anchorView(view)
 //                    .text("Test")
