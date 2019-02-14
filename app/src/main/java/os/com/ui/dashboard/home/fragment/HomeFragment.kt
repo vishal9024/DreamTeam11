@@ -369,6 +369,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 
     override fun onDestroy() {
         super.onDestroy()
-        fixturesAdapter!!.stopUpdateTimer()
+          try{
+              fixturesAdapter!!.stopUpdateTimer()
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
+
     }
 }

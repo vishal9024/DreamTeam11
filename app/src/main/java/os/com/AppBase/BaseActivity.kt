@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
+import kotlinx.android.synthetic.main.dialogue_tooltip.view.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -173,7 +174,7 @@ open class BaseActivity : AppCompatActivity() {
 
 
             /* set view for filter popup window*/
-            walletPopupWindow = PopupWindow(applicationContext)
+            walletPopupWindow = PopupWindow(this)
             popupWindowView = layoutInflater.inflate(R.layout.dialogue_wallet, null) as View
             walletPopupWindow!!.contentView = popupWindowView
 
@@ -185,23 +186,27 @@ open class BaseActivity : AppCompatActivity() {
                 walletPopupWindow!!.dismiss()
             }
             popupWindowView.imvBonusInfo.setOnClickListener { view ->
-                    if(popupWindowView.infoTip.visibility== View.VISIBLE)
-                        popupWindowView.infoTip.visibility=View.GONE
-                        else popupWindowView.infoTip.visibility=View.VISIBLE
+
+                initToolTipPopUp(view,"bonus")
+//                    if(popupWindowView.infoTip.visibility== View.VISIBLE)
+//                        popupWindowView.infoTip.visibility=View.GONE
+//                        else popupWindowView.infoTip.visibility=View.VISIBLE
 //                SimpleTooltip.Builder(this)
 //                    .anchorView(view)
 //                    .text("Test")
 //                    .build()
 //                    .show()
             }
-            popupWindowView.imvWinningInfo.setOnClickListener {
+            popupWindowView.imvWinningInfo.setOnClickListener {view ->
+                initToolTipPopUp(view,"winning")
                 //                SimpleTooltip.Builder(baseContext)
 //                    .anchorView(it)
 //                    .text(resources.getString(R.string.winning_info_text))
 //                    .build()
 //                    .show()
             }
-            popupWindowView.imvDepositedInfo.setOnClickListener {
+            popupWindowView.imvDepositedInfo.setOnClickListener {view ->
+                initToolTipPopUp(view,"deposit")
                 //                SimpleTooltip.Builder(baseContext)
 //                    .anchorView(it)
 //                    .text(resources.getString(R.string.deposited_info_text))
@@ -215,6 +220,39 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    private fun initToolTipPopUp(anchorView: View, type: String) {
+        try {
+
+
+            /* set view for filter popup window*/
+            walletPopupWindow = PopupWindow(this)
+            popupWindowView = layoutInflater.inflate(R.layout.dialogue_tooltip, null) as View
+            walletPopupWindow!!.contentView = popupWindowView
+
+//            walletPopupWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
+//            walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
+            walletPopupWindow!!.isOutsideTouchable = true
+            walletPopupWindow!!.isFocusable = true
+            if (type=="bonus")
+            popupWindowView.txt_Tooltip.setText(R.string.bonus_info_text)
+            else if (type=="winning")
+                popupWindowView.txt_Tooltip.setText(R.string.winning_info_text)
+            else if (type=="deposit")
+                popupWindowView.txt_Tooltip.setText(R.string.deposited_info_text)
+
+            var background = ColorDrawable(android.graphics.Color.BLACK)
+            background.alpha = 10
+            walletPopupWindow!!.setBackgroundDrawable(background);
+            val rectangle = Rect()
+            val window = window
+            window.decorView.getWindowVisibleDisplayFrame(rectangle)
+            walletPopupWindow!!.showAsDropDown(anchorView)
+            /* show popup window*/
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun showWalletPopUp(
         anchorView: View,
         data: MyAccountResponse.ResponseBean.DataBean
@@ -223,8 +261,6 @@ open class BaseActivity : AppCompatActivity() {
         walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
         walletPopupWindow!!.isOutsideTouchable = true
         walletPopupWindow!!.isFocusable = true
-
-
 
         popupWindowView.txtTotalAmount.setText("₹ " + data.total_balance)
         popupWindowView.txtDepositedAmount.setText("₹ " + data.deposit_amount)

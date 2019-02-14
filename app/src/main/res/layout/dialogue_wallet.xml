@@ -204,8 +204,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:srcCompat="@mipmap/info"
-                            android:layout_marginRight="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_centerVertical="true"
                             android:layout_alignParentRight="true"
                             android:tint="@color/colorSecondary"/>
                     <androidx.appcompat.widget.AppCompatTextView
@@ -219,7 +218,6 @@
                             android:text="@string/bonus_info_text"
                             android:background="@drawable/patch"
                             android:layout_alignParentRight="true"
-
                             android:textColor="@color/whiteTab"
                             android:layout_height="wrap_content"/>
                 </RelativeLayout>

@@ -26,7 +26,7 @@ object ApiConstant {
     const val playing11BaseURL = "https://72.octallabs.com/playing11/"
     // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val real11BaseURL = "http://real11.com/"
-    const val lucky11BaseURL = "http://real11.com/"
+    const val lucky11BaseURL = "http://18.224.67.198/"
     const val realBashBaseURL = "https://72.octallabs.com/realBash/"
     fun getBaseUrl(): String {
         when {

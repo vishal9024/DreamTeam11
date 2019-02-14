@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_40sdp"
+android:background="@drawable/patch">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txt_Tooltip"
+                    android:layout_gravity="center_horizontal"
+                    style="@style/TextStyleNormal"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/_12sdp"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:text="@string/bonus_info_text"
+                    android:textColor="@color/whiteTab"
+                    android:layout_height="wrap_content"/>
+</RelativeLayout>
