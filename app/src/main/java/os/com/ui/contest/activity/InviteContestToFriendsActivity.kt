@@ -13,7 +13,6 @@ import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 
 
 class InviteContestToFriendsActivity : BaseActivity(), View.OnClickListener {
@@ -49,7 +48,7 @@ class InviteContestToFriendsActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-    var countTimer: CountTimer? = CountTimer()
+//    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var contestCode = ""

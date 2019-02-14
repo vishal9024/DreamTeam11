@@ -17,7 +17,6 @@ import os.com.ui.createTeam.adapter.PlayerListSubstituteAdapter
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
-import os.com.utils.CountTimer
 
 class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
 
@@ -88,7 +87,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
             countTimer!!.stopUpdateTimer()
     }
 
-    var countTimer: CountTimer? = CountTimer()
+//    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var from = 0
@@ -123,7 +122,7 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
             if (!match!!.star_date.isEmpty()) {
                 val strt_date = match!!.star_date.split("T")
                 val dateTime = strt_date.get(0) + " " + match!!.star_time
-                countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
             }
         } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))

@@ -162,20 +162,32 @@
                         android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatTextView
+        <LinearLayout
                 android:layout_marginStart="@dimen/_5sdp"
-                android:id="@+id/txt_status"
-                android:layout_below="@+id/ll_headerView"
-                android:layout_toRightOf="@+id/imvUserProfile"
-                android:padding="@dimen/_3sdp"
-                style="@style/TextStyleSemiBold"
-                android:background="@color/white"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:textSize="@dimen/_10sdp"
-                android:textColor="@color/textColorGray"
-                android:text="@string/not_in_your_team"
-                android:layout_height="wrap_content"/>
+                android:layout_width="match_parent"
+                      android:layout_below="@+id/ll_headerView"
+                      android:layout_toRightOf="@+id/imvUserProfile"
+                      android:layout_height="wrap_content">
+            <androidx.appcompat.widget.AppCompatImageView
+                    android:padding="@dimen/_2sdp"
+                    android:id="@+id/img_playerSelected"
+                    android:src="@drawable/player_selector"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_18sdp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:id="@+id/txt_status"
+                    android:padding="@dimen/_3sdp"
+                    style="@style/TextStyleSemiBold"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/textColorGray"
+                    android:text="@string/not_in_your_team"
+                    android:layout_height="wrap_content"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
     <View
@@ -254,7 +266,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <LinearLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_alignParentBottom="true"
             android:paddingStart="@dimen/_5sdp"
             android:id="@+id/ll_bottom"
@@ -277,6 +289,7 @@
                 android:drawableStart="@mipmap/player_selected"
                 android:layout_height="wrap_content"/>
         <androidx.appcompat.widget.AppCompatTextView
+                android:visibility="gone"
                 style="@style/TextStyleSemiBold"
                 android:textSize="@dimen/_10sdp"
                 android:drawablePadding="@dimen/_5sdp"

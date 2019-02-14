@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_joined_completed_contestlist.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
@@ -130,7 +131,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                     R.string.vs
                 ) + " " + visitorTeamName
                 if (matchType == IntentConstant.LIVE) {
-                    callMatchScoreApi()
+                    callMatchScoreApi(VISIBLE)
                     if (!match!!.star_date.isEmpty()) {
                         val strt_date = match!!.star_date.split("T")
                         val dateTime = strt_date.get(0) + " " + match!!.star_time
@@ -138,24 +139,42 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                     }
                     txt_CountDownTimer.setText(getString(R.string.in_progress))
                 } else if (matchType == IntentConstant.COMPLETED) {
-                    callMatchScoreApi()
+                    callMatchScoreApi(VISIBLE)
                     txt_CountDownTimer.setText(getString(R.string.completed))
                 } else
                     txt_CountDownTimer.setText(getString(R.string.in_progress))
                 if (NetworkUtils.isConnected()) {
-                    callGetJoinedContestListApi()
+                    callGetJoinedContestListApi(VISIBLE)
                 } else
                     AppDelegate.showToast(this, getString(R.string.error_network_connection))
                 btn_dreamTeam.setOnClickListener(this)
+            }
+
+            swipeToRefresh.setOnRefreshListener {
+                if (AppDelegate.isNetworkAvailable(this))
+                    refreshItems()
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
 
-
     }
 
-    private fun callGetJoinedContestListApi() {
+    private fun refreshItems() {
+        GlobalScope.launch {
+            delay(200)
+            try {
+                if (AppDelegate.isNetworkAvailable(this@CompletedJoinedContestActivity)) {
+                    callGetJoinedContestListApi(View.GONE)
+                    callMatchScoreApi(View.GONE)
+                }
+            } catch (e: Exception) {
+                swipeToRefresh.isRefreshing = false
+            }
+        }
+    }
+
+    private fun callGetJoinedContestListApi(visibility: Int) {
         try {
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
@@ -166,7 +185,8 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/
             GlobalScope.launch(Dispatchers.Main) {
-                AppDelegate.showProgressDialog(this@CompletedJoinedContestActivity)
+                if (visibility == VISIBLE)
+                    AppDelegate.showProgressDialog(this@CompletedJoinedContestActivity)
                 try {
                     val request = ApiClient.client
                         .getRetrofitService()
@@ -174,6 +194,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
+                    swipeToRefresh.isRefreshing = false
                     if (response.response!!.status) {
                         constraint_layout.visibility = VISIBLE
                         if (matchType == IntentConstant.COMPLETED)
@@ -191,6 +212,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                         logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
+                    swipeToRefresh.isRefreshing = false
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                 }
             }
@@ -215,7 +237,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
         rv_Contest!!.adapter = MatchFixturesAdapter(this, matchList, this)
     }
 
-    private fun callMatchScoreApi() {
+    private fun callMatchScoreApi(visibility: Int) {
         try {
             callApi = false
             val map = HashMap<String, String>()
@@ -227,17 +249,19 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/
             GlobalScope.launch(Dispatchers.Main) {
-                AppDelegate.showProgressDialog(this@CompletedJoinedContestActivity)
+                if (visibility == VISIBLE)
+                    AppDelegate.showProgressDialog(this@CompletedJoinedContestActivity)
                 try {
                     val request = ApiClient.client
                         .getRetrofitService()
                         .match_scores(map)
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response);
+                    swipeToRefresh.isRefreshing = false
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                     if (response.response!!.status) {
 //                        if (response.response!!.data != null) {
-                            updateScoreBoard(response.response!!.data)
+                        updateScoreBoard(response.response!!.data)
 //                        } else
 //                        {
 //                            txt_scoreBoard.visibility = GONE
@@ -250,6 +274,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                         logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
+                    swipeToRefresh.isRefreshing = false
                     AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                 }
             }
@@ -302,7 +327,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                 ll_visitorTeamScore.visibility = VISIBLE
                 if (callApi) {
                     callApi = false
-                    callMatchScoreApi()
+                    callMatchScoreApi(VISIBLE)
                 }
 //                textView!!.text = "Expired!!"
             }

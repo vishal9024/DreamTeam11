@@ -154,7 +154,6 @@
                     android:drawablePadding="@dimen/_11sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorLightBlack"
-                    android:text="06h 36m 52s"
                     android:layout_height="wrap_content"
             />
 

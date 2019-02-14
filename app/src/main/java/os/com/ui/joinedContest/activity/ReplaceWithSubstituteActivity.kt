@@ -25,7 +25,6 @@ import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.ReplaceSubstituteAdapter
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.HashMap
 import kotlin.collections.ArrayList
@@ -83,7 +82,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
             countTimer!!.stopUpdateTimer()
     }
 
-    var countTimer: CountTimer? = CountTimer()
+//    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var teamNo = ""

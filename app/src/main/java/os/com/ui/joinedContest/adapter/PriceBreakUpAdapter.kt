@@ -31,9 +31,20 @@ class PriceBreakUpAdapter(
 //        } catch (e: Exception) {
 //            holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
 //        }
-        holder.itemView.txt_TeamName.text =breakup_detail[position]
+        holder.itemView.txt_TeamName.text = breakup_detail[position]
         holder.itemView.txt_actual.text = priceBreakUpList[breakup_detail[position]]!!.actual
-        holder.itemView.txt_rank.text =  priceBreakUpList[breakup_detail[position]]!!.points
+        holder.itemView.txt_rank.text = priceBreakUpList[breakup_detail[position]]!!.points
+        if (breakup_detail[position].equals("Starting 11") || breakup_detail[position].equals("Duck")) {
+            if (!priceBreakUpList[breakup_detail[position]]!!.actual.isEmpty()) {
+                if (priceBreakUpList[breakup_detail[position]]!!.actual.equals("1"))
+                    holder.itemView.txt_actual.text = "Yes"
+                else
+                    holder.itemView.txt_actual.text = "No"
+            } else {
+                holder.itemView.txt_actual.text = "No"
+            }
+        }
+
     }
 
 

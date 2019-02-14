@@ -56,21 +56,24 @@ class BottomSheetPriceBreakUpFragment() : BottomSheetDialogFragment() {
             dialog.imvUserProfile,
             FantasyApplication.getInstance().options
         )
-        dialog.txtPoints.text=data.points
+        dialog.txtPoints.text = data.points
         dialog.txt_label.text = data.player_name
         dialog.txtSelectedBy.text = data.selection_percent
         dialog.txtCredits.text = data.player_credit
-        if (!data.team_number !!.isEmpty()) {
+        if (!data.team_number!!.isEmpty()) {
             var name = StringBuilder()
             for (dat in data.team_number!!)
-                name.append("T"+dat).append(", ")
+                name.append("T" + dat).append(", ")
 
             var finalName = name.toString()
             if (finalName.length > 3)
                 finalName = finalName.substring(0, finalName.length - 2)
             dialog.txt_status.text = finalName
-        } else
+            dialog.img_playerSelected.isSelected = true
+        } else {
             dialog.txt_status.text = getString(R.string.not_in_your_team)
+            dialog.img_playerSelected.isSelected = false
+        }
     }
 
     private fun addData(data: Data) {
@@ -139,7 +142,7 @@ class BottomSheetPriceBreakUpFragment() : BottomSheetDialogFragment() {
         val llm = LinearLayoutManager(context)
         llm.orientation = LinearLayoutManager.VERTICAL
         dialog.rv_rank!!.layoutManager = llm
-        dialog.rv_rank!!.adapter = PriceBreakUpAdapter(context!!, priceBreakUp,priceBreakUpList)
+        dialog.rv_rank!!.adapter = PriceBreakUpAdapter(context!!, priceBreakUp, priceBreakUpList)
     }
 }
 

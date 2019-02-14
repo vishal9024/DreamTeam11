@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_joined_completed_contest_leadership.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
@@ -37,7 +38,6 @@ import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.LeaderShipTeamsAdapter
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.Comparator
 import kotlin.collections.ArrayList
@@ -112,7 +112,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         else
-            loginRequest[Tags.user_id]= ""
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         loginRequest[Tags.contest_id] = contest_id
         loginRequest[Tags.match_id] = match!!.match_id
@@ -131,7 +131,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     if (!response.response!!.data!!.url.isEmpty())
                         DownloadTeam(response.response!!.data!!.url)
                 } else {
-                   logoutIfDeactivate(response.response!!.message)
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
@@ -160,15 +160,16 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         }
 
         var link = "market://details?id="
-        try {
-            // play market available
-            packageManager?.getPackageInfo("com.android.vending", 0)
-            // not available
-        } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            // should use browser
-            link = "https://play.google.com/store/apps/details?id="
-        }
+//        try {
+//            // play market available
+//            packageManager?.getPackageInfo("com.android.vending", 0)
+//            // not available
+//        } catch (e: PackageManager.NameNotFoundException) {
+//            e.printStackTrace()
+//            // should use browser
+//            link = "https://play.google.com/store/apps/details?id="
+//        }
+        link = "https://play.google.com/store/apps/details?id="
         // starts external action
 //                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(link +packageName)))
         var shareCode = ""
@@ -222,11 +223,11 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
 
     var localTeamName = ""
     var visitorTeamName = ""
-    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var contest_id = ""
-//    var joinedContest: JoinedContestData? = null
+    //    var joinedContest: JoinedContestData? = null
     private fun initViews() {
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -245,10 +246,10 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             if (!match!!.star_date.isEmpty()) {
                 val strt_date = match!!.star_date.split("T")
                 val dateTime = strt_date.get(0) + " " + match!!.star_time
-                countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
             }
         } else if (matchType == IntentConstant.COMPLETED) {
-            ll_bottom.visibility= VISIBLE
+            ll_bottom.visibility = VISIBLE
             txt_CountDownTimer.setText(getString(R.string.completed))
         } else
             txt_CountDownTimer.setText(getString(R.string.in_progress))
@@ -259,8 +260,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         toolbarTitleTv.setText(R.string.joined_Contest)
         setMenu(false, false, false, false, false)
         if (NetworkUtils.isConnected()) {
-            callContestDetailApi()
-            callMatchScoreApi()
+            callContestDetailApi(VISIBLE)
+            callMatchScoreApi(VISIBLE)
         } else
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
@@ -283,10 +284,28 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         txt_ViewPlayerStats.setOnClickListener(this)
         btn_ViewTeams.setOnClickListener(this)
         btn_InviteFriends.setOnClickListener(this)
+
+        swipeToRefresh.setOnRefreshListener {
+            if (AppDelegate.isNetworkAvailable(this))
+                refreshItems()
+        }
+    }
+    private fun refreshItems() {
+        GlobalScope.launch {
+            delay(200)
+            try {
+                if (NetworkUtils.isConnected()) {
+                    callContestDetailApi(GONE)
+                    callMatchScoreApi(GONE)
+                }
+            } catch (e: Exception) {
+                swipeToRefresh.isRefreshing = false
+            }
+        }
     }
 
     var data: Data? = null
-    private fun callContestDetailApi() {
+    private fun callContestDetailApi(visible: Int) {
 //        callApi = false
         val loginRequest = HashMap<String, String>()
         if (pref!!.isLogin)
@@ -299,16 +318,18 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         loginRequest[Tags.series_id] = match!!.series_id
 
         GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
+            if (visible == VISIBLE)
+                AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
                     .contest_detail(loginRequest)
                 val response = request.await()
                 AppDelegate.LogT("Response=>" + response);
+                swipeToRefresh.isRefreshing = false
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
-                    scrollView.visibility= VISIBLE
+                    scrollView.visibility = VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
@@ -316,6 +337,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                     logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
+                swipeToRefresh.isRefreshing = false
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
             }
         }
@@ -348,41 +370,44 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
     }
 
     var joined_team_list: ArrayList<Team> = ArrayList()
-    private fun callMatchScoreApi() {
+    private fun callMatchScoreApi(visible: Int) {
         try {
             val map = HashMap<String, String>()
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
             else
-                map[Tags.user_id]= ""
+                map[Tags.user_id] = ""
             map[Tags.language] = FantasyApplication.getInstance().getLanguage()
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/
             GlobalScope.launch(Dispatchers.Main) {
-                AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
+                if (visible == VISIBLE)
+                    AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
                 try {
                     val request = ApiClient.client
                         .getRetrofitService()
                         .match_scores(map)
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response);
+                    swipeToRefresh.isRefreshing = false
                     AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                     if (response.response!!.status) {
-                        scrollView.visibility= VISIBLE
-                        if (response.response!!.data != null) {
-                            updateScoreBoard(response.response!!.data)
-                        } else
-                        {
-                            txt_scoreBoard.visibility = GONE
-                            ll_visitorTeamScore.visibility = GONE
-                            txt_WinBy.visibility = GONE
-                            card_view1.visibility = VISIBLE
-                            txt_localTeamScore.text = getString(R.string.match_not_started)
-                        }
+                        scrollView.visibility = VISIBLE
+                        updateScoreBoard(response.response!!.data)
+//                        if (response.response!!.data != null) {
+//                            updateScoreBoard(response.response!!.data)
+//                        } else {
+//                            txt_scoreBoard.visibility = GONE
+//                            ll_visitorTeamScore.visibility = GONE
+//                            txt_WinBy.visibility = GONE
+//                            card_view1.visibility = VISIBLE
+//                            txt_localTeamScore.text = getString(R.string.match_not_started)
+//                        }
                     } else {
                         logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
+                    swipeToRefresh.isRefreshing = false
                     AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 }
             }
@@ -440,6 +465,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             )
         }
     }
+
     private fun callDreamTeamApi(tag: String, user_id: String, teamNo: String, team_name: String) {
         val loginRequest = java.util.HashMap<String, String>()
         loginRequest[Tags.user_id] = user_id
@@ -477,6 +503,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
             }
         }
     }
+
     private fun callGetTeamListApi(tag: String, user_id: String, teamNo: String, team_name: String) {
         val loginRequest = HashMap<String, String>()
         loginRequest[Tags.user_id] = user_id
@@ -487,7 +514,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@LeaderShipBoardActivity)
             try {
-                var request=
+                var request =
                     ApiClient.client
                         .getRetrofitService()
                         .player_team_list(loginRequest)
@@ -512,7 +539,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                                 .putExtra("teamName", teamName)
                                 .putExtra("points", true)
                         )
-                    }  else if (tag.equals("substitute")) {
+                    } else if (tag.equals("substitute")) {
                         startActivityForResult(
                             Intent(
                                 this@LeaderShipBoardActivity,

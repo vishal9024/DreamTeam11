@@ -116,9 +116,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 //            }
 
         matchSelector(FIXTURES)
-        setFixturesAdapter()
-        setCompletedAdapter()
-        setLiveAdapter()
+
+//        setCompletedAdapter()
+//        setLiveAdapter()
         if (NetworkUtils.isConnected()) {
             callGetMatchListApi(VISIBLE)
         } else
@@ -225,12 +225,16 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     var completedAdapter: MatchCompletedAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_fixMatch!!.layoutManager = llm
-        recyclerView_fixMatch!!.setHasFixedSize(true)
-        fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
-        recyclerView_fixMatch!!.adapter = fixturesAdapter
+        if (fixturesAdapter != null) {
+            recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
+        } else {
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_fixMatch!!.layoutManager = llm
+            recyclerView_fixMatch!!.setHasFixedSize(true)
+            fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
+            recyclerView_fixMatch!!.adapter = fixturesAdapter
+        }
     }
 
     @SuppressLint("WrongConstant")
@@ -279,11 +283,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                     liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
                     completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
                     setFixturesAdapter()
-                    setCompletedAdapter()
-                    setLiveAdapter()
-                    recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
-                    recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
-                    recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
+//                    setCompletedAdapter()
+//                    setLiveAdapter()
+
+//                    recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
+//                    recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
 
                 } else {
                     (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
@@ -327,8 +331,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                     (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
-                swipeToRefresh.isRefreshing = false
-                AppDelegate.hideProgressDialog(activity)
+                if (isAdded) {
+                    swipeToRefresh.isRefreshing = false
+                    AppDelegate.hideProgressDialog(activity)
+                }
             }
         }
     }

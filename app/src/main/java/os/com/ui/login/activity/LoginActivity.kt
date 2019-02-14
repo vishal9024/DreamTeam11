@@ -290,8 +290,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 //                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
-                    startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java))
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
                     finish()
                 } else {
                     if(response.response!!.message.equals("Invalid User id.",true)){

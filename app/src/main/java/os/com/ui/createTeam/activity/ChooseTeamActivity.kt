@@ -38,7 +38,6 @@ import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.HashMap
 import kotlin.collections.ArrayList
@@ -521,7 +520,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             countTimer!!.stopUpdateTimer()
     }
 
-    var countTimer: CountTimer? = CountTimer()
+//    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var from = 0
@@ -580,7 +579,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))

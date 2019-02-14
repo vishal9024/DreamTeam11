@@ -16,7 +16,6 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
@@ -43,6 +42,7 @@ import os.com.ui.notification.activity.NotificationActivity
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUp
 import os.com.ui.winningBreakup.dialogues.BottomSheetWinningListFragment
 import os.com.utils.AppDelegate
+import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 import kotlin.math.roundToInt
 
@@ -61,7 +61,7 @@ open class BaseActivity : AppCompatActivity() {
     var edit = false
     var guru = false
 
-
+    var countTimer: CountTimer? = CountTimer()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         overridePendingTransition(0, 0);

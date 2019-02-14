@@ -197,7 +197,6 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                                 ), UPDATEVIEW
                         )
                     }
-
                 } else if (holder.itemView.txt_Join.text.toString().equals(mContext.getString(R.string.invite))) {
                     val shareCode =
                         "You've been challanged! \n\nThink you can beat me? Join the contest on " + mContext.getString(R.string.app_name) + " for the " + match!!.series_name + " match and prove it! \n\nUse Contest Code " + contest[position].invite_code.capitalize() + " & join the action NOW!"

@@ -35,7 +35,6 @@ import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.apiResponse.joinedContestFixtureListResponse.JoinedContestData
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 
 
@@ -191,7 +190,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
 
     var joinedContest: JoinedContestData? = null
     var contest: Contest? = null
-    var countTimer: CountTimer? = CountTimer()
+//    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var contest_id = ""
@@ -225,7 +224,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))

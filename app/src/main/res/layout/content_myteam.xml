@@ -38,7 +38,6 @@
                 android:layout_width="wrap_content"
                 android:drawableStart="@mipmap/time"
                 android:textColor="@color/textColorLightBlack"
-                android:text="06h 23m 45s"
                 android:layout_height="wrap_content"/>
     </LinearLayout>
     <View

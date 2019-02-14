@@ -198,7 +198,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
-
     fun setTitleVisibility(title: Boolean, icon: Boolean) {
         if (icon)
             img_AppIcon.visibility = VISIBLE
@@ -246,6 +245,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         super.onResume()
         if (!pref!!.isLogin)
             bottomNavigationView.visibility = View.GONE
+        if (countTimer != null)
+            countTimer!!.stopUpdateTimer()
 //        addressTv.text = pref!!.getStringValue(PrefConstant.KEY_SELECTED_STORE_NAME, getString(R.string.home))
 //        updateNavigationView()
     }
