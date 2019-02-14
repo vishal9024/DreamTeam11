@@ -149,4 +149,5 @@ object ApiConstant {
     const val contest_prize_breakup = "contest-prize-breakup"
     const val add_withdraw_request = "add-withdraw-request"
     const val create_contest = "create-contest"
+    const val deleteNotifications = "deleteNotifications"
 }

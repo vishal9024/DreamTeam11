@@ -35,35 +35,32 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun deleteNotification(type: String) {
-//        try {
-//            val loginRequest = HashMap<String, String>()
-//            if (pref!!.isLogin)
-//                loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
-//            else
-//                loginRequest[Tags.user_id] = ""
-//            loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-//            GlobalScope.launch(Dispatchers.Main) {
-//                AppDelegate.showProgressDialog(this@NotificationActivity)
-//
-//                val request = ApiClient.client
-//                    .getRetrofitService()
-//                    .notification_list(loginRequest)
-//                val response = request.await()
-//                AppDelegate.LogT("Response=>" + response);
-//                AppDelegate.hideProgressDialog(this@NotificationActivity)
-//                if (response.response!!.status) {
-//                    setAdapter(response.response!!.data)
-////                    if (!response.response!!.data!!.isEmpty())
-////                        NotificationCountChannel.getInstance()
-////                            .notificationCountChannel.send(response.response!!.data!!.size)
-////                    else
-////                        NotificationCountChannel.getInstance()
-////                            .notificationCountChannel.send(151)
-//                } else {
-//                    AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
-//                }
-//            }
-//        }
+        try {
+            val loginRequest = HashMap<String, String>()
+            if (pref!!.isLogin)
+                loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
+            else
+                loginRequest[Tags.user_id] = ""
+            loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+//            loginRequest[Tags.notification_id] = FantasyApplication.getInstance().getLanguage()
+            GlobalScope.launch(Dispatchers.Main) {
+                AppDelegate.showProgressDialog(this@NotificationActivity)
+
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .deleteNotifications(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(this@NotificationActivity)
+                if (response.response!!.status) {
+
+                } else {
+                    AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
+                }
+            }
+        } catch (exception: Exception) {
+            AppDelegate.hideProgressDialog(this@NotificationActivity)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -95,7 +92,7 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         else
-            loginRequest[Tags.user_id]= ""
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@NotificationActivity)
@@ -115,7 +112,7 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
 //                        NotificationCountChannel.getInstance()
 //                            .notificationCountChannel.send(151)
                 } else {
-                   logoutIfDeactivate(response.response!!.message!!)
+                    logoutIfDeactivate(response.response!!.message!!)
                     AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {

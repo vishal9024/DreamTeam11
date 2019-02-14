@@ -206,8 +206,10 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
             }
         } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))
-        } else
+        } else {
             txt_CountDownTimer.setText(getString(R.string.in_progress))
+            txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+        }
         txt_joined_contest.text = joined_contest.toString()
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
         if (FantasyApplication.getInstance().teamCount == 0) {

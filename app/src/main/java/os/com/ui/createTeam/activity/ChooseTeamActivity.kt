@@ -583,8 +583,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
-            } else
+            } else {
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
+                txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+            }
         }
         createTeamData()
     }

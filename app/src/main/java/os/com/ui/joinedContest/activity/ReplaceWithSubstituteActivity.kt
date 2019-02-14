@@ -146,8 +146,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
             playerListEdit = intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
             substituteDetail = intent.getParcelableExtra("substitute")
-             localTeamName = match!!.local_team_name
-             visitorTeamName = match!!.visitor_team_name
+            localTeamName = match!!.local_team_name
+            visitorTeamName = match!!.visitor_team_name
             if (match!!.local_team_name.length > 5)
                 localTeamName = match!!.local_team_name.substring(0, 4)
             if (match!!.visitor_team_name.length > 5)
@@ -169,8 +169,10 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
 //                }
 //            } else if (matchType == IntentConstant.COMPLETED) {
 //                txt_CountDownTimer.setText(getString(R.string.completed))
-//            } else
+//            } else{
 //                txt_CountDownTimer.setText(getString(R.string.in_progress))
+//            txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+//        }
         }
     }
 

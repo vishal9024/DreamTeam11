@@ -126,8 +126,10 @@ class ChooseSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPla
             }
         } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))
-        } else
+        } else {
             txt_CountDownTimer.setText(getString(R.string.in_progress))
+            txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+        }
         wkList = intent.getParcelableArrayListExtra(IntentConstant.WK)
         arList = intent.getParcelableArrayListExtra(IntentConstant.AR)
         bowlerList = intent.getParcelableArrayListExtra(IntentConstant.BOWLER)

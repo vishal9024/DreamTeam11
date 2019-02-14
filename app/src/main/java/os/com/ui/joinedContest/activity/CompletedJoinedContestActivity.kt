@@ -138,11 +138,14 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                         startUpdateTimer(dateTime)
                     }
                     txt_CountDownTimer.setText(getString(R.string.in_progress))
+                    txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
                 } else if (matchType == IntentConstant.COMPLETED) {
                     callMatchScoreApi(VISIBLE)
                     txt_CountDownTimer.setText(getString(R.string.completed))
-                } else
+                } else {
                     txt_CountDownTimer.setText(getString(R.string.in_progress))
+                    txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+                }
                 if (NetworkUtils.isConnected()) {
                     callGetJoinedContestListApi(VISIBLE)
                 } else
