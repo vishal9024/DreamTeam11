@@ -192,8 +192,10 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             }
         } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))
-        } else
+        } else {
             txt_CountDownTimer.setText(getString(R.string.in_progress))
+            txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+        }
         var bowlerList: MutableList<Data>? = ArrayList()
         var arList: MutableList<Data>? = ArrayList()
         var wkList: MutableList<Data>? = ArrayList()

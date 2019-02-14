@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.app_toolbar.*
+
 import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.coroutines.Dispatchers
@@ -172,8 +173,10 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
-            } else
+            } else {
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
+                txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+            }
         }
     }
 

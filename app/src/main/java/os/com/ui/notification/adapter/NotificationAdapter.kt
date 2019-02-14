@@ -88,6 +88,7 @@ class NotificationAdapter(
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
 
+        holder.itemView.txt_Title.text = data!![position].title
         holder.itemView.txt_Notification.text = data!![position].notification
         holder.itemView.txt_Date.text = data[position].date
     }

@@ -370,8 +370,10 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
-            } else
+            } else {
                 txt_CountDownTimer.setText(getString(R.string.in_progress))
+                txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
+            }
             txt_TotalWinnings.setText(contest_size)
             txt_Winners.text = getString(R.string.Rs) + " " + winning_amount
             txt_EntryFees.text = getString(R.string.Rs) + " " + entry_fee

@@ -28,7 +28,7 @@ class MyContestLiveAdapter(val mContext: Context, var matchList: List<Match>) :
 //        holder.itemView.txt_contestJoined.visibility = View.GONE
         holder.itemView.txt_contestJoined.text=matchList[position].total_contest.toString()+" "+mContext.getString(R.string.contest_joined)
         holder.itemView.txt_Countdown.text = mContext.getString(R.string.in_progress)
-        holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.textColorPrimarylight))
+        holder.itemView.txt_Countdown.setTextColor(mContext.resources.getColor(R.color.dark_yellow))
         holder.itemView.card_view.setOnClickListener {
             mContext. startActivity(
                 Intent(mContext, CompletedJoinedContestActivity::class.java).putExtra(
