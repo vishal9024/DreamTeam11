@@ -61,32 +61,32 @@ public class InviteFreindDetailResponse implements Serializable {
              * friend_detail : [{"image":"","team_name":"Nidhiiiii","received_amount":100,"total_amount":"100"},{"image":"","team_name":"USU7AK31J","received_amount":0,"total_amount":"100"}]
              */
 
-            public int total_earnd;
-            public int to_be_earnd;
-            public int total_fields;
+            public String total_earnd;
+            public String to_be_earnd;
+            public String total_fields;
             public List<FriendDetailBean> friend_detail;
 
-            public int getTotal_earnd() {
+            public String getTotal_earnd() {
                 return total_earnd;
             }
 
-            public void setTotal_earnd(int total_earnd) {
+            public void setTotal_earnd(String total_earnd) {
                 this.total_earnd = total_earnd;
             }
 
-            public int getTo_be_earnd() {
+            public String getTo_be_earnd() {
                 return to_be_earnd;
             }
 
-            public void setTo_be_earnd(int to_be_earnd) {
+            public void setTo_be_earnd(String to_be_earnd) {
                 this.to_be_earnd = to_be_earnd;
             }
 
-            public int getTotal_fields() {
+            public String getTotal_fields() {
                 return total_fields;
             }
 
-            public void setTotal_fields(int total_fields) {
+            public void setTotal_fields(String total_fields) {
                 this.total_fields = total_fields;
             }
 
@@ -108,7 +108,7 @@ public class InviteFreindDetailResponse implements Serializable {
 
                 public String image;
                 public String team_name;
-                public int received_amount;
+                public String received_amount;
                 public String total_amount;
 
                 public String getImage() {
@@ -127,11 +127,11 @@ public class InviteFreindDetailResponse implements Serializable {
                     this.team_name = team_name;
                 }
 
-                public int getReceived_amount() {
+                public String getReceived_amount() {
                     return received_amount;
                 }
 
-                public void setReceived_amount(int received_amount) {
+                public void setReceived_amount(String received_amount) {
                     this.received_amount = received_amount;
                 }
 

@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_notifications.*
-import kotlinx.android.synthetic.main.activity_ranking.*
+
+import kotlinx.android.synthetic.main.activity_recent_trans.*
+import kotlinx.android.synthetic.main.app_toolbar.*
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -75,7 +77,14 @@ class RecentTansActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@RecentTansActivity)
                     if (response.response!!.isStatus) {
-                        setAdapter(response.response!!.data)
+                        if (response.response!!.data!=null && response.response!!.data!!.size>0) {
+                            setAdapter(response.response!!.data)
+                            rv_Contest.visibility=View.VISIBLE
+                            txt_NotFoundData.visibility=View.GONE
+                        }else{
+                            rv_Contest.visibility=View.GONE
+                            txt_NotFoundData.visibility=View.VISIBLE
+                        }
                     } else {
                         logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@RecentTansActivity, response.response!!.message)

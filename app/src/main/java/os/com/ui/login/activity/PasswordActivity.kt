@@ -46,11 +46,10 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
                 R.id.txt_ForgetPassword -> {
                     if (!TextUtils.isEmpty(mEmail)) {
                         startActivity(Intent(this, ResetPasswordActivity::class.java).putExtra("email", mEmail))
-                        finish()
                     }
                 }
                 R.id.txt_LoginWithMobile -> {
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    onBackPressed()
                     finish()
                 }
             }

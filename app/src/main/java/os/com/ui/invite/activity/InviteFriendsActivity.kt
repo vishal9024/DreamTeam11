@@ -37,7 +37,7 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                 intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.how_fair_play_tab)
                 startActivity(intent)
             }
-            R.id.card_view_bottom -> {
+            R.id.llInvited -> {
                 if (mData != null) {
                     val intent = Intent(this, InviteFriendDetailActivity::class.java)
                     intent.putExtra("data", mData)
@@ -77,7 +77,7 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             tv_how_it_work.setOnClickListener(this)
             tv_rule_for_fair_play.setOnClickListener(this)
-            card_view_bottom.setOnClickListener(this)
+            llInvited.setOnClickListener(this)
             txt_label.setText("kick off your friends " + getString(R.string.app_name) + " Journey!")
             txt_code.setText(pref!!.userdata!!.refer_id)
         } catch (e: Exception) {
@@ -126,8 +126,8 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
             if (data != null) {
                 mData = data
                 if (data.total_fields != null)
-                    if (data.total_fields > 0) {
-                        if (data.total_fields == 1)
+                    if (data.total_fields.toLong() > 0) {
+                        if (data.total_fields.toInt() == 1)
                             txtFriendsCount.text = "" + data.total_fields + " Friend Joined"
                         else txtFriendsCount.text = "" + data.total_fields + " Friends Joined"
                         llInvited.visibility = View.VISIBLE

@@ -37,7 +37,7 @@
                 android:textSize="@dimen/_11sdp"
                 android:layout_width="wrap_content"
                 android:textColor="@color/textColorLightBlack"
-                android:text="450"
+                android:text="0"
                 android:layout_height="match_parent"/>
     </LinearLayout>
     <View

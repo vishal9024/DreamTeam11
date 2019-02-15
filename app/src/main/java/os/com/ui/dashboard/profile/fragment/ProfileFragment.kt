@@ -490,9 +490,9 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
             }
             if (mData!!.contest_level != null) {
                 txt_StartValue.setText("" + mData!!.contest_level)
-                txt_EndValue.setText("" + (mData!!.contest_level + 1))
+                txt_EndValue.setText("" + (mData!!.contest_level.toLong() + 1))
                 main_textview_subtitle.setText("Level " + mData!!.contest_level)
-                tvUnlockLevel.setText("Unlock these rewards at level " + (mData!!.contest_level + 1))
+                tvUnlockLevel.setText("Unlock these rewards at level " + (mData!!.contest_level.toLong() + 1))
 
             }
             if (mData!!.image != null && mData!!.image != "")

@@ -1,6 +1,5 @@
 package os.com.ui.login.activity
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -43,7 +42,7 @@ class ResetPasswordActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
                 R.id.txt_LoginWithMobile -> {
-                    startActivity(Intent(this, LoginActivity::class.java))
+                    onBackPressed()
                     finish()
                 }
             }

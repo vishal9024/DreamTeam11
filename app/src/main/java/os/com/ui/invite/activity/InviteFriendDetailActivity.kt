@@ -75,8 +75,8 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
                     total_earnd = data.total_earnd.toFloat()
                 }
                 if (data.total_fields != null) {
-                    if (data.total_fields > 0) {
-                        if (data.total_fields == 1)
+                    if (data.total_fields.toLong() > 0) {
+                        if (data.total_fields.toInt() == 1)
                             txtFriendCount.text = "" + data.total_fields + " Friend Joined!"
                         else txtFriendCount.text = "" + data.total_fields + " Friends Joined!"
                         total_fields = data.total_fields.toFloat()
@@ -96,7 +96,7 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
                 if (data.total_earnd != null)
                     txtReceivedAmount.text = "₹ " + data.total_earnd
                 if (data.to_be_earnd != null)
-                    txtEarnAmount.text = "₹ " + (data.to_be_earnd * data.total_fields)
+                    txtEarnAmount.text = "₹ " + (data.to_be_earnd.toFloat() * data.total_fields.toFloat())
                 if (data.friend_detail != null && data.friend_detail.size > 0)
                     setAdapter(data.friend_detail)
             }
