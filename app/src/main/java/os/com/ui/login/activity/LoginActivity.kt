@@ -44,11 +44,24 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.btn_Next -> {
-                if (validation())
-                    if (NetworkUtils.isConnected()) {
-                        callLoginApi()
-                    } else
-                        AppDelegate.showToast(this, getString(R.string.error_network_connection))
+                if (validation()) {
+                    if (TextUtils.isDigitsOnly(et_email.text.toString())) {
+                        if (ValidationUtil.isPhoneValid(et_email.text.toString())) {
+                            if (NetworkUtils.isConnected()) {
+                                callLoginApi()
+                            } else
+                                AppDelegate.showToast(this, getString(R.string.error_network_connection))
+                        } else {
+                            AppDelegate.showToast(this, getString(R.string.valid_phone_number))
+                        }
+                    } else {
+                        if (ValidationUtil.isEmailValid(et_email.text.toString())) {
+                            startActivity(Intent(this, PasswordActivity::class.java).putExtra("email", et_email.text.toString()))
+                        } else {
+                            AppDelegate.showToast(this, getString(R.string.valid_email))
+                        }
+                    }
+                }
             }
             R.id.txt_Signup -> {
                 startActivity(Intent(this, SignUpActivity::class.java))
@@ -68,17 +81,6 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
             AppDelegate.showToast(this, getString(R.string.enterphone_or))
             return false
         }
-        if (TextUtils.isDigitsOnly(et_email.text.toString())) {
-            if (!ValidationUtil.isPhoneValid(et_email.text.toString())) {
-                AppDelegate.showToast(this, getString(R.string.valid_phone_number))
-                return false
-            }
-        } else
-            if (!ValidationUtil.isEmailValid(et_email.text.toString())) {
-                AppDelegate.showToast(this, getString(R.string.valid_email))
-                return false
-            }
-
         return true
     }
 

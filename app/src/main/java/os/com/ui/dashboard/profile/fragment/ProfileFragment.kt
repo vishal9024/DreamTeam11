@@ -501,7 +501,7 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                     imvTeamImage,
                     FantasyApplication.getInstance().options
                 )
-            if (mData!!.team_name_updated != null && mData!!.team_name_updated == 1)
+            if (mData!!.team_name_updated != null && mData!!.team_name_updated.toInt() == 1)
                 imvTeamNameEdit.visibility = View.GONE
             else
                 imvTeamNameEdit.visibility = View.VISIBLE

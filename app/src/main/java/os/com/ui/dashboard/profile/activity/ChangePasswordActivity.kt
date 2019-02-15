@@ -32,7 +32,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
                     )
-                        AppDelegate.showToast(this, getString(R.string.invalid_password))
+                        AppDelegate.showToast(this, getString(R.string.old_invalid_password))
 
                     //new password check
                     else if (TextUtils.isEmpty(et_NewPassword.text.toString()))
@@ -43,7 +43,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
                     )
-                        AppDelegate.showToast(this, getString(R.string.invalid_password))
+                        AppDelegate.showToast(this, getString(R.string.new_invalid_password))
 
                     //confirm password check
                     else if (TextUtils.isEmpty(et_ConfirmPassword.text.toString()))
@@ -54,7 +54,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
                     )
-                        AppDelegate.showToast(this, getString(R.string.invalid_password))
+                        AppDelegate.showToast(this, getString(R.string.confirm_invalid_password))
                     else if (et_ConfirmPassword.text.toString() != et_NewPassword.text.toString())
                         AppDelegate.showToast(this, getString(R.string.not_same_password))
 

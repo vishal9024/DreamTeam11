@@ -95,17 +95,17 @@ public class ProfileResponse implements Serializable {
 
 
             public String team_name;
-            public int contest_level;
-            public int paid_contest_count;
+            public String contest_level;
+            public String paid_contest_count;
             public String total_cash_amount;
             public String total_winning_amount;
             public String cash_bonus_amount;
             public String invite_friend_code;
             public String contest_finished;
-            public int total_match;
-            public int total_series;
+            public String total_match;
+            public String total_series;
             public String series_wins;
-            public int team_name_updated;
+            public String team_name_updated;
             public String image;
             public String gender;
             public String account_verified;
@@ -130,19 +130,19 @@ public class ProfileResponse implements Serializable {
                 this.team_name = team_name;
             }
 
-            public int getContest_level() {
+            public String getContest_level() {
                 return contest_level;
             }
 
-            public void setContest_level(int contest_level) {
+            public void setContest_level(String contest_level) {
                 this.contest_level = contest_level;
             }
 
-            public int getPaid_contest_count() {
+            public String getPaid_contest_count() {
                 return paid_contest_count;
             }
 
-            public void setPaid_contest_count(int paid_contest_count) {
+            public void setPaid_contest_count(String paid_contest_count) {
                 this.paid_contest_count = paid_contest_count;
             }
 
@@ -186,19 +186,19 @@ public class ProfileResponse implements Serializable {
                 this.contest_finished = contest_finished;
             }
 
-            public int getTotal_match() {
+            public String getTotal_match() {
                 return total_match;
             }
 
-            public void setTotal_match(int total_match) {
+            public void setTotal_match(String total_match) {
                 this.total_match = total_match;
             }
 
-            public int getTotal_series() {
+            public String getTotal_series() {
                 return total_series;
             }
 
-            public void setTotal_series(int total_series) {
+            public void setTotal_series(String total_series) {
                 this.total_series = total_series;
             }
 
@@ -210,11 +210,11 @@ public class ProfileResponse implements Serializable {
                 this.series_wins = series_wins;
             }
 
-            public int getTeam_name_updated() {
+            public String getTeam_name_updated() {
                 return team_name_updated;
             }
 
-            public void setTeam_name_updated(int team_name_updated) {
+            public void setTeam_name_updated(String team_name_updated) {
                 this.team_name_updated = team_name_updated;
             }
 
@@ -273,15 +273,15 @@ public class ProfileResponse implements Serializable {
                  * image :
                  */
 
-                public int user_id;
+                public String user_id;
                 public String team_name;
                 public String image;
 
-                public int getUser_id() {
+                public String getUser_id() {
                     return user_id;
                 }
 
-                public void setUser_id(int user_id) {
+                public void setUser_id(String user_id) {
                     this.user_id = user_id;
                 }
 
@@ -309,7 +309,7 @@ public class ProfileResponse implements Serializable {
                  */
 
                 public String date;
-                public int amount;
+                public String amount;
 
                 public String getDate() {
                     return date;
@@ -319,11 +319,11 @@ public class ProfileResponse implements Serializable {
                     this.date = date;
                 }
 
-                public int getAmount() {
+                public String getAmount() {
                     return amount;
                 }
 
-                public void setAmount(int amount) {
+                public void setAmount(String amount) {
                     this.amount = amount;
                 }
             }
@@ -340,8 +340,8 @@ public class ProfileResponse implements Serializable {
                 public String points;
                 public String rank;
                 public String series_name;
-                public int series_id;
-                public int previous_rank;
+                public String series_id;
+                public String previous_rank;
 
                 public String getPoints() {
                     return points;
@@ -367,19 +367,19 @@ public class ProfileResponse implements Serializable {
                     this.series_name = series_name;
                 }
 
-                public int getSeries_id() {
+                public String getSeries_id() {
                     return series_id;
                 }
 
-                public void setSeries_id(int series_id) {
+                public void setSeries_id(String series_id) {
                     this.series_id = series_id;
                 }
 
-                public int getPrevious_rank() {
+                public String getPrevious_rank() {
                     return previous_rank;
                 }
 
-                public void setPrevious_rank(int previous_rank) {
+                public void setPrevious_rank(String previous_rank) {
                     this.previous_rank = previous_rank;
                 }
             }

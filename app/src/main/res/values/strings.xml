@@ -300,7 +300,10 @@
     <string name="old_short_password">Old password must be at least 6 characters long.</string>
     <string name="new_short_password">New password must be at least 6 characters long</string>
     <string name="confrim_short_password">Confrim password must be at least 6 characters long.</string>
-    <string name="invalid_password">Password must contain atleast one alphabet and numeric character</string>
+    <string name="invalid_password">Password must contain at least one alphabet and numeric character</string>
+    <string name="old_invalid_password">Old Password must contain at least one alphabet and numeric character</string>
+    <string name="new_invalid_password">New Password must contain at least one alphabet and numeric character</string>
+    <string name="confirm_invalid_password">Confirm Password must contain at least one alphabet and numeric character</string>
     <string name="resend_otp">Resend OTP</string>
     <string name="resend_in">Resend in</string>
     <string name="sec">seconds</string>
@@ -569,4 +572,10 @@
     <string name="delete">Delete</string>
     <string name="delete_notificaions">Are you sure you want to delete?</string>
     <string name="notification_not_fount">Notification Not Fount</string>
+    <string name="login_using_mobile_number">Login using mobile number</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="resend_email">Resend Email</string>
+    <string name="don_t_receive_reset_link">Don\'t receive reset link?</string>
+    <string name="reset_password_info">A link to reset your password has been sent to</string>
 </resources>

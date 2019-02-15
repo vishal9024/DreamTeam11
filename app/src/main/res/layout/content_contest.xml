@@ -206,6 +206,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rv_Contest"
                 card_view:layout_constraintBottom_toTopOf="@+id/ll_bottom"
+                android:backgroundTint="@color/white"
                 android:id="@+id/card_view"
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_8sdp"

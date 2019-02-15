@@ -18,6 +18,8 @@ import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
+import os.com.networkCall.ApiConstant
+import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.ui.login.activity.LoginActivity
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.utils.AppDelegate
@@ -34,18 +36,17 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                         checkValidationSocial()
                     else
                         checkValidation()
-
                 }
                 R.id.txt_Login -> {
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 }
                 R.id.txt_TC -> {
-//                    val intent = Intent(activity, WebViewActivity::class.java)
-//                    intent.putExtra("PAGE_SLUG", "Fantasy Point System")
-//                    intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.point_system)
-//                    startActivity(intent)
-                    startActivity(Intent(this, TermsConditionActivity::class.java))
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra("PAGE_SLUG", "Terms and Conditions")
+                    intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.terms_conditions)
+                    startActivity(intent)
+//                    startActivity(Intent(this, TermsConditionActivity::class.java))
                 }
             }
         } catch (e: Exception) {

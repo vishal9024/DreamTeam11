@@ -91,6 +91,7 @@ object ApiConstant {
     const val how_fair_play_tab = "pages/fair-play"
     const val legality_tab = "pages/legality"
     const val dream11_champions = "pages/dream11_champions"
+    const val terms_conditions = "pages/terms_conditions"
 
 
     const val signup = "signup"
