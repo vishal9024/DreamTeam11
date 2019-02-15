@@ -16,6 +16,11 @@ import os.com.ui.contest.activity.AllContestActivity
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
+//import com.sun.org.apache.xerces.internal.util.DOMUtil.getParent
+
+
+
+
 
 
 class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListener {
@@ -130,12 +135,18 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
     var FROM = 0
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
+
         //Get the content View
         val contentView = View.inflate(context, R.layout.bottom_sheet_filter, null)
         dialog.setContentView(contentView)
+//        val displayMetrics = activity!!.resources.displayMetrics
+//        val width = displayMetrics.widthPixels
+//        val height = displayMetrics.heightPixels
+//        val maxHeight = (height * 0.88).toInt()
         //Set the coordinator layout behavior
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
-        val behavior = params.behavior
+        val behavior = params.behavior/* as BottomSheetBehavior<*>*/
+//        behavior.peekHeight = maxHeight
         //Set callback
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
@@ -177,19 +188,19 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
     fun filterEntryArray() {
         var finalArrayList: ArrayList<Contest> = ArrayList()
         if (dialog.entry_1_100.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toInt() in 1..100 }
+            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toLong() in 1..100 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.entry_101_1000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toInt() in 101..1000 }
+            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toLong() in 101..1000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.entry_1001_5000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toInt() in 1001..5000 }
+            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toLong() in 1001..5000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.entry_5000_more.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toInt() > 5000 }
+            val filterContestList: List<Contest> = contestList.filter { it.entry_fee.toLong() > 5000 }
             finalArrayList.addAll(filterContestList)
         }
         finalArrayList.distinct()
@@ -254,13 +265,13 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contest_multiwinner.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_winners.toInt() > 1 }
+            val filterContestList: List<Contest> = contestList.filter { it.total_winners.toLong() > 1 }
             finalArrayList.addAll(filterContestList)
         }
-//        if (dialog.contest_confirmed.isSelected) {
-//            val filterContestList: List<Contest> = contestList.filter { it.multiple_team!! }
-//            finalArrayList.addAll(filterContestList)
-//        }
+        if (dialog.contest_confirmed.isSelected) {
+            val filterContestList: List<Contest> = contestList.filter { it.multiple_team!! }
+            finalArrayList.addAll(filterContestList)
+        }
 
         finalArrayList.distinct()
         if (!dialog.contest_multientry.isSelected && !dialog.contest_multiwinner.isSelected && !dialog.contest_confirmed.isSelected)
@@ -272,27 +283,27 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         var finalArrayList: ArrayList<Contest> = ArrayList()
 
         if (dialog.winning_1_10000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() in 1..10000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() in 1..10000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.winning_10001_50000.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() in 10001..50000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() in 10001..50000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.winning_50001_1lac.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() in 50001..100000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() in 50001..100000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.winning_1lac_10lac.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() in 100001..1000000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() in 100001..1000000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.winning_10lac_25lac.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() in 1000000..2500000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() in 1000000..2500000 }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.winning_25lac_more.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toInt() > 2500000 }
+            val filterContestList: List<Contest> = contestList.filter { it.prize_money.toLong() > 2500000 }
             finalArrayList.addAll(filterContestList)
         }
         finalArrayList.distinct()

@@ -63,7 +63,7 @@ class JoinedFixturesContestAdapter(
 //
         holder.itemView.ll_totalWinners.setOnClickListener {
             try {
-                if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toInt() > 0)
+                if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toLong() > 0)
                     (mContext as BaseActivity).callWinningBreakupApi(
                         data[position].contest_id,
                         data[position].breakup_detail!!,
@@ -77,7 +77,7 @@ class JoinedFixturesContestAdapter(
         if (!data.get(holder.adapterPosition).multiple_team!!) {
             if (data.get(holder.adapterPosition).is_joined!!) {
                 val total_teams =
-                    data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toInt()
+                    data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toLong()
                 if (total_teams > 0) {
                     holder.itemView.txt_Join.text = mContext.getString(R.string.invite)
                 } else {
@@ -90,7 +90,7 @@ class JoinedFixturesContestAdapter(
             if (data.get(holder.adapterPosition).is_joined!!) {
                 holder.itemView.txt_Join.text = mContext.getString(R.string.join_plus)
                 val total_teams =
-                    data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toInt()
+                    data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toLong()
                 if (total_teams > 0) {
                     holder.itemView.txt_Join.text = mContext.getString(R.string.join_new)
                 } else {
@@ -181,7 +181,7 @@ class JoinedFixturesContestAdapter(
 
         if (!data.get(holder.adapterPosition).total_teams.isEmpty() && !data.get(holder.adapterPosition).teams_joined.isEmpty()) {
             val strtValue =
-                data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toInt()
+                data.get(holder.adapterPosition).total_teams.toLong() - data.get(holder.adapterPosition).teams_joined.toLong()
             holder.itemView.txt_StartValue.text = mContext.getString(R.string.only) + " " + strtValue.toString() + " " +
                     mContext.getString(R.string.spots_left)
             holder.itemView.crs_Progress.setMinValue(0f)

@@ -57,7 +57,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 )
             }
             R.id.ll_winners -> {
-                if (!data!!.total_winners.isEmpty() && data!!.total_winners.toInt() > 0)
+                if (!data!!.total_winners.isEmpty() && data!!.total_winners.toLong() > 0)
                     callWinningBreakupApi(
                         contest_id,
                         data!!.breakup_detail!!,
@@ -440,7 +440,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
         }
     }
 
-    fun selectorRank(p: Team): Int = p.rank.toInt()
+    fun selectorRank(p: Team): Long = p.rank.toLong()
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
 //        joined_team_list.sortWith(Comparator  { t,  -> t.user_id.compareTo(pref!!.userdata!!.user_id) })

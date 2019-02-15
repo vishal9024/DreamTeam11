@@ -283,8 +283,8 @@ class AllContestActivity : BaseActivity(), View.OnClickListener, OnClickRecycler
             countTimer!!.stopUpdateTimer()
     }
 
-    fun selectorWINNERS(p: Contest): Int = p.total_winners.toInt()
-    fun selectorWINNING(p: Contest): Int = p.prize_money.toInt()
+    fun selectorWINNERS(p: Contest): Long = p.total_winners.toLong()
+    fun selectorWINNING(p: Contest): Long = p.prize_money.toLong()
     fun selectorENTRY_FEE(p: Contest): Double = p.entry_fee.toDouble()
     fun selectorTEAMS(p: Contest): Long = p.total_teams.toLong()
     private var WINNERS = 1

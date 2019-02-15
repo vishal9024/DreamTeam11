@@ -13,7 +13,7 @@ class Data() : Parcelable {
     var total_batsman: String = ""
     var total_wicketkeeper: String = ""
     var total_allrounder: String = ""
-    var  total_points=""
+    var total_point=""
     var player_details: ArrayList<PlayerRecord>? = null
    var substitute_detail: Substitute?=null
 
@@ -27,7 +27,7 @@ class Data() : Parcelable {
         total_batsman = parcel.readString()
         total_wicketkeeper = parcel.readString()
         total_allrounder = parcel.readString()
-        total_points = parcel.readString()
+        total_point = parcel.readString()
         substitute_detail = parcel.readParcelable(Substitute::class.java.classLoader)
     }
 
@@ -41,7 +41,7 @@ class Data() : Parcelable {
         parcel.writeString(total_batsman)
         parcel.writeString(total_wicketkeeper)
         parcel.writeString(total_allrounder)
-        parcel.writeString(total_points)
+        parcel.writeString(total_point)
         parcel.writeParcelable(substitute_detail, flags)
     }
 

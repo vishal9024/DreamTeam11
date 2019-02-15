@@ -225,16 +225,16 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
     var completedAdapter: MatchCompletedAdapter? = null
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
-        if (fixturesAdapter != null) {
-            recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
-        } else {
+//        if (fixturesAdapter != null) {
+//            recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
+//        } else {
             val llm = LinearLayoutManager(context)
             llm.orientation = LinearLayoutManager.VERTICAL
             recyclerView_fixMatch!!.layoutManager = llm
             recyclerView_fixMatch!!.setHasFixedSize(true)
             fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
             recyclerView_fixMatch!!.adapter = fixturesAdapter
-        }
+//        }
     }
 
     @SuppressLint("WrongConstant")

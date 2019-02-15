@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/patch"
+        android:id="@+id/txt_Country"
+        style="@style/TextStyleMedium"
+        android:textSize="@dimen/_11sdp"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/white"
+        android:gravity="start"
+        android:paddingTop="@dimen/_25sdp"
+        android:paddingBottom="@dimen/_5sdp"
+        android:layout_height="wrap_content"/>

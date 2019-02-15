@@ -259,6 +259,6 @@ interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.deleteNotifications)
-    fun deleteNotifications(@Body request: Map<String, String>): Deferred<PriceBreakUpResponse>
+    fun deleteNotifications(@Body request: Map<String, String>): Deferred<BaseResponse>
 
 }

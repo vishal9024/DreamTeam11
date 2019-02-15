@@ -10,7 +10,7 @@
     <androidx.core.widget.NestedScrollView
             android:id="@+id/bottom_sheet_filter"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_350sdp"
             android:background="@color/colorTransparent"
             android:clipToPadding="true"
             app:layout_behavior="@string/bottom_sheet_behavior">

@@ -18,8 +18,8 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.app_toolbar.*
-
 import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.coroutines.Dispatchers
@@ -41,14 +41,14 @@ import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 class CreateContestActivity : BaseActivity(), View.OnClickListener {
     override fun onClick(view: View?) {
         try {
             when (view!!.id) {
                 R.id.btn_CreateContest -> {
-                    if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toInt() == 2 || et_winning_amount.text.toString().toInt() == 0) {
+                    if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() == 2L || et_winning_amount.text.toString().toLong() == 0L) {
                         if (FantasyApplication.getInstance().teamCount > 0) {
                             startActivityForResult(
                                 Intent(this, MyTeamSelectActivity::class.java).putExtra(IntentConstant.MATCH, match)
@@ -196,18 +196,18 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
     private fun checkCall() {
         btn_CreateContest.text = getString(R.string.create_contest)
         if (!et_winning_amount.text.toString().isEmpty() && !et_contest_size.text.toString().isEmpty()) {
-            if (et_winning_amount.text.toString().toInt() == 0 && et_contest_size.text.toString().toInt() >= 2) {
+            if (et_winning_amount.text.toString().toLong() == 0L && et_contest_size.text.toString().toLong() >= 2L) {
                 txt_EntryFeeAmount.text = getString(R.string.Rs) + " " +
                         String.format("%.2f", 0.00)
                 entryFee = String.format("%.2f", 0.00)
                 btn_CreateContest.isEnabled = true
-            } else if (et_contest_size.text.toString().toInt() >= 2) {
+            } else if (et_contest_size.text.toString().toLong() >= 2L) {
                 GlobalScope.launch(Dispatchers.Main) {
                     delay(300)
                     callEntryFeeApi()
                 }
             } else {
-                if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toInt() < 2)
+                if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() < 2L)
                     showToolbar("Contest size should not less than 2")
                 entryFee = ""
                 txt_EntryFeeAmount.text = "-"
@@ -246,7 +246,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                                     String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
                             entryFee = String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
                             btn_CreateContest.isEnabled = true
-                            if (et_contest_size.text.toString().toInt() != 2)
+                            if (et_contest_size.text.toString().toLong() != 2L)
                                 btn_CreateContest.text = getString(R.string.choose_winning_breakup)
                         } else {
                             entryFee = ""
@@ -401,6 +401,15 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
             //            onClickDialogue.onClick(Tags.cancel, false)
             dialogue.dismiss()
         }
+        dialogue.img_info.setOnClickListener {
+            SimpleTooltip.Builder(baseContext)
+                .anchorView(it)
+                .animated(false)
+                .text(resources.getString(R.string.joinContestInfo))
+                .build()
+                .show()
+//            initToolTipPopUp(it,getString(R.string.joinContestInfo))
+        }
         dialogue.btn_Join.setOnClickListener {
             joinContest()
             dialogue.dismiss()
@@ -472,7 +481,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                     IntentConstant.currentBalance,
                     bonus.toString()
                 ).putExtra(IntentConstant.AddType, IntentConstant.TO_JOIN)
-                    .putExtra(IntentConstant.AMOUNT_TO_ADD, toPay.roundToInt().toString()),
+                    .putExtra(IntentConstant.AMOUNT_TO_ADD, toPay.roundToLong().toString()),
                 AppRequestCodes.ADD_CASH_CONTEST
             )
         }

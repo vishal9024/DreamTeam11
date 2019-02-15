@@ -80,6 +80,7 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
                 return true
             }
             R.id.navigation_more -> {
+//                AppDelegate.showToast(this,"Coming Soon...")
                 if (supportFragmentManager.findFragmentById(R.id.container) !is MoreFragment) {
                     toolbar.visibility = View.VISIBLE
                     setMenu(true, false, false, false, false)

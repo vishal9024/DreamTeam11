@@ -15,6 +15,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.activity_select_winners_contest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_select_winners_contest.*
@@ -221,6 +222,15 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
         dialogue.img_Close.setOnClickListener {
             //            onClickDialogue.onClick(Tags.cancel, false)
             dialogue.dismiss()
+        }
+        dialogue.img_info.setOnClickListener {
+            SimpleTooltip.Builder(baseContext)
+                .anchorView(it)
+                .animated(false)
+                .text(resources.getString(R.string.joinContestInfo))
+                .build()
+                .show()
+//            initToolTipPopUp(it,getString(R.string.joinContestInfo))
         }
         dialogue.btn_Join.setOnClickListener {
             joinContest()

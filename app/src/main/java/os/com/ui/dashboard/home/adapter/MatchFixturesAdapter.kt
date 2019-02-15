@@ -71,7 +71,7 @@ class MatchFixturesAdapter(
             holder.itemView.txt_contestJoined.visibility = View.GONE
             holder.itemView.card_view.setOnClickListener {
                 if (!matchList.get(position).total_contest.isEmpty())
-                    if (matchList.get(position).total_contest.toInt() > 0)
+                    if (matchList.get(position).total_contest.toLong() > 0)
                         mContext.startActivity(
                             Intent(mContext, ContestActivity::class.java).putExtra(
                                 IntentConstant.DATA,

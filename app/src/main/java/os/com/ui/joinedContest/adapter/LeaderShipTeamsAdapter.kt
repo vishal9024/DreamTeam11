@@ -66,7 +66,7 @@ class LeaderShipTeamsAdapter(
         }
         if (matchType == IntentConstant.LIVE) {
             if (!joined_team_list[holder.adapterPosition].rank.isEmpty() && !joined_team_list[holder.adapterPosition].previous_rank.isEmpty()) {
-                if (joined_team_list[holder.adapterPosition].rank.toInt() > joined_team_list[holder.adapterPosition].previous_rank.toInt()) {
+                if (joined_team_list[holder.adapterPosition].rank.toLong() > joined_team_list[holder.adapterPosition].previous_rank.toLong()) {
                     holder.itemView.img_rank.visibility = View.VISIBLE
                     holder.itemView.img_rank.setImageResource(R.mipmap.upflag)
                 } else {

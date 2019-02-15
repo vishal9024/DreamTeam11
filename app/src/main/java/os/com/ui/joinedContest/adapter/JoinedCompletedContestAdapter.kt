@@ -63,7 +63,7 @@ class JoinedCompletedContestAdapter(
         }
 holder.itemView.ll_totalWinners.setOnClickListener {
     try {
-        if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toInt() > 0)
+        if (!data.get(position).total_winners.isEmpty() && data.get(position).total_winners!!.toLong() > 0)
             (mContext as BaseActivity).callWinningBreakupApi(
                 data[position].contest_id,
                 data[position].breakup_detail!!,

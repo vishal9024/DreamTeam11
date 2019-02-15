@@ -62,9 +62,9 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
         points = intent.getBooleanExtra("points", false)
         DreamTeam = intent.getBooleanExtra("DreamTeam", false)
-//        if (points)
-//            rl_bottom.visibility = VISIBLE
-        if (DreamTeam)
+        if (points)
+            rl_bottom.visibility = VISIBLE
+       else if (DreamTeam)
             rl_bottom.visibility = VISIBLE
         pts.setOnClickListener(this)
         if (isEdit == 1) {
@@ -77,7 +77,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 var players: ArrayList<os.com.ui.createTeam.apiResponse.myTeamListResponse.PlayerRecord> =
                     intent.getParcelableArrayListExtra(IntentConstant.SELECT_PLAYER)
                 substituteDetail = intent.getParcelableExtra("substitute")
-                txt_totalPoints.setText(playerListPreview!!.total_points)
+                txt_totalPoints.setText(playerListPreview!!.total_point)
                 setDataPreview(playerListPreview!!, players)
             } else {
                 var playerListPreview =

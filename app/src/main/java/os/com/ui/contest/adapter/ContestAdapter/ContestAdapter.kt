@@ -53,7 +53,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
 
         if (!contest.get(holder.adapterPosition).total_teams.isEmpty() && !contest.get(holder.adapterPosition).teams_joined.isEmpty()) {
             val strtValue =
-                contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toInt()
+                contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toLong()
             holder.itemView.txt_StartValue.text = mContext.getString(R.string.only) + " " + strtValue.toString() + " " +
                     mContext.getString(R.string.spots_left)
             holder.itemView.crs_Progress.setMinValue(0f)
@@ -76,7 +76,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         }
 
         holder.itemView.ll_totalWinners.setOnClickListener {
-            if (!contest.get(position).total_winners.isEmpty() && contest.get(position).total_winners.toInt() > 0)
+            if (!contest.get(position).total_winners.isEmpty() && contest.get(position).total_winners.toLong() > 0)
                 (mContext as BaseActivity).callWinningBreakupApi(
                     contest[position].contest_id,
                     contest[position].breakup_detail,
@@ -104,7 +104,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         if (!contest.get(holder.adapterPosition).multiple_team!!) {
             if (contest.get(holder.adapterPosition).is_joined!!) {
                 val total_teams =
-                    contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toInt()
+                    contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toLong()
                 if (total_teams > 0) {
                     holder.itemView.txt_Join.text = mContext.getString(R.string.invite)
                 } else {
@@ -117,7 +117,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
             if (contest.get(holder.adapterPosition).is_joined!!) {
                 holder.itemView.txt_Join.text = mContext.getString(R.string.join_plus)
                 val total_teams =
-                    contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toInt()
+                    contest.get(holder.adapterPosition).total_teams.toLong() - contest.get(holder.adapterPosition).teams_joined.toLong()
                 if (total_teams > 0) {
                     holder.itemView.txt_Join.text = mContext.getString(R.string.join_new)
                 } else {

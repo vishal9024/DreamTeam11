@@ -47,7 +47,7 @@ import os.com.ui.dashboard.home.apiResponse.bannerList.Offer
 import os.com.ui.dashboard.profile.apiResponse.ApplyCouponCodeResponse.Data
 import os.com.utils.AppDelegate
 import java.util.*
-import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 import kotlin.random.Random
 
 
@@ -64,6 +64,8 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
             R.id.btn_addCash -> {
                 if (!et_addCash.text.toString().isEmpty())
                     checkPermission()
+                else
+                    AppDelegate.showToast(this,getString(R.string.add_amount_validation))
             }
             R.id.txt_500 -> {
                 et_addCash.setText("500")
@@ -274,7 +276,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                         finish()
                     }
                 } else {
-                   logoutIfDeactivate(response.response!!.message)
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
@@ -373,7 +375,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 max_discount = data!!.max_discount.toDouble()
             tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
                     " is required to avail this offer"
-            et_addCash.setText(min_amount.roundToInt().toString())
+            et_addCash.setText(min_amount.roundToLong().toString())
             applyOffer(max_discount)
         } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
             if (!data_OFFER!!.min_amount.isEmpty())
@@ -382,10 +384,10 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 max_discount = data_OFFER!!.max_discount.toDouble()
             tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
                     " is required to avail this offer"
-            et_addCash.setText(min_amount.roundToInt().toString())
+            et_addCash.setText(min_amount.roundToLong().toString())
             applyOffer(max_discount)
         }
-        et_addCash.setText(min_amount.roundToInt().toString())
+        et_addCash.setText(min_amount.roundToLong().toString())
 
         et_addCash.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {

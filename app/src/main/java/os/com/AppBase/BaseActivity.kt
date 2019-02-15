@@ -16,6 +16,7 @@ import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_tooltip.view.*
@@ -187,7 +188,7 @@ open class BaseActivity : AppCompatActivity() {
             }
             popupWindowView.imvBonusInfo.setOnClickListener { view ->
 
-                initToolTipPopUp(view,"bonus")
+                initToolTipPopUp(view, getString(R.string.bonus_info_text))
 //                    if(popupWindowView.infoTip.visibility== View.VISIBLE)
 //                        popupWindowView.infoTip.visibility=View.GONE
 //                        else popupWindowView.infoTip.visibility=View.VISIBLE
@@ -197,16 +198,16 @@ open class BaseActivity : AppCompatActivity() {
 //                    .build()
 //                    .show()
             }
-            popupWindowView.imvWinningInfo.setOnClickListener {view ->
-                initToolTipPopUp(view,"winning")
+            popupWindowView.imvWinningInfo.setOnClickListener { view ->
+                initToolTipPopUp(view, getString(R.string.winning_info_text))
                 //                SimpleTooltip.Builder(baseContext)
 //                    .anchorView(it)
 //                    .text(resources.getString(R.string.winning_info_text))
 //                    .build()
 //                    .show()
             }
-            popupWindowView.imvDepositedInfo.setOnClickListener {view ->
-                initToolTipPopUp(view,"deposit")
+            popupWindowView.imvDepositedInfo.setOnClickListener { view ->
+                initToolTipPopUp(view, getString(R.string.deposited_info_text))
                 //                SimpleTooltip.Builder(baseContext)
 //                    .anchorView(it)
 //                    .text(resources.getString(R.string.deposited_info_text))
@@ -233,12 +234,7 @@ open class BaseActivity : AppCompatActivity() {
 //            walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
             walletPopupWindow!!.isOutsideTouchable = true
             walletPopupWindow!!.isFocusable = true
-            if (type=="bonus")
-            popupWindowView.txt_Tooltip.setText(R.string.bonus_info_text)
-            else if (type=="winning")
-                popupWindowView.txt_Tooltip.setText(R.string.winning_info_text)
-            else if (type=="deposit")
-                popupWindowView.txt_Tooltip.setText(R.string.deposited_info_text)
+            popupWindowView.txt_Tooltip.setText(type)
 
             var background = ColorDrawable(android.graphics.Color.BLACK)
             background.alpha = 10
@@ -455,6 +451,15 @@ open class BaseActivity : AppCompatActivity() {
         dialogue.img_Close.setOnClickListener {
             onClickDialogue.onClick(Tags.cancel, false)
             dialogue.dismiss()
+        }
+        dialogue.img_info.setOnClickListener {
+            SimpleTooltip.Builder(baseContext)
+                .anchorView(it)
+                .animated(false)
+                .text(resources.getString(R.string.joinContestInfo))
+                .build()
+                .show()
+//            initToolTipPopUp(it,getString(R.string.joinContestInfo))
         }
         dialogue.btn_Join.setOnClickListener {
             joinContest(match_id, series_id, contest_id, team_id, onClickDialogue)

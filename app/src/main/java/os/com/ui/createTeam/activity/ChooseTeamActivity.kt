@@ -56,7 +56,23 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         if (tag == WK) {
             var player_credit = 0.0
             if (isSelected) {
+
                 if (selectPlayer!!.wk_selected < selectPlayer!!.wk_count) {
+                    if (wkList!![position].team_id.equals(match!!.local_team_id)) {
+                        if (selectPlayer!!.localTeamplayerCount >= 7)
+                            return
+                    } else {
+                        if (selectPlayer!!.visitorTeamPlayerCount >= 7)
+                            return
+                    }
+
+                    var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
+                    var visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount
+                    if (wkList!![position].team_id.equals(match!!.local_team_id))
+                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
+                    else
+                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+
                     if (!wkList!!.get(position).player_record!!.player_credit.isEmpty()) {
                         player_credit = wkList!!.get(position).player_record!!.player_credit.toDouble()
                     }
@@ -66,12 +82,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                         rv_Player.adapter!!.notifyDataSetChanged()
                         return
                     }
-                    var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
-                    var visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount
-                    if (wkList!![position].team_id.equals(match!!.local_team_id))
-                        localTeamplayerCount = selectPlayer!!.localTeamplayerCount + 1
-                    else
-                        visitorTeamPlayerCount = selectPlayer!!.visitorTeamPlayerCount + 1
+
                     wkList!!.get(position).isSelected = isSelected
                     updateTeamData(
                         selectPlayer!!.extra_player,
@@ -121,6 +132,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else if (tag == AR) {
             var player_credit = 0.0
             if (isSelected) {
+                if (arList!![position].team_id.equals(match!!.local_team_id)) {
+                    if (selectPlayer!!.localTeamplayerCount >= 7)
+                        return
+                } else {
+                    if (selectPlayer!!.visitorTeamPlayerCount >= 7)
+                        return
+                }
                 if (selectPlayer!!.ar_selected < selectPlayer!!.ar_maxcount) {
                     if (selectPlayer!!.selectedPlayer < 11) {
                         if (selectPlayer!!.ar_selected < selectPlayer!!.ar_mincount || selectPlayer!!.extra_player > 0) {
@@ -198,6 +216,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else if (tag == BAT) {
             var player_credit = 0.0
             if (isSelected) {
+                if (batsmenList!![position].team_id.equals(match!!.local_team_id)) {
+                    if (selectPlayer!!.localTeamplayerCount >= 7)
+                        return
+                } else {
+                    if (selectPlayer!!.visitorTeamPlayerCount >= 7)
+                        return
+                }
                 if (selectPlayer!!.bat_selected < selectPlayer!!.bat_maxcount) {
                     if (selectPlayer!!.selectedPlayer < 11) {
                         if (selectPlayer!!.bat_selected < selectPlayer!!.bat_mincount || selectPlayer!!.extra_player > 0) {
@@ -278,6 +303,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else if (tag == BOWLER) {
             var player_credit = 0.0
             if (isSelected) {
+                if (bowlerList!![position].team_id.equals(match!!.local_team_id)) {
+                    if (selectPlayer!!.localTeamplayerCount >= 7)
+                        return
+                } else {
+                    if (selectPlayer!!.visitorTeamPlayerCount >= 7)
+                        return
+                }
                 if (selectPlayer!!.bowl_selected < selectPlayer!!.bowl_maxcount) {
                     if (selectPlayer!!.selectedPlayer < 11) {
                         if (selectPlayer!!.bowl_selected < selectPlayer!!.bowl_mincount || selectPlayer!!.extra_player > 0) {
@@ -383,7 +415,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 addSubstituteData()
             }
             R.id.btn_Next -> {
-                val remainingPlayer = 11-selectPlayer!!.selectedPlayer
+                val remainingPlayer = 11 - selectPlayer!!.selectedPlayer
                 if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
                     if (selectPlayer!!.selectedPlayer != 11)
                         showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")
@@ -520,7 +552,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             countTimer!!.stopUpdateTimer()
     }
 
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var from = 0
@@ -579,7 +611,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))

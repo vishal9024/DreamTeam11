@@ -28,7 +28,7 @@ class WithdrawRequestActivity : BaseActivity(), View.OnClickListener {
                     if(TextUtils.isEmpty(edtWithdrawAmount.text.toString().trim())){
                         Toast.makeText(this@WithdrawRequestActivity!!, getString(R.string.enter_amount_to_proceed), Toast.LENGTH_LONG).show()
                     }else{
-                        val amount=edtWithdrawAmount.text.toString().replace("₹","").trim().toInt()
+                        val amount=edtWithdrawAmount.text.toString().replace("₹","").trim().toLong()
                         if (amount>=200 && amount<=200000) {
                             withdraw_request_call(edtWithdrawAmount.text.toString().replace("₹", "").trim())
                         }else Toast.makeText(this@WithdrawRequestActivity!!, getString(R.string.valid_amount_to_proceed), Toast.LENGTH_LONG).show()
