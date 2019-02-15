@@ -16,11 +16,8 @@ import os.com.ui.contest.activity.AllContestActivity
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
+
 //import com.sun.org.apache.xerces.internal.util.DOMUtil.getParent
-
-
-
-
 
 
 class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListener {
@@ -213,7 +210,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         var finalArrayList: ArrayList<Contest> = ArrayList()
 
         if (dialog.contestsize_2.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong().equals(2)}
+            val filterContestList: List<Contest> = contestList.filter { it.total_teams.toLong().equals(2) }
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contestsize_3_10.isSelected) {
