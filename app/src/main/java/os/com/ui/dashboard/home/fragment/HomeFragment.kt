@@ -228,12 +228,12 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 //        if (fixturesAdapter != null) {
 //            recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
 //        } else {
-            val llm = LinearLayoutManager(context)
-            llm.orientation = LinearLayoutManager.VERTICAL
-            recyclerView_fixMatch!!.layoutManager = llm
-            recyclerView_fixMatch!!.setHasFixedSize(true)
-            fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
-            recyclerView_fixMatch!!.adapter = fixturesAdapter
+        val llm = LinearLayoutManager(context)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        recyclerView_fixMatch!!.layoutManager = llm
+        recyclerView_fixMatch!!.setHasFixedSize(true)
+        fixturesAdapter = MatchFixturesAdapter(context!!, fixturesMatchList, this)
+        recyclerView_fixMatch!!.adapter = fixturesAdapter
 //        }
     }
 
@@ -282,10 +282,10 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                     fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
                     liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
                     completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
+                    txt_title.visibility = VISIBLE
                     setFixturesAdapter()
 //                    setCompletedAdapter()
 //                    setLiveAdapter()
-
 //                    recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
 //                    recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
 
@@ -369,11 +369,11 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 
     override fun onDestroy() {
         super.onDestroy()
-          try{
-              fixturesAdapter!!.stopUpdateTimer()
-              } catch (e: Exception) {
-                      e.printStackTrace()
-              }
+        try {
+            fixturesAdapter!!.stopUpdateTimer()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
     }
 }

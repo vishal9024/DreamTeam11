@@ -2,9 +2,13 @@ package os.com.ui.contest.dialogues
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Parcelable
 import android.view.View
+import android.view.View.VISIBLE
+import android.view.WindowManager
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -16,6 +20,7 @@ import os.com.ui.contest.activity.AllContestActivity
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
+
 
 //import com.sun.org.apache.xerces.internal.util.DOMUtil.getParent
 
@@ -124,7 +129,9 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             }
         }
 
-        override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+        override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            dialog.btn_CreateTeam.visibility = VISIBLE
+        }
     }
     var contestList: ArrayList<Contest> = ArrayList()
     var match: Match? = null
@@ -132,7 +139,6 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
     var FROM = 0
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
-
         //Get the content View
         val contentView = View.inflate(context, R.layout.bottom_sheet_filter, null)
         dialog.setContentView(contentView)
@@ -143,10 +149,19 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         //Set the coordinator layout behavior
         val params = (contentView.parent as View).layoutParams as CoordinatorLayout.LayoutParams
         val behavior = params.behavior/* as BottomSheetBehavior<*>*/
-//        behavior.peekHeight = maxHeight
+        contentView.measure(0, 0);
+        val screenHeight = activity!!.resources.displayMetrics.heightPixels
+
+        val wm = context!!.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        var display = wm.defaultDisplay
         //Set callback
         if (behavior != null && behavior is BottomSheetBehavior<*>) {
             behavior.setBottomSheetCallback(mBottomSheetBehaviorCallback)
+            val size = Point()
+            display.getSize(size)
+            val width = size.x
+            val height = size.y
+            behavior.peekHeight = height
         }
         contestList = arguments!!.getParcelableArrayList<Contest>(Tags.DATA)
         match = arguments!!.getParcelable(IntentConstant.MATCH)
@@ -266,7 +281,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contest_confirmed.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.multiple_team!! }
+            val filterContestList: List<Contest> = contestList.filter { it.confirm_winning!! }
             finalArrayList.addAll(filterContestList)
         }
 

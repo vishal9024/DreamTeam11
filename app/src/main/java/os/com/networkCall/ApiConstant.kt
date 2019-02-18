@@ -23,11 +23,11 @@ object ApiConstant {
     const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/"
     const val CricsetBaseURL = "http://192.168.1.67/real_11/"
     const val fSLBaseURL = "http://fansuperleague.com/"
-    const val playing11BaseURL = "https://72.octallabs.com/playing11/"
+    const val playing11BaseURL = "http://3.17.90.89/"
     // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val real11BaseURL = "http://real11.com/"
     const val lucky11BaseURL = "http://18.224.67.198/"
-    const val realBashBaseURL = "https://72.octallabs.com/realBash/"
+    const val realBashBaseURL = "http://3.17.175.199/"
     fun getBaseUrl(): String {
         when {
             BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL + "WebServices/"
@@ -98,6 +98,7 @@ object ApiConstant {
     const val verify_otp = "verify-otp"
     const val resend_otp = "resend-otp"
     const val login = "login"
+    const val login_password = "login-password"
     const val social_login = "social-login"
     const val social_signup = "social-signup"
     const val getMatchList = "getMatchList"
@@ -151,4 +152,5 @@ object ApiConstant {
     const val add_withdraw_request = "add-withdraw-request"
     const val create_contest = "create-contest"
     const val deleteNotifications = "deleteNotifications"
+    const val forgot_password = "forgot-password"
 }

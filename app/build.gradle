@@ -134,5 +134,8 @@ dependencies {
 
 //    Easy Image
     implementation 'com.github.jkwiecien:EasyImage:2.1.1'
+
+    /*Showcase view*/
+    implementation 'com.github.amlcurran.showcaseview:library:5.4.3'
 }
 apply plugin: 'com.google.gms.google-services'

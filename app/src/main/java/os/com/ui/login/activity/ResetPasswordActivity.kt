@@ -3,8 +3,9 @@ package os.com.ui.login.activity
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_change_password.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_forget_password.*
 import kotlinx.coroutines.Dispatchers
@@ -25,18 +26,18 @@ class ResetPasswordActivity : BaseActivity(), View.OnClickListener {
             when (view!!.id) {
                 R.id.btn_RestPassword -> {
                     //email check
-                    if (!TextUtils.isEmpty(mEmail)){
+                    if (!mEmail.isEmpty()) {
                         if (NetworkUtils.isConnected()) {
-                            savePassword()
+                            callForgotPasswordApi()
                         } else
                             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
                 }
                 R.id.txt_ResendEmail -> {
                     //email check
-                    if (!TextUtils.isEmpty(mEmail)){
+                    if (!TextUtils.isEmpty(mEmail)) {
                         if (NetworkUtils.isConnected()) {
-                            savePassword()
+                            callForgotPasswordApi()
                         } else
                             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
@@ -57,7 +58,7 @@ class ResetPasswordActivity : BaseActivity(), View.OnClickListener {
         initViews()
     }
 
-    private var mEmail=""
+    private var mEmail = ""
     private fun initViews() {
         try {
             setSupportActionBar(toolbar)
@@ -65,10 +66,11 @@ class ResetPasswordActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.reset_password)
-            setMenu(false, false, false, false,false)
+            setMenu(false, false, false, false, false)
             if (intent.hasExtra("email"))
                 mEmail = intent.getStringExtra("email")
-            txt_EmailId.text=mEmail
+            txt_EmailId.text = mEmail
+            txt_MailId.text = mEmail
             btn_RestPassword.setOnClickListener(this)
             txt_LoginWithMobile.setOnClickListener(this)
             txt_ResendEmail.setOnClickListener(this)
@@ -77,28 +79,29 @@ class ResetPasswordActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-    private fun savePassword() {
+    private fun callForgotPasswordApi() {
         try {
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(this@ResetPasswordActivity)
                 try {
                     var map = HashMap<String, String>()
-                    map[Tags.user_id] = pref!!.userdata!!.user_id
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
-                    map[Tags.password] = et_ConfirmPassword.text.toString()
-                    map[Tags.old_password] = et_OldPassword.text.toString()
+                    map[Tags.email] = mEmail
                     val request = ApiClient.client
                         .getRetrofitService()
-                        .change_pasword(map)
+                        .forgot_password(map)
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(this@ResetPasswordActivity)
-                    if (response.response!!.status) {
-                        AppDelegate.showToast(this@ResetPasswordActivity, response.response!!.message)
-                        finish()
+                    if (response.response!!.status!!) {
+                        AppDelegate.showToast(this@ResetPasswordActivity, response.response!!.message!!)
+                        ll_success.visibility = VISIBLE
+                        ll_main.visibility = GONE
                     } else {
-                        AppDelegate.showToast(this@ResetPasswordActivity, response.response!!.message)
-                        logoutIfDeactivate(response.response!!.message)
+                        ll_success.visibility = GONE
+                        ll_main.visibility = VISIBLE
+                        AppDelegate.showToast(this@ResetPasswordActivity, response.response!!.message!!)
+                        logoutIfDeactivate(response.response!!.message!!)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@ResetPasswordActivity)

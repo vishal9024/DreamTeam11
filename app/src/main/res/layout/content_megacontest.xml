@@ -20,7 +20,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:orientation="horizontal"
             android:padding="@dimen/_9sdp"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.AppCompatTextView
@@ -333,12 +332,46 @@
                                     android:layout_height="0.5dp"
                                     android:background="@color/GrayColorOTP"/>
                             <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/cl_m"
-                                    android:paddingTop="@dimen/_2sdp"
+                                    android:id="@+id/cl_c2"
+                                    android:visibility="gone"
                                     android:layout_marginTop="@dimen/_5sdp"
                                     card_view:layout_constraintStart_toStartOf="parent"
                                     card_view:layout_constraintEnd_toEndOf="parent"
                                     card_view:layout_constraintTop_toBottomOf="@+id/view0"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/c2"
+                                        style="@style/TextStyleNormal"
+                                        android:textSize="@dimen/_8sdp"
+                                        android:textColor="@color/textColorWhite"
+                                        android:background="@color/colorMatchUnSelected"
+                                        android:paddingStart="@dimen/_3sdp"
+                                        android:paddingTop="@dimen/_2sdp"
+                                        android:paddingBottom="@dimen/_2sdp"
+                                        android:paddingEnd="@dimen/_2sdp"
+                                        android:text="C"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"/>
+                                <androidx.appcompat.widget.AppCompatTextView
+                                        android:layout_marginStart="@dimen/_5sdp"
+                                        card_view:layout_constraintStart_toEndOf="@id/c2"
+                                        style="@style/TextStyleNormal"
+                                        android:textSize="@dimen/_9sdp"
+                                        android:textColor="@color/textColorGray"
+                                        android:padding="@dimen/_2sdp"
+                                        android:text="Confirmed winnings even if the contest remains unfilled"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"/>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:id="@+id/cl_m"
+                                    android:paddingTop="@dimen/_2sdp"
+
+                                    card_view:layout_constraintStart_toStartOf="parent"
+                                    card_view:layout_constraintEnd_toEndOf="parent"
+                                    card_view:layout_constraintTop_toBottomOf="@+id/cl_c2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content">
                                 <androidx.appcompat.widget.AppCompatTextView
@@ -362,13 +395,14 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"/>
                             </androidx.constraintlayout.widget.ConstraintLayout>
+
                         </androidx.constraintlayout.widget.ConstraintLayout>
                         <androidx.constraintlayout.widget.ConstraintLayout
                                 android:id="@+id/cl_join"
                                 card_view:layout_constraintTop_toTopOf="parent"
                                 card_view:layout_constraintStart_toStartOf="parent"
                                 card_view:layout_constraintEnd_toEndOf="parent"
-android:visibility="gone"
+                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
                             <androidx.constraintlayout.widget.ConstraintLayout

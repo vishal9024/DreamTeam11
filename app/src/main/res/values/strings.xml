@@ -580,6 +580,7 @@
     <string name="joinContestInfo">Usable Cash bonu:\n 10% of Total Entry Fee* per match\n (whichever is higher)\n\n * Not valid for private contests. </string>
     <string name="reset_password_info">A link to reset your password has been sent to</string>
     <string name="add_amount_validation">Please add amount</string>
-    <string name="ranking_not_fount">Rank Not Fount</string>
-    <string name="trans_not_fount">Transaction Not Fount</string>
+    <string name="ranking_not_fount">Rank Not Found</string>
+    <string name="trans_not_fount">Transaction Not Found</string>
+    <string name="upcoming_match">Upcoming Matches</string>
 </resources>

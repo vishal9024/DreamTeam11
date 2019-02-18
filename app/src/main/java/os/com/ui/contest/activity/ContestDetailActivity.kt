@@ -403,6 +403,13 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
             }
         }
         joined_team_list = data.joined_team_list!!
+
+        if (!data.is_joined){
+            cl_c1.visibility= VISIBLE
+        }else{
+            cl_c2 .visibility= VISIBLE
+        }
+
         setAdapter()
     }
 

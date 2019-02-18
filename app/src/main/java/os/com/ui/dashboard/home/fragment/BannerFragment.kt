@@ -33,9 +33,9 @@ class BannerFragment : Fragment() {
             rootview = inflater.inflate(R.layout.child_banner_layout, container, false)
         bundle = arguments
         banner = bundle!!.getParcelable(Tags.DATA)
-        val img=rootview!!.findViewById<ImageView>(R.id.imv_product)
+        val img = rootview!!.findViewById<ImageView>(R.id.imv_product)
         ImageLoader.getInstance().displayImage(banner!!.image, img, FantasyApplication.getInstance().options)
-        img.setOnClickListener{
+        img.setOnClickListener {
             if (banner!!.type.equals("1")) {
                 if (!banner!!.upcoming!!.match_id.isEmpty()) {
                     val match: os.com.ui.dashboard.home.apiResponse.getMatchList.Match = Match()
@@ -75,7 +75,6 @@ class BannerFragment : Fragment() {
                 )
             }
         }
-
 
         return rootview
     }

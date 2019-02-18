@@ -38,7 +38,7 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
                     else {
                         AppDelegate.hideKeyBoard(this)
                         if (NetworkUtils.isConnected()) {
-//                            savePassword()
+                            savePassword()
                         } else
                             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
                     }
@@ -76,7 +76,7 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
             setMenu(false, false, false, false, false)
             if (intent.hasExtra("email"))
                 mEmail = intent.getStringExtra("email")
-            txt_EmailId.text=mEmail
+            txt_EmailId.text = mEmail
             btn_Login.setOnClickListener(this)
             txt_ForgetPassword.setOnClickListener(this)
             txt_LoginWithMobile.setOnClickListener(this)
@@ -91,20 +91,27 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.showProgressDialog(this@PasswordActivity)
                 try {
                     var map = HashMap<String, String>()
-                    map[Tags.user_id] = pref!!.userdata!!.user_id
+                    map["email"] = mEmail
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
                     map[Tags.password] = et_password.text.toString()
+                    map["device_id"] = pref!!.fcMtokeninTemp
+                    map["device_type"] = Tags.device_type
                     val request = ApiClient.client
                         .getRetrofitService()
-                        .change_pasword(map)
+                        .login_password(map)
                     val response = request.await()
-                    AppDelegate.LogT("Response=>" + response);
+                    AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(this@PasswordActivity)
                     if (response.response!!.status) {
                         AppDelegate.showToast(this@PasswordActivity, response.response!!.message)
-//                        pref!!.userdata = response.response!!.data
+                        pref!!.userdata = response.response!!.data
                         pref!!.isLogin = true
-                        startActivity(Intent(this@PasswordActivity, DashBoardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+                        startActivity(
+                            Intent(
+                                this@PasswordActivity,
+                                DashBoardActivity::class.java
+                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
                         finish()
                     } else {
                         AppDelegate.showToast(this@PasswordActivity, response.response!!.message)

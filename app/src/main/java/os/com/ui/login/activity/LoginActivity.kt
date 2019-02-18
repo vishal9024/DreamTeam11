@@ -107,7 +107,9 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     private fun callLoginApi() {
         val loginRequest = HashMap<String, String>()
         loginRequest["user_name"] = et_email.text.toString()
-        loginRequest["language"] = FantasyApplication.getInstance().getLanguage()
+        loginRequest["type"] = "phone"
+        loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
+        loginRequest[Tags.password] =""
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@LoginActivity)
             try {

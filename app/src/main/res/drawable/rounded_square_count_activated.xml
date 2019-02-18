@@ -6,7 +6,7 @@
     android:thicknessRatio="2"
     android:useLevel="false">
     <corners android:radius="2dp" />
-    <solid android:color="@color/green" />
+    <solid android:color="@color/colorRed" />
     <stroke
         android:width="2dp"
         android:color="@color/white" />

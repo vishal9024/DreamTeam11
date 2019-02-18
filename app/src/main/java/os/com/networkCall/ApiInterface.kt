@@ -57,6 +57,11 @@ interface ApiInterface {
     fun login(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
 
     @Headers("Content-Type: application/json")
+    @POST(ApiConstant.login_password)
+    fun login_password(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
+
+
+    @Headers("Content-Type: application/json")
     @POST(ApiConstant.social_login)
     fun social_login(@Body request: Map<String, String>): Deferred<OtpVerifyResponse>
 
@@ -100,6 +105,7 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.change_pasword)
     fun change_pasword(@Body request: Map<String, String>): Deferred<ProfileResponse>
+
 
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.player_team_list)
@@ -260,5 +266,11 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.deleteNotifications)
     fun deleteNotifications(@Body request: Map<String, String>): Deferred<BaseResponse>
+
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.forgot_password)
+    fun forgot_password(@Body request: Map<String, String>): Deferred<BaseResponse>
+
 
 }

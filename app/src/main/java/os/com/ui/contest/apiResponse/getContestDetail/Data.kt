@@ -10,6 +10,7 @@ class Data() : Parcelable {
     var entry_fee = ""
     var invite_code = ""
     var join_multiple_teams = false
+    var confirm_winning = false
     var total_winners = ""
     var teams_joined = ""
     var is_joined = false
@@ -17,7 +18,7 @@ class Data() : Parcelable {
     var my_team_ids: ArrayList<String>? = null
     var joined_team_list: ArrayList<Team>? = null
     var breakup_detail: ArrayList<PriceBreakUp>? = null
-    var match_status:String=""
+    var match_status: String = ""
 
     constructor(parcel: Parcel) : this() {
         total_point = parcel.readString()
@@ -26,6 +27,7 @@ class Data() : Parcelable {
         entry_fee = parcel.readString()
         invite_code = parcel.readString()
         join_multiple_teams = parcel.readByte() != 0.toByte()
+        confirm_winning = parcel.readByte() != 0.toByte()
         total_winners = parcel.readString()
         teams_joined = parcel.readString()
         is_joined = parcel.readByte() != 0.toByte()
@@ -38,6 +40,7 @@ class Data() : Parcelable {
         parcel.writeString(entry_fee)
         parcel.writeString(invite_code)
         parcel.writeByte(if (join_multiple_teams) 1 else 0)
+        parcel.writeByte(if (confirm_winning) 1 else 0)
         parcel.writeString(total_winners)
         parcel.writeString(teams_joined)
         parcel.writeByte(if (is_joined) 1 else 0)

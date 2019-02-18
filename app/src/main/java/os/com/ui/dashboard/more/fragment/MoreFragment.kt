@@ -152,6 +152,10 @@ class MoreFragment : BaseFragment(), View.OnClickListener {
                 tv_version_code.text =
                     activity!!.resources.getString(os.com.R.string.version) + " " + BuildConfig.VERSION_CODE
             }
+            if (BuildConfig.APPLICATION_ID == "os.real11")
+                llZendeskChat.visibility=View.GONE
+            else llZendeskChat.visibility=View.VISIBLE
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

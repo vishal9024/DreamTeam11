@@ -17,25 +17,53 @@
             android:layout_width="match_parent"
             android:theme="@style/AppTheme.AppBarOverlay">
         <!--<com.google.android.material.appbar.CollapsingToolbarLayout-->
-                <!--android:id="@+id/toolbar_layout"-->
-                <!--app:contentScrim="@android:color/transparent"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
+        <!--android:id="@+id/toolbar_layout"-->
+        <!--app:contentScrim="@android:color/transparent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
         <!--&gt;-->
-<RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <com.github.demono.AutoScrollViewPager
-                    android:id="@+id/viewPager_Banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_146sdp"
-                    app:slideDirection="right"
-                    android:clipToPadding="false"
-                    android:paddingStart="@dimen/_15sdp"
-                    android:paddingEnd="@dimen/_15sdp"
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
 
-                    app:slideDuration="3000"
-                    app:slideInterval="3000"
-                    app:stopWhenTouch="true"/>
+            <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="match_parent"
+                                                               android:layout_height="wrap_content">
+                <com.github.demono.AutoScrollViewPager
+                        android:id="@+id/viewPager_Banner"
+                        app:slideDirection="right"
+                        android:clipToPadding="false"
+                        android:paddingStart="@dimen/_15sdp"
+                        android:paddingEnd="@dimen/_15sdp"
+                        app:slideDuration="3000"
+                        app:slideInterval="3000"
+                        app:stopWhenTouch="true"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_constraintDimensionRatio="H,13:6"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/cricket_banner"
+
+                />
+
+                <!--<com.github.demono.AutoScrollViewPager-->
+                <!--android:id="@+id/viewPager_Banner"-->
+                <!--android:layout_width="match_parent"-->
+
+                <!--android:layout_height="@dimen/_146sdp"-->
+                <!--app:slideDirection="right"-->
+                <!--android:clipToPadding="false"-->
+                <!--android:paddingStart="@dimen/_15sdp"-->
+                <!--android:paddingEnd="@dimen/_15sdp"-->
+
+                <!--app:slideDuration="3000"-->
+                <!--app:slideInterval="3000"-->
+                <!--app:stopWhenTouch="true"/>-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -152,7 +180,7 @@
                             android:layout_height="wrap_content"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.appcompat.widget.Toolbar>
-</RelativeLayout>
+        </RelativeLayout>
         <!--</com.google.android.material.appbar.CollapsingToolbarLayout>-->
     </com.google.android.material.appbar.AppBarLayout>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -177,7 +205,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorBlack"
-                    android:text="@string/select_a_match"
+                    android:text="@string/upcoming_match"
                     android:layout_height="wrap_content"
             />
 

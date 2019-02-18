@@ -562,7 +562,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.choose_team)
-        setMenu(false, false, false, false, true)
+        if (BuildConfig.APPLICATION_ID == "os.real11")
+            setMenu(false, false, false, false, false)
+        else
+            setMenu(false, false, false, false, true)
         getIntentData()
         if (NetworkUtils.isConnected()) {
             if (match != null)

@@ -88,7 +88,9 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                             .putExtra("DreamTeam", true)
                     )
                 } else {
+
                     logoutIfDeactivate(response.response!!.message!!)
+                    AppDelegate.showToast(this@CompletedJoinedContestActivity,response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)

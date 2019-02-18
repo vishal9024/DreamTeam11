@@ -292,6 +292,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 refreshItems()
         }
     }
+
     private fun refreshItems() {
         GlobalScope.launch {
             delay(200)
@@ -499,6 +500,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                             .putExtra("DreamTeam", true)
                     )
                 } else {
+                    AppDelegate.showToast(this@LeaderShipBoardActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
