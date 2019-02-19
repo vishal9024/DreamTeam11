@@ -20,10 +20,6 @@ import os.com.ui.contest.activity.ContestActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
 import java.util.*
-import com.github.amlcurran.showcaseview.targets.ViewTarget
-import com.github.amlcurran.showcaseview.ShowcaseView
-
-
 
 
 class MatchFixturesAdapter(

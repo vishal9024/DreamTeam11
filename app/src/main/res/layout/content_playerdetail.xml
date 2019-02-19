@@ -11,16 +11,21 @@
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:id="@+id/ll_level"
+                android:visibility="gone"
                 android:background="@color/colorBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
-                android:layout_width="match_parent" android:layout_height="wrap_content">
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <de.hdodenhof.circleimageview.CircleImageView
-                    android:layout_gravity="center_vertical" android:layout_width="@dimen/_60sdp"
-                    android:src="@mipmap/cricketer"
+                    android:id="@+id/imvPlayer"
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="@dimen/_60sdp"
+                    android:src="@mipmap/avatar"
                     android:layout_height="@dimen/_60sdp"/>
             <LinearLayout
                     android:paddingStart="@dimen/_10sdp"
@@ -32,13 +37,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_PlayerName"
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleSemiBold"
                             android:gravity="start"
                             android:paddingTop="@dimen/_7sdp"
                             android:textSize="@dimen/_13sdp"
                             android:layout_width="match_parent"
-                            android:text="MS Dhoni"
+
                             android:textColor="@color/colorASPrimary"
                             android:layout_height="wrap_content"/>
 
@@ -66,13 +72,14 @@
                                 android:textColor="@color/textColorGray"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txtCredits"
                                 android:layout_gravity="start"
                                 android:paddingTop="@dimen/_2sdp"
                                 style="@style/TextStyleSemiBold"
                                 android:gravity="center_vertical"
                                 android:textSize="@dimen/_13sdp"
                                 android:layout_width="wrap_content"
-                                android:text="9.0"
+                                android:text="0"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_height="wrap_content"/>
 
@@ -108,6 +115,7 @@
                                 android:textColor="@color/textColorGray"
                                 android:layout_height="wrap_content"/>
                         <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/txt_totalPoints"
                                 app:layout_constraintStart_toStartOf="@+id/txt_pointsLable"
                                 app:layout_constraintTop_toBottomOf="@+id/txt_pointsLable"
                                 android:layout_gravity="center"
@@ -117,7 +125,7 @@
                                 android:gravity="center"
                                 android:textSize="@dimen/_13sdp"
                                 android:layout_width="wrap_content"
-                                android:text="18.0"
+                                android:text="0"
                                 android:textColor="@color/textColorBlack"
                                 android:layout_height="wrap_content"/>
 
@@ -144,6 +152,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:visibility="gone"
                         android:background="@color/colorBackgroundGray"
                         android:layout_width="match_parent" android:layout_height="wrap_content"
                         android:orientation="horizontal">
@@ -169,6 +178,7 @@
                                     android:textColor="@color/textColorGray"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtBatsType"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleMedium"
                                     android:gravity="center_vertical"
@@ -176,7 +186,6 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                     android:layout_width="wrap_content"
-                                    android:text="Right Handed Batsman"
                                     android:textColor="@color/textColorLightBlack"
                                     android:layout_height="wrap_content"/>
 
@@ -201,6 +210,7 @@
                                     android:textColor="@color/textColorGray"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtNationality"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleMedium"
                                     android:gravity="center_vertical"
@@ -208,7 +218,6 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                     android:layout_width="wrap_content"
-                                    android:text="Indian"
                                     android:textColor="@color/textColorLightBlack"
                                     android:layout_height="wrap_content"/>
 
@@ -243,6 +252,7 @@
                                     android:textColor="@color/textColorGray"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtBowlsType"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleMedium"
                                     android:gravity="center_vertical"
@@ -250,7 +260,6 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                     android:layout_width="wrap_content"
-                                    android:text="Right Handed Bowler"
                                     android:textColor="@color/textColorLightBlack"
                                     android:layout_height="wrap_content"/>
 
@@ -274,6 +283,7 @@
                                     android:textColor="@color/textColorGray"
                                     android:layout_height="wrap_content"/>
                             <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtBirthday"
                                     android:layout_gravity="center_horizontal"
                                     style="@style/TextStyleMedium"
                                     android:gravity="center_vertical"
@@ -281,7 +291,6 @@
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                     android:layout_width="wrap_content"
-                                    android:text="December 14, 1992"
                                     android:textColor="@color/textColorLightBlack"
                                     android:layout_height="wrap_content"/>
 
@@ -293,6 +302,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt_FantasyStatus"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         style="@style/TextStyleMedium"
                         android:gravity="center"
                         android:padding="@dimen/_7sdp"
@@ -310,6 +320,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:orientation="vertical"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                     <LinearLayout

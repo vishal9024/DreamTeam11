@@ -8,6 +8,7 @@ import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_invite_friend_detail.*
 import os.com.AppBase.BaseActivity
+import os.com.BuildConfig
 import os.com.R
 import os.com.ui.dashboard.profile.adapter.FriendListAdapter
 import os.com.ui.invite.apiResponse.InviteFreindDetailResponse
@@ -55,6 +56,9 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
             if (mData != null) {
                 setData(mData)
             }
+            if (BuildConfig.APPLICATION_ID == "os.realbash")
+                txt_code.setText(R.string.referral_friend_comment_50)
+            else txt_code.setText(R.string.referral_friend_comment)
         } catch (e: Exception) {
             e.printStackTrace()
         }

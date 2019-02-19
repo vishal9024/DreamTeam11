@@ -72,10 +72,10 @@ class MatchStatesActivity : BaseActivity(), View.OnClickListener {
             if (intent.hasExtra("user_id"))
                 userId = intent.getStringExtra("user_id")
             if (NetworkUtils.isConnected()) {
-                if (seriesId != null && !seriesId.equals("") && userId != null && !userId.equals(""))
-                    getMatchStatesData(seriesId, userId)
-            } else
-                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+                    if (seriesId != null && !seriesId.equals("") && userId != null && !userId.equals(""))
+                        getMatchStatesData(seriesId, userId)
+                } else
+                    Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 //        btn_CreateTeam.setOnClickListener(this)
 //        txt_Signup.setOnClickListener(this)
         } catch (e: Exception) {

@@ -33,7 +33,9 @@ class ChooseC_VC_Adapter(
 
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         holder.itemView.cimg_player.setOnClickListener {
-            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java)
+                .putExtra("player_id",playerList[position].player_id)
+                .putExtra("series_id",playerList[position].series_id))
         }
         if (playerList[position].player_record != null) {
             ImageLoader.getInstance().displayImage(

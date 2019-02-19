@@ -16,6 +16,7 @@ import os.com.ui.contest.apiResponse.joinContestWalletAmountResponse.JoinContest
 import os.com.ui.contest.apiResponse.matchScoreResponse.MatchScoreResponse
 import os.com.ui.createTeam.apiRequest.CreateTeamRequest
 import os.com.ui.createTeam.apiRequest.SwitchTeamRequest
+import os.com.ui.createTeam.apiResponse.PlayerdetailResponse
 import os.com.ui.createTeam.apiResponse.createTeamResponse.CreateTeamResponse
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.createTeam.apiResponse.playerListResponse.GetPlayerListResponse
@@ -271,6 +272,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.forgot_password)
     fun forgot_password(@Body request: Map<String, String>): Deferred<BaseResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.seriesPlayerDetail)
+    fun seriesPlayerDetail(@Body request: Map<String, String>): Deferred<PlayerdetailResponse>
 
 
 }

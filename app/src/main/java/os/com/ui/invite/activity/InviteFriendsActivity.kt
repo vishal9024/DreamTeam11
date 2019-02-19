@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.Tags
@@ -27,7 +28,7 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
         when (view!!.id) {
             R.id.tv_how_it_work -> {
                 val intent = Intent(this, WebViewActivity::class.java)
-                intent.putExtra("PAGE_SLUG", "How it work")
+                intent.putExtra("PAGE_SLUG", "How It Works")
                 intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.how_it_works_tab)
                 startActivity(intent)
             }
@@ -49,8 +50,20 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
                 sharingIntent.type = "text/plain"
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.app_name))
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TITLE, getString(R.string.app_name))
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Download the app and use my invite code  "
-                        +txt_code!!.text.toString().toUpperCase()+ " to get a Cash Bonus of Rs100")
+                try {
+                    if (BuildConfig.APPLICATION_ID == "os.realbash")
+                        sharingIntent.putExtra(
+                            android.content.Intent.EXTRA_TEXT, "Download the app and use my invite code  "
+                                    + txt_code!!.text.toString().toUpperCase() + " to get a Cash Bonus of Rs50"
+                        )
+                    else sharingIntent.putExtra(
+                        android.content.Intent.EXTRA_TEXT, "Download the app and use my invite code  "
+                                + txt_code!!.text.toString().toUpperCase() + " to get a Cash Bonus of Rs100"
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
                 startActivity(Intent.createChooser(sharingIntent, "share using"))
             }
         }
@@ -80,6 +93,9 @@ class InviteFriendsActivity : BaseActivity(), View.OnClickListener {
             llInvited.setOnClickListener(this)
             txt_label.setText("kick off your friends " + getString(R.string.app_name) + " Journey!")
             txt_code.setText(pref!!.userdata!!.refer_id)
+            if (BuildConfig.APPLICATION_ID == "os.realbash")
+                txt_label2.setText(R.string.for_every_friend_that_plays_you_both_get_rs_50_for_free)
+            else txt_label2.setText(R.string.for_every_friend_that_plays_you_both_get_rs_100_for_free)
         } catch (e: Exception) {
             e.printStackTrace()
         }

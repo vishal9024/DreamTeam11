@@ -1,6 +1,7 @@
 package os.com.ui.createTeam.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.interfaces.SelectPlayerInterface
 import os.com.ui.createTeam.activity.ChooseTeamActivity
+import os.com.ui.createTeam.activity.PlayerDetailActivity
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 
@@ -104,7 +106,9 @@ class PlayerListAdapter(
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
         }
         holder.itemView.cimg_player.setOnClickListener {
-            //            mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java))
+                        mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java)
+                            .putExtra("player_id",playerList!![position].player_id)
+                            .putExtra("series_id",playerList!![position].series_id))
         }
         holder.itemView.ll_main.alpha = 1.0f
         if (playerList!![position].team_id.equals(local_team_id)) {

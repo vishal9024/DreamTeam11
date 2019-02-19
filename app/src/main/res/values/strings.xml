@@ -291,11 +291,11 @@
     <string name="my_account">My Account</string>
     <string name="ok">OK</string>
     <string name="error_network_connection">You are not connected with an active internet connection.</string>
-    <string name="enter_phone_number">Please enter phone number.</string>
-    <string name="valid_phone_number">Please enter valid phone number.</string>
+    <string name="enter_phone_number">Please enter mobile number</string>
+    <string name="valid_phone_number">Please enter valid mobile number</string>
     <string name="enter_email">Please enter email address.</string>
     <string name="valid_email">Please enter valid email address.</string>
-    <string name="enter_password">Password can\'t be empty.</string>
+    <string name="enter_password">Please enter mobile number</string>
     <string name="short_password">Password must be at least 6 characters long.</string>
     <string name="old_short_password">Old password must be at least 6 characters long.</string>
     <string name="new_short_password">New password must be at least 6 characters long</string>
@@ -583,4 +583,12 @@
     <string name="ranking_not_fount">Rank Not Found</string>
     <string name="trans_not_fount">Transaction Not Found</string>
     <string name="upcoming_match">Upcoming Matches</string>
+    <string name="invalid_password_2">Invalid Password.</string>
+
+    <string name="for_every_friend_that_plays_you_both_get_rs_50_for_free">For every friend that plays, you both get
+        \u20B9 50 for free
+    </string>
+    <string name="referral_friend_comment_50">The more your friends play in cash contests, the more you earn (max Rs 50
+        for each friend)
+    </string>
 </resources>

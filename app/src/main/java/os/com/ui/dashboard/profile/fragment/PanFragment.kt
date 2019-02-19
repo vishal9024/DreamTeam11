@@ -30,6 +30,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 import os.com.AppBase.BaseActivity
 import os.com.AppBase.BaseFragment
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
@@ -42,7 +43,7 @@ import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
 import java.util.*
 
-class PanFragment : BaseFragment(), View.OnClickListener{
+class PanFragment : BaseFragment(), View.OnClickListener {
 
     private val dobCalendar = Calendar.getInstance()
     private var dob: String? = null
@@ -53,51 +54,84 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             dobCalendar.set(Calendar.YEAR, year)
             dobCalendar.set(Calendar.MONTH, monthOfYear)
             dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            edtDateOfBirth.setText("" +dayOfMonth+ "-" + monthOfYear + 1 + "-" + year)
+            edtDateOfBirth.setText("" + dayOfMonth + "-" + monthOfYear + 1 + "-" + year)
 //            dob = state.toString() + "-" + Util.setZeroBeforeNine(monthOfYear + 1) + "-" +
 //                    Util.setZeroBeforeNine(dayOfMonth)
         }
 
     override fun onClick(p0: View?) {
-      when(p0!!.id){
-          R.id.btn_uploadPanCard->{
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                  requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA), 10)
-              } else {
-                  selectImage()
-              }
-          }
-          R.id.txtWhySubmitPANCard->{
-              val str="Since " +  getString(R.string.app_name)+ " involves money related transactions. It is mandatory for us to verify your PAN card"
-              Toast.makeText(context!!, str, Toast.LENGTH_LONG).show()
-          }
-          R.id.btnSubmitForVerifyPAN->{
-              if(TextUtils.isEmpty(edtPanName.text.toString().trim())){
-                  Toast.makeText(context!!, getString(R.string.enter_pan_name), Toast.LENGTH_LONG).show()
-              }else if(TextUtils.isEmpty(edtPanNumber.text.toString().trim())){
-                  Toast.makeText(context!!, getString(R.string.enter_pan_number), Toast.LENGTH_LONG).show()
-              }else if(TextUtils.isEmpty(edtAdharCardNumber.text.toString().trim())){
-                  Toast.makeText(context!!, getString(R.string.enter_aadhar_card_number), Toast.LENGTH_LONG).show()
-              }else if(TextUtils.isEmpty(edtDateOfBirth.text.toString().trim())){
-                  Toast.makeText(context!!, getString(R.string.select_dateofbirth), Toast.LENGTH_LONG).show()
-              }else if(state.equals("Select State",true)){
-                  Toast.makeText(context!!, getString(R.string.select_state_name), Toast.LENGTH_LONG).show()
-              }else{
-                  verify_pan_details(edtPanName.text.toString().trim(),edtPanNumber.text.toString().trim(),edtAdharCardNumber.text.toString().trim(),edtDateOfBirth.text.toString().trim())
-              }
-          }
-          R.id.edtDateOfBirth->{
-                  val fromDateDialog = DatePickerDialog(
-                      activity,
-                      fromDate,
-                      dobCalendar.get(Calendar.YEAR),
-                      dobCalendar.get(Calendar.MONTH),
-                      dobCalendar.get(Calendar.DAY_OF_MONTH)
-                  )
-                  fromDateDialog.datePicker.maxDate = System.currentTimeMillis() - 1000
-                  fromDateDialog.show()
-          }
-      }
+        when (p0!!.id) {
+            R.id.btn_uploadPanCard -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.CAMERA
+                    ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                        activity!!,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    requestPermissions(
+                        arrayOf(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA
+                        ), 10
+                    )
+                } else {
+                    selectImage()
+                }
+            }
+            R.id.txtWhySubmitPANCard -> {
+                val str =
+                    "Since " + getString(R.string.app_name) + " involves money related transactions. It is mandatory for us to verify your PAN card"
+                Toast.makeText(context!!, str, Toast.LENGTH_LONG).show()
+            }
+            R.id.btnSubmitForVerifyPAN -> {
+                if (TextUtils.isEmpty(edtPanName.text.toString().trim())) {
+                    Toast.makeText(context!!, getString(R.string.enter_pan_name), Toast.LENGTH_LONG).show()
+                } else if (TextUtils.isEmpty(edtPanNumber.text.toString().trim())) {
+                    Toast.makeText(context!!, getString(R.string.enter_pan_number), Toast.LENGTH_LONG).show()
+                } else if (TextUtils.isEmpty(edtDateOfBirth.text.toString().trim())) {
+                    Toast.makeText(context!!, getString(R.string.select_dateofbirth), Toast.LENGTH_LONG).show()
+                } else if (state.equals("Select State", true)) {
+                    Toast.makeText(context!!, getString(R.string.select_state_name), Toast.LENGTH_LONG).show()
+                } else {
+                    if (BuildConfig.APPLICATION_ID == "os.realbash") {
+                        verify_pan_details(
+                            edtPanName.text.toString().trim(),
+                            edtPanNumber.text.toString().trim(),
+                            edtAdharCardNumber.text.toString().trim(),
+                            edtDateOfBirth.text.toString().trim()
+                        )
+                    } else {
+                        if (TextUtils.isEmpty(edtAdharCardNumber.text.toString().trim())) {
+                            Toast.makeText(context!!, getString(R.string.enter_aadhar_card_number), Toast.LENGTH_LONG)
+                                .show()
+                        } else
+                            verify_pan_details(
+                                edtPanName.text.toString().trim(),
+                                edtPanNumber.text.toString().trim(),
+                                edtAdharCardNumber.text.toString().trim(),
+                                edtDateOfBirth.text.toString().trim()
+                            )
+                    }
+                }
+            }
+            R.id.edtDateOfBirth -> {
+                val fromDateDialog = DatePickerDialog(
+                    activity,
+                    fromDate,
+                    dobCalendar.get(Calendar.YEAR),
+                    dobCalendar.get(Calendar.MONTH),
+                    dobCalendar.get(Calendar.DAY_OF_MONTH)
+                )
+                fromDateDialog.datePicker.maxDate = System.currentTimeMillis() - 1000
+                fromDateDialog.show()
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -121,6 +155,13 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             btnSubmitForVerifyPAN.setOnClickListener(this)
             edtDateOfBirth.setOnClickListener(this)
             txtWhySubmitPANCard.setOnClickListener(this)
+            if (BuildConfig.APPLICATION_ID == "os.realbash") {
+                tlAadhaarCard.visibility = View.GONE
+                txtAadhaarCard.visibility = View.GONE
+            } else {
+                tlAadhaarCard.visibility = View.VISIBLE
+                txtAadhaarCard.visibility = View.VISIBLE
+            }
             initState()
             withdraw_cash()
         } catch (e: Exception) {
@@ -143,18 +184,18 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(activity!!)
                     if (response.response!!.isStatus) {
-                        if(response.response.data.pen_verify==0){
+                        if (response.response.data.pen_verify == 0) {
                             cardVieAfterPanVerify.visibility = View.GONE
                             cardViewBeforePanVerify.visibility = View.VISIBLE
-                        }else if(response.response.data.pen_verify==1){
+                        } else if (response.response.data.pen_verify == 1) {
                             cardVieAfterPanVerify.visibility = View.VISIBLE
                             cardViewBeforePanVerify.visibility = View.GONE
-                        }else if(response.response.data.pen_verify==2){
-                            llVerifiedSuccess.visibility=View.VISIBLE;
+                        } else if (response.response.data.pen_verify == 2) {
+                            llVerifiedSuccess.visibility = View.VISIBLE;
                         }
                         txtVerifiedMobileNumber.setText(response.response.data.mobile_no)
                     } else {
-                        (activity as  BaseActivity).logoutIfDeactivate(response.response!!.message)
+                        (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(activity!!, response.response!!.message)
                     }
                 } catch (exception: Exception) {
@@ -194,12 +235,12 @@ class PanFragment : BaseFragment(), View.OnClickListener{
         }
     }
 
-    private fun verify_pan_details(pan_name: String,pan_number: String,aadhar_card: String,dob: String) {
+    private fun verify_pan_details(pan_name: String, pan_number: String, aadhar_card: String, dob: String) {
         try {
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(activity!!)
                 try {
-                  /*  { "user_id": "36","language": "en","pan_image": "","pan_name": "test","pan_number": "ASDE785","date_of_birth": "18-05-2004","state": "rajasthan","aadhar_card":"48781SGY4"}*/
+                    /*  { "user_id": "36","language": "en","pan_image": "","pan_name": "test","pan_number": "ASDE785","date_of_birth": "18-05-2004","state": "rajasthan","aadhar_card":"48781SGY4"}*/
                     var map = HashMap<String, String>()
                     val dataObject = JSONObject()
 
@@ -218,12 +259,12 @@ class PanFragment : BaseFragment(), View.OnClickListener{
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(activity!!)
                     if (response.response!!.isStatus) {
-                        if (response.response.data.pen_verify==1){
-                            cardViewBeforePanVerify.visibility=View.GONE
-                            cardVieAfterPanVerify.visibility=View.VISIBLE
-                        }else if(response.response.data.pen_verify==2){
-                            cardViewBeforePanVerify.visibility=View.GONE
-                            cardVieAfterPanVerify.visibility=View.GONE
+                        if (response.response.data.pen_verify == 1) {
+                            cardViewBeforePanVerify.visibility = View.GONE
+                            cardVieAfterPanVerify.visibility = View.VISIBLE
+                        } else if (response.response.data.pen_verify == 2) {
+                            cardViewBeforePanVerify.visibility = View.GONE
+                            cardVieAfterPanVerify.visibility = View.GONE
                         }
 
                         //AppDelegate.showToast(activity!!, response.response!!.message)
@@ -251,7 +292,11 @@ class PanFragment : BaseFragment(), View.OnClickListener{
     }
 
     private fun selectImage() {
-        val items = arrayOf<CharSequence>(getString(R.string.take_photo), getString(R.string.from_gallery), getString(R.string.cancel))
+        val items = arrayOf<CharSequence>(
+            getString(R.string.take_photo),
+            getString(R.string.from_gallery),
+            getString(R.string.cancel)
+        )
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(getString(R.string.add_photo))
 
@@ -279,6 +324,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
             selectImage()
         }
     }
+
     private var imageURI: Uri? = null
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -286,7 +332,7 @@ class PanFragment : BaseFragment(), View.OnClickListener{
         EasyImage.handleActivityResult(requestCode, resultCode, data, activity, object : DefaultCallback() {
 
             override fun onImagesPicked(imageFiles: MutableList<File>, source: EasyImage.ImageSource?, type: Int) {
-                val imagePath =AppDelegate.getCompressImagePath(Uri.fromFile(imageFiles[0]), activity!!)
+                val imagePath = AppDelegate.getCompressImagePath(Uri.fromFile(imageFiles[0]), activity!!)
                 val file = File(imagePath)
                 imageURI = Uri.fromFile(file)
 //                imv_profile_images.setImageURI(imageURI)

@@ -203,7 +203,7 @@
                             android:layout_height="@dimen/_50sdp"
                             android:padding="@dimen/_5sdp"
                             android:layout_centerHorizontal="true"
-                            android:src="@mipmap/cashbonus"/>
+                            />
                     <RelativeLayout android:layout_width="@dimen/_75sdp"
                                     android:gravity="center"
                                     android:background="@mipmap/cashbonusbg"
@@ -660,7 +660,54 @@
                         </LinearLayout>
                         <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
                               android:background="@color/GrayColorOTP"/>
+                        <LinearLayout
+                                android:padding="@dimen/_10sdp"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                            <ImageView android:layout_width="@dimen/_60sdp"
+                                       android:layout_height="@dimen/_30sdp"
+                                       android:padding="@dimen/_5sdp"
+                                       android:src="@mipmap/trophy_icon"
+                            />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/txtWins"
+                                    android:layout_gravity="center_horizontal"
+                                    style="@style/TextStyleSemiBold"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/_13sdp"
+                                    android:layout_width="wrap_content"
+                                    android:text="0"
+                                    android:textColor="@color/colorSecondary"
+                                    android:layout_height="wrap_content"/>
+                            <androidx.appcompat.widget.AppCompatTextView
+                                    android:layout_gravity="center_horizontal"
+                                    style="@style/TextStyleMedium"
+                                    android:gravity="center_vertical"
+                                    android:textSize="@dimen/_11sdp"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintTop_toBottomOf="@+id/ll_account"
+                                    android:layout_width="wrap_content"
+                                    android:text="Wins"
+                                    android:textColor="@color/textColorLightBlack"
+                                    android:layout_height="wrap_content"/>
 
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View android:layout_width="@dimen/_1sdp"
+                          android:layout_height="match_parent"
+                          app:layout_constraintStart_toStartOf="parent"
+                          app:layout_constraintTop_toBottomOf="@+id/ll_ContestType"
+                          android:background="@color/GrayColorOTP"/>
+                    <LinearLayout
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
                         <LinearLayout
                                 android:padding="@dimen/_10sdp"
                                 android:gravity="center_horizontal"
@@ -696,20 +743,11 @@
 
 
                         </LinearLayout>
-                    </LinearLayout>
 
-                    <View android:layout_width="@dimen/_1sdp"
-                          android:layout_height="match_parent"
-                          app:layout_constraintStart_toStartOf="parent"
-                          app:layout_constraintTop_toBottomOf="@+id/ll_ContestType"
-                          android:background="@color/GrayColorOTP"/>
-                    <LinearLayout
-                            android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
+                        <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
+                              android:background="@color/GrayColorOTP"/>
                         <LinearLayout
+                                android:id="@+id/ll_Series"
                                 android:padding="@dimen/_10sdp"
                                 android:gravity="center_horizontal"
                                 android:orientation="vertical"
@@ -739,43 +777,6 @@
                                     app:layout_constraintTop_toBottomOf="@+id/ll_account"
                                     android:layout_width="wrap_content"
                                     android:text="Series"
-                                    android:textColor="@color/textColorLightBlack"
-                                    android:layout_height="wrap_content"/>
-
-
-                        </LinearLayout>
-                        <View android:layout_width="match_parent" android:layout_height="@dimen/_1sdp"
-                              android:background="@color/GrayColorOTP"/>
-                        <LinearLayout
-                                android:padding="@dimen/_10sdp"
-                                android:gravity="center_horizontal"
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                            <ImageView android:layout_width="@dimen/_60sdp"
-                                       android:layout_height="@dimen/_30sdp"
-                                       android:padding="@dimen/_5sdp"
-                                       android:src="@mipmap/trophy_icon"
-                            />
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/txtWins"
-                                    android:layout_gravity="center_horizontal"
-                                    style="@style/TextStyleSemiBold"
-                                    android:gravity="center_vertical"
-                                    android:textSize="@dimen/_13sdp"
-                                    android:layout_width="wrap_content"
-                                    android:text="0"
-                                    android:textColor="@color/colorSecondary"
-                                    android:layout_height="wrap_content"/>
-                            <androidx.appcompat.widget.AppCompatTextView
-                                    android:layout_gravity="center_horizontal"
-                                    style="@style/TextStyleMedium"
-                                    android:gravity="center_vertical"
-                                    android:textSize="@dimen/_11sdp"
-                                    app:layout_constraintStart_toStartOf="parent"
-                                    app:layout_constraintTop_toBottomOf="@+id/ll_account"
-                                    android:layout_width="wrap_content"
-                                    android:text="Wins"
                                     android:textColor="@color/textColorLightBlack"
                                     android:layout_height="wrap_content"/>
 

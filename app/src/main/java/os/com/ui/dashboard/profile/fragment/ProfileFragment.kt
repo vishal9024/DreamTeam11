@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
-import android.view.View.GONE
 import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -311,9 +310,14 @@ private fun initViews() {
         ll_Ranking4.setOnClickListener(this)
 
         setData()
+        if (BuildConfig.APPLICATION_ID == "os.realbash")
+            ll_Series.visibility=View.INVISIBLE
+        else ll_Series.visibility=View.VISIBLE
+
+
         if (pref!!.isLogin) {
             if (!pref!!.userdata!!.fb_id.isEmpty() || !pref!!.userdata!!.google_id.isEmpty()) {
-                txt_changePassword.visibility = GONE
+                txt_changePassword.visibility = View.GONE
             }
             if (NetworkUtils.isConnected()) {
                 getProfileData()
@@ -530,6 +534,7 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                               e.printStackTrace()
                           }
                       }else{
+                          cimg_user.setImageResource(R.mipmap.cashbonus)
                           txtContest.setText("" + mData!!.contest_finished)
                           var contest = mData!!.contest_finished.toLong() % 20
                           tvRemianContest.setText("" + (20 - contest))

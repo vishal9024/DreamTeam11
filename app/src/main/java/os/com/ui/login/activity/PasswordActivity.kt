@@ -29,12 +29,12 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
                     if (TextUtils.isEmpty(et_password.text.toString()))
                         AppDelegate.showToast(this, getString(R.string.empty_password))
                     else if (et_password.text.toString().length < 6)
-                        AppDelegate.showToast(this, getString(R.string.short_password))
+                        AppDelegate.showToast(this, getString(R.string.invalid_password_2))
                     else if (!(et_password.text.toString().matches(".*[A-Za-z]+.*[0-9]+.*".toRegex()) || et_password.text.toString().matches(
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
                     )
-                        AppDelegate.showToast(this, getString(R.string.invalid_password))
+                        AppDelegate.showToast(this, getString(R.string.invalid_password_2))
                     else {
                         AppDelegate.hideKeyBoard(this)
                         if (NetworkUtils.isConnected()) {

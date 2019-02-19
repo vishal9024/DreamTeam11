@@ -16,6 +16,7 @@
                 android:orientation="vertical" android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtMatchName"
                     style="@style/TextStyleSemiBold"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_5sdp"
@@ -23,9 +24,9 @@
                     android:textSize="@dimen/_12sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorBlack"
-                    android:text="IND vs Pak"
                     android:layout_height="match_parent"/>
             <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtDate"
                     style="@style/TextStyleMedium"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_5sdp"
@@ -33,12 +34,11 @@
                     android:textSize="@dimen/_10sdp"
                     android:layout_width="wrap_content"
                     android:textColor="@color/textColorGray"
-                    android:text="Nov 14,2018"
                     android:layout_height="match_parent"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_TeamName"
+                android:id="@+id/txtPoints"
                 style="@style/TextStyleMedium"
                 android:gravity="center"
                 android:paddingStart="@dimen/_8sdp"
@@ -47,10 +47,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:textColor="@color/textColorGray"
-                android:text="1"
+                android:text="0"
                 android:layout_height="match_parent"/>
         <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/txt_rank"
+                android:id="@+id/txtSelectedBy"
                 style="@style/TextStyleMedium"
                 android:gravity="center"
                 android:paddingStart="@dimen/_10sdp"
@@ -58,7 +58,7 @@
                 android:textSize="@dimen/_11sdp"
                 android:layout_width="wrap_content"
                 android:textColor="@color/colorSecondary"
-                android:text="49.31%"
+                android:text="0%"
                 android:layout_height="match_parent"/>
     </LinearLayout>
     <View android:layout_width="match_parent" android:layout_height="1dp"
