@@ -270,6 +270,7 @@
                             android:hint="@string/address"
                             android:singleLine="true"
                             android:maxLines="1"
+                            android:maxLength="50"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>

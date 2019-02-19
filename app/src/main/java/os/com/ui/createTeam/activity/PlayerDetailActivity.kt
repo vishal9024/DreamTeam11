@@ -35,26 +35,33 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_detail)
         initViews()
-
-        if (intent.hasExtra("series_id"))
-            seriesId = intent.getStringExtra("series_id")
-        if (intent.hasExtra("player_id"))
-            playerId = intent.getStringExtra("player_id")
-        if (NetworkUtils.isConnected()) {
-            if (seriesId != null && !seriesId.equals("") && playerId != null && !playerId.equals(""))
-                getPlayerDetailData(seriesId, playerId)
-        } else
-            Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+  try{
+      if (intent.hasExtra("series_id"))
+          seriesId = intent.getStringExtra("series_id")
+      if (intent.hasExtra("player_id"))
+          playerId = intent.getStringExtra("player_id")
+      if (NetworkUtils.isConnected()) {
+          if (seriesId != null && !seriesId.equals("") && playerId != null && !playerId.equals(""))
+              getPlayerDetailData(seriesId, playerId)
+      } else
+          Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+  } catch (e: Exception) {
+      e.printStackTrace()
+  }
     }
 
 
     private fun initViews() {
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        toolbarTitleTv.setText(R.string.player_detail)
-        setMenu(false, false, false, false,false)
+          try{
+              setSupportActionBar(toolbar)
+              supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+              supportActionBar!!.setDisplayShowHomeEnabled(true)
+              supportActionBar!!.setDisplayShowTitleEnabled(false)
+              toolbarTitleTv.setText(R.string.player_detail)
+              setMenu(false, false, false, false,false)
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
     }
 
     private fun getPlayerDetailData(series_id: String, playerId: String) {
@@ -156,10 +163,14 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
 
     @SuppressLint("WrongConstant")
     private fun setAdapter(match_detail: MutableList<PlayerdetailResponse.ResponseBean.DataBean.MatchDetailBean>) {
-        val llm = LinearLayoutManager(this)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        rv_FantasyStatus!!.layoutManager = llm
-        rv_FantasyStatus!!.adapter = PlayerDetailFantasyStatusAdapter(this,match_detail)
+          try{
+              val llm = LinearLayoutManager(this)
+              llm.orientation = LinearLayoutManager.VERTICAL
+              rv_FantasyStatus!!.layoutManager = llm
+              rv_FantasyStatus!!.adapter = PlayerDetailFantasyStatusAdapter(this,match_detail)
+          } catch (e: Exception) {
+              e.printStackTrace()
+          }
     }
 
 

@@ -108,7 +108,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/pan_number"
                             android:textAllCaps="true"
-                            android:inputType="text"
+                            android:inputType="textCapCharacters"
                             android:maxLength="10"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_11sdp"/>
@@ -164,7 +164,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/_15sdp"
-                            android:text="@string/date_of_birth_star"
+                            android:hint="@string/date_of_birth_star"
                             android:textSize="@dimen/_12sdp"/>
                     <View android:layout_width="match_parent"
                           android:layout_height="@dimen/_1sdp"

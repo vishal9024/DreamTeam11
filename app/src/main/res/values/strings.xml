@@ -404,7 +404,7 @@
     <string name="mobile_hint_label">You will receive an OTP for verification</string>
     <string name="email_hint_label">No spam. We promise!</string>
     <string name="password_hint_label">Minimum 6 characters with 1 number/symbol</string>
-    <string name="join_contest">Join Contest</string>
+    <string name="joined_contest">Join Contest</string>
     <string name="prectice_contest">Practice Contest</string>
     <string name="winner_takes_all_the_glory">Winner takes all the glory</string>
     <string name="term_and_condition">
@@ -591,4 +591,8 @@
     <string name="referral_friend_comment_50">The more your friends play in cash contests, the more you earn (max Rs 50
         for each friend)
     </string>
+    <string name="upload_image_error">Please upload PAN Card image</string>
+    <string name="your_team_is_ready_to_join_contests">Your team is ready to join contests</string>
+    <string name="check_out_the_full_points_system">Check out the full points system</string>
+    <string name="join_contest2">Join Contest</string>
 </resources>

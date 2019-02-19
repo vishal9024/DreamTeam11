@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 public class VerifyPanResponse implements Serializable {
 
+
     /**
-     * response : {"status":true,"message":"","data":{"mobile_no":"9782966743","email":"uttam.kumar@octalinfosolution.com","email_verify":true,"pen_verify":2,"bank_account_verify":0}}
+     * response : {"status":true,"message":"Your PAN details have been submitted.","data":{"pan_image":"1550554671130.jpg","user_id":"130","pan_name":"Pawan Tanwar","pan_card":"ASDFG1234A","date_of_birth":"19-11-1996","state":"Rajasthan","aadhar_card":"455548424448","created":"2019-02-19 11:07:51","id":22}}
      */
 
-    private ResponseBean response;
+    public ResponseBean response;
 
     public ResponseBean getResponse() {
         return response;
@@ -21,13 +22,13 @@ public class VerifyPanResponse implements Serializable {
     public static class ResponseBean {
         /**
          * status : true
-         * message :
-         * data : {"mobile_no":"9782966743","email":"uttam.kumar@octalinfosolution.com","email_verify":true,"pen_verify":2,"bank_account_verify":0}
+         * message : Your PAN details have been submitted.
+         * data : {"pan_image":"1550554671130.jpg","user_id":"130","pan_name":"Pawan Tanwar","pan_card":"ASDFG1234A","date_of_birth":"19-11-1996","state":"Rajasthan","aadhar_card":"455548424448","created":"2019-02-19 11:07:51","id":22}
          */
 
-        private boolean status;
-        private String message;
-        private DataBean data;
+        public boolean status;
+        public String message;
+        public DataBean data;
 
         public boolean isStatus() {
             return status;
@@ -55,57 +56,97 @@ public class VerifyPanResponse implements Serializable {
 
         public static class DataBean {
             /**
-             * mobile_no : 9782966743
-             * email : uttam.kumar@octalinfosolution.com
-             * email_verify : true
-             * pen_verify : 2
-             * bank_account_verify : 0
+             * pan_image : 1550554671130.jpg
+             * user_id : 130
+             * pan_name : Pawan Tanwar
+             * pan_card : ASDFG1234A
+             * date_of_birth : 19-11-1996
+             * state : Rajasthan
+             * aadhar_card : 455548424448
+             * created : 2019-02-19 11:07:51
+             * id : 22
              */
 
-            private String mobile_no;
-            private String email;
-            private boolean email_verify;
-            private int pen_verify;
-            private int bank_account_verify;
+            public String pan_image;
+            public String user_id;
+            public String pan_name;
+            public String pan_card;
+            public String date_of_birth;
+            public String state;
+            public String aadhar_card;
+            public String created;
+            public int id;
 
-            public String getMobile_no() {
-                return mobile_no;
+            public String getPan_image() {
+                return pan_image;
             }
 
-            public void setMobile_no(String mobile_no) {
-                this.mobile_no = mobile_no;
+            public void setPan_image(String pan_image) {
+                this.pan_image = pan_image;
             }
 
-            public String getEmail() {
-                return email;
+            public String getUser_id() {
+                return user_id;
             }
 
-            public void setEmail(String email) {
-                this.email = email;
+            public void setUser_id(String user_id) {
+                this.user_id = user_id;
             }
 
-            public boolean isEmail_verify() {
-                return email_verify;
+            public String getPan_name() {
+                return pan_name;
             }
 
-            public void setEmail_verify(boolean email_verify) {
-                this.email_verify = email_verify;
+            public void setPan_name(String pan_name) {
+                this.pan_name = pan_name;
             }
 
-            public int getPen_verify() {
-                return pen_verify;
+            public String getPan_card() {
+                return pan_card;
             }
 
-            public void setPen_verify(int pen_verify) {
-                this.pen_verify = pen_verify;
+            public void setPan_card(String pan_card) {
+                this.pan_card = pan_card;
             }
 
-            public int getBank_account_verify() {
-                return bank_account_verify;
+            public String getDate_of_birth() {
+                return date_of_birth;
             }
 
-            public void setBank_account_verify(int bank_account_verify) {
-                this.bank_account_verify = bank_account_verify;
+            public void setDate_of_birth(String date_of_birth) {
+                this.date_of_birth = date_of_birth;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getAadhar_card() {
+                return aadhar_card;
+            }
+
+            public void setAadhar_card(String aadhar_card) {
+                this.aadhar_card = aadhar_card;
+            }
+
+            public String getCreated() {
+                return created;
+            }
+
+            public void setCreated(String created) {
+                this.created = created;
+            }
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
             }
         }
     }

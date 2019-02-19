@@ -85,7 +85,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                 et_Email.setText(userData!!.email_address)
                 if (!userData!!.email_address.isEmpty())
                     et_Email.isEnabled = false
-                et_Password.visibility = View.GONE
+                til_Password.visibility = View.GONE
             }
             et_Mobile.setText("+91")
 

@@ -52,7 +52,6 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
             loginRequest[Tags.notification_id] = id
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(this@NotificationActivity)
-
                 val request = ApiClient.client
                     .getRetrofitService()
                     .deleteNotifications(loginRequest)

@@ -98,6 +98,8 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                     Toast.makeText(context!!, getString(R.string.select_dateofbirth), Toast.LENGTH_LONG).show()
                 } else if (state.equals("Select State", true)) {
                     Toast.makeText(context!!, getString(R.string.select_state_name), Toast.LENGTH_LONG).show()
+                } else if (imageURI==null) {
+                    Toast.makeText(context!!, getString(R.string.upload_image_error), Toast.LENGTH_LONG).show()
                 } else {
                     if (BuildConfig.APPLICATION_ID == "os.realbash") {
                         verify_pan_details(
@@ -259,13 +261,13 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                     AppDelegate.LogT("Response=>" + response);
                     AppDelegate.hideProgressDialog(activity!!)
                     if (response.response!!.isStatus) {
-                        if (response.response.data.pen_verify == 1) {
+//                        if (response.response.data.pen_verify == 1) {
                             cardViewBeforePanVerify.visibility = View.GONE
                             cardVieAfterPanVerify.visibility = View.VISIBLE
-                        } else if (response.response.data.pen_verify == 2) {
-                            cardViewBeforePanVerify.visibility = View.GONE
-                            cardVieAfterPanVerify.visibility = View.GONE
-                        }
+//                        } else if (response.response.data.pen_verify == 2) {
+//                            cardViewBeforePanVerify.visibility = View.GONE
+//                            cardVieAfterPanVerify.visibility = View.GONE
+//                        }
 
                         //AppDelegate.showToast(activity!!, response.response!!.message)
                         //finish()
