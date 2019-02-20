@@ -517,12 +517,14 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
             if (mData!!.cash_bonus_amount != null && mData!!.cash_bonus_amount != "")
                 txtCashBonus.setText("\u20B9 " + mData!!.cash_bonus_amount)
 
-            if (mData!!.contest_finished != null) {
+            if (mData!!.contest_finished != null && mData!!.contest_finished!= "")
+                txtContest.setText("" + mData!!.contest_finished)
+
+            if (mData!!.paid_contest_count != null) {
                   try{
                       if (BuildConfig.APPLICATION_ID == "os.realbash") {
                           cimg_user.setImageResource(R.mipmap.cashbonus25)
-                          txtContest.setText("" + mData!!.contest_finished)
-                          var contest = mData!!.contest_finished.toLong() % 25
+                          var contest = mData!!.paid_contest_count.toLong() % 25
                           tvRemianContest.setText("" + (25 - contest))
                           try {
                               crs_Progress.setMinValue(0f)
@@ -535,8 +537,7 @@ private fun initData(data: ProfileResponse.ResponseBean.DataBean?) {
                           }
                       }else{
                           cimg_user.setImageResource(R.mipmap.cashbonus)
-                          txtContest.setText("" + mData!!.contest_finished)
-                          var contest = mData!!.contest_finished.toLong() % 20
+                          var contest = mData!!.paid_contest_count.toLong() % 20
                           tvRemianContest.setText("" + (20 - contest))
                           try {
                               crs_Progress.setMinValue(0f)

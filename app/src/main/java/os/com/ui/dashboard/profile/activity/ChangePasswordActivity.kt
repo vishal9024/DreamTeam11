@@ -32,7 +32,7 @@ class ChangePasswordActivity : BaseActivity(), View.OnClickListener {
                             ".*[0-9]+.*[A-Za-z]+.*".toRegex()
                         ))
                     )
-                        AppDelegate.showToast(this, getString(R.string.old_invalid_password))
+                        AppDelegate.showToast(this, getString(R.string.invalid_password_2))
 
                     //new password check
                     else if (TextUtils.isEmpty(et_NewPassword.text.toString()))
