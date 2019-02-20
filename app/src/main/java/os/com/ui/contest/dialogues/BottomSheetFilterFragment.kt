@@ -281,7 +281,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contest_confirmed.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.confirm_winning!! }
+            val filterContestList: List<Contest> = contestList.filter { it.confirm_winning!!.equals("yes",ignoreCase = true) }
             finalArrayList.addAll(filterContestList)
         }
 

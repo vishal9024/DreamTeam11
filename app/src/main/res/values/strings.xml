@@ -563,7 +563,7 @@
     </string>
     <string name="deposited_info_text">Money deposited by you can use to join any contests but can\'t withdraw</string>
     <string name="winning_info_text">Money that you can withdraw or re-use to join any contests</string>
-    <string name="bonus_info_text">Money that can you use to join any public contes</string>
+    <string name="bonus_info_text">Money that can you use to join any public contest</string>
     <string name="earned_info_text">Cash bonus will be added to your Account only once the winner has been declared for the matches your friends have joined cash contest in.</string>
     <string name="choose_winning_breakup">Choose Winning BreakUp</string>
     <string name="enterphone_or">Enter phone number or email.</string>
@@ -598,4 +598,7 @@
     <string name="check_out_the_full_points_system">Check out the full points system</string>
     <string name="join_contest2">Join Contest</string>
     <string name="no_dream_team_found">No dream team found.</string>
+
+    <string name="winning">Winning Amount</string>
+    <string name="view_leadership_board">View Leadership Board</string>
 </resources>

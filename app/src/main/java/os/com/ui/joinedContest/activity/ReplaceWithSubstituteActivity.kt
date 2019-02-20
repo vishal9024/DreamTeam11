@@ -44,7 +44,6 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         } else {
             replacedPlayerId = ""
             btn_replaceSubstitute.isEnabled = false
-
         }
         rv_players.adapter!!.notifyDataSetChanged()
     }
@@ -63,7 +62,6 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
                         callReplaceSubstituteApi()
                     } else
                         Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
                 }
             }
         }
@@ -81,7 +79,6 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
-
 //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE

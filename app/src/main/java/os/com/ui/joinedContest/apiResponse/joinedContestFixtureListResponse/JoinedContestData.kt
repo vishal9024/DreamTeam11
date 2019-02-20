@@ -16,13 +16,14 @@ class JoinedContestData() : Parcelable {
     var invite_code: String = ""
     var is_joined = false
     var multiple_team = false
-    var confirm_winning=false
+    var confirm_winning=""
     var my_team_ids: ArrayList<String>? = null
     var breakup_detail: ArrayList<PriceBreakUp>? = null
     var points_earned: String = ""
     var my_rank: String = ""
     var team_number: ArrayList<String>? = null
-
+    var is_winner = false
+    var winning_amount: String = ""
     constructor(parcel: Parcel) : this() {
         entry_fee = parcel.readString()
         prize_money = parcel.readString()
@@ -34,12 +35,14 @@ class JoinedContestData() : Parcelable {
         invite_code = parcel.readString()
         is_joined = parcel.readByte() != 0.toByte()
         multiple_team = parcel.readByte() != 0.toByte()
-        confirm_winning = parcel.readByte() != 0.toByte()
+        confirm_winning = parcel.readString()
         my_team_ids = parcel.createStringArrayList()
         breakup_detail = parcel.createTypedArrayList(PriceBreakUp)
         points_earned = parcel.readString()
         my_rank = parcel.readString()
         team_number = parcel.createStringArrayList()
+        is_winner = parcel.readByte() != 0.toByte()
+        winning_amount = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -53,12 +56,14 @@ class JoinedContestData() : Parcelable {
         parcel.writeString(invite_code)
         parcel.writeByte(if (is_joined) 1 else 0)
         parcel.writeByte(if (multiple_team) 1 else 0)
-        parcel.writeByte(if (confirm_winning) 1 else 0)
+        parcel.writeString(confirm_winning)
         parcel.writeStringList(my_team_ids)
         parcel.writeTypedList(breakup_detail)
         parcel.writeString(points_earned)
         parcel.writeString(my_rank)
         parcel.writeStringList(team_number)
+        parcel.writeByte(if (is_winner) 1 else 0)
+        parcel.writeString(winning_amount)
     }
 
     override fun describeContents(): Int {

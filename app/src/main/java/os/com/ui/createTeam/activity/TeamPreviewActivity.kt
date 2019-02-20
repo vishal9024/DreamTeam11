@@ -64,7 +64,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
         DreamTeam = intent.getBooleanExtra("DreamTeam", false)
         if (points)
             rl_bottom.visibility = VISIBLE
-       else if (DreamTeam)
+        else if (DreamTeam)
             rl_bottom.visibility = VISIBLE
         pts.setOnClickListener(this)
         if (isEdit == 1) {
@@ -527,7 +527,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                 }
             }
-         }
+    }
 
     private fun setDreamTeamPreview(
         playerList: Data,
@@ -1048,7 +1048,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
 
             if (points)
-                txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
+                txt_substitute_points.setText(substituteDetail!!.point + " " + getString(R.string.Pts))
             else
                 txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Cr))
 
@@ -1080,7 +1080,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     img_dreamTeam_wk.visibility = View.VISIBLE
                 if (points)
                     if (DreamTeam)
-                        txt_wk_points.setText(data.point + " " + getString(R.string.Pts))
+                        txt_wk_points.setText(data.points + " " + getString(R.string.Pts))
                     else
                         txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
                 else
@@ -1114,7 +1114,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         img_dreamTeam_bat1.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
-                            txt_bat1_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bat1_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1146,7 +1146,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         img_dreamTeam_bat2.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
-                            txt_bat2_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bat2_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1180,7 +1180,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bat3_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1213,7 +1213,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bat4_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1246,7 +1246,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bat5_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1280,7 +1280,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_ar1_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1312,7 +1312,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_ar2_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1344,7 +1344,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_ar3_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1379,7 +1379,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         img_dreamTeam_bowler1.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
-                            txt_bowler1_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bowler1_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1410,7 +1410,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bowler2_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1442,7 +1442,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bowler3_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1473,7 +1473,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bowler4_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
                     else
@@ -1504,7 +1504,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                     if (points)
                         if (DreamTeam)
-                            txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))
+                            txt_bowler5_points.setText(data.points + " " + getString(R.string.Pts))
                         else
                             txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
                     else

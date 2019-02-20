@@ -56,7 +56,7 @@ class LeaderShipTeamsAdapter(
 //            FantasyApplication.getInstance().options
 //        )
         holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name + "(T" + joined_team_list[holder.adapterPosition].team_no + ")")
-        if (!joined_team_list[holder.adapterPosition].rank.isEmpty())
+        if (!joined_team_list[holder.adapterPosition].rank.isEmpty() && joined_team_list[holder.adapterPosition].rank.toLong()>0)
             holder.itemView.txt_rank.setText("#" + joined_team_list[holder.adapterPosition].rank)
         else
             holder.itemView.txt_rank.setText("-")

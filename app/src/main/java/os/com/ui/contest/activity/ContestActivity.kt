@@ -130,7 +130,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
         if (os.com.application.FantasyApplication.getInstance().teamCount == 0) {
             ll_viewTeam.visibility = View.GONE
             btn_CreateTeam.visibility = VISIBLE
-            var count = os.com.application.FantasyApplication.getInstance().teamCount + 1
+            val count = os.com.application.FantasyApplication.getInstance().teamCount + 1
             btn_CreateTeam.text = getString(R.string.create_team) + " " + count
         } else {
             ll_viewTeam.visibility = View.VISIBLE
@@ -207,13 +207,15 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
                     when (newState) {
                     }
                 }
-
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
             filterBootomSheet()
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+        if (!pref!!.isLogin)
+            ll_ContestType.visibility=GONE
     }
 
     fun filterBootomSheet() {

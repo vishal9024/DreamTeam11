@@ -123,10 +123,18 @@ open class BaseActivity : AppCompatActivity() {
         this.menu = menu
         /* if child activity is product activity then visible filer menu icon*/
         menu.findItem(R.id.menu_filter).isVisible = filter
-        menu.findItem(R.id.menu_notification).isVisible = notif
-        menu.findItem(R.id.menu_wallet).isVisible = wallet
+//        menu.findItem(R.id.menu_notification).isVisible = notif
+//        menu.findItem(R.id.menu_wallet).isVisible = wallet
         menu.findItem(R.id.menu_edit).isVisible = edit
         menu.findItem(R.id.menu_guru).isVisible = guru
+
+        if (pref!!.isLogin) {
+            menu.findItem(R.id.menu_notification).isVisible = notif
+            menu.findItem(R.id.menu_wallet).isVisible = wallet
+        } else {
+            menu.findItem(R.id.menu_notification).isVisible = false
+            menu.findItem(R.id.menu_wallet).isVisible = false
+        }
 //        menu.findItem(R.id.menu_sort).isVisible = driveActivityName == ProductActivity().javaClass.name
 //        if (driveActivityName == ProductActivity().javaClass.name){
 //        }
