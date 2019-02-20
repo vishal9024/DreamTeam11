@@ -11,6 +11,7 @@ class PlayerRecord() : Parcelable {
     var credits :String?=null
     var point :String?=null
     var in_dream_team = false
+    var is_local_team = false
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
@@ -20,6 +21,7 @@ class PlayerRecord() : Parcelable {
         credits = parcel.readString()
         point = parcel.readString()
         in_dream_team = parcel.readByte() != 0.toByte()
+        is_local_team = parcel.readByte() != 0.toByte()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -30,6 +32,7 @@ class PlayerRecord() : Parcelable {
         parcel.writeString(credits)
         parcel.writeString(point)
         parcel.writeByte(if (in_dream_team) 1 else 0)
+        parcel.writeByte(if (is_local_team) 1 else 0)
     }
 
     override fun describeContents(): Int {

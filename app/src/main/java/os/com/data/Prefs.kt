@@ -61,7 +61,10 @@ class Prefs(internal var mContext: Context?) {
         mSharedPreferences!!.edit().putBoolean(editorkey, editorvalue).apply()
         AppDelegate.LogP("putBooleanValue => editorkey = $editorkey, editorvalue = $editorvalue")
     }
-
+    fun putBooleanValueinTemp(editorkey: String, editorvalue: Boolean) {
+        mSharedPreferencesTemp.edit().putBoolean(editorkey, editorvalue).apply()
+        AppDelegate.LogP("putBooleanValue => editorkey = $editorkey, editorvalue = $editorvalue")
+    }
     /**
      * This method is used to get String value from SharedPreferences
      *
@@ -98,6 +101,11 @@ class Prefs(internal var mContext: Context?) {
         return PrefValue
     }
 
+    fun getBooleanValuefromTemp(editorkey: String, defValue: Boolean): Boolean {
+        val PrefValue = mSharedPreferencesTemp!!.getBoolean(editorkey, defValue)
+        AppDelegate.LogP("getBooleanValue => editorkey = $editorkey, editorvalue = $PrefValue")
+        return PrefValue
+    }
 
     fun putAuthKey(str_AuthKey: String) {
         mSharedPreferences!!.edit().putString(Tags.auth_key, str_AuthKey).apply()

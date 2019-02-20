@@ -5,23 +5,29 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_contest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_contest.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
+import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
@@ -38,7 +44,7 @@ import os.com.utils.networkUtils.NetworkUtils
 import java.util.*
 
 
-class ContestActivity : BaseActivity(), View.OnClickListener {
+class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventListener {
     override fun onClick(view: View?) {
         try {
             when (view!!.id) {
@@ -144,7 +150,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
     }
 
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     private fun initViews() {
@@ -157,7 +163,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             toolbarTitleTv.setText(R.string.contest)
 
-            setMenu(false, true, true, false,false)
+            setMenu(false, true, true, false, false)
             setAdapter()
             var localTeamName = match!!.local_team_name
             var visitorTeamName = match!!.visitor_team_name
@@ -171,7 +177,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
@@ -302,13 +308,92 @@ class ContestActivity : BaseActivity(), View.OnClickListener {
                         contests!!.addAll(contest.contests!!)
                         txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
                     }
-
+                    if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, false)) {
+                        pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, true)
+                        callIntroductionScreen(
+                            R.id.ll_totalWinnings,
+                            getString(R.string.winnings),
+                            "Total amount to be won",
+                            ShowcaseView.BELOW_SHOWCASE
+                        )
+                    }
                 } else {
                     logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestActivity)
             }
+        }
+    }
+
+    var counterValue = 0
+    override fun onShowcaseViewShow(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewHide(showcaseView: ShowcaseView?) {
+        when (counterValue) {
+            1 -> callIntroductionScreen(
+                R.id.ll_totalWinners,
+                "No. of Winners",
+                "Tap here to see the winning breakup", ShowcaseView.BELOW_SHOWCASE
+            )
+            2 -> callIntroductionScreen(
+                R.id.ll_entryFee,
+                getString(R.string.entry),
+                "Amount to pay to join this contest"
+                ,
+                ShowcaseView.BELOW_SHOWCASE
+            )
+            3 -> {
+                callIntroductionScreen(
+                    R.id.txt_EndValue,
+                    "Contest Limit",
+                    "Max no. of teams that can join this contest"
+                    ,
+                    ShowcaseView.BELOW_SHOWCASE
+                )
+
+            }
+//            4 -> callIntroductionScreen(
+//                R.id.ll_players,
+//                "Player Counter",
+//                "Pick 11 players to create your team"
+//                ,
+//                ShowcaseView.ABOVE_SHOWCASE
+//            )
+        }
+    }
+
+    override fun onShowcaseViewDidHide(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewTouchBlocked(motionEvent: MotionEvent?) {
+    }
+
+    var scv: ShowcaseView.Builder? = null
+    var buil: ShowcaseView? = null
+    fun callIntroductionScreen(
+        target: Int,
+        title: String,
+        description: String,
+        abovE_SHOWCASE: Int
+    ) {
+        GlobalScope.launch(Dispatchers.Main) {
+            scv = ShowcaseView.Builder(this@ContestActivity)
+                .withMaterialShowcase()
+//                .setTarget(ViewTarget(target, this@ContestActivity))
+                .setContentTitle(title)
+                .setContentText(description)
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setShowcaseEventListener(this@ContestActivity)
+            counterValue = counterValue + 1
+            buil = scv!!.build()
+            buil!!.hideButton()
+            buil!!.setShowcase(ViewTarget(target, this@ContestActivity), true)
+//            buil!!.setFadeDurations(0,0)
+            buil!!.forceTextPosition(abovE_SHOWCASE)
+            delay(5000)
+            buil!!.hide()
         }
     }
 

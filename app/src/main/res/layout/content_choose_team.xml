@@ -435,7 +435,7 @@
                 android:layout_width="@dimen/_1sdp" android:layout_height="@dimen/_23sdp"/>
         <LinearLayout
                 android:paddingStart="@dimen/_5sdp"
-                android:id="@+id/ll_Credits"
+                android:id="@+id/ll_Credit"
                 android:layout_toEndOf="@+id/view2"
                 android:layout_width="wrap_content"
                 android:orientation="vertical" android:layout_height="wrap_content">

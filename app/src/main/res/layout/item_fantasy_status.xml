@@ -13,9 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_weight="1"
                 android:orientation="vertical" android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatTextView
+
                     android:id="@+id/txtMatchName"
                     style="@style/TextStyleSemiBold"
                     android:gravity="center_vertical"
@@ -45,7 +47,7 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:textColor="@color/textColorGray"
                 android:text="0"
                 android:layout_height="match_parent"/>
@@ -53,9 +55,8 @@
                 android:id="@+id/txtSelectedBy"
                 style="@style/TextStyleMedium"
                 android:gravity="center"
-                android:paddingStart="@dimen/_10sdp"
-                android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
+                android:layout_weight="0.5"
                 android:layout_width="wrap_content"
                 android:textColor="@color/colorSecondary"
                 android:text="0%"

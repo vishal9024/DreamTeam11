@@ -74,6 +74,12 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)
                 if (response.response!!.status) {
+//                    AppDelegate.showToast(this@CompletedJoinedContestActivity, response.response!!.message!!)
+                    if (response.response!!.data!=null){
+
+                    }else{
+                        AppDelegate.showToast(this@CompletedJoinedContestActivity,getString(R.string.no_dream_team_found))
+                    }
                     startActivity(
                         Intent(this@CompletedJoinedContestActivity, TeamPreviewActivity::class.java).putExtra(
                             "show",
@@ -88,9 +94,8 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                             .putExtra("DreamTeam", true)
                     )
                 } else {
-
                     logoutIfDeactivate(response.response!!.message!!)
-                    AppDelegate.showToast(this@CompletedJoinedContestActivity,response.response!!.message!!)
+                    AppDelegate.showToast(this@CompletedJoinedContestActivity, response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CompletedJoinedContestActivity)

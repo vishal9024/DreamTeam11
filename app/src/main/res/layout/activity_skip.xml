@@ -8,7 +8,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -66,6 +65,7 @@
                         android:paddingRight="@dimen/_5sdp"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Date"
                         style="@style/TextStyleNormal"
                         android:gravity="center"
                         android:textSize="@dimen/_12sdp"
@@ -95,7 +95,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp">
+                    android:padding="@dimen/_10sdp">
                 <LinearLayout
                         android:id="@+id/ll_runPoints"
                         card_view:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
                             android:textSize="@dimen/_18sdp"
                             android:layout_width="wrap_content"
                             android:textColor="@color/textColorGray"
-                            android:text="1 Run ="
+                            android:text="1 Catch ="
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
 
@@ -155,7 +155,7 @@
                             android:textSize="@dimen/_18sdp"
                             android:layout_width="wrap_content"
                             android:textColor="@color/colorRed"
-                            android:text="0.5 Points"
+                            android:text="4 Points"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
@@ -175,7 +175,7 @@
                             android:textSize="@dimen/_18sdp"
                             android:layout_width="wrap_content"
                             android:textColor="@color/textColorGray"
-                            android:text="1 Run ="
+                            android:text="1 Wicket ="
                             android:layout_height="wrap_content"/>
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/txtWicketPoints"
@@ -186,10 +186,9 @@
                             android:textSize="@dimen/_18sdp"
                             android:layout_width="wrap_content"
                             android:textColor="@color/colorRed"
-                            android:text="0.5 Points"
+                            android:text="12 Points"
                             android:layout_height="wrap_content"/>
                 </LinearLayout>
-
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -212,6 +211,7 @@
         </androidx.cardview.widget.CardView>
         <View
                 android:id="@+id/view1"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/llBottom"
@@ -223,13 +223,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:id="@+id/llBottom"
-                android:background="@color/whiteTab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatButton
 
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:id="@+id/btn_Register"
+                    android:id="@+id/btn_Join"
 
                     style="@style/ButtonStyle"
                     android:text="@string/join_contest2"

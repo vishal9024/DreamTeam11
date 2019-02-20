@@ -486,6 +486,12 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
+//                    AppDelegate.showToast(this@LeaderShipBoardActivity, response.response!!.message!!)
+                    if (response.response!!.data!=null){
+
+                    }else{
+                        AppDelegate.showToast(this@LeaderShipBoardActivity,getString(R.string.no_dream_team_found))
+                    }
                     startActivity(
                         Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
                             "show",

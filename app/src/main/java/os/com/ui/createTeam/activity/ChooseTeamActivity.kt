@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.MotionEvent
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -14,11 +15,15 @@ import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_team.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.BuildConfig
@@ -28,6 +33,7 @@ import os.com.constant.AppRequestCodes
 import os.com.constant.AppRequestCodes.CREATE_CONTEST
 import os.com.constant.AppRequestCodes.UPDATE_ACTIVITY
 import os.com.constant.IntentConstant
+import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.interfaces.SelectPlayerInterface
 import os.com.networkCall.ApiClient
@@ -44,7 +50,8 @@ import kotlin.collections.ArrayList
 import kotlin.collections.set
 
 
-class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
+class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface, OnShowcaseEventListener {
+
     var exeedCredit = false
 
     companion object {
@@ -573,6 +580,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
+
         img_wk.setOnClickListener(this)
         img_ar.setOnClickListener(this)
         img_bat.setOnClickListener(this)
@@ -583,6 +591,76 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
             txt_substitute.visibility = VISIBLE
             txt_substitute.isEnabled = false
             txt_PickPlayer.gravity = Gravity.START
+        }
+
+    }
+
+    var counterValue = 0
+    override fun onShowcaseViewShow(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewHide(showcaseView: ShowcaseView?) {
+        when (counterValue) {
+            1 -> callIntroductionScreen(
+                R.id.ll_Credit,
+                "Credit Counter",
+                "Use 100 credits to pick your players", ShowcaseView.ABOVE_SHOWCASE
+            )
+            2 -> callIntroductionScreen(
+                R.id.ll_players,
+                "Player Counter",
+                "Pick 11 players to create your team"
+                ,
+                ShowcaseView.ABOVE_SHOWCASE
+            )
+            3 -> callIntroductionScreen(
+                R.id.ll_Credits,
+                "Player's Credits",
+                "Cost of adding a player to your team"
+                ,
+                ShowcaseView.BELOW_SHOWCASE
+            )
+//            4 -> callIntroductionScreen(
+//                R.id.ll_players,
+//                "Player Counter",
+//                "Pick 11 players to create your team"
+//                ,
+//                ShowcaseView.ABOVE_SHOWCASE
+//            )
+        }
+
+    }
+
+    override fun onShowcaseViewDidHide(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewTouchBlocked(motionEvent: MotionEvent?) {
+    }
+
+    fun callIntroductionScreen(
+        target: Int,
+        title: String,
+        description: String,
+        abovE_SHOWCASE: Int
+    ) {
+        GlobalScope.launch(Dispatchers.Main) {
+            var scv = ShowcaseView.Builder(this@ChooseTeamActivity)
+                .withMaterialShowcase()
+                .setTarget(ViewTarget(target, this@ChooseTeamActivity))
+                .setContentTitle(title)
+                .setContentText(description)
+                .setStyle(R.style.CustomShowcaseTheme)
+                .setShowcaseEventListener(this@ChooseTeamActivity)
+
+            counterValue = counterValue + 1
+            var buil = scv.build()
+            buil.hideButton()
+//            buil.animation = null
+            buil.forceTextPosition(abovE_SHOWCASE)
+
+            delay(5000)
+            buil.hide()
+
         }
     }
 
@@ -692,6 +770,16 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT)
                         updateData()
                     else playerTypeSelector(WK, wkList)
+
+                    if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CREATETEAM_INSTRUCTION, false)) {
+                        pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CREATETEAM_INSTRUCTION, true)
+                        callIntroductionScreen(
+                            R.id.img_bowler,
+                            "Player Category",
+                            "Select a balanced team to help you win",
+                            ShowcaseView.BELOW_SHOWCASE
+                        )
+                    }
                 } else {
                     logoutIfDeactivate(response.response!!.message)
                 }

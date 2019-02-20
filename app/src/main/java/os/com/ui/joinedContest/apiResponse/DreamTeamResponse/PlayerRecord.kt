@@ -8,8 +8,9 @@ class PlayerRecord() : Parcelable {
     var player_id:String?=StringUtils.toNull("")
     var image :String?=StringUtils.toNull("")
     var role :String?=StringUtils.toNull("")
-    var credits :String?=StringUtils.toNull("")
+    var credit :String?=StringUtils.toNull("")
     var point :String?=StringUtils.toNull("")
+    var is_local_team = false
     var in_dream_team = false
 
     constructor(parcel: Parcel) : this() {
@@ -17,8 +18,9 @@ class PlayerRecord() : Parcelable {
         player_id = parcel.readString()
         image = parcel.readString()
         role = parcel.readString()
-        credits = parcel.readString()
+        credit = parcel.readString()
         point = parcel.readString()
+        is_local_team = parcel.readByte() != 0.toByte()
         in_dream_team = parcel.readByte() != 0.toByte()
     }
 
@@ -27,8 +29,9 @@ class PlayerRecord() : Parcelable {
         parcel.writeString((if (player_id == null) "" else player_id))
         parcel.writeString((if (image == null) "" else image))
         parcel.writeString((if (role == null) "" else role))
-        parcel.writeString((if (credits == null) "" else credits))
+        parcel.writeString((if (credit == null) "" else credit))
         parcel.writeString((if (point == null) "" else point))
+        parcel.writeByte(if (is_local_team) 1 else 0)
         parcel.writeByte(if (in_dream_team) 1 else 0)
     }
 

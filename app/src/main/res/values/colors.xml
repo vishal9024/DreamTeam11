@@ -4,6 +4,7 @@
     <color name="black">#000000</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorTransparentGray">#11FFFFFF</color>
+    <color name="colorTransparentDarkBlack">#c8000000</color>
     <color name="colorTransparentBlack">#33000000</color>
     <color name="createTeamColor">#343434</color>
     <color name="GrayColorMain">#f4f4f4</color>
@@ -25,5 +26,6 @@
     <color name="simpletooltip_background">@color/colorASPrimary</color>
     <color name="simpletooltip_text">@color/whiteTab</color>
     <color name="simpletooltip_arrow">@color/colorASPrimary</color>
-
+<color name="showcasebackgroundColor">#aa232323</color>
+    <color name="showcasebackgroundCircleColor">#D4D4D4</color>
 </resources>

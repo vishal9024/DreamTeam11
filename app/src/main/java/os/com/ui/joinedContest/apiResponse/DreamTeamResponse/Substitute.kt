@@ -10,6 +10,8 @@ class Substitute() : Parcelable {
     var image: String = ""
     var role: String = ""
     var credits: String = ""
+    var is_local_team = false
+    var in_dream_team = false
 
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
@@ -18,6 +20,8 @@ class Substitute() : Parcelable {
         image = parcel.readString()
         role = parcel.readString()
         credits = parcel.readString()
+        is_local_team = parcel.readByte() != 0.toByte()
+        in_dream_team = parcel.readByte() != 0.toByte()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -27,6 +31,8 @@ class Substitute() : Parcelable {
         parcel.writeString(image)
         parcel.writeString(role)
         parcel.writeString(credits)
+        parcel.writeByte(if (is_local_team) 1 else 0)
+        parcel.writeByte(if (in_dream_team) 1 else 0)
     }
 
     override fun describeContents(): Int {

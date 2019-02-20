@@ -36,7 +36,6 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
         when (view!!.id) {
             R.id.toolbarClearAll -> {
                 showDeleteDialog(getString(R.string.delete_notificaions), 0, true)
-
             }
         }
     }
@@ -49,7 +48,10 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
             else
                 loginRequest[Tags.user_id] = ""
             loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-            loginRequest[Tags.notification_id] = id
+            if (clearAll)
+                loginRequest[Tags.notification_id] = ""
+            else
+                loginRequest[Tags.notification_id] = id
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(this@NotificationActivity)
                 val request = ApiClient.client

@@ -29,7 +29,6 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
         holder.itemView.rl_clone.setOnClickListener {
             onClickRecyclerView.onClickItem(Tags.clone,holder.adapterPosition)
 //            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]))
-
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.rl_preview.setOnClickListener {
@@ -54,8 +53,6 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
         holder.itemView.txt_bat.text = data[holder.adapterPosition].total_batsman
         holder.itemView.txt_all.text = data[holder.adapterPosition].total_allrounder
         holder.itemView.txt_bowl.text = data[holder.adapterPosition].total_bowler
-
-
     }
 
     override fun getItemCount(): Int {

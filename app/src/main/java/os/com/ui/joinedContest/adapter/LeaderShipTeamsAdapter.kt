@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_completed_leadershipteams.view.*
@@ -41,7 +42,12 @@ class LeaderShipTeamsAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
         holder.itemView.cimg_player.setOnClickListener {
-            mContext.startActivity(Intent(mContext, OtherUserProfileActivity::class.java).putExtra("data", "" + joined_team_list[position].user_id))
+            mContext.startActivity(
+                Intent(mContext, OtherUserProfileActivity::class.java).putExtra(
+                    "data",
+                    "" + joined_team_list[position].user_id
+                )
+            )
 
         }
 //        ImageLoader.getInstance().displayImage(
@@ -55,10 +61,12 @@ class LeaderShipTeamsAdapter(
         else
             holder.itemView.txt_rank.setText("-")
 
-        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty())
+        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty()) {
             holder.itemView.txt_prizeMoney.setText(mContext.getString(R.string.Rs) + " " + joined_team_list[holder.adapterPosition].winning_amount)
+            holder.itemView.txt_prizeMoney.visibility=View.VISIBLE
+        }
         else
-            holder.itemView.txt_prizeMoney.setText(mContext.getString(R.string.Rs) + " 0")
+            holder.itemView.txt_prizeMoney.visibility=GONE
 
         holder.itemView.txt_Points.setText(joined_team_list[holder.adapterPosition].point + mContext.getString(R.string.points))
         holder.itemView.ll_main.setOnClickListener {
@@ -75,7 +83,11 @@ class LeaderShipTeamsAdapter(
                 }
             } else
                 holder.itemView.img_rank.visibility = View.GONE
-        } else holder.itemView.img_rank.visibility = View.GONE
+            holder.itemView.txt_prizeMoney.visibility = View.GONE
+        } else {
+            holder.itemView.img_rank.visibility = View.GONE
+            holder.itemView.txt_prizeMoney.visibility = View.VISIBLE
+        }
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
@@ -84,7 +96,7 @@ class LeaderShipTeamsAdapter(
             if (matchType == LIVE && match_status == "NOT STARTED") {
                 if (joined_team_list[holder.adapterPosition].substitute_status.equals("0")) {
                     holder.itemView.ll_substitute.visibility = View.VISIBLE
-                    holder.itemView. ll_Ranking.visibility = View.GONE
+                    holder.itemView.ll_Ranking.visibility = View.GONE
                     holder.itemView.replace_with_substitute.setOnClickListener {
                         onClickRecyclerView.onClickItem("substitute", position)
                     }
@@ -95,7 +107,7 @@ class LeaderShipTeamsAdapter(
 
 
     override fun getItemCount(): Int {
-        return joined_team_list.size;
+        return joined_team_list.size
     }
 
     inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

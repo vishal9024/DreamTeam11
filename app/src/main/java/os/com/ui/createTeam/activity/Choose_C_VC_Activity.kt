@@ -5,13 +5,18 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.amlcurran.showcaseview.OnShowcaseEventListener
+import com.github.amlcurran.showcaseview.ShowcaseView
+import com.github.amlcurran.showcaseview.targets.ViewTarget
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_c_vc.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.BuildConfig
@@ -19,6 +24,7 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
+import os.com.constant.PrefConstant
 import os.com.interfaces.OnClickCVC
 import os.com.interfaces.OnClickDialogue
 import os.com.networkCall.ApiClient
@@ -29,11 +35,10 @@ import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
-import os.com.utils.CountTimer
 import os.com.utils.networkUtils.NetworkUtils
 
 
-class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
+class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, OnShowcaseEventListener {
     companion object {
         var choose_C_VC_Activity: Choose_C_VC_Activity? = null
     }
@@ -151,15 +156,15 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             countTimer!!.stopUpdateTimer()
     }
 
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var matchType = IntentConstant.FIXTURE
     var team_id = ""
     var contest_id = ""
     var from = 0
     var createOrJoin = AppRequestCodes.CREATE
     var substitute_id = ""
-    var localTeamName =""
-    var visitorTeamName=""
+    var localTeamName = ""
+    var visitorTeamName = ""
     fun getData() {
 //      contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
         createOrJoin = intent.getIntExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.CREATE)
@@ -168,8 +173,8 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         selectPlayer = intent.getParcelableExtra(IntentConstant.SELECT_PLAYER)
         match = intent.getParcelableExtra(IntentConstant.MATCH)
         matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
-         localTeamName = match!!.local_team_name
-         visitorTeamName = match!!.visitor_team_name
+        localTeamName = match!!.local_team_name
+        visitorTeamName = match!!.visitor_team_name
         if (match!!.local_team_name.length > 5)
             localTeamName = match!!.local_team_name.substring(0, 4)
         if (match!!.visitor_team_name.length > 5)
@@ -188,7 +193,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             if (!match!!.star_date.isEmpty()) {
                 val strt_date = match!!.star_date.split("T")
                 val dateTime = strt_date.get(0) + " " + match!!.star_time
-                countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
             }
         } else if (matchType == IntentConstant.COMPLETED) {
             txt_CountDownTimer.setText(getString(R.string.completed))
@@ -302,6 +307,58 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
         playerListCVC.distinct()
 
         setAdapter()
+
+
+    }
+
+    var counterValue = 0
+    override fun onShowcaseViewShow(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewHide(showcaseView: ShowcaseView?) {
+        when (counterValue) {
+            1 -> callIntroductionScreen(
+                R.id.img_vc,
+                "Choose a Vice Captain",
+                "Your Vice Captain scores you 1.5x points", ShowcaseView.BELOW_SHOWCASE
+            )
+        }
+
+    }
+
+    override fun onShowcaseViewDidHide(showcaseView: ShowcaseView?) {
+    }
+
+    override fun onShowcaseViewTouchBlocked(motionEvent: MotionEvent?) {
+    }
+
+    fun callIntroductionScreen(
+        target: Int,
+        title: String,
+        description: String,
+        abovE_SHOWCASE: Int
+    ) {
+        try {
+            GlobalScope.launch(Dispatchers.Main) {
+                var scv = ShowcaseView.Builder(this@Choose_C_VC_Activity)
+                    .withMaterialShowcase()
+                    .setTarget(ViewTarget(target, this@Choose_C_VC_Activity))
+                    .setContentTitle(title)
+                    .setContentText(description)
+                    .setStyle(R.style.CustomShowcaseTheme)
+                    .setShowcaseEventListener(this@Choose_C_VC_Activity)
+
+                counterValue = counterValue + 1
+                var buil = scv.build()
+                buil.hideButton()
+                buil.forceTextPosition(abovE_SHOWCASE)
+                delay(5000)
+                buil.hide()
+
+            }
+        } catch (e: Exception) {
+            AppDelegate.LogE(e.printStackTrace().toString())
+        }
     }
 
     private var WK = 1
@@ -326,6 +383,18 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC {
             match!!.visitor_team_id
         )
         rv_Players!!.adapter = adapter
+        GlobalScope.launch {
+            delay(1000)
+            if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CREATECVC_INSTRUCTION, false)) {
+                pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CREATECVC_INSTRUCTION, true)
+                callIntroductionScreen(
+                    R.id.img_captain,
+                    "Choose a Captain",
+                    "Your Captain scores you 2x points",
+                    ShowcaseView.BELOW_SHOWCASE
+                )
+            }
+        }
     }
 
     private fun callCreateTeamApi(player_id: ArrayList<String>) {

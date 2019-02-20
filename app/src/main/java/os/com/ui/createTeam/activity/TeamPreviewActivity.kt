@@ -144,8 +144,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         cimg_wk1,
                         FantasyApplication.getInstance().options
                     )
-
                     txt_wk1.setText(getName(getName(data.player_record!!.player_name)))
+
+                    if (match!!.local_team_id.equals(data.team_id))
+                        txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                     if (points)
                         txt_wk_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                     else
@@ -170,6 +174,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bat1.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bat1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -191,6 +199,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bat2.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bat2_points.text = data.player_record!!.player_credit + " " + getString(R.string.Pts)
                         else
@@ -212,6 +224,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bat3.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bat3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -233,6 +249,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bat4.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bat4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -255,6 +275,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bat5.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bat5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -282,6 +306,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_ar1.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_ar1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -304,6 +332,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_ar2.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_ar2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -326,6 +358,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_ar3.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_ar3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -353,6 +389,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bowler1.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bowler1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bowler1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bowler1_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -375,6 +415,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bowler2.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bowler2_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -397,6 +441,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bowler3.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bowler3_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -419,7 +467,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bowler4.setText(getName(data.player_record!!.player_name))
-
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bowler4_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -442,6 +493,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                             FantasyApplication.getInstance().options
                         )
                         txt_bowler5.setText(getName(data.player_record!!.player_name))
+                        if (match!!.local_team_id.equals(data.team_id))
+                            txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                        else
+                            txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                         if (points)
                             txt_bowler5_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                         else
@@ -460,6 +515,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_substitute.setText(getName(data.player_record!!.player_name))
+                    if (match!!.local_team_id.equals(data.team_id))
+                        txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         txt_substitute_points.setText(data.player_record!!.player_credit + " " + getString(R.string.Pts))
                     else
@@ -467,7 +527,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
 
                 }
             }
-    }
+         }
 
     private fun setDreamTeamPreview(
         playerList: Data,
@@ -484,6 +544,10 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             )
             if (!substituteDetail!!.name!!.isNullOrEmpty())
                 txt_substitute.setText(getName(substituteDetail!!.name))
+            if (substituteDetail!!.is_local_team)
+                txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+            else
+                txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch)
             if (points)
                 txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
             else
@@ -508,15 +572,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 )
                 if (!data.name!!.isNullOrEmpty())
                     txt_wk1.setText(getName(data.name!!))
+                if (data.is_local_team)
+                    txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                else
+                    txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
                 if (data.in_dream_team)
                     img_dreamTeam_wk.visibility = View.VISIBLE
                 if (points)
                     if (DreamTeam)
                         txt_wk_points.setText(data.point + " " + getString(R.string.Pts))
                     else
-                        txt_wk_points.setText(data.credits + " " + getString(R.string.Pts))
+                        txt_wk_points.setText(data.credit + " " + getString(R.string.Pts))
                 else
-                    txt_wk_points.setText(data.credits + " " + getString(R.string.Cr))
+                    txt_wk_points.setText(data.credit + " " + getString(R.string.Cr))
 
             } else if (data.role!!.contains("Batsman", true)) {
                 if (rl_bat1.visibility == View.GONE) {
@@ -537,15 +605,21 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bat1.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (data.in_dream_team)
                         img_dreamTeam_bat1.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
                             txt_bat1_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bat1_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bat1_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bat1_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bat1_points.setText(data.credit + " " + getString(R.string.Cr))
 
                 } else if (rl_bat2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
@@ -565,15 +639,21 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bat2.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (data.in_dream_team)
                         img_dreamTeam_bat2.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
                             txt_bat2_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bat2_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bat2_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bat2_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bat2_points.setText(data.credit + " " + getString(R.string.Cr))
 
                 } else if (rl_bat3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
@@ -595,13 +675,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bat3.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bat3_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bat3_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bat3_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bat3_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bat4.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bat4_cvc.setText("C")
@@ -622,13 +707,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bat4.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bat4_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bat4_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bat4_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bat4_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bat5.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bat5_cvc.setText("C")
@@ -649,13 +740,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bat5.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bat5_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bat5_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bat5_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bat5_points.setText(data.credit + " " + getString(R.string.Cr))
                 }
             } else if (data.role!!.contains("Allrounder", true)) {
                 if (rl_ar1.visibility == View.GONE) {
@@ -678,13 +774,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_ar1.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_ar1_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_ar1_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_ar1_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_ar1_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_ar2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_ar2_cvc.setText("C")
@@ -705,13 +806,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_ar2.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_ar2_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_ar2_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_ar2_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_ar2_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_ar3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_ar3_cvc.setText("C")
@@ -732,13 +838,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_ar3.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_ar3_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_ar3_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_ar3_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_ar3_points.setText(data.credit + " " + getString(R.string.Cr))
                 }
 
             } else if (data.role!!.contains("Bowler", true)) {
@@ -760,15 +872,22 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bowler1.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bowler1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (data.in_dream_team)
                         img_dreamTeam_bowler1.visibility = View.VISIBLE
                     if (points)
                         if (DreamTeam)
                             txt_bowler1_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bowler1_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bowler1_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bowler1_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bowler1_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bowler2.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler2_cvc.setText("C")
@@ -789,13 +908,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bowler2.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bowler2_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bowler2_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bowler2_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bowler2_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bowler3.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler3_cvc.setText("C")
@@ -816,13 +941,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bowler3.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bowler3_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bowler3_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bowler3_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bowler3_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bowler4.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler4_cvc.setText("C")
@@ -843,13 +973,18 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bowler4.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bowler4_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bowler4_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bowler4_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bowler4_points.setText(data.credit + " " + getString(R.string.Cr))
                 } else if (rl_bowler5.visibility == View.GONE) {
                     if (data.player_id.equals(playerList.captain_player_id)) {
                         txt_bowler5_cvc.setText("C")
@@ -870,13 +1005,19 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     )
                     if (!data.name!!.isNullOrEmpty())
                         txt_bowler5.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))
                         else
-                            txt_bowler5_points.setText(data.credits + " " + getString(R.string.Pts))
+                            txt_bowler5_points.setText(data.credit + " " + getString(R.string.Pts))
                     else
-                        txt_bowler5_points.setText(data.credits + " " + getString(R.string.Cr))
+                        txt_bowler5_points.setText(data.credit + " " + getString(R.string.Cr))
                 }
 
             }
@@ -899,6 +1040,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                 FantasyApplication.getInstance().options
             )
             txt_substitute.setText(getName(substituteDetail!!.name))
+
+            if (substituteDetail!!.is_local_team)
+                txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+            else
+                txt_substitute.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
             if (points)
                 txt_substitute_points.setText(substituteDetail!!.credits + " " + getString(R.string.Pts))
             else
@@ -922,6 +1070,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                     FantasyApplication.getInstance().options
                 )
                 txt_wk1.setText(getName(data.name!!))
+                if (data.is_local_team)
+                    txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                else
+                    txt_wk1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                 if (data.in_dream_team)
                     img_dreamTeam_wk.visibility = View.VISIBLE
                 if (points)
@@ -950,6 +1104,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bat1.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (data.in_dream_team)
                         img_dreamTeam_bat1.visibility = View.VISIBLE
                     if (points)
@@ -977,6 +1137,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bat2.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (data.in_dream_team)
                         img_dreamTeam_bat2.visibility = View.VISIBLE
                     if (points)
@@ -1006,6 +1171,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bat3.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bat3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1032,6 +1204,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bat4.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bat4_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1058,6 +1237,13 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bat5.setText(getName(data.name!!))
+
+                    if (data.is_local_team)
+                        txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bat5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bat5_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1086,6 +1272,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_ar1.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_ar1_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1112,6 +1304,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_ar2.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_ar2_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1138,6 +1336,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_ar3.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_ar3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1165,6 +1369,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bowler1.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_ar1.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (data.in_dream_team)
                         img_dreamTeam_bowler1.visibility = View.VISIBLE
                     if (points)
@@ -1193,6 +1403,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bowler2.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler2.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler2_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1219,6 +1434,12 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bowler3.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler3.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler3_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1245,6 +1466,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bowler4.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler4.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler4_points.setText(data.point + " " + getString(R.string.Pts))
@@ -1271,6 +1497,11 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
                         FantasyApplication.getInstance().options
                     )
                     txt_bowler5.setText(getName(data.name!!))
+                    if (data.is_local_team)
+                        txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch_local)
+                    else
+                        txt_bowler5.setBackgroundResource(R.drawable.button_rounded_background_pitch)
+
                     if (points)
                         if (DreamTeam)
                             txt_bowler5_points.setText(data.point + " " + getString(R.string.Pts))

@@ -15,7 +15,7 @@ class Data() : Parcelable {
     var total_allrounder: String = ""
     var total_point=""
     var player_details: ArrayList<PlayerRecord>? = null
-   var substitute_detail: Substitute?=null
+    var substitute_detail: Substitute?=null
 
     constructor(parcel: Parcel) : this() {
         isSelected = parcel.readByte() != 0.toByte()

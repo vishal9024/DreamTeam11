@@ -404,7 +404,7 @@
     <string name="mobile_hint_label">You will receive an OTP for verification</string>
     <string name="email_hint_label">No spam. We promise!</string>
     <string name="password_hint_label">Minimum 6 characters with 1 number/symbol</string>
-    <string name="joined_contest">Join Contest</string>
+    <string name="join_contest">Join Contest</string>
     <string name="prectice_contest">Practice Contest</string>
     <string name="winner_takes_all_the_glory">Winner takes all the glory</string>
     <string name="term_and_condition">
@@ -576,12 +576,14 @@
     <string name="reset_password">Reset Password</string>
     <string name="resend_email">Resend Email</string>
     <string name="don_t_receive_reset_link">Don\'t receive reset link?</string>
-    <string name="notification_not_fount">Notification Not Found</string>
-    <string name="joinContestInfo">Usable Cash bonu:\n 10% of Total Entry Fee* per match\n (whichever is higher)\n\n * Not valid for private contests. </string>
+    <string name="notification_not_fount">No notification found</string>
+    <string name="joinContestInfo">Usable Cash bonus:\n 10% of Total Entry Fee* per match\n (whichever is higher)\n\n *
+        Not valid for private contests.
+    </string>
     <string name="reset_password_info">A link to reset your password has been sent to</string>
     <string name="add_amount_validation">Please add amount</string>
-    <string name="ranking_not_fount">Rank Not Found</string>
-    <string name="trans_not_fount">Transaction Not Found</string>
+    <string name="ranking_not_fount">No rank found</string>
+    <string name="trans_not_fount">No transaction found</string>
     <string name="upcoming_match">Upcoming Matches</string>
     <string name="invalid_password_2">Invalid Password.</string>
 
@@ -595,4 +597,5 @@
     <string name="your_team_is_ready_to_join_contests">Your team is ready to join contests</string>
     <string name="check_out_the_full_points_system">Check out the full points system</string>
     <string name="join_contest2">Join Contest</string>
+    <string name="no_dream_team_found">No dream team found.</string>
 </resources>

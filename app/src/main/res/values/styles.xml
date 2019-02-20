@@ -59,7 +59,23 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
-
     <style name="simpletooltip_default" parent="@android:style/TextAppearance.Small"></style>
-
+    <style name="TextStyleShowcaseTitle" parent="Theme.AppCompat.Light">
+        <item name="android:fontFamily">@font/faktpro_semibold</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="TextStyleShowcaseDescription" parent="Theme.AppCompat.Light">
+        <item name="android:fontFamily">@font/faktpro_medium</item>
+        <item name="android:textSize">@dimen/_10sdp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">@color/colorTransparentDarkBlack</item>
+        <item name="sv_showcaseColor">@color/showcasebackgroundCircleColor</item>
+        <item name="sv_buttonText">Hide</item>
+        <item name="sv_tintButtonColor">false</item>
+        <item name="sv_titleTextAppearance">@style/TextStyleShowcaseTitle</item>
+        <item name="sv_detailTextAppearance">@style/TextStyleShowcaseDescription</item>
+    </style>
 </resources>
