@@ -51,5 +51,6 @@ object AppRequestCodes {
     const val CREATE_CONTEST = 21
     const val ADD_CASH_CONTEST =22
     const val SIGNUP =23
+    const val REFRESH_WALLET=24
 
 }

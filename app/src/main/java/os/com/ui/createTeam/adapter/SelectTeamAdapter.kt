@@ -14,11 +14,13 @@ import os.com.interfaces.SelectPlayerInterface
 import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamSelectActivity
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Data
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
 
 class SelectTeamAdapter(
     val mContext: MyTeamSelectActivity,
     var data: ArrayList<Data>,
+    var match: Match,
     var onClickRecyclerView: SelectPlayerInterface,
     val FOR: Int,
     val my_team_ids: ArrayList<String>
@@ -43,15 +45,16 @@ class SelectTeamAdapter(
                     IntentConstant.DATA,
                     data[holder.adapterPosition]
                 ).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER, data[holder.adapterPosition].player_details)
-                    .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
-                    .putExtra("teamName",holder.itemView.txt_team.text.toString())
+                    .putExtra("substitute", data[holder.adapterPosition].substitute_detail)
+                    .putExtra("teamName", holder.itemView.txt_team.text.toString())
+                    .putExtra(IntentConstant.MATCH, match)
             )
         }
         if (FOR == AppRequestCodes.JOIN_PLUS)
             if (data[position].isJOINED)
-                holder.itemView.card_view.alpha=0.7f
+                holder.itemView.card_view.alpha = 0.7f
             else
-                holder.itemView.card_view.alpha=1f
+                holder.itemView.card_view.alpha = 1f
         holder.itemView.card_view.setOnClickListener {
             if (FOR == AppRequestCodes.JOIN_PLUS) {
                 if (!data[position].isJOINED) {

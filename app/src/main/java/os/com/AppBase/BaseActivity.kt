@@ -288,11 +288,11 @@ open class BaseActivity : AppCompatActivity() {
         popupWindowView.txt_Add.setOnClickListener {
             var currentBalance = "0.0"
             currentBalance = data!!.total_balance!!.toString()
-            startActivity(
+            startActivityForResult(
                 Intent(this, AddCashActivity::class.java).putExtra(
                     IntentConstant.currentBalance,
                     currentBalance
-                ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
+                ).putExtra(IntentConstant.AddType, IntentConstant.ADD), AppRequestCodes.REFRESH_WALLET
             )
         }
         var background = ColorDrawable(android.graphics.Color.BLACK)
@@ -419,6 +419,14 @@ open class BaseActivity : AppCompatActivity() {
             )
         else if (requestCode == AppRequestCodes.ADD_CASH && resultCode == Activity.RESULT_CANCELED) {
             onClickDialogueBase!!.onClick(Tags.fail, false)
+        }
+        if (requestCode == AppRequestCodes.REFRESH_WALLET && resultCode == Activity.RESULT_OK) {
+            val view = findViewById<View>(R.id.menu_wallet)
+            if (walletPopupWindow!!.isShowing)
+                if (walletPopupWindow == null)
+                    initWalletPopUp(view)
+                else
+                    my_account_call(view)
         }
     }
 

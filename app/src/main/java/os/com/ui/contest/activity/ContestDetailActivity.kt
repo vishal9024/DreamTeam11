@@ -467,7 +467,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                             .putParcelableArrayListExtra(
                                 IntentConstant.SELECT_PLAYER,
                                 response.response!!.data!![0].player_details
-                            )
+                            )  .putExtra(IntentConstant.MATCH, match)
                             .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                             .putExtra("teamName", teamName)
                     )

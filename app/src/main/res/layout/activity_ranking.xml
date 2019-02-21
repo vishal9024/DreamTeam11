@@ -17,6 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="0dp">
             <LinearLayout
@@ -115,6 +116,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"
                     android:nestedScrollingEnabled="false"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     android:layout_width="match_parent"
                     tools:listitem="@layout/item_ranking"
                     android:layout_height="0dp">

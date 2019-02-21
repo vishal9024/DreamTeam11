@@ -333,6 +333,6 @@ class MyTeamSelectActivity : BaseActivity(), View.OnClickListener, SelectPlayerI
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = SelectTeamAdapter(this, data, this, FOR, my_team_ids)
+        rv_Contest!!.adapter = SelectTeamAdapter(this, data, match!!,this, FOR, my_team_ids)
     }
 }

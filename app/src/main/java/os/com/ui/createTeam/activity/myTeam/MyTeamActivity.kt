@@ -178,6 +178,6 @@ class MyTeamActivity : BaseActivity(), View.OnClickListener, OnClickRecyclerView
         val llm = LinearLayoutManager(this)
         llm.orientation = LinearLayoutManager.VERTICAL
         rv_Contest!!.layoutManager = llm
-        rv_Contest!!.adapter = MyTeamAdapter(this, data, this)
+        rv_Contest!!.adapter = MyTeamAdapter(this, data,match!!, this)
     }
 }

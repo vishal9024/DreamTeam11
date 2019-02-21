@@ -36,6 +36,7 @@ import os.com.R
 import os.com.application.FantasyApplication
 import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
+import os.com.constant.IntentConstant.ADD
 import os.com.constant.IntentConstant.OFFER
 import os.com.constant.IntentConstant.OFFER_BANNER
 import os.com.constant.IntentConstant.TO_JOIN
@@ -267,7 +268,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, PaymentResultListe
                 AppDelegate.hideProgressDialog(this@AddCashActivity)
                 AppDelegate.showToast(this@AddCashActivity, response.response!!.message)
                 if (response.response!!.status) {
-                    if (AddTYPE == TO_JOIN) {
+                    if (AddTYPE == TO_JOIN || AddTYPE==ADD) {
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         finish()

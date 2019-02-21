@@ -96,7 +96,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/textColorGray"
-                                android:text="Score Card"
+                                android:text="@string/scorecard"
                         />
                         <LinearLayout
                                 android:id="@+id/ll_score"

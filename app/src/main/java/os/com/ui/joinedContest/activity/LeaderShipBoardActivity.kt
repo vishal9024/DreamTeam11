@@ -544,7 +544,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                             ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
                                 IntentConstant.SELECT_PLAYER,
                                 response.response!!.data!![0].player_details
-                            )
+                            ) .putExtra(IntentConstant.MATCH, match)
                                 .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                                 .putExtra("teamName", teamName)
                                 .putExtra("points", true)
@@ -561,6 +561,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                             ).putExtra("substitute", response.response!!.data!![0].substitute_detail)
                                 .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
                                 .putExtra(IntentConstant.CONTEST_ID, contest_id)
+                                .putExtra(IntentConstant.CAPTAIN_ID, response.response!!.data!![0].captain_player_id)
+                                .putExtra(IntentConstant.VICE_CAPTAIN_ID,  response.response!!.data!![0].vice_captain_player_id)
                                 .putExtra(IntentConstant.TEAM_ID, teamNo)
                             ,
                             AppRequestCodes.EDIT

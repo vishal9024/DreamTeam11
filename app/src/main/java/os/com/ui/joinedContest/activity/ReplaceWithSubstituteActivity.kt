@@ -33,19 +33,89 @@ import kotlin.collections.set
 
 class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface {
     var replacedPlayerId = ""
-
+    var captain_id = ""
+    var vice_captain_id = ""
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
-        for (i in playerListfinal!!.indices)
-            playerListfinal!![i].isSelected = false
-        playerListfinal!![position].isSelected = isSelected
-        if (isSelected) {
-            replacedPlayerId = playerListfinal!![position].player_id
-            btn_replaceSubstitute.isEnabled = true
+        if (substituteDetail!!.role.contains("Wicketkeeper", true)) {
+            for (i in filteredPlayersList.indices)
+                filteredPlayersList[i].isSelected = false
+            filteredPlayersList[position].isSelected = isSelected
+            if (isSelected) {
+                replacedPlayerId = playerListfinal!![position].player_id
+                btn_replaceSubstitute.isEnabled = true
+            } else {
+                replacedPlayerId = ""
+                btn_replaceSubstitute.isEnabled = false
+            }
+            rv_players.adapter!!.notifyDataSetChanged()
         } else {
-            replacedPlayerId = ""
-            btn_replaceSubstitute.isEnabled = false
+            var filteredList: List<Data> = ArrayList()
+            when {
+                filteredPlayersList[position].player_record!!.playing_role.contains("Bowler", true) -> filteredList =
+                        playerListfinal!!.filter { it.player_record!!.playing_role.contains("Bowler", true) }
+                filteredPlayersList[position].player_record!!.playing_role.contains("Batsman", true) -> filteredList =
+                        playerListfinal!!.filter { it.player_record!!.playing_role.contains("Batsman", true) }
+                filteredPlayersList[position].player_record!!.playing_role.contains("Allrounder", true) -> filteredList =
+                        playerListfinal!!.filter { it.player_record!!.playing_role.contains("Allrounder", true) }
+            }
+            when {
+                filteredPlayersList[position].player_record!!.playing_role.contains("Bowler", true) -> {
+                    if (!filteredList.isEmpty() && filteredList.size < 5) {
+                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit>100){
+                            AppDelegate.showToast(this, "You do not have enough credit to select this player.")
+                        }else{
+                            update(position,isSelected)
+                        }
+                    }else{
+                        AppDelegate.showToast(this, "You can not select more than five Bowlers.")
+                    }
+                }
+                filteredPlayersList[position].player_record!!.playing_role.contains("Batsman", true) -> {
+                    if (!filteredList.isEmpty() && filteredList.size < 5) {
+                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit>100){
+                            AppDelegate.showToast(this, "You do not have enough credit to select this player.")
+                        }else{
+                            update(position,isSelected)
+                        }
+                    }else{
+                        AppDelegate.showToast(this, "You can not select more than five Batsmen.")
+                    }
+                }
+                filteredPlayersList[position].player_record!!.playing_role.contains("Allrounder", true) -> {
+                    if (!filteredList.isEmpty() && filteredList.size < 3) {
+                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit>100){
+                            AppDelegate.showToast(this, "You do not have enough credit to select this player.")
+                        }else{
+                            update(position,isSelected)
+                        }
+                    }else{
+                        AppDelegate.showToast(this, "You can not select more than three All-Rounder.")
+                    }
+                }
+            }
         }
-        rv_players.adapter!!.notifyDataSetChanged()
+    }
+
+fun update( position: Int, isSelected: Boolean){
+    for (i in filteredPlayersList.indices)
+        filteredPlayersList[i].isSelected = false
+    filteredPlayersList[position].isSelected = isSelected
+    if (isSelected) {
+        replacedPlayerId = playerListfinal!![position].player_id
+        btn_replaceSubstitute.isEnabled = true
+    } else {
+        replacedPlayerId = ""
+        btn_replaceSubstitute.isEnabled = false
+    }
+    rv_players.adapter!!.notifyDataSetChanged()
+}
+
+    fun calculateTotalCredit(playerCredit:String) :Float{
+      var  totalCredit=totalCredit-playerCredit.toFloat()+substituteDetail!!.credits.toFloat()
+return totalCredit
     }
 
     override fun onClickItem(tag: String, position: Int) {
@@ -79,7 +149,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }
-//    var countTimer: CountTimer? = CountTimer()
+
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var teamNo = ""
@@ -137,6 +207,8 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
     var visitorTeamName = ""
     private fun getIntentData() {
         if (intent != null) {
+            captain_id = intent.getStringExtra(IntentConstant.CAPTAIN_ID)
+            vice_captain_id = intent.getStringExtra(IntentConstant.VICE_CAPTAIN_ID)
             contest_id = intent.getStringExtra(IntentConstant.CONTEST_ID)
             teamNo = intent.getStringExtra(IntentConstant.TEAM_ID)
             match = intent.getParcelableExtra(IntentConstant.MATCH)
@@ -149,7 +221,6 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
                 localTeamName = match!!.local_team_name.substring(0, 4)
             if (match!!.visitor_team_name.length > 5)
                 visitorTeamName = match!!.visitor_team_name.substring(0, 4)
-
             ImageLoader.getInstance().displayImage(
                 substituteDetail!!.image,
                 imvUserProfile,
@@ -157,19 +228,7 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
             )
             txt_label.text = substituteDetail!!.name
             txtPoints.text = substituteDetail!!.credits
-//            txt_matchVS.text = localTeamName + " " + getString(R.string.vs) + " " + visitorTeamName
-//            if (matchType == IntentConstant.FIXTURE) {
-//                if (!match!!.star_date.isEmpty()) {
-//                    val strt_date = match!!.star_date.split("T")
-//                    val dateTime = strt_date.get(0) + " " + match!!.star_time
-//                    countTimer!!.startUpdateTimer(dateTime, txt_CountDownTimer)
-//                }
-//            } else if (matchType == IntentConstant.COMPLETED) {
-//                txt_CountDownTimer.setText(getString(R.string.completed))
-//            } else{
-//                txt_CountDownTimer.setText(getString(R.string.in_progress))
-//            txt_CountDownTimer.setTextColor(resources.getColor(R.color.dark_yellow))
-//        }
+
         }
     }
 
@@ -188,7 +247,6 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         loginRequest[Tags.series_id] = match!!.series_id
         loginRequest[Tags.local_team_id] = match!!.local_team_id
         loginRequest[Tags.visitor_team_id] = match!!.visitor_team_id
-
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@ReplaceWithSubstituteActivity)
             try {
@@ -218,16 +276,47 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         }
     }
 
+    var totalCredit = 0f
+    var filteredPlayersList: List<Data> = ArrayList()
     private fun updateData() {
-//        team_id = playerListPreview!!.teamid
         for (position in playerList!!.indices) {
             for (playerData in playerListEdit!!) {
                 if (playerList!![position].player_id == playerData.player_id) {
                     playerListfinal!!.add(playerList!![position])
+                    totalCredit = totalCredit + playerList!![position].player_record!!.player_credit.toFloat()
                 }
             }
         }
-        setAdapter(playerListfinal!!)
+        var filteredPlayerList: List<Data> = ArrayList()
+        when {
+            substituteDetail!!.role.contains("Wicketkeeper", true) -> filteredPlayerList =
+                    playerListfinal!!.filter { it.player_record!!.playing_role.contains("Wicketkeeper", true) }
+            substituteDetail!!.role.contains("Bowler", true) || substituteDetail!!.role.contains(
+                "Batsman",
+                true
+            ) || substituteDetail!!.role.contains("Allrounder", true) -> filteredPlayerList =
+                    playerListfinal!!.filter {
+                        it.player_record!!.playing_role.contains(
+                            "Bowler",
+                            true
+                        ) || it.player_record!!.playing_role.contains(
+                            "Batsman",
+                            true
+                        ) || it.player_record!!.playing_role.contains("Allrounder", true)
+                    }
+//            substituteDetail!!.role.contains("Batsman", true) -> filteredPlayerList =
+//                    playerListfinal!!.filter { it.player_record!!.playing_role.contains("Batsman", true) }
+//            substituteDetail!!.role.contains("Allrounder", true) -> filteredPlayerList =
+//                    playerListfinal!!.filter { it.player_record!!.playing_role.contains("Allrounder", true) }
+
+
+        }
+
+        filteredPlayersList = filteredPlayerList.filter {
+            !it.player_record!!.player_id.equals(captain_id) || !it.player_record!!.player_id.equals(vice_captain_id)
+        }
+
+        setAdapter(filteredPlayersList as MutableList<Data>)
     }
 
     @SuppressLint("WrongConstant")

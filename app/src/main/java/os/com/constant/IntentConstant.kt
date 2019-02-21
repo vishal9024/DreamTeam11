@@ -4,6 +4,9 @@ package os.com.constant
  * Created by heenas on 2/21/2018.
  */
 object IntentConstant {
+    const val CAPTAIN_ID="CAPTAIN_ID"
+    const val VICE_CAPTAIN_ID="VICE_CAPTAIN_ID"
+
     const val TYPE="TYPE"
     const val CONTEST_CODE="CONTEST_CODE"
     const val ENTRY_FEE="ENTRY_FEE"

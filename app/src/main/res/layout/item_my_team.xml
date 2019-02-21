@@ -25,7 +25,6 @@
                 android:paddingStart="@dimen/_10sdp"
                 android:paddingEnd="@dimen/_10sdp"
                 android:textSize="@dimen/_11sdp"
-                android:drawableEnd="@mipmap/info"
                 android:layout_width="match_parent"
                 android:textColor="@color/textColorLightBlack"
                 android:text="Team 1"

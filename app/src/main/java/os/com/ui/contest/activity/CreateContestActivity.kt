@@ -99,7 +99,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 if (response.response!!.status) {
                     sendIntent(response.response!!.data)
                 } else {
-                   logoutIfDeactivate(response.response!!.message!!)
+                    logoutIfDeactivate(response.response!!.message!!)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CreateContestActivity)
@@ -146,7 +146,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var createOrJoin = AppRequestCodes.JOIN
@@ -168,7 +168,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
@@ -203,7 +203,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 btn_CreateContest.isEnabled = true
             } else if (et_contest_size.text.toString().toLong() >= 2L) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    delay(300)
+                    delay(700)
                     callEntryFeeApi()
                 }
             } else {
@@ -352,7 +352,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                             response.response!!.data!!
                         )
                 } else {
-                   logoutIfDeactivate(response.response!!.message)
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {
@@ -456,7 +456,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                         , AppRequestCodes.INVITE_CONTEST
                     )
                 } else {
-                   logoutIfDeactivate(response.response!!.message)
+                    logoutIfDeactivate(response.response!!.message)
                     AppDelegate.showToast(this@CreateContestActivity, response.response!!.message)
                 }
             } catch (exception: Exception) {

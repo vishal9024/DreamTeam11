@@ -13,9 +13,10 @@ import os.com.interfaces.OnClickRecyclerView
 import os.com.ui.createTeam.activity.TeamPreviewActivity
 import os.com.ui.createTeam.activity.myTeam.MyTeamActivity
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Data
+import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 
 
-class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var onClickRecyclerView: OnClickRecyclerView) :
+class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>, var match: Match, var onClickRecyclerView: OnClickRecyclerView) :
     RecyclerView.Adapter<MyTeamAdapter.AppliedCouponCodeHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -32,7 +33,11 @@ class MyTeamAdapter(val mContext: MyTeamActivity, var data: ArrayList<Data>,var 
             //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
         }
         holder.itemView.rl_preview.setOnClickListener {
-            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java).putExtra("show", 1).putExtra(IntentConstant.DATA, data[holder.adapterPosition]).putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details)
+            mContext.startActivity(Intent(mContext, TeamPreviewActivity::class.java)
+                .putExtra("show", 1)
+                .putExtra(IntentConstant.MATCH, match)
+                .putExtra(IntentConstant.DATA, data[holder.adapterPosition])
+                .putParcelableArrayListExtra(IntentConstant.SELECT_PLAYER,data[holder.adapterPosition].player_details)
                 .putExtra("substitute",data[holder.adapterPosition].substitute_detail)
                 .putExtra("teamName",holder.itemView.txt_team.text.toString())
             )

@@ -601,4 +601,5 @@
 
     <string name="winning">Winning Amount</string>
     <string name="view_leadership_board">View Leadership Board</string>
+    <string name="scorecard">Scorecard</string>
 </resources>

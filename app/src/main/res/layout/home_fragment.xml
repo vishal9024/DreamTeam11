@@ -9,7 +9,6 @@
 >
 
     <com.google.android.material.appbar.AppBarLayout
-
             android:id="@+id/app_bar"
             app:elevation="0dp"
             android:background="@color/colorTransparent"
