@@ -64,7 +64,7 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     )
                 }
                 R.id.txt_fullProfile -> {
-                    startActivityForResult(Intent(activity, FullProfileActivity::class.java),100)
+                    startActivity(Intent(activity, FullProfileActivity::class.java))
                 }
                 R.id.txt_changePassword -> {
                     startActivity(Intent(activity, ChangePasswordActivity::class.java))
