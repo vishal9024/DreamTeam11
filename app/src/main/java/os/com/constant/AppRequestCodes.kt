@@ -50,5 +50,6 @@ object AppRequestCodes {
     const val GALARY_REQUEST_CODE = 19
     const val CREATE_CONTEST = 21
     const val ADD_CASH_CONTEST =22
+    const val SIGNUP =23
 
 }

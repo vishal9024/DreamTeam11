@@ -1,5 +1,6 @@
 package os.com.ui.login.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -13,6 +14,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.DashBoardActivity
@@ -65,6 +67,7 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
     }
 
     private var mEmail = ""
+    var from = false
 
     private fun initViews() {
         try {
@@ -74,6 +77,7 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowTitleEnabled(false)
 //            toolbarTitleTv.setText(R.string.change_password)
             setMenu(false, false, false, false, false)
+            from = intent.getBooleanExtra(IntentConstant.TYPE, false)
             if (intent.hasExtra("email"))
                 mEmail = intent.getStringExtra("email")
             txt_EmailId.text = mEmail
@@ -106,23 +110,22 @@ class PasswordActivity : BaseActivity(), View.OnClickListener {
                         AppDelegate.showToast(this@PasswordActivity, response.response!!.message)
                         pref!!.userdata = response.response!!.data
                         pref!!.isLogin = true
-                        startActivity(
-                            Intent(
-                                this@PasswordActivity,
-                                DashBoardActivity::class.java
-                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-                        )
-                        finish()
+                        if (from){
+                            val intent = Intent()
+                            setResult(Activity.RESULT_OK,intent)
+                            finish()
+                        }else {
+                            startActivity(
+                                Intent(
+                                    this@PasswordActivity,
+                                    DashBoardActivity::class.java
+                                ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                            finish()
+                        }
                     } else {
                         AppDelegate.showToast(this@PasswordActivity, response.response!!.message)
                     }
-//                    if (response.response!!.status) {
-//                        AppDelegate.showToast(this@PasswordActivity, response.response!!.message)
-//                        finish()
-//                    } else {
-//                        logoutIfDeactivate(response.response!!.message)
-//                        AppDelegate.showToast(this@PasswordActivity, response.response!!.message)
-//                    }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@PasswordActivity)
                 }

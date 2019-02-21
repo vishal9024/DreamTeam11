@@ -1,5 +1,6 @@
 package os.com.ui.signup.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Html
@@ -73,12 +74,13 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
 //        Toast.makeText(this, "Got $smsText", Toast.LENGTH_LONG).show()
         otp_view.setText(smsText)
     }
-
+    var from = false
     private fun initViews() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
+        from = intent.getBooleanExtra(IntentConstant.TYPE, false)
         toolbarTitleTv.setText(R.string.enter_otp)
         btn_Submit.setOnClickListener(this)
         otp = intent.getStringExtra(IntentConstant.OTP)
@@ -113,8 +115,19 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
-                    startActivity(Intent(this@OTPActivity, DashBoardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
-                    finish()
+                    if (from){
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK,intent)
+                        finish()
+                    }else {
+                        startActivity(
+                            Intent(
+                                this@OTPActivity,
+                                DashBoardActivity::class.java
+                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
+                        finish()
+                    }
                 } else {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)
                 }

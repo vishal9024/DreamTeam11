@@ -124,21 +124,6 @@ public class FantasySportProgressDialog extends ProgressDialog {
                 msGWProgressDialog = null;
                 ex.printStackTrace();
             }
-//            new Handler().postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        if (msGWProgressDialog != null && msGWProgressDialog.isShowing()) {
-//                            msGWProgressDialog.dismiss();
-//                            msGWProgressDialog = null;
-//                        } else if (msGWProgressDialog != null)
-//                            msGWProgressDialog = null;
-//                    } catch (Exception ex) {
-//                        msGWProgressDialog = null;
-//                        ex.printStackTrace();
-//                    }
-//                }
-//            }, 500);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

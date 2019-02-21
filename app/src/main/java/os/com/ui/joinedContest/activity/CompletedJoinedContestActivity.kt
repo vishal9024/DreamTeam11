@@ -281,6 +281,7 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
 //                            txt_localTeamScore.text = getString(R.string.match_not_started)
 //                        }
                     } else {
+//                        updateScoreBoard(response.response!!.data)
                         logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {

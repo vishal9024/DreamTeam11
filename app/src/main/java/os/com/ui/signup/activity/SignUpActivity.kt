@@ -1,5 +1,6 @@
 package os.com.ui.signup.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.model.SocialModel
 import os.com.networkCall.ApiClient
@@ -38,21 +40,28 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                         checkValidation()
                 }
                 R.id.txt_Login -> {
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    if (from){
+                        startActivityForResult(
+                            Intent(this, LoginActivity::class.java)
+                                .putExtra(IntentConstant.TYPE, true)
+                            , AppRequestCodes.SIGNUP
+                        )
+                    }else {
+                        startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
+                    }
                 }
                 R.id.txt_TC -> {
                     val intent = Intent(this, WebViewActivity::class.java)
                     intent.putExtra("PAGE_SLUG", "Terms and Conditions")
                     intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.terms_conditions)
                     startActivity(intent)
-//                    startActivity(Intent(this, TermsConditionActivity::class.java))
+//                  startActivity(Intent(this, TermsConditionActivity::class.java))
                 }
             }
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,67 +71,61 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
     }
 
     var userData: SocialModel? = null
-
-    private fun initViews() {
+    var from = false
+    private fun initViews() = try {
+        toolbarTitleTv.setText(R.string.sign_up)
+        setSupportActionBar(toolbar)
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        supportActionBar!!.setDisplayShowHomeEnabled(true)
+        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        btn_Register.setOnClickListener(this)
+        txt_Login.setOnClickListener(this)
+        txt_TC.setOnClickListener(this)
+        from = intent.getBooleanExtra(IntentConstant.TYPE, false)
+        txt_register.text = getString(R.string.by_registering_i_agree_to) + " " +
+                getString(R.string.app_name) + getString(R.string.s)
         try {
-            toolbarTitleTv.setText(R.string.sign_up)
-            setSupportActionBar(toolbar)
-            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-            supportActionBar!!.setDisplayShowHomeEnabled(true)
-            supportActionBar!!.setDisplayShowTitleEnabled(false)
-            btn_Register.setOnClickListener(this)
-            txt_Login.setOnClickListener(this)
-            txt_TC.setOnClickListener(this)
-            txt_register.text = getString(R.string.by_registering_i_agree_to) + " " +
-                    getString(R.string.app_name) + getString(R.string.s)
-            try {
-                userData = intent.getParcelableExtra(IntentConstant.DATA)
-            } catch (e: Exception) {
-
-            }
-
-            if (userData != null) {
-                et_Email.setText(userData!!.email_address)
-                if (!userData!!.email_address.isEmpty())
-                    et_Email.isEnabled = false
-                til_Password.visibility = View.GONE
-            }
-            et_Mobile.setText("+91")
-
-            et_Mobile.addTextChangedListener(object : TextWatcher {
-
-                override fun afterTextChanged(s: Editable) {
-                    if (!s.toString().startsWith("+91")) {
-                        et_Mobile.setText("+91")
-                        Selection.setSelection(et_Mobile.text, et_Mobile.text!!.length);
-                    }
-                }
-
-                override fun beforeTextChanged(
-                    s: CharSequence, start: Int,
-                    count: Int, after: Int
-                ) {
-
-                }
-
-                override fun onTextChanged(
-                    s: CharSequence, start: Int,
-                    before: Int, count: Int
-                ) {
-
-                }
-            })
-            et_Password.setOnFocusChangeListener(View.OnFocusChangeListener { view, isFocused ->
-                if (!isFocused) {
-                    til_Password.setPasswordVisibilityToggleEnabled(false)
-                } else {
-                    til_Password.setPasswordVisibilityToggleEnabled(true)
-                }
-            })
+            userData = intent.getParcelableExtra(IntentConstant.DATA)
         } catch (e: Exception) {
-            e.printStackTrace()
         }
 
+        if (userData != null) {
+            et_Email.setText(userData!!.email_address)
+            if (!userData!!.email_address.isEmpty())
+                et_Email.isEnabled = false
+            til_Password.visibility = View.GONE
+        }
+        et_Mobile.setText("+91")
+        et_Mobile.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                if (!s.toString().startsWith("+91")) {
+                    et_Mobile.setText("+91")
+                    Selection.setSelection(et_Mobile.text, et_Mobile.text!!.length);
+                }
+            }
+
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int,
+                count: Int, after: Int
+            ) {
+            }
+
+            override fun onTextChanged(
+                s: CharSequence, start: Int,
+                before: Int, count: Int
+            ) {
+            }
+        })
+
+        et_Password.setOnFocusChangeListener { view, isFocused ->
+            if (!isFocused) {
+                til_Password.setPasswordVisibilityToggleEnabled(false)
+            } else {
+                til_Password.setPasswordVisibilityToggleEnabled(true)
+            }
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 
     private fun checkValidationSocial() {
@@ -170,7 +173,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.hideKeyBoard(this)
                 if (NetworkUtils.isConnected()) {
                     prepareData(false)
-
                 } else
                     Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }
@@ -198,7 +200,6 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     private fun callSignUpApi(signUpRequest: SignUpRequest) {
@@ -214,12 +215,22 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.hideProgressDialog(this@SignUpActivity)
                     if (response.response!!.status) {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                        startActivity(
-                            Intent(this@SignUpActivity, OTPActivity::class.java)
-                                .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
-                                .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-                                .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
-                        )
+                        if (from)
+                            startActivityForResult(
+                                Intent(this@SignUpActivity, OTPActivity::class.java)
+                                    .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                    .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.TYPE, true)
+                                    .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id),
+                                AppRequestCodes.SIGNUP
+                            )
+                        else
+                            startActivity(
+                                Intent(this@SignUpActivity, OTPActivity::class.java)
+                                    .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                    .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                            )
                     } else {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
                     }
@@ -230,7 +241,15 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode==AppRequestCodes.SIGNUP && resultCode== Activity.RESULT_OK) {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK,intent)
+            finish()
+        }
     }
 
     private fun callSocialSignUpApi(signUpRequest: SignUpRequest) {
@@ -246,12 +265,22 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                     AppDelegate.hideProgressDialog(this@SignUpActivity)
                     if (response.response!!.status) {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
-                        startActivity(
-                            Intent(this@SignUpActivity, OTPActivity::class.java)
-                                .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
-                                .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-                                .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
-                        )
+                        if (from)
+                            startActivityForResult(
+                                Intent(this@SignUpActivity, OTPActivity::class.java)
+                                    .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                    .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.TYPE, true)
+                                    .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id),
+                                AppRequestCodes.SIGNUP
+                            )
+                        else
+                            startActivity(
+                                Intent(this@SignUpActivity, OTPActivity::class.java)
+                                    .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                    .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                            )
                     } else {
                         AppDelegate.showToast(this@SignUpActivity, response.response!!.message)
                     }
@@ -262,6 +291,5 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 }

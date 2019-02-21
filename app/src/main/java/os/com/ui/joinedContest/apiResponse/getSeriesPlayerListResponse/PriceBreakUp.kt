@@ -15,7 +15,7 @@ class PriceBreakUp() : Parcelable {
     var maiden_over: PriceBreakUpData? = null
     var eco_rate: PriceBreakUpData? = null
     var bonus: PriceBreakUpData? = null
-    var catches: PriceBreakUpData? = null
+    var catch: PriceBreakUpData? = null
     var run_outStumping: PriceBreakUpData? = null
     var total_point: PriceBreakUpData? = null
 
@@ -31,7 +31,7 @@ class PriceBreakUp() : Parcelable {
         maiden_over = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
         eco_rate = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
         bonus = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
-        catches = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
+        catch = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
         run_outStumping = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
         total_point = parcel.readParcelable(PriceBreakUpData::class.java.classLoader)
     }
@@ -48,7 +48,7 @@ class PriceBreakUp() : Parcelable {
         parcel.writeParcelable(maiden_over, flags)
         parcel.writeParcelable(eco_rate, flags)
         parcel.writeParcelable(bonus, flags)
-        parcel.writeParcelable(catches, flags)
+        parcel.writeParcelable(catch, flags)
         parcel.writeParcelable(run_outStumping, flags)
         parcel.writeParcelable(total_point, flags)
     }

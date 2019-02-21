@@ -9,6 +9,7 @@ import android.os.Handler
 import androidx.core.content.ContextCompat
 import os.com.AppBase.BaseActivity
 import os.com.R
+import os.com.application.FantasyApplication
 import os.com.ui.dashboard.DashBoardActivity
 import os.com.utils.AppDelegate
 
@@ -18,6 +19,8 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        FantasyApplication.getInstance(). teamCount = 0
+        FantasyApplication.getInstance(). joinedCount = 0
         checkPermission()
     }
 

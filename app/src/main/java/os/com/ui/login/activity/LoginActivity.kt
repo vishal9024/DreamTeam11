@@ -1,5 +1,6 @@
 package os.com.ui.login.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.facebook.*
+import com.facebook.internal.CallbackManagerImpl
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.Auth
@@ -26,6 +28,7 @@ import org.json.JSONObject
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
@@ -56,7 +59,19 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                         }
                     } else {
                         if (ValidationUtil.isEmailValid(et_email.text.toString())) {
-                            startActivity(Intent(this, PasswordActivity::class.java).putExtra("email", et_email.text.toString()))
+                            if (from) {
+                                startActivityForResult(
+                                    Intent(this, PasswordActivity::class.java).putExtra(
+                                        "email",
+                                        et_email.text.toString()
+                                    ).putExtra(IntentConstant.TYPE, true), AppRequestCodes.SIGNUP
+                                )
+                            } else startActivity(
+                                Intent(this, PasswordActivity::class.java).putExtra(
+                                    "email",
+                                    et_email.text.toString()
+                                )
+                            )
                         } else {
                             AppDelegate.showToast(this, getString(R.string.valid_email))
                         }
@@ -90,6 +105,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         initViews()
     }
 
+    var from = false
     private fun initViews() {
         if (intent.getBooleanExtra("show", true)) {
             setSupportActionBar(toolbar)
@@ -97,6 +113,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
         }
+        from = intent.getBooleanExtra(IntentConstant.TYPE, false)
         toolbarTitleTv.setText(R.string.login)
         btn_Next.setOnClickListener(this)
         txt_Signup.setOnClickListener(this)
@@ -109,7 +126,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
         loginRequest["user_name"] = et_email.text.toString()
         loginRequest["type"] = "phone"
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
-        loginRequest[Tags.password] =""
+        loginRequest[Tags.password] = ""
         GlobalScope.launch(Dispatchers.Main) {
             AppDelegate.showProgressDialog(this@LoginActivity)
             try {
@@ -121,12 +138,21 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 AppDelegate.hideProgressDialog(this@LoginActivity)
                 if (response.response!!.status) {
 //                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
-                    startActivity(
-                        Intent(this@LoginActivity, OTPActivity::class.java)
-                            .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
-                            .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
-                            .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
-                    )
+                    if (from) {
+                        startActivityForResult(
+                            Intent(this@LoginActivity, OTPActivity::class.java)
+                                .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                                .putExtra(IntentConstant.TYPE, true), AppRequestCodes.SIGNUP
+                        )
+                    } else
+                        startActivity(
+                            Intent(this@LoginActivity, OTPActivity::class.java)
+                                .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                        )
 
                 } else {
                     AppDelegate.showToast(this@LoginActivity, response.response!!.message)
@@ -164,6 +190,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
     internal var request_code = 102
 
     fun faceBookLogin() {
+
         callbackManager = CallbackManager.Factory.create()
         LoginManager.getInstance()
             .logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends", "user_birthday", "email"))
@@ -294,17 +321,35 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 //                    AppDelegate.showToast(this@LoginActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
-                    startActivity(Intent(this@LoginActivity, DashBoardActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
-                    finish()
-                } else {
-                    if(response.response!!.message.equals("Invalid User id.",true)){
-                        AppDelegate.showToast(this@LoginActivity, response.response!!.message)
-                    }else {
-
+                    if (from) {
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    } else {
                         startActivity(
-                            Intent(this@LoginActivity, SignUpActivity::class.java)
-                                .putExtra(IntentConstant.DATA, socialModel)
+                            Intent(
+                                this@LoginActivity,
+                                DashBoardActivity::class.java
+                            ).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                         )
+                        finish()
+                    }
+                } else {
+                    if (response.response!!.message.equals("Invalid User id.", true)) {
+                        AppDelegate.showToast(this@LoginActivity, response.response!!.message)
+                    } else {
+                        if (from) {
+                            startActivityForResult(
+                                Intent(this@LoginActivity, SignUpActivity::class.java)
+                                    .putExtra(IntentConstant.DATA, socialModel).putExtra(IntentConstant.TYPE, true),
+                                AppRequestCodes.SIGNUP
+                            )
+                        } else {
+                            startActivity(
+                                Intent(this@LoginActivity, SignUpActivity::class.java)
+                                    .putExtra(IntentConstant.DATA, socialModel)
+                            )
+                        }
                     }
                 }
             } catch (exception: Exception) {
@@ -362,8 +407,11 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == AppRequestCodes.SIGNUP && resultCode == Activity.RESULT_OK) {
+            val intent = Intent()
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+        } else if (requestCode == RC_SIGN_IN) {
             AppDelegate.LogT("resultCode==>" + resultCode)
             AppDelegate.LogT("data==>" + data)
             val result = Auth.GoogleSignInApi.getSignInResultFromIntent(data)
@@ -372,17 +420,12 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                 if (result.isSuccess) {
                     val account = result.signInAccount
                     firebaseAuthWithGoogle(account)
-//                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//                try {
-//                    val account = task.getResult(ApiException::class.java)
-//                    firebaseAuthWithGoogle(account!!)
-
                 } else {
                 }
             } catch (e: ApiException) {
                 AppDelegate.LogE(e.printStackTrace().toString())
             }
-        } else {
+        } else if (requestCode == CallbackManagerImpl.RequestCodeOffset.Login.toRequestCode()) {
             callbackManager!!.onActivityResult(requestCode, resultCode, data)
         }
 

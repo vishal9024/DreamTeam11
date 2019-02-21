@@ -121,8 +121,8 @@ class BottomSheetPriceBreakUpFragment() : BottomSheetDialogFragment() {
             priceBreakUpList.put("Bonus", data.player_breckup!!.bonus!!)
             priceBreakUp.add("Bonus")
         }
-        if (data.player_breckup!!.catches != null) {
-            priceBreakUpList.put("Catch", data.player_breckup!!.catches!!)
+        if (data.player_breckup!!.catch != null) {
+            priceBreakUpList.put("Catch", data.player_breckup!!.catch!!)
             priceBreakUp.add("Catch")
         }
         if (data.player_breckup!!.run_outStumping != null) {

@@ -226,13 +226,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             <androidx.appcompat.widget.AppCompatButton
-
                     android:layout_marginTop="@dimen/_5sdp"
                     android:id="@+id/btn_Join"
-
                     style="@style/ButtonStyle"
                     android:text="@string/join_contest2"
-                    android:backgroundTint="@color/colorASPrimary"
+                    android:background="@color/colorASPrimary"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_45sdp"/>
         </LinearLayout>

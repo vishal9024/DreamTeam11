@@ -9,6 +9,7 @@ class PlayerRecord() : Parcelable {
     var image :String?=null
     var role :String?=null
     var credits :String?=null
+    var point :String?=null
     var points :String?=null
     var in_dream_team = false
     var is_local_team = false
@@ -19,6 +20,7 @@ class PlayerRecord() : Parcelable {
         image = parcel.readString()
         role = parcel.readString()
         credits = parcel.readString()
+        point = parcel.readString()
         points = parcel.readString()
         in_dream_team = parcel.readByte() != 0.toByte()
         is_local_team = parcel.readByte() != 0.toByte()
@@ -30,6 +32,7 @@ class PlayerRecord() : Parcelable {
         parcel.writeString(image)
         parcel.writeString(role)
         parcel.writeString(credits)
+        parcel.writeString(point)
         parcel.writeString(points)
         parcel.writeByte(if (in_dream_team) 1 else 0)
         parcel.writeByte(if (is_local_team) 1 else 0)

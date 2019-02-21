@@ -36,7 +36,7 @@
                android:layout_alignParentEnd="true"
     />
     <androidx.appcompat.widget.LinearLayoutCompat
-            android:paddingTop="@dimen/_20sdp"
+            android:paddingTop="@dimen/_5sdp"
             android:layout_below="@+id/img_Close"
             android:layout_above="@+id/rl_bottom"
             android:layout_centerVertical="true"

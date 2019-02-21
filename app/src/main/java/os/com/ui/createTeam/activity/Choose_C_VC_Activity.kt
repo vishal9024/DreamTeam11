@@ -34,6 +34,7 @@ import os.com.ui.createTeam.apiResponse.PlayerListModel
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.ui.signup.activity.SkipActivity
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 
@@ -124,7 +125,14 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == AppRequestCodes.UPDATEVIEW && resultCode.equals(Activity.RESULT_OK)) {
+        if (requestCode == AppRequestCodes.SIGNUP && resultCode == Activity.RESULT_OK) {
+            if (!player_ids.isEmpty())
+                if (NetworkUtils.isConnected()) {
+                    callCreateTeamApi(player_ids)
+                } else
+                    Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+        } else if (requestCode == AppRequestCodes.UPDATEVIEW && resultCode.equals(Activity.RESULT_OK)) {
             finish()
         }
     }
@@ -397,7 +405,9 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
         }
     }
 
+    var player_ids: ArrayList<String> = ArrayList()
     private fun callCreateTeamApi(player_id: ArrayList<String>) {
+        player_ids = player_id
         var creteTeamRequest: CreateTeamRequest = CreateTeamRequest()
         if (pref!!.isLogin)
             creteTeamRequest.user_id = pref!!.userdata!!.user_id
@@ -412,10 +422,15 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
         creteTeamRequest.vice_captain = vicecaptain
         creteTeamRequest.player_id = player_id
         creteTeamRequest.substitute = substitute_id
-//        if (!pref!!.isLogin){
-//            startActivityForResult(Intent(this@Choose_C_VC_Activity,SkipActivity::class.java).putExtra(IntentConstant.DATA,creteTeamRequest),AppRequestCodes.)
-//        }
-//        else {
+        if (!pref!!.isLogin) {
+//            AppDelegate.showToast(this@Choose_C_VC_Activity, "Please Login.")
+            startActivityForResult(
+                Intent(this@Choose_C_VC_Activity, SkipActivity::class.java)
+                    .putExtra(IntentConstant.DATA, creteTeamRequest)
+                    .putExtra("DATE", match!!.star_date)
+                    .putExtra("TIME", match!!.star_time), AppRequestCodes.SIGNUP
+            )
+        } else {
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(this@Choose_C_VC_Activity)
                 try {
@@ -466,7 +481,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
                 }
-//            }
+            }
         }
     }
 }

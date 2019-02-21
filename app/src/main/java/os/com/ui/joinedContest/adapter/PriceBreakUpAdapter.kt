@@ -45,6 +45,10 @@ class PriceBreakUpAdapter(
             }
         }
 
+        if(priceBreakUpList[breakup_detail[position]]!!.actual.isEmpty()){
+            holder.itemView.txt_actual.text = "0"
+        }
+
     }
 
 

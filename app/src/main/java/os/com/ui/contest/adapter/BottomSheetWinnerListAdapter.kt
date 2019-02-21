@@ -30,9 +30,9 @@ class BottomSheetWinnerListAdapter(
     override fun onBindViewHolder(holder: AppliedCouponCodeHolder, position: Int) {
         try {
             if (position == 0)
-                holder.itemView.txt_team.text = data!![position].title + " " + mContext.getString(R.string.recommended)
+                holder.itemView.txt_team.text = data!![position].title + " "+ mContext.getString(R.string.winners) +" "+ mContext.getString(R.string.recommended)
             else
-                holder.itemView.txt_team.text = data!![position].title
+                holder.itemView.txt_team.text = data!![position].title + " "+ mContext.getString(R.string.winners)
             holder.itemView.img_check.isSelected = data!![position].isSelected
             holder.itemView.ll.setOnClickListener {
                 clickRecyclerView.onClickItem("click", position)
