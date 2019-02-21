@@ -70,9 +70,9 @@ public class SeriesRankingListResponse implements Serializable {
             public String points;
             public String rank;
             public String series_name;
-            public int series_id;
+            public String series_id;
             public String previous_rank;
-            public int user_id;
+            public String user_id;
             public String team_name;
             public String user_image;
 
@@ -100,11 +100,11 @@ public class SeriesRankingListResponse implements Serializable {
                 this.series_name = series_name;
             }
 
-            public int getSeries_id() {
+            public String getSeries_id() {
                 return series_id;
             }
 
-            public void setSeries_id(int series_id) {
+            public void setSeries_id(String series_id) {
                 this.series_id = series_id;
             }
 
@@ -116,11 +116,11 @@ public class SeriesRankingListResponse implements Serializable {
                 this.previous_rank = previous_rank;
             }
 
-            public int getUser_id() {
+            public String getUser_id() {
                 return user_id;
             }
 
-            public void setUser_id(int user_id) {
+            public void setUser_id(String user_id) {
                 this.user_id = user_id;
             }
 

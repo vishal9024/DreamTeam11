@@ -46,8 +46,8 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
     private val seriesList = ArrayList<String>()
     private var series = ""
 
-    private var mSeriesId: Int = -1
-    private var mSeriesIdBack: Int = -1
+    private var mSeriesId: String = ""
+    private var mSeriesIdBack: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +64,9 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
             toolbarTitleTv.setText(R.string.leaderboard)
             setMenu(false, false, false, false, false)
             if (intent.hasExtra("data"))
-                mSeriesIdBack = intent.getIntExtra("data", -1)
+                mSeriesIdBack = intent.getStringExtra("data")
             if (NetworkUtils.isConnected()) {
-                if (mSeriesIdBack == -1)
+                if (mSeriesIdBack == "")
                     getSeriesList()
                 else {
                     getSeriesList()
@@ -121,7 +121,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
 
     private var rankingList: MutableList<SeriesRankingListResponse.ResponseBean.DataBean>? = null
 
-    private fun getSeriesRankingList(mSeriesId: Int) {
+    private fun getSeriesRankingList(mSeriesId: String) {
         try {
             GlobalScope.launch(Dispatchers.Main) {
                 AppDelegate.showProgressDialog(this@RankingActivity)
@@ -132,7 +132,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
                     else
                         map[Tags.user_id]= ""
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
-                    map[Tags.series_id] = "" + mSeriesId
+                    map[Tags.series_id] = mSeriesId
                     val request = ApiClient.client
                         .getRetrofitService()
                         .series_ranking(map)
@@ -173,7 +173,7 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
                         selectedText?.setTextColor(Color.BLACK)
                         series = parent.getItemAtPosition(position).toString()
                           try{
-                              if (mSeriesIdBack == -1) {
+                              if (mSeriesIdBack == "") {
                                   if (mSeriesList != null && mSeriesList!!.size > 0)
                                       for (item in mSeriesList!!) {
                                           if (item.series_name.equals(series)) {
@@ -188,10 +188,9 @@ class RankingActivity : BaseActivity(), View.OnClickListener {
                                       if (item.series_id.equals(mSeriesIdBack)) {
                                           var pos = seriesList.indexOf(item.series_name)
                                           spn_match.setSelection(pos)
-                                          mSeriesIdBack = -1
+                                          mSeriesIdBack = ""
                                           break
                                       }
-
                                   }
                               }
                           } catch (e: Exception) {

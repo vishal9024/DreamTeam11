@@ -35,12 +35,12 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
 //                startActivity(Intent(this, SignUpActivity::class.java))
                 }
                 R.id.txt_Add -> {
-                    startActivity(
+                    startActivityForResult(
                         Intent(this, AddCashActivity::class.java).putExtra(
                             IntentConstant.currentBalance,
                             currentBalance
                         ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
-                    )
+                    ,100)
 //                startActivity(Intent(this, SignUpActivity::class.java))
                 }
                 R.id.txt_Withdraw -> {
@@ -121,6 +121,15 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+          try{
+              if (requestCode==100)
+              my_account_call()
+              } catch (e: Exception) {
+                      e.printStackTrace()
+              }
+    }
     private fun my_account_call() {
         try {
             GlobalScope.launch(Dispatchers.Main) {

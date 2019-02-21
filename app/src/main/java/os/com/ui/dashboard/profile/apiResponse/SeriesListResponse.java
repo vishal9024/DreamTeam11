@@ -61,14 +61,14 @@ public class SeriesListResponse implements Serializable {
              * series_name : Australia Women vs New Zealand
              */
 
-            public int series_id;
+            public String series_id;
             public String series_name;
 
-            public int getSeries_id() {
+            public String getSeries_id() {
                 return series_id;
             }
 
-            public void setSeries_id(int series_id) {
+            public void setSeries_id(String series_id) {
                 this.series_id = series_id;
             }
 

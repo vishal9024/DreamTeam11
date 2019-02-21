@@ -56,15 +56,15 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         try {
             when (view!!.id) {
                 R.id.txt_MyAccount -> {
-                    startActivity(
+                    startActivityForResult(
                         Intent(activity, MyAccountActivity::class.java).putExtra(
                             "accountVerified",
                             accountVerified
-                        )
+                        ),100
                     )
                 }
                 R.id.txt_fullProfile -> {
-                    startActivity(Intent(activity, FullProfileActivity::class.java))
+                    startActivityForResult(Intent(activity, FullProfileActivity::class.java),100)
                 }
                 R.id.txt_changePassword -> {
                     startActivity(Intent(activity, ChangePasswordActivity::class.java))
@@ -106,16 +106,16 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 if (mData != null)
                     currentBalance =
                         (mData!!.getCash_bonus_amount().toFloat() + mData!!.total_cash_amount.toFloat() + mData!!.total_winning_amount.toFloat()).toString()
-                startActivity(
+                startActivityForResult(
                     Intent(activity, AddCashActivity::class.java).putExtra(
                         IntentConstant.currentBalance,
                         currentBalance
-                    ).putExtra(IntentConstant.AddType, IntentConstant.ADD)
-                )
+                    ).putExtra(IntentConstant.AddType, IntentConstant.ADD),
+                    100)
             }
 
             R.id.imvTeamNameEdit -> {
-                startActivity(Intent(activity, ChangeTeamNameActivity::class.java))
+                startActivityForResult(Intent(activity, ChangeTeamNameActivity::class.java),100)
             }
             R.id.imvJoinInfo -> {
                 val intent = Intent(activity, WebViewActivity::class.java)
@@ -190,6 +190,16 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         e.printStackTrace()
     }
 }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        try{
+            if (requestCode==100)
+            getProfileData()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
 private fun ApplyOfferCodeApi() {
     try {
