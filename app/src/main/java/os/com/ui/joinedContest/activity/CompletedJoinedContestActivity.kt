@@ -311,7 +311,6 @@ class CompletedJoinedContestActivity : BaseActivity(), View.OnClickListener, OnC
                 txt_localTeamScore.text = data.comment
             else
                 txt_localTeamScore.text = getString(R.string.match_not_started)
-
         }
     }
 

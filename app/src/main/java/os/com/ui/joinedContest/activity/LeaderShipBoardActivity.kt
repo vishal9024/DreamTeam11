@@ -548,6 +548,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                                 .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                                 .putExtra("teamName", teamName)
                                 .putExtra("points", true)
+                                .putExtra("pointsShow", 1)
                         )
                     } else if (tag.equals("substitute")) {
                         startActivityForResult(

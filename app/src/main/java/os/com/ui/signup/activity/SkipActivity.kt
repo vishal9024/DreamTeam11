@@ -36,7 +36,6 @@ class SkipActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             btn_Join.setOnClickListener(this)
-
         } catch (e: Exception) {
             e.printStackTrace()
         }

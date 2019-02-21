@@ -53,7 +53,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                         getString(R.string.app_name) + " for the " + match!!.series_name +
                         " match and prove it! \n\nUse Contest Code " + data!!.invite_code.capitalize() +
                         " & join the action NOW!"
-                AppDelegate.prepareShareIntent(shareCode,this,getString(R.string.invite))
+                AppDelegate.prepareShareIntent(shareCode, this, getString(R.string.invite))
             }
             R.id.txt_switch_team -> {
 //                callApi = true
@@ -116,7 +116,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                     .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN),
                 AppRequestCodes.UPDATE_ACTIVITY
             )
-        } else if ( !data!!.is_joined && FantasyApplication.getInstance().teamCount == 1) {
+        } else if (!data!!.is_joined && FantasyApplication.getInstance().teamCount == 1) {
             if (NetworkUtils.isConnected()) {
                 checkAmountWallet(
                     match!!.match_id,
@@ -190,7 +190,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
 
     var joinedContest: JoinedContestData? = null
     var contest: Contest? = null
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var contest_id = ""
@@ -224,7 +224,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
@@ -239,7 +239,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.contest_detail)
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         if (NetworkUtils.isConnected()) {
             callContestDetailApi()
         } else
@@ -315,7 +315,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
                 if (response.response!!.status) {
-                    scrollView.visibility=View.VISIBLE
+                    scrollView.visibility = View.VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
@@ -404,10 +404,16 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         }
         joined_team_list = data.joined_team_list!!
 
-        if (!data.is_joined){
-            cl_c1.visibility= VISIBLE
-        }else{
-            cl_c2 .visibility= VISIBLE
+        if (!data.is_joined) {
+            if (data.confirm_winning.equals("yes", true))
+                cl_c1.visibility = VISIBLE
+            else
+                cl_c1.visibility = GONE
+        } else {
+            if (data.confirm_winning.equals("yes", true))
+                cl_c2.visibility = VISIBLE
+            else
+                cl_c2.visibility = GONE
         }
 
         setAdapter()
@@ -464,10 +470,10 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                             )
                             .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                             .putExtra("teamName", teamName)
-                            .putExtra("points",true)
+                            .putExtra("points", true)
                     )
                 } else {
-               logoutIfDeactivate(response.response!!.message)
+                    logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)

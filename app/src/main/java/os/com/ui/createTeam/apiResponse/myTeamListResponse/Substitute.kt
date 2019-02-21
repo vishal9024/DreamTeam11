@@ -6,6 +6,7 @@ import android.os.Parcelable
 class Substitute() : Parcelable {
     var name: String = ""
     var point: String = ""
+    var points: String = ""
     var player_id: String = ""
     var image: String = ""
     var role: String = ""
@@ -15,6 +16,7 @@ class Substitute() : Parcelable {
     constructor(parcel: Parcel) : this() {
         name = parcel.readString()
         point = parcel.readString()
+        points = parcel.readString()
         player_id = parcel.readString()
         image = parcel.readString()
         role = parcel.readString()
@@ -25,6 +27,7 @@ class Substitute() : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeString(point)
+        parcel.writeString(points)
         parcel.writeString(player_id)
         parcel.writeString(image)
         parcel.writeString(role)

@@ -412,56 +412,61 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
         creteTeamRequest.vice_captain = vicecaptain
         creteTeamRequest.player_id = player_id
         creteTeamRequest.substitute = substitute_id
-        GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@Choose_C_VC_Activity)
-            try {
-                val request = ApiClient.client
-                    .getRetrofitService()
-                    .create_team(creteTeamRequest)
-                val response = request.await()
-                AppDelegate.LogT("Response=>" + response);
-                AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
-                if (response.response!!.status) {
-                    if (from != AppRequestCodes.EDIT)
-                        FantasyApplication.getInstance().teamCount + 1
-                    if (createOrJoin == AppRequestCodes.JOIN) {
-                        if (NetworkUtils.isConnected()) {
-                            checkAmountWallet(
-                                match!!.match_id,
-                                match!!.series_id,
-                                contest_id,
-                                response.response!!.data!!.team_id,
-                                object : OnClickDialogue {
-                                    override fun onClick(tag: String, success: Boolean) {
-                                        val intent = Intent()
-                                        setResult(Activity.RESULT_OK, intent)
-                                        finish()
+//        if (!pref!!.isLogin){
+//            startActivityForResult(Intent(this@Choose_C_VC_Activity,SkipActivity::class.java).putExtra(IntentConstant.DATA,creteTeamRequest),AppRequestCodes.)
+//        }
+//        else {
+            GlobalScope.launch(Dispatchers.Main) {
+                AppDelegate.showProgressDialog(this@Choose_C_VC_Activity)
+                try {
+                    val request = ApiClient.client
+                        .getRetrofitService()
+                        .create_team(creteTeamRequest)
+                    val response = request.await()
+                    AppDelegate.LogT("Response=>" + response);
+                    AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
+                    if (response.response!!.status) {
+                        if (from != AppRequestCodes.EDIT)
+                            FantasyApplication.getInstance().teamCount + 1
+                        if (createOrJoin == AppRequestCodes.JOIN) {
+                            if (NetworkUtils.isConnected()) {
+                                checkAmountWallet(
+                                    match!!.match_id,
+                                    match!!.series_id,
+                                    contest_id,
+                                    response.response!!.data!!.team_id,
+                                    object : OnClickDialogue {
+                                        override fun onClick(tag: String, success: Boolean) {
+                                            val intent = Intent()
+                                            setResult(Activity.RESULT_OK, intent)
+                                            finish()
+                                        }
                                     }
-                                }
-                            )
+                                )
+                            } else {
+                                Toast.makeText(
+                                    this@Choose_C_VC_Activity,
+                                    getString(R.string.error_network_connection),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                val intent = Intent()
+                                setResult(Activity.RESULT_OK, intent)
+                                finish()
+                            }
                         } else {
-                            Toast.makeText(
-                                this@Choose_C_VC_Activity,
-                                getString(R.string.error_network_connection),
-                                Toast.LENGTH_LONG
-                            ).show()
                             val intent = Intent()
+                            intent.putExtra(IntentConstant.TEAM_ID, response.response!!.data!!.team_id)
                             setResult(Activity.RESULT_OK, intent)
                             finish()
                         }
                     } else {
-                        val intent = Intent()
-                        intent.putExtra(IntentConstant.TEAM_ID, response.response!!.data!!.team_id)
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
+                        logoutIfDeactivate(response.response!!.message)
+                        AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message)
                     }
-                } else {
-                    logoutIfDeactivate(response.response!!.message)
-                    AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message)
+                } catch (exception: Exception) {
+                    AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
                 }
-            } catch (exception: Exception) {
-                AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)
-            }
+//            }
         }
     }
 }

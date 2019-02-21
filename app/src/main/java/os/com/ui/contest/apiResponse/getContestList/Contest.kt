@@ -16,7 +16,7 @@ class Contest (`in`: Parcel) : Parcelable {
     internal var teams_joined = ""
     internal var is_joined: Boolean? = false
     internal var multiple_team: Boolean? = false
-    internal var confirm_winning: Boolean? = false
+    internal var confirm_winning: String? = ""
     internal var invite_code = ""
     internal var breakup_detail: ArrayList<PriceBreakUp>
     internal var my_team_ids: ArrayList<String>
@@ -28,12 +28,11 @@ class Contest (`in`: Parcel) : Parcelable {
         contest_id = `in`.readString()
         total_winners = `in`.readString()
         teams_joined = `in`.readString()
+        confirm_winning = `in`.readString()
         val tmpIs_joined = `in`.readByte()
         is_joined = if (tmpIs_joined.toInt() == 0) null else tmpIs_joined.toInt() == 1
         val tmpMultiple_team = `in`.readByte()
         multiple_team = if (tmpMultiple_team.toInt() == 0) null else tmpMultiple_team.toInt() == 1
-        val tmpConfirm_winning = `in`.readByte()
-        confirm_winning = if (tmpConfirm_winning.toInt() == 0) null else tmpConfirm_winning.toInt() == 1
         invite_code = `in`.readString()
         breakup_detail = `in`.createTypedArrayList(PriceBreakUp)
         my_team_ids = `in`.createStringArrayList()
@@ -47,9 +46,9 @@ class Contest (`in`: Parcel) : Parcelable {
         dest.writeString(contest_id)
         dest.writeString(total_winners)
         dest.writeString(teams_joined)
+        dest.writeString(confirm_winning)
         dest.writeByte((if (is_joined == null) 0 else if (is_joined!!) 1 else 2).toByte())
         dest.writeByte((if (multiple_team == null) 0 else if (multiple_team!!) 1 else 2).toByte())
-        dest.writeByte((if (confirm_winning == null) 0 else if (confirm_winning!!) 1 else 2).toByte())
         dest.writeString(invite_code)
         dest.writeTypedList(breakup_detail)
         dest.writeStringList(my_team_ids)
