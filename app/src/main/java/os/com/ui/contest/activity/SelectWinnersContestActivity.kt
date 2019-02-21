@@ -48,9 +48,10 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
     BottomSheetWinnerListFragment.OnClickWinning {
     override fun onClick(tag: String, position: Int) {
         if (position == 0)
-            txt_winners.text = priceBreakUpList!![position].title + " " + getString(R.string.recommended)
+            txt_winners.text = priceBreakUpList!![position].title + " " + getString(R.string.winners) + " " +
+                    getString(R.string.recommended)
         else
-            txt_winners.text = priceBreakUpList[position].title
+            txt_winners.text = priceBreakUpList[position].title + " " + getString(R.string.winners)
         winners_count = priceBreakUpList[position].title!!
         winnerListAdapter!!.infoList(priceBreakUpList[position].info!!, winning_amount)
         winnerListAdapter!!.notifyDataSetChanged()
@@ -319,7 +320,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
     }
 
 
-//    var countTimer: CountTimer? = CountTimer()
+    //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
     var createOrJoin = AppRequestCodes.JOIN
@@ -375,7 +376,7 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
                 if (!match!!.star_date.isEmpty()) {
                     val strt_date = match!!.star_date.split("T")
                     val dateTime = strt_date.get(0) + " " + match!!.star_time
-                    countTimer!!.startUpdateTimer(this,dateTime, txt_CountDownTimer)
+                    countTimer!!.startUpdateTimer(this, dateTime, txt_CountDownTimer)
                 }
             } else if (matchType == IntentConstant.COMPLETED) {
                 txt_CountDownTimer.setText(getString(R.string.completed))
@@ -386,7 +387,8 @@ class SelectWinnersContestActivity : BaseActivity(), View.OnClickListener,
             txt_TotalWinnings.setText(contest_size)
             txt_Winners.text = getString(R.string.Rs) + " " + winning_amount
             txt_EntryFees.text = getString(R.string.Rs) + " " + entry_fee
-            txt_winners.text = priceBreakUpList!![0].title + " " + getString(R.string.recommended)
+            txt_winners.text = priceBreakUpList!![0].title + " " + getString(R.string.winners) + " " +
+                    getString(R.string.recommended)
             winnerListAdapter!!.infoList(priceBreakUpList[0].info!!, winning_amount)
             winnerListAdapter!!.notifyDataSetChanged()
             winners_count = priceBreakUpList[0].title!!

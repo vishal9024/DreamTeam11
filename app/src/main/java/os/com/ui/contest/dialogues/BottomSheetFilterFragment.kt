@@ -14,9 +14,11 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_filter.*
 import os.com.R
+import os.com.application.FantasyApplication
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.ui.contest.activity.AllContestActivity
+import os.com.ui.contest.apiResponse.FilterModel
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.utils.AppDelegate
@@ -89,6 +91,7 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
                 filterEntryArray()
             }
             R.id.txt_Reset -> {
+                FantasyApplication.getInstance().filterModel = FilterModel()
                 resetAll()
             }
         }
@@ -167,6 +170,9 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         match = arguments!!.getParcelable(IntentConstant.MATCH)
         matchType = arguments!!.getInt(IntentConstant.CONTEST_TYPE)
         FROM = arguments!!.getInt(IntentConstant.FROM)
+
+
+
         dialog.txt_close.setOnClickListener { dismiss() }
         dialog.txt_Reset.setOnClickListener(this)
 
@@ -195,6 +201,34 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         dialog.contestsize_10001_50000.setOnClickListener(this)
         dialog.contestsize_50000_more.setOnClickListener(this)
         dialog.btn_CreateTeam.setOnClickListener(this)
+        setDataModel()
+    }
+
+    fun setDataModel() {
+        dialog.entry_1_100.isSelected = FantasyApplication.getInstance().filterModel.entry_1_100
+        dialog. entry_101_1000.isSelected = FantasyApplication.getInstance().filterModel.entry_101_1000
+        dialog.entry_1001_5000.isSelected = FantasyApplication.getInstance().filterModel.entry_1001_5000
+        dialog.entry_5000_more.isSelected = FantasyApplication.getInstance().filterModel.entry_5000_more
+
+        dialog.winning_1_10000.isSelected = FantasyApplication.getInstance().filterModel.winning_1_10000
+        dialog. winning_10001_50000.isSelected = FantasyApplication.getInstance().filterModel.winning_10001_50000
+        dialog. winning_50001_1lac.isSelected = FantasyApplication.getInstance().filterModel.winning_50001_1lac
+        dialog.winning_1lac_10lac.isSelected = FantasyApplication.getInstance().filterModel.winning_1lac_10lac
+        dialog. winning_10lac_25lac.isSelected = FantasyApplication.getInstance().filterModel.winning_10lac_25lac
+        dialog. winning_25lac_more.isSelected = FantasyApplication.getInstance().filterModel.winning_25lac_more
+
+        dialog. contest_confirmed.isSelected = FantasyApplication.getInstance().filterModel.contest_confirmed
+        dialog. contest_multientry.isSelected = FantasyApplication.getInstance().filterModel.contest_multientry
+        dialog.contest_multiwinner.isSelected = FantasyApplication.getInstance().filterModel.contest_multiwinner
+
+        dialog.contestsize_2.isSelected = FantasyApplication.getInstance().filterModel.contestsize_2
+        dialog.contestsize_3_10.isSelected = FantasyApplication.getInstance().filterModel.contestsize_3_10
+        dialog. contestsize_11_20.isSelected = FantasyApplication.getInstance().filterModel.contestsize_11_20
+        dialog. contestsize_21_100.isSelected = FantasyApplication.getInstance().filterModel.contestsize_21_100
+        dialog. contestsize_101_1000.isSelected = FantasyApplication.getInstance().filterModel.contestsize_101_1000
+        dialog. contestsize_1001_10000.isSelected = FantasyApplication.getInstance().filterModel.contestsize_1001_10000
+        dialog. contestsize_10001_50000.isSelected = FantasyApplication.getInstance().filterModel.contestsize_10001_50000
+        dialog. contestsize_50000_more.isSelected = FantasyApplication.getInstance().filterModel.contestsize_50000_more
     }
 
     fun filterEntryArray() {
@@ -281,7 +315,8 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
             finalArrayList.addAll(filterContestList)
         }
         if (dialog.contest_confirmed.isSelected) {
-            val filterContestList: List<Contest> = contestList.filter { it.confirm_winning!!.equals("yes",ignoreCase = true) }
+            val filterContestList: List<Contest> =
+                contestList.filter { it.confirm_winning!!.equals("yes", ignoreCase = true) }
             finalArrayList.addAll(filterContestList)
         }
 
@@ -327,7 +362,35 @@ class BottomSheetFilterFragment : BottomSheetDialogFragment(), View.OnClickListe
         filterContestArray(finalArrayList)
     }
 
+    fun setSelection() {
+        FantasyApplication.getInstance().filterModel.entry_1_100 = dialog.entry_1_100.isSelected
+        FantasyApplication.getInstance().filterModel.entry_101_1000 = dialog.entry_101_1000.isSelected
+        FantasyApplication.getInstance().filterModel.entry_1001_5000 = dialog.entry_1001_5000.isSelected
+        FantasyApplication.getInstance().filterModel.entry_5000_more = dialog.entry_5000_more.isSelected
+
+        FantasyApplication.getInstance().filterModel.winning_1_10000 =dialog. winning_1_10000.isSelected
+        FantasyApplication.getInstance().filterModel.winning_10001_50000 =dialog. winning_10001_50000.isSelected
+        FantasyApplication.getInstance().filterModel.winning_50001_1lac =dialog. winning_50001_1lac.isSelected
+        FantasyApplication.getInstance().filterModel.winning_1lac_10lac =dialog. winning_1lac_10lac.isSelected
+        FantasyApplication.getInstance().filterModel.winning_10lac_25lac = dialog.winning_10lac_25lac.isSelected
+        FantasyApplication.getInstance().filterModel.winning_25lac_more = dialog.winning_25lac_more.isSelected
+
+        FantasyApplication.getInstance().filterModel.contest_confirmed = dialog.contest_confirmed.isSelected
+        FantasyApplication.getInstance().filterModel.contest_multientry =dialog. contest_multientry.isSelected
+        FantasyApplication.getInstance().filterModel.contest_multiwinner = dialog.contest_multiwinner.isSelected
+
+        FantasyApplication.getInstance().filterModel.contestsize_2 =dialog. contestsize_2.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_3_10 =dialog. contestsize_3_10.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_11_20 =dialog. contestsize_11_20.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_21_100 = dialog.contestsize_21_100.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_101_1000 = dialog.contestsize_101_1000.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_1001_10000 = dialog.contestsize_1001_10000.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_10001_50000 =dialog. contestsize_10001_50000.isSelected
+        FantasyApplication.getInstance().filterModel.contestsize_50000_more =dialog. contestsize_50000_more.isSelected
+    }
+
     fun filterValue(finalArrayList: ArrayList<Contest>) {
+        setSelection()
         finalArrayList.distinct()
         if (FROM == 1)
             onClickFilter!!.onClick("DATA", finalArrayList);

@@ -33,6 +33,7 @@ import os.com.ui.joinedContest.apiResponse.viewTeamsResponse.ViewTeamResponse
 import os.com.ui.notification.apiResponse.notificationResponse.NotificationResponse
 import os.com.ui.signup.apiRequest.SignUpRequest
 import os.com.ui.signup.apiRequest.VerifyOtpRequest
+import os.com.ui.signup.apiResponse.beforeJoinContest.BeforeJoinContestResponse
 import os.com.ui.signup.apiResponse.otpVerify.OtpVerifyResponse
 import os.com.ui.signup.apiResponse.signup.SignUpResponse
 import os.com.ui.winningBreakup.apiResponse.contestPriceBreakupResponse.PriceBreakUpResponse
@@ -276,6 +277,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.seriesPlayerDetail)
     fun seriesPlayerDetail(@Body request: Map<String, String>): Deferred<PlayerdetailResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(ApiConstant.befor_join_contest)
+    fun befor_join_contest(@Body request: Map<String, String>): Deferred<BeforeJoinContestResponse>
 
 
 }

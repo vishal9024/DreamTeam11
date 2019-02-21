@@ -16,6 +16,7 @@ import net.danlew.android.joda.JodaTimeAndroid
 import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
+import os.com.ui.contest.apiResponse.FilterModel
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.Utils
 import retrofit2.Retrofit
@@ -28,6 +29,7 @@ class FantasyApplication : MultiDexApplication() {
     private var retrofit: Retrofit? = null
     var teamCount = 0
     var joinedCount = 0
+    var filterModel:FilterModel=FilterModel()
     //    var createOrjoin=false
     companion object {
         lateinit var fantasyApplication: FantasyApplication
@@ -60,7 +62,6 @@ class FantasyApplication : MultiDexApplication() {
             .considerExifParams(true)
             .build()
         Utils.init(this)
-
 
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             throwable.printStackTrace()

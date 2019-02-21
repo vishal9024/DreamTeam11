@@ -200,10 +200,14 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
     }
 
     fun setTitleVisibility(title: Boolean, icon: Boolean) {
-        if (icon)
+        if (icon) {
             img_AppIcon.visibility = VISIBLE
-        else
+            appTitle.visibility = VISIBLE
+        }
+        else {
             img_AppIcon.visibility = GONE
+            appTitle.visibility = GONE
+        }
 
         if (title)
             toolbarTitle.visibility = VISIBLE
@@ -246,6 +250,8 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         super.onResume()
         if (!pref!!.isLogin)
             bottomNavigationView.visibility = View.GONE
+        else
+            bottomNavigationView.visibility = View.VISIBLE
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
 //        addressTv.text = pref!!.getStringValue(PrefConstant.KEY_SELECTED_STORE_NAME, getString(R.string.home))

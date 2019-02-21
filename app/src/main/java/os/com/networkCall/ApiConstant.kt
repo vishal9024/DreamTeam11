@@ -154,4 +154,5 @@ object ApiConstant {
     const val deleteNotifications = "deleteNotifications"
     const val forgot_password = "forgot-password"
     const val seriesPlayerDetail = "seriesPlayerDetail"
+    const val befor_join_contest="befor-join-contest"
 }

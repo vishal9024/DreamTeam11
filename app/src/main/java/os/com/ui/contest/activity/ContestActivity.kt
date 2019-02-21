@@ -31,6 +31,7 @@ import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.contest.adapter.ContestAdapter.ContestMainAdapter
+import os.com.ui.contest.apiResponse.FilterModel
 import os.com.ui.contest.apiResponse.getContestList.Contest
 import os.com.ui.contest.apiResponse.getContestList.ContestCategory
 import os.com.ui.contest.dialogues.BottomSheetFilterFragment
@@ -138,7 +139,11 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
         }
         txt_joined_contest.text = FantasyApplication.getInstance().joinedCount.toString()
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
-
+        setMenu(false, true, true, false, false)
+        if (!pref!!.isLogin)
+            ll_ContestType.visibility=GONE
+        else
+            ll_ContestType.visibility= VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -214,8 +219,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
             e.printStackTrace()
         }
 
-        if (!pref!!.isLogin)
-            ll_ContestType.visibility=GONE
+
     }
 
     fun filterBootomSheet() {
@@ -401,6 +405,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
 
     override fun onDestroy() {
         super.onDestroy()
+        FantasyApplication.getInstance().filterModel= FilterModel()
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }

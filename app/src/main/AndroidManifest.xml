@@ -171,25 +171,39 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+
+
         <!--<meta-data-->
-        <!--android:name="com.google.android.geo.API_KEY"-->
-        <!--android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" />-->
+                <!--android:name="com.google.android.geo.API_KEY"-->
+                <!--android:value="AIzaSyAMGoB3Bpt1Sg1oejEX7xLAz1jIGoP8hZQ" />-->
         <meta-data
                 android:name="io.fabric.ApiKey"
                 android:value="b56459f19c9162c72a127d9e031fcc8f00bee5b2"
         />
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
-                android:value="@string/facebook_app_id"/>
+                android:value="@string/facebook_app_id" />
 
         <activity
                 android:name="com.facebook.FacebookActivity"
                 android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-                android:label="@string/app_name"/>
-        <activity android:name=".ui.createTeam.activity.myTeam.MyTeamSelectActivity"/>
-        <activity android:name=".ui.addCash.activity.AddCashActivity"/>
-        <activity android:name=".ui.createTeam.activity.ChooseSubstituteActivity"/>
-        <activity android:name=".ui.joinedContest.activity.ReplaceWithSubstituteActivity"/>
+                android:label="@string/app_name" />
+        <activity android:name=".ui.createTeam.activity.myTeam.MyTeamSelectActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.addCash.activity.AddCashActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.createTeam.activity.ChooseSubstituteActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.joinedContest.activity.ReplaceWithSubstituteActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
         <activity android:name=".ui.dashboard.profile.activity.ChangeTeamNameActivity"
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
@@ -198,22 +212,31 @@
                   android:configChanges="orientation|keyboardHidden"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
-        <activity android:name=".ui.dashboard.profile.activity.MyProfileActivity"/>
-        <activity android:name=".ui.contest.activity.InviteContestToFriendsActivity"/>
-        <activity android:name=".ui.signup.activity.SkipActivity"/>
+        <activity android:name=".ui.dashboard.profile.activity.MyProfileActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.contest.activity.InviteContestToFriendsActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.signup.activity.SkipActivity"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
 
         <meta-data
                 android:name="com.google.firebase.messaging.default_notification_channel_id"
-                android:value="@string/default_notification_channel_id"/>
+                android:value="@string/default_notification_channel_id" />
 
         <service android:name=".firebase.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service android:name=".firebase.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
         <meta-data

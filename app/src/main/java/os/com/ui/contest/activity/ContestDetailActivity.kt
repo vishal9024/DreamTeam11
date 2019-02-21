@@ -470,7 +470,6 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                             )
                             .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                             .putExtra("teamName", teamName)
-                            .putExtra("points", true)
                     )
                 } else {
                     logoutIfDeactivate(response.response!!.message)

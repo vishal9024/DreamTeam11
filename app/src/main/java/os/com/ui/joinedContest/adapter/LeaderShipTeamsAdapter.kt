@@ -61,7 +61,7 @@ class LeaderShipTeamsAdapter(
         else
             holder.itemView.txt_rank.setText("-")
 
-        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty()) {
+        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty() && joined_team_list[holder.adapterPosition].winning_amount.toDouble()>0  ) {
             holder.itemView.txt_prizeMoney.setText(mContext.getString(R.string.Rs) + " " + joined_team_list[holder.adapterPosition].winning_amount)
             holder.itemView.txt_prizeMoney.visibility=View.VISIBLE
         }

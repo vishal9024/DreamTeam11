@@ -540,7 +540,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                         startActivity(
                             Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
                                 "show",
-                                1
+                                2
                             ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
                                 IntentConstant.SELECT_PLAYER,
                                 response.response!!.data!![0].player_details

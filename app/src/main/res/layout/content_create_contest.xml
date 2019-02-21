@@ -41,7 +41,7 @@
                 android:drawablePadding="@dimen/_5sdp"
                 android:textSize="@dimen/_10sdp"
                 android:layout_width="wrap_content"
-                android:drawableStart="@mipmap/time"
+                android:drawableLeft="@mipmap/time"
                 android:textColor="@color/textColorLightBlack"
                 android:layout_height="wrap_content"/>
     </LinearLayout>

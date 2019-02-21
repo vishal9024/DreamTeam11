@@ -46,6 +46,9 @@ class WelcomeActivity : BaseActivity(), View.OnClickListener {
         btn_LetsPlay.isEnabled = true
         txt_AlreadyUser.isEnabled = true
         txt_referralCode.isEnabled = true
+        if (pref!!.isLogin) {
+            finishAffinity()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

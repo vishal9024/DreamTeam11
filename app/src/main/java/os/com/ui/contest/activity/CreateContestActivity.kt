@@ -231,7 +231,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         loginRequest[Tags.winning_amount] = et_winning_amount.text.toString()
 
         GlobalScope.launch(Dispatchers.Main) {
-            AppDelegate.showProgressDialog(this@CreateContestActivity)
+            AppDelegate.showProgressDialogWithKeyBoardOpen(this@CreateContestActivity)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()

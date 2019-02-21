@@ -728,7 +728,13 @@ object AppDelegate {
 
         }
     }
+    fun showProgressDialogWithKeyBoardOpen(mContext: Activity) {
+        try {
+            FantasySportProgressDialog.getProgressDialog(mContext)!!.showDialog()
+        } catch (e: Exception) {
 
+        }
+    }
     fun showProgressDialogCancelable(mContext: Activity) {
         hideKeyBoard(mContext)
         try {
