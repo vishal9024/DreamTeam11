@@ -57,7 +57,7 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
               supportActionBar!!.setDisplayHomeAsUpEnabled(true)
               supportActionBar!!.setDisplayShowHomeEnabled(true)
               supportActionBar!!.setDisplayShowTitleEnabled(false)
-              toolbarTitleTv.setText(R.string.player_detail)
+              toolbarTitleTv.setText(R.string.player_name)
               setMenu(false, false, false, false,false)
           } catch (e: Exception) {
               e.printStackTrace()
@@ -114,7 +114,8 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
                     FantasyApplication.getInstance().options
                 )
             if (data.player_name != null)
-                txt_PlayerName.setText(data.player_name)
+                toolbarTitleTv.setText(data.player_name)
+//                txt_PlayerName.setText(data.player_name)
             if (data.player_credit!= null)
                 txtCredits.setText(data.player_credit)
             if (data.player_total_points!= null)

@@ -76,7 +76,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                     startActivity(Intent(activity, InviteFriendsActivity::class.java))
                 }
                 R.id.txt_ApplyCode -> {
-                    if (!et_email.text.toString().isEmpty())
                         if (!et_email.text.toString().isEmpty()) {
                             if (NetworkUtils.isConnected()) {
                                 ApplyOfferCodeApi()

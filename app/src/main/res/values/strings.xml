@@ -602,4 +602,7 @@
     <string name="winning">Winning Amount</string>
     <string name="view_leadership_board">View Leadership Board</string>
     <string name="scorecard">Scorecard</string>
+    <string name="cashfree">CashFree</string>
+    <string name="manage_payment">Manage Payment</string>
+    <string name="player_name">Player Name</string>
 </resources>

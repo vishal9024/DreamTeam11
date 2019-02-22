@@ -32,7 +32,7 @@ class MyAccountActivity : BaseActivity(), View.OnClickListener {
                     startActivity(Intent(this, RecentTansActivity::class.java))
                 }
                 R.id.cv_payments -> {
-//                startActivity(Intent(this, SignUpActivity::class.java))
+                startActivityForResult(Intent(this, ManagePaymentActivity::class.java),100)
                 }
                 R.id.txt_Add -> {
                     startActivityForResult(
