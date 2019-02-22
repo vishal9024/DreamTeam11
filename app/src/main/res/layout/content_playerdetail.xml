@@ -311,8 +311,9 @@
                         app:layout_constraintTop_toBottomOf="@+id/ll_about"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:text="@string/fantasy_status"
+                        android:text="@string/matchwise_fantasy_status"
                         android:textColor="@color/colorASPrimary"
+                        android:textAllCaps="true"
                         android:layout_height="wrap_content"/>
                 <LinearLayout
                         android:id="@+id/ll_AllContest"
@@ -349,7 +350,7 @@
                                 android:gravity="center"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.3"
+                                android:layout_weight="0.4"
                                 android:textColor="@color/textColorBlack"
                                 android:text="@string/points"
                                 android:layout_height="wrap_content"/>
@@ -359,7 +360,7 @@
                                 android:gravity="end"
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_width="0dp"
-                                android:layout_weight="0.5"
+                                android:layout_weight="0.4"
                                 android:paddingEnd="@dimen/_10sdp"
                                 android:textColor="@color/textColorBlack"
                                 android:text="@string/selected_by"

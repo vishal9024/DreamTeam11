@@ -605,5 +605,5 @@
     <string name="cashfree">CashFree</string>
     <string name="manage_payment">Manage Payment</string>
     <string name="player_name">Player Name</string>
-    <string name="matchwise_fantasy_status">Fantasy Status</string>
+    <string name="matchwise_fantasy_status">Matchwise Fantasy Stats</string>
 </resources>

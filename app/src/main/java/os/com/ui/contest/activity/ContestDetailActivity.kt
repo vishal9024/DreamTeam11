@@ -3,16 +3,21 @@ package os.com.ui.contest.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_megacontest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
+import kotlinx.android.synthetic.main.dialogue_fairplay.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -262,7 +267,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         txt_Join.setOnClickListener(this)
         txt_switch_team.setOnClickListener(this)
         btn_InviteFriends.setOnClickListener(this)
-
+        initFairPlayPopUp()
     }
 
     private fun setdata(data: Data) {
@@ -477,6 +482,34 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
             }
+        }
+    }
+
+    private fun initFairPlayPopUp() {
+        try {
+            /* set view for filter popup window*/
+            var walletPopupWindow = PopupWindow(this)
+            var popupWindowView = layoutInflater.inflate(R.layout.dialogue_tooltip, null) as View
+            walletPopupWindow.contentView = popupWindowView
+
+//            walletPopupWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
+//            walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
+
+            popupWindowView.ll_ok.setOnClickListener { view ->
+                walletPopupWindow.dismiss()
+            }
+            walletPopupWindow.isOutsideTouchable = true
+            walletPopupWindow.isFocusable = true
+
+            var background = ColorDrawable(Color.BLACK)
+            background.alpha = 10
+            walletPopupWindow.setBackgroundDrawable(background);
+            val rectangle = Rect()
+            val window = window
+            window.decorView.getWindowVisibleDisplayFrame(rectangle)
+            /* show popup window*/
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }
