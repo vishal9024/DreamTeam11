@@ -170,7 +170,7 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                 try {
                     val request = ApiClient.client
                         .getRetrofitService()
-                        .ifsc_code("https://api.techm.co.in/api/v1/ifsc/"+edtIFSCCode.text.toString().trim())
+                        .ifsc_code(AppRequestCodes.IFSCurl+edtIFSCCode.text.toString().trim())
                     val response = request.await()
                     AppDelegate.LogT("Response=>" + response)
                     AppDelegate.hideProgressDialog(activity!!)

@@ -19,6 +19,7 @@ import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_choose_team.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_team.*
 import kotlinx.coroutines.Dispatchers
@@ -425,15 +426,15 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 val remainingPlayer = 11 - selectPlayer!!.selectedPlayer
                 if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
                     if (selectPlayer!!.selectedPlayer != 11)
-                        showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")
+                        showSnackBar(cl, "Pick " + remainingPlayer + " more player to complete your team.")
                     else if (!selectPlayer!!.substitute) {
-                        showSnackBar(toolbar, "Please select substitute.")
+                        showSnackBar(cl, "Please select substitute.")
                     } else {
                         gotoNext()
                     }
                 } else {
                     if (selectPlayer!!.selectedPlayer != 11)
-                        showSnackBar(toolbar, "Pick " + remainingPlayer + " more player to complete your team.")
+                        showSnackBar(cl, "Pick " + remainingPlayer + " more player to complete your team.")
                     else {
                         gotoNext()
                     }
@@ -658,7 +659,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 //            buil.animation = null
             buil.forceTextPosition(abovE_SHOWCASE)
 
-            delay(5000)
+            delay(2500)
             buil.hide()
 
         }

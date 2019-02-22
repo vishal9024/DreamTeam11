@@ -1,11 +1,13 @@
 package os.com.networkCall
 
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Deferred
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import os.com.networkCall.responseModel.BaseResponse
 import os.com.ui.addCash.apiRequest.GeneratePayTmCheckSumRequest
 import os.com.ui.addCash.apiRequest.UpdateTransactionRequest
+import os.com.ui.addCash.apiResponse.CashFreeTokenResponse
 import os.com.ui.addCash.apiResponse.generatePaytmChecksumResponse.GeneratePaytmChecksumResponse
 import os.com.ui.contest.apiResponse.contestSizePriceBreakUp.ContestSizePriceBreakup
 import os.com.ui.contest.apiResponse.entryFeeResponse.EntryFeeResponse
@@ -281,6 +283,10 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(ApiConstant.befor_join_contest)
     fun befor_join_contest(@Body request: Map<String, String>): Deferred<BeforeJoinContestResponse>
+
+    @POST(ApiConstant.cashfreeToken)
+    fun cashFreeToken(@Header("x-client-id") client_id: String, @Header("x-client-secret") client_secret: String, @Body verifyObject: JsonObject): Deferred<CashFreeTokenResponse>
+
 
 
 }

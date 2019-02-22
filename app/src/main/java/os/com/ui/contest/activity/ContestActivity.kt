@@ -398,7 +398,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
             buil!!.setShowcase(ViewTarget(target, this@ContestActivity), true)
 //            buil!!.setFadeDurations(0,0)
             buil!!.forceTextPosition(abovE_SHOWCASE)
-            delay(5000)
+            delay(2500)
             buil!!.hide()
         }
     }

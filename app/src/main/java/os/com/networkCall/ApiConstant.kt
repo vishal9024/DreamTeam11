@@ -2,10 +2,6 @@ package os.com.networkCall
 
 import os.com.BuildConfig
 
-/**
- * Created by heena on 26/9/17.
- */
-
 object ApiConstant {
     /*Base Url*/
 //    https://72.octallabs.com/real11/WebServices/
@@ -20,7 +16,7 @@ object ApiConstant {
 //    const val realBashBaseURL = "https://72.octallabs.com/realBash/WebServices/"
 
 
-    const val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/"
+    val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/"
     const val CricsetBaseURL = "http://192.168.1.67/real_11/"
     const val fSLBaseURL = "http://fansuperleague.com/"
     const val playing11BaseURL = "http://3.17.90.89/"
@@ -41,13 +37,6 @@ object ApiConstant {
         return realBashBaseURL
     }
 
-    //    const val cashFantasyWebViewURL = "https://72.octallabs.com/cashfantasy/"
-//    const val CricsetWebViewURL = "https://72.octallabs.com/dreamstock11/"
-//    const val fSLWebViewURL = "https://72.octallabs.com/fsl/"
-//    const val playing11WebViewURL = "https://72.octallabs.com/playing11/"
-//    //    const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
-//    const val real11WebViewURL = "https://72.octallabs.com/real11/"
-//    const val realBashWebViewURL = "https://72.octallabs.com/realBash/"
     fun getWebViewUrl(): String {
         when {
             BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL
@@ -61,27 +50,6 @@ object ApiConstant {
         return realBashBaseURL
     }
 
-
-//    const val index = "pages/index.html"
-//    const val point_system = "pages/point_system.html"
-//    const val static = "pages/static.html"
-//    const val static_tab = "pages/static_tab.html"
-//    const val how_to_play_tab = "pages/how_to_play.html"
-//    const val how_it_works_tab = "pages/invite-friends-how-it-works.html"
-//    const val how_fair_play_tab = "pages/invite-friends-how-it-works-2.html"
-//    const val legality_tab = "pages/legality.html"
-//    const val dream11_champions = "pages/dream11_champions"
-
-//    const val help = "pages/help.html"
-//    const val point_system = "pages/point-system.html"
-//    const val static = "pages/about_us.html"
-//    const val static_tab = "pages/static-tab.html"
-//    const val how_to_play_tab = "pages/how-to-play.html"
-//    const val how_it_works_tab = "pages/how-it-works.html"
-//    const val how_fair_play_tab = "pages/fair-play.html"
-//    const val legality_tab = "pages/legality.html"
-//    const val dream11_champions = "pages/dream11_champions"
-
     const val help = "pages/help"
     const val point_system = "pages/point-system"
     const val static = "pages/about_us"
@@ -92,7 +60,6 @@ object ApiConstant {
     const val legality_tab = "pages/legality"
     const val dream11_champions = "pages/dream11_champions"
     const val terms_conditions = "pages/terms_conditions"
-
 
     const val signup = "signup"
     const val verify_otp = "verify-otp"
@@ -139,7 +106,6 @@ object ApiConstant {
     const val team_profile_comparision = "team-profile-comparision"
     const val friend_referal_detail = "friend-referal-detail"
 
-
     const val withdraw_cash = "withdraw-cash"
     const val verify_email = "verify-email"
     const val transation_history = "transation-history-new"
@@ -154,5 +120,6 @@ object ApiConstant {
     const val deleteNotifications = "deleteNotifications"
     const val forgot_password = "forgot-password"
     const val seriesPlayerDetail = "seriesPlayerDetail"
-    const val befor_join_contest="befor-join-contest"
+    const val befor_join_contest = "befor-join-contest"
+    const val cashfreeToken = "cftoken/order"
 }

@@ -360,7 +360,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
                 var buil = scv.build()
                 buil.hideButton()
                 buil.forceTextPosition(abovE_SHOWCASE)
-                delay(5000)
+                delay(2500)
                 buil.hide()
 
             }

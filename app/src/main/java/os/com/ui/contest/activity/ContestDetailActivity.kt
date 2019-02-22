@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.WindowManager
 import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.content_megacontest.*
 import kotlinx.android.synthetic.main.dialogue_fairplay.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
@@ -487,26 +489,41 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
 
     private fun initFairPlayPopUp() {
         try {
-            /* set view for filter popup window*/
-            var walletPopupWindow = PopupWindow(this)
-            var popupWindowView = layoutInflater.inflate(R.layout.dialogue_tooltip, null) as View
-            walletPopupWindow.contentView = popupWindowView
+            GlobalScope.launch(Dispatchers.Main) {
+                delay(1000)
+                var walletPopupWindow = PopupWindow(this@ContestDetailActivity)
+                var popupWindowView = layoutInflater.inflate(R.layout.dialogue_fairplay, null) as View
+                walletPopupWindow.contentView = popupWindowView
 
-//            walletPopupWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
-//            walletPopupWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
+                popupWindowView.ll_ok.setOnClickListener { view ->
+                    walletPopupWindow.dismiss()
+                }
+                walletPopupWindow.isOutsideTouchable = true
+                walletPopupWindow.isFocusable = true
 
-            popupWindowView.ll_ok.setOnClickListener { view ->
-                walletPopupWindow.dismiss()
+                var background = ColorDrawable(Color.BLACK)
+                background.alpha = 10
+                walletPopupWindow.setBackgroundDrawable(background);
+                val rectangle = Rect()
+                val window = window
+                window.decorView.getWindowVisibleDisplayFrame(rectangle)
+                walletPopupWindow.height = WindowManager.LayoutParams.WRAP_CONTENT
+                walletPopupWindow.width = WindowManager.LayoutParams.MATCH_PARENT
+                walletPopupWindow.isOutsideTouchable = true
+                walletPopupWindow.isFocusable = true
+
+
+                background.alpha = 10
+                walletPopupWindow.setBackgroundDrawable(background);
+                window.decorView.getWindowVisibleDisplayFrame(rectangle)
+                walletPopupWindow.showAsDropDown(cl/*, Gravity.BOTTOM, 0*/)
+
+
             }
-            walletPopupWindow.isOutsideTouchable = true
-            walletPopupWindow.isFocusable = true
+            /* set view for filter popup window*/
 
-            var background = ColorDrawable(Color.BLACK)
-            background.alpha = 10
-            walletPopupWindow.setBackgroundDrawable(background);
-            val rectangle = Rect()
-            val window = window
-            window.decorView.getWindowVisibleDisplayFrame(rectangle)
+
+
             /* show popup window*/
         } catch (e: Exception) {
             e.printStackTrace()

@@ -104,7 +104,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             R.id.cimg_bowler5 -> {
                 callPlayerDetail(cimg_bowler5ID)
             }
-            R.id.cimg_substitute-> {
+            R.id.cimg_substitute -> {
                 callPlayerDetail(cimg_SubID)
             }
         }
@@ -127,7 +127,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             bundle.putParcelable(Tags.DATA, playerData[0])
             bottomSheetDialogFragment.arguments = bundle
             bottomSheetDialogFragment.show(supportFragmentManager, "Bottom Sheet Dialog Fragment")
-        }else{
+        } else {
             AppDelegate.showToast(this, "Player stats not available")
         }
     }
@@ -166,6 +166,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             e.printStackTrace()
         }
     }
+
     private fun filterBootomSheet() {
         val mBottomSheetBehaviorfilter = BottomSheetBehavior.from(bottom_sheet_filter)
         mBottomSheetBehaviorfilter.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -179,6 +180,7 @@ class TeamPreviewActivity : BaseActivity(), View.OnClickListener {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
     }
+
     var teamName = ""
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE

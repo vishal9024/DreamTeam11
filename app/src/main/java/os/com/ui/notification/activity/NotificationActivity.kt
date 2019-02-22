@@ -18,6 +18,7 @@ import kotlinx.coroutines.launch
 import os.com.AppBase.BaseActivity
 import os.com.R
 import os.com.application.FantasyApplication
+import os.com.channel.NotificationCountChannel
 import os.com.constant.PrefConstant
 import os.com.constant.Tags
 import os.com.data.Prefs
@@ -147,12 +148,8 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
                         rv_Notifications.visibility = View.GONE
                         txt_NotFoundData.visibility = View.VISIBLE
                     }
-//                    if (!response.response!!.data!!.isEmpty())
-//                        NotificationCountChannel.getInstance()
-//                            .notificationCountChannel.send(response.response!!.data!!.size)
-//                    else
-//                        NotificationCountChannel.getInstance()
-//                            .notificationCountChannel.send(151)
+                        NotificationCountChannel.getInstance()
+                            .notificationCountChannel.send(0)
                 } else {
                     logoutIfDeactivate(response.response!!.message!!)
                     AppDelegate.showToast(this@NotificationActivity, response.response!!.message!!)
@@ -164,7 +161,6 @@ class NotificationActivity : BaseActivity(), View.OnClickListener {
     }
 
     private var mData = ArrayList<Data>()
-
     @SuppressLint("WrongConstant")
     private fun setAdapter() {
         val llm = LinearLayoutManager(this)
