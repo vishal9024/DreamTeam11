@@ -35,33 +35,33 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_detail)
         initViews()
-  try{
-      if (intent.hasExtra("series_id"))
-          seriesId = intent.getStringExtra("series_id")
-      if (intent.hasExtra("player_id"))
-          playerId = intent.getStringExtra("player_id")
-      if (NetworkUtils.isConnected()) {
-          if (seriesId != null && !seriesId.equals("") && playerId != null && !playerId.equals(""))
-              getPlayerDetailData(seriesId, playerId)
-      } else
-          Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-  } catch (e: Exception) {
-      e.printStackTrace()
-  }
+        try {
+            if (intent.hasExtra("series_id"))
+                seriesId = intent.getStringExtra("series_id")
+            if (intent.hasExtra("player_id"))
+                playerId = intent.getStringExtra("player_id")
+            if (NetworkUtils.isConnected()) {
+                if (seriesId != null && !seriesId.equals("") && playerId != null && !playerId.equals(""))
+                    getPlayerDetailData(seriesId, playerId)
+            } else
+                Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
     private fun initViews() {
-          try{
-              setSupportActionBar(toolbar)
-              supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-              supportActionBar!!.setDisplayShowHomeEnabled(true)
-              supportActionBar!!.setDisplayShowTitleEnabled(false)
-              toolbarTitleTv.setText(R.string.player_name)
-              setMenu(false, false, false, false,false)
-          } catch (e: Exception) {
-              e.printStackTrace()
-          }
+        try {
+            setSupportActionBar(toolbar)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowHomeEnabled(true)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            toolbarTitleTv.setText(R.string.player_name)
+            setMenu(false, false, false, false, false)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun getPlayerDetailData(series_id: String, playerId: String) {
@@ -73,7 +73,7 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
                     if (pref!!.isLogin)
                         map[Tags.user_id] = pref!!.userdata!!.user_id
                     else
-                        map[Tags.user_id]= ""
+                        map[Tags.user_id] = ""
                     map[Tags.language] = FantasyApplication.getInstance().getLanguage()
                     map[Tags.series_id] = series_id
                     map[Tags.player_id] = playerId
@@ -105,8 +105,8 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
 
     private fun setData(data: PlayerdetailResponse.ResponseBean.DataBean) {
         try {
-            ll_level.visibility=View.VISIBLE
-            ll_about.visibility=View.VISIBLE
+            ll_level.visibility = View.VISIBLE
+            ll_about.visibility = View.VISIBLE
             if (data.player_image != null && data.player_image != "")
                 ImageLoader.getInstance().displayImage(
                     data.player_image,
@@ -116,22 +116,22 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
             if (data.player_name != null)
                 toolbarTitleTv.setText(data.player_name)
 //                txt_PlayerName.setText(data.player_name)
-            if (data.player_credit!= null)
+            if (data.player_credit != null)
                 txtCredits.setText(data.player_credit)
-            if (data.player_total_points!= null)
+            if (data.player_total_points != null)
                 txt_totalPoints.setText(data.player_total_points)
-            if (data.bats_type!= null)
+            if (data.bats_type != null)
                 txtBatsType.setText(data.bats_type)
             if (data.bowls_type != null)
                 txtBowlsType.setText(data.bowls_type)
             if (data.nationality != null)
                 txtNationality.setText(data.nationality)
-            if (data.birthday!= null)
+            if (data.birthday != null)
                 txtBirthday.setText(data.birthday)
 
-            if (data.match_detail!= null && data.match_detail.size>0 ){
-                txt_FantasyStatus.visibility=View.VISIBLE
-                ll_AllContest.visibility=View.VISIBLE
+            if (data.match_detail != null && data.match_detail.size > 0) {
+                txt_FantasyStatus.visibility = View.VISIBLE
+                ll_AllContest.visibility = View.VISIBLE
                 setAdapter(data.match_detail)
             }
 //            ll_match.visibility = View.VISIBLE
@@ -164,14 +164,14 @@ class PlayerDetailActivity : BaseActivity(), View.OnClickListener {
 
     @SuppressLint("WrongConstant")
     private fun setAdapter(match_detail: MutableList<PlayerdetailResponse.ResponseBean.DataBean.MatchDetailBean>) {
-          try{
-              val llm = LinearLayoutManager(this)
-              llm.orientation = LinearLayoutManager.VERTICAL
-              rv_FantasyStatus!!.layoutManager = llm
-              rv_FantasyStatus!!.adapter = PlayerDetailFantasyStatusAdapter(this,match_detail)
-          } catch (e: Exception) {
-              e.printStackTrace()
-          }
+        try {
+            val llm = LinearLayoutManager(this)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            rv_FantasyStatus!!.layoutManager = llm
+            rv_FantasyStatus!!.adapter = PlayerDetailFantasyStatusAdapter(this, match_detail)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 

@@ -17,7 +17,9 @@ import os.com.constant.AppRequestCodes
 import os.com.constant.IntentConstant
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
+import os.com.networkCall.ApiConstant
 import os.com.ui.createTeam.apiRequest.CreateTeamRequest
+import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.utils.AppDelegate
 import os.com.utils.networkUtils.NetworkUtils
 
@@ -32,6 +34,12 @@ class SkipActivity : BaseActivity(), View.OnClickListener {
                             .putExtra(IntentConstant.TYPE, true)
                         , AppRequestCodes.SIGNUP
                     )
+                }
+                R.id.txtFullPointSystem->{
+                    val intent = Intent(this, WebViewActivity::class.java)
+                    intent.putExtra("PAGE_SLUG", "Fantasy Point System")
+                    intent.putExtra("URL", ApiConstant.getWebViewUrl() + ApiConstant.point_system)
+                    startActivity(intent)
                 }
             }
         } catch (e: Exception) {
@@ -64,7 +72,7 @@ class SkipActivity : BaseActivity(), View.OnClickListener {
             supportActionBar!!.setDisplayShowHomeEnabled(true)
             supportActionBar!!.setDisplayShowTitleEnabled(false)
             btn_Join.setOnClickListener(this)
-
+            txtFullPointSystem.setOnClickListener(this)
             getIntentData()
         } catch (e: Exception) {
             e.printStackTrace()

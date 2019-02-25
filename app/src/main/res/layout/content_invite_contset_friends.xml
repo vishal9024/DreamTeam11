@@ -94,12 +94,12 @@
                 android:textSize="@dimen/_11sdp"
                 card_view:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:textColor="@color/textColorLightBlack"
                 android:text="ICC Women's World T20 2018"
                 android:layout_height="wrap_content"
-                card_view:layout_constraintStart_toStartOf="parent"
-                card_view:layout_constraintEnd_toEndOf="parent"/>
+                card_view:layout_constraintStart_toEndOf="@id/ll_Team1"
+                card_view:layout_constraintEnd_toStartOf="@id/ll_Team2"/>
         <androidx.appcompat.widget.AppCompatTextView
                 card_view:layout_constraintTop_toBottomOf="@+id/txt_Title"
                 card_view:layout_constraintBottom_toTopOf="@+id/txt_Countdown"
