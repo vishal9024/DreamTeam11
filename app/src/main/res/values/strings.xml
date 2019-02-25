@@ -539,8 +539,8 @@
     <string name="select_dateofbirth">Please select Date of birth to proceed.</string>
     <string name="select_state_name">Please select state name to proceed.</string>
     <string name="aadhar_card_number">Aadhaar Card Number</string>
-    <string name="enter_account_number">Please enter acount number to proceed.</string>
-    <string name="enter_retypeaccount_number">Please enter retype acount number to proceed.</string>
+    <string name="enter_account_number">Please enter account number to proceed.</string>
+    <string name="enter_retypeaccount_number">Please retype account number to proceed.</string>
     <string name="enter_ifsc_code">Please enter IFSC Code to proceed.</string>
     <string name="enter_bank_name">Please enter Bank Name to proceed.</string>
     <string name="enter_bank_branch">Please enter Branch Name to proceed.</string>
@@ -607,4 +607,5 @@
     <string name="player_name">Player Name</string>
     <string name="matchwise_fantasy_status">Matchwise Fantasy Stats</string>
     <string name="player_not_fount">No player found</string>
+    <string name="account_number_do_not_match">Account number does not match</string>
 </resources>

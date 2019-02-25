@@ -32,6 +32,7 @@ import os.com.constant.AppRequestCodes
 import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.utils.AppDelegate
+import os.com.utils.networkUtils.NetworkUtils
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
@@ -52,6 +53,8 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                     Toast.makeText(context!!, getString(R.string.enter_account_number), Toast.LENGTH_LONG).show()
                 }else if(TextUtils.isEmpty(edtRetypeAcoountNumber.text.toString().trim())){
                     Toast.makeText(context!!, getString(R.string.enter_retypeaccount_number), Toast.LENGTH_LONG).show()
+                }else if(edtRetypeAcoountNumber.text.toString().trim().equals(edtAccountNamber.text.toString().trim())){
+                    Toast.makeText(context!!, getString(R.string.account_number_do_not_match), Toast.LENGTH_LONG).show()
                 }else if(TextUtils.isEmpty(edtIFSCCode.text.toString().trim())){
                     Toast.makeText(context!!, getString(R.string.enter_ifsc_code), Toast.LENGTH_LONG).show()
                 }else if(TextUtils.isEmpty(edtBankname.text.toString().trim())){
@@ -59,7 +62,12 @@ class BankFragment : BaseFragment(), View.OnClickListener{
                 }else if(TextUtils.isEmpty(edtBankbranch.text.toString().trim())){
                     Toast.makeText(context!!, getString(R.string.enter_bank_branch), Toast.LENGTH_LONG).show()
                 }else{
-                    verify_bank_details(edtAccountNamber.text.toString().trim(),edtIFSCCode.text.toString().trim(),edtBankname.text.toString().trim(),edtBankbranch.text.toString().trim())
+                    if (NetworkUtils.isConnected()) {
+                        verify_bank_details(edtAccountNamber.text.toString().trim(),edtIFSCCode.text.toString().trim(),
+                            edtBankname.text.toString().trim(),edtBankbranch.text.toString().trim())
+                    } else
+                        Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
                 }
             }
         }

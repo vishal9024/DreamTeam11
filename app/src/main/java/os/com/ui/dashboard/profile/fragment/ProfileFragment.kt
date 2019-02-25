@@ -314,8 +314,6 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
             imvJoinInfo.setOnClickListener(this)
             imvOfferInfo.setOnClickListener(this)
             txt_Withdraw.setOnClickListener(this)
-
-
             ll_Ranking1.setOnClickListener(this)
             ll_Ranking2.setOnClickListener(this)
             ll_Ranking3.setOnClickListener(this)

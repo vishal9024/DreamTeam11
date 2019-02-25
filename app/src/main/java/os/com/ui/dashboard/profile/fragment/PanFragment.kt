@@ -38,6 +38,7 @@ import os.com.constant.Tags
 import os.com.networkCall.ApiClient
 import os.com.ui.dashboard.profile.adapter.CustomSpinnerAdapter
 import os.com.utils.AppDelegate
+import os.com.utils.networkUtils.NetworkUtils
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
 import java.io.File
@@ -105,23 +106,32 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                         AppDelegate.convertTimeFormat(edtDateOfBirth.text.toString().trim(), "dd-MM-yyyy", "yyyy-MM-dd")
 
                     if (BuildConfig.APPLICATION_ID == "os.realbash") {
-                        verify_pan_details(
-                            edtPanName.text.toString().trim(),
-                            edtPanNumber.text.toString().trim(),
-                            edtAdharCardNumber.text.toString().trim(),
-                            date.trim()
-                        )
-                    } else {
-                        if (TextUtils.isEmpty(edtAdharCardNumber.text.toString().trim())) {
-                            Toast.makeText(context!!, getString(R.string.enter_aadhar_card_number), Toast.LENGTH_LONG)
-                                .show()
-                        } else
+                        if (NetworkUtils.isConnected()) {
                             verify_pan_details(
                                 edtPanName.text.toString().trim(),
                                 edtPanNumber.text.toString().trim(),
                                 edtAdharCardNumber.text.toString().trim(),
                                 date.trim()
                             )
+                        } else
+                            Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+                    } else {
+                        if (TextUtils.isEmpty(edtAdharCardNumber.text.toString().trim())) {
+                            Toast.makeText(context!!, getString(R.string.enter_aadhar_card_number), Toast.LENGTH_LONG)
+                                .show()
+                        } else {
+                            if (NetworkUtils.isConnected()) {
+                                verify_pan_details(
+                                    edtPanName.text.toString().trim(),
+                                    edtPanNumber.text.toString().trim(),
+                                    edtAdharCardNumber.text.toString().trim(),
+                                    date.trim()
+                                )
+                            } else
+                                Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
+                        }
                     }
                 }
             }
