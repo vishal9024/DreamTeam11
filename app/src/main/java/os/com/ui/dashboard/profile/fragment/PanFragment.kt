@@ -98,15 +98,18 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                     Toast.makeText(context!!, getString(R.string.select_dateofbirth), Toast.LENGTH_LONG).show()
                 } else if (state.equals("Select State", true)) {
                     Toast.makeText(context!!, getString(R.string.select_state_name), Toast.LENGTH_LONG).show()
-                } else if (imageURI==null) {
+                } else if (imageURI == null) {
                     Toast.makeText(context!!, getString(R.string.upload_image_error), Toast.LENGTH_LONG).show()
                 } else {
+                    var date =
+                        AppDelegate.convertTimeFormat(edtDateOfBirth.text.toString().trim(), "dd-MM-yyyy", "yyyy-MM-dd")
+
                     if (BuildConfig.APPLICATION_ID == "os.realbash") {
                         verify_pan_details(
                             edtPanName.text.toString().trim(),
                             edtPanNumber.text.toString().trim(),
                             edtAdharCardNumber.text.toString().trim(),
-                            edtDateOfBirth.text.toString().trim()
+                            date.trim()
                         )
                     } else {
                         if (TextUtils.isEmpty(edtAdharCardNumber.text.toString().trim())) {
@@ -117,7 +120,7 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                                 edtPanName.text.toString().trim(),
                                 edtPanNumber.text.toString().trim(),
                                 edtAdharCardNumber.text.toString().trim(),
-                                edtDateOfBirth.text.toString().trim()
+                                date.trim()
                             )
                     }
                 }
@@ -220,7 +223,7 @@ class PanFragment : BaseFragment(), View.OnClickListener {
             }
             val spinnerAdapter = CustomSpinnerAdapter(activity!!, stateList)
             spnStateName.setAdapter(spinnerAdapter)
-            spnStateName.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+            spnStateName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                     val layout = parent.getChildAt(0) as RelativeLayout
                     if (layout != null) {
@@ -231,7 +234,7 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
-            })
+            }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -262,13 +265,12 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                     AppDelegate.hideProgressDialog(activity!!)
                     if (response.response!!.isStatus) {
 //                        if (response.response.data.pen_verify == 1) {
-                            cardViewBeforePanVerify.visibility = View.GONE
-                            cardVieAfterPanVerify.visibility = View.VISIBLE
+                        cardViewBeforePanVerify.visibility = View.GONE
+                        cardVieAfterPanVerify.visibility = View.VISIBLE
 //                        } else if (response.response.data.pen_verify == 2) {
 //                            cardViewBeforePanVerify.visibility = View.GONE
 //                            cardVieAfterPanVerify.visibility = View.GONE
 //                        }
-
                         //AppDelegate.showToast(activity!!, response.response!!.message)
                         //finish()
                     } else {
@@ -301,7 +303,6 @@ class PanFragment : BaseFragment(), View.OnClickListener {
         )
         val builder = AlertDialog.Builder(activity!!)
         builder.setTitle(getString(R.string.add_photo))
-
         builder.setItems(items) { dialog, item ->
             when {
                 items[item] == getString(R.string.take_photo) -> cameraIntent()

@@ -84,6 +84,14 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         initViews()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (pref!!.isLogin)
+            viewPager_Banner.visibility = VISIBLE
+        else
+            viewPager_Banner.visibility = GONE
+    }
+
     private fun initViews() {
         toolbar.visibility = GONE
         txt_title.visibility = GONE
@@ -125,7 +133,8 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
         Handler().postDelayed(Runnable {
-            callBannerApi()
+            if (pref!!.isLogin)
+                callBannerApi()
         }, 100)
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
@@ -279,6 +288,9 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
                 swipeToRefresh.isRefreshing = false
                 if (response.response!!.status) {
 //                    AppDelegate.showToast(activity, response.response!!.message)
+                    if (!response.response!!.data!!.upcoming_match!!.isEmpty())
+                        FantasyApplication.getInstance().server_time =
+                                AppDelegate.getTimeStampFromDateServer(response.response!!.data!!.upcoming_match!![0].server_time!!)!!
                     fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
                     liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
                     completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>

@@ -105,14 +105,27 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/winning_amount"
                         android:inputType="number"
-                         android:maxLength="6"
+                         android:maxLength="5"
                         android:imeOptions="actionNext"
                         android:textSize="@dimen/_11sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
+            <androidx.appcompat.widget.AppCompatTextView
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/til_winning_amount"
+                    android:id="@+id/tv_totalWinning"
+                    style="@style/TextStyleLight"
+                    android:gravity="start"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_13sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="0-10000 Rs Max"
+                    android:layout_height="wrap_content"/>
+            <com.google.android.material.textfield.TextInputLayout
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_totalWinning"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:id="@+id/til_contest_size"
                     android:layout_width="match_parent"
@@ -125,10 +138,23 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/contest_size"
-                        android:maxLength="6"
+                        android:maxLength="3"
                         android:inputType="number"
                         android:textSize="@dimen/_11sdp"/>
             </com.google.android.material.textfield.TextInputLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/til_contest_size"
+                    android:id="@+id/tv_mobile_label"
+                    style="@style/TextStyleLight"
+                    android:gravity="start"
+                    android:textSize="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_13sdp"
+                    android:layout_width="match_parent"
+                    android:textColor="@color/textColorGray"
+                    android:text="2-100 Max."
+                    android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.AppCompatTextView
                     android:padding="@dimen/_10sdp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -137,12 +163,12 @@
                     android:textSize="@dimen/_11sdp"
                     android:textColor="@color/textColorGray"
                     android:text="@string/allow_friends_to_join_with_multiple_team"
-                    app:layout_constraintTop_toBottomOf="@+id/til_contest_size"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mobile_label"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
             <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switch_multipleTeam"
-                    app:layout_constraintTop_toBottomOf="@+id/til_contest_size"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mobile_label"
                     android:padding="@dimen/_5sdp"
                     android:scaleX="0.8"
                     android:scaleY="0.8"

@@ -8,15 +8,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import os.com.BuildConfig
 import os.com.R
+import os.com.application.FantasyApplication
 import os.com.ui.dashboard.DashBoardActivity
 import java.util.*
 
 class CountTimer {
     private val updateRemainingTimeRunnable = Runnable {
-        val currentTime = System.currentTimeMillis()
+        var diff= System.currentTimeMillis()- FantasyApplication.getInstance().server_time
+        val currentTime = System.currentTimeMillis()+diff
+//        val currentTime = FantasyApplication.getInstance().server_time
         updateTimeRemaining(currentTime)
     }
-var close:Boolean=true
+    var close: Boolean = true
     fun updateTimeRemaining(currentTime: Long) {
         try {
             val timeDiff = AppDelegate.getTimeStampFromDate(dateTime!!)!! - currentTime
@@ -39,7 +42,7 @@ var close:Boolean=true
                     tmr = null
                 }
                 if (close) {
-                    close=false
+                    close = false
                     AppDelegate.showToast(context, context!!.getString(R.string.time_out))
                     context!!.startActivity(
                         Intent(
@@ -62,7 +65,7 @@ var close:Boolean=true
     internal var tmr: Timer? = null
     private val mHandler = Handler()
     fun startUpdateTimer(context: AppCompatActivity, dateTime: String, textView: AppCompatTextView) {
-        close=true
+        close = true
         this.dateTime = dateTime
         this.textView = textView
         this.context = context

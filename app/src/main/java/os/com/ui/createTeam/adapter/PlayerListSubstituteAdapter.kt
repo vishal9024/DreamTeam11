@@ -93,6 +93,13 @@ class PlayerListSubstituteAdapter(
             holder.itemView.img_add.isSelected=true
         else holder.itemView.img_add.isSelected = playerList!![position].isSubstitute
         holder.itemView.img_add.isSelected = playerList!![position].isSubstitute
+
+        if (BuildConfig.APPLICATION_ID == "os.real11")
+            holder.itemView.txt_Avg.text=playerList!![position].selected_by
+        else
+            holder.itemView.txt_Avg.text=playerList!![position].player_points+" "+ mContext.getString(R.string.points)
+
+
         if (BuildConfig.APPLICATION_ID == "os.cashfantasy")
             holder.itemView.ll_main.setOnClickListener {
                 if (!playerList!![position].isSelected)

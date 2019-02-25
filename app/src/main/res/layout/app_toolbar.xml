@@ -32,4 +32,3 @@
         <!--android:layout_height="wrap_content"/>-->
     </androidx.appcompat.widget.Toolbar>
 </com.google.android.material.appbar.AppBarLayout>
-

@@ -3,6 +3,8 @@ package os.com.ui.joinedContest.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_completed_player_stats.*
@@ -52,7 +54,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         toolbarTitleTv.setText(R.string.player_points)
-        setMenu(false, false, false, false,false)
+        setMenu(false, false, false, false, false)
         if (intent != null) {
             match = intent.getParcelableExtra(IntentConstant.MATCH)
             matchType = intent.getIntExtra(IntentConstant.CONTEST_TYPE, IntentConstant.FIXTURE)
@@ -69,6 +71,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
         txt_Points.isEnabled = false
         filterBootomSheet()
     }
+
     private fun filterBootomSheet() {
         val mBottomSheetBehaviorfilter = BottomSheetBehavior.from(bottom_sheet_filter)
         mBottomSheetBehaviorfilter.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -78,6 +81,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                 when (newState) {
                 }
             }
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
     }
@@ -89,7 +93,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
             if (pref!!.isLogin)
                 map[Tags.user_id] = pref!!.userdata!!.user_id
             else
-                map[Tags.user_id]= ""
+                map[Tags.user_id] = ""
             map[Tags.language] = FantasyApplication.getInstance().getLanguage()
             map[Tags.match_id] = match!!.match_id/*"13071965317"*/
             map[Tags.series_id] = match!!.series_id/*"13071965317"*/
@@ -107,16 +111,29 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
                         txt_SelectedBy.isEnabled = true
                         txt_Points.isEnabled = true
                         playerPoints = response.response!!.data!!
+                        if (playerPoints.isEmpty()) {
+                            rv_Players.visibility = GONE
+                            txt_NotFoundData.visibility = VISIBLE
+                        } else {
+                            rv_Players.visibility = VISIBLE
+                            txt_NotFoundData.visibility = GONE
+                        }
                         setAdapter()
                         sortBySelector(Points)
                     } else {
-                       logoutIfDeactivate(response.response!!.message)
+                        logoutIfDeactivate(response.response!!.message)
+                        rv_Players.visibility = GONE
+                        txt_NotFoundData.visibility = VISIBLE
                     }
                 } catch (exception: Exception) {
+                    rv_Players.visibility = GONE
+                    txt_NotFoundData.visibility = VISIBLE
                     AppDelegate.hideProgressDialog(this@PlayerStatsActivity)
                 }
             }
         } catch (e: Exception) {
+            rv_Players.visibility = GONE
+            txt_NotFoundData.visibility = VISIBLE
             e.printStackTrace()
         }
     }
@@ -132,7 +149,7 @@ class PlayerStatsActivity : BaseActivity(), View.OnClickListener {
 
     var isAsc = true
     fun selectorPlayers(p: Data): String = p.player_name
-    fun selectorSelectedBy(p: Data):Float =(p.selection_percent).replace("%","") .toFloat()
+    fun selectorSelectedBy(p: Data): Float = (p.selection_percent).replace("%", "").toFloat()
     fun selectorPoints(p: Data): Double = p.points.toDouble()
     private var Players = 1
     private var SelectedBy = 2

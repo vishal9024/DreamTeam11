@@ -343,7 +343,7 @@
                                 android:paddingStart="@dimen/_10sdp"
                                 android:textColor="@color/textColorBlack"
                                 android:text="@string/match"
-                                android:layout_height="wrap_content"/>
+                                android:layout_height="0dp"/>
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/txt_Team"
                                 style="@style/TextStyleSemiBold"
@@ -361,14 +361,14 @@
                                 android:textSize="@dimen/_10sdp"
                                 android:layout_width="0dp"
                                 android:layout_weight="0.4"
-                                android:paddingEnd="@dimen/_10sdp"
-                                android:textColor="@color/textColorBlack"
+                                android:paddingRight="@dimen/_10sdp"
                                 android:text="@string/selected_by"
                                 android:layout_height="wrap_content"/>
 
                     </LinearLayout>
-                    <View android:layout_width="match_parent" android:layout_height="1dp"
-                          android:background="@color/GrayColorMain"/>
+                    <View android:layout_width="match_parent"
+                          android:layout_height="@dimen/_1sdp"
+                          android:background="@color/GrayColorOTP"/>
                 </LinearLayout>
                 <androidx.recyclerview.widget.RecyclerView
                         app:layout_constraintTop_toBottomOf="@+id/ll_AllContest"

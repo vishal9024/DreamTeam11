@@ -56,17 +56,16 @@ class LeaderShipTeamsAdapter(
 //            FantasyApplication.getInstance().options
 //        )
         holder.itemView.txt_TeamName.setText(joined_team_list[holder.adapterPosition].team_name + "(T" + joined_team_list[holder.adapterPosition].team_no + ")")
-        if (!joined_team_list[holder.adapterPosition].rank.isEmpty() && joined_team_list[holder.adapterPosition].rank.toLong()>0)
+        if (!joined_team_list[holder.adapterPosition].rank.isEmpty() && joined_team_list[holder.adapterPosition].rank.toLong() > 0)
             holder.itemView.txt_rank.setText("#" + joined_team_list[holder.adapterPosition].rank)
         else
             holder.itemView.txt_rank.setText("-")
 
-        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty() && joined_team_list[holder.adapterPosition].winning_amount.toDouble()>0  ) {
+        if (!joined_team_list[holder.adapterPosition].winning_amount.isEmpty() && joined_team_list[holder.adapterPosition].winning_amount.toDouble() > 0) {
             holder.itemView.txt_prizeMoney.setText(mContext.getString(R.string.Rs) + " " + joined_team_list[holder.adapterPosition].winning_amount)
-            holder.itemView.txt_prizeMoney.visibility=View.VISIBLE
-        }
-        else
-            holder.itemView.txt_prizeMoney.visibility=GONE
+            holder.itemView.txt_prizeMoney.visibility = View.VISIBLE
+        } else
+            holder.itemView.txt_prizeMoney.visibility = GONE
 
         holder.itemView.txt_Points.setText(joined_team_list[holder.adapterPosition].point + mContext.getString(R.string.points))
         holder.itemView.ll_main.setOnClickListener {
@@ -88,32 +87,37 @@ class LeaderShipTeamsAdapter(
             holder.itemView.img_rank.visibility = View.GONE
             holder.itemView.txt_prizeMoney.visibility = View.VISIBLE
         }
+        if (matchType == LIVE && match_status.equals("Not Started", ignoreCase = true)) {
+            holder.itemView.img_rank.visibility = View.GONE
+        }
 //        holder.itemView.txt_Join.setOnClickListener {
 //            mContext.startActivity(Intent(mContext, ContestDetailActivity::class.java))
 //        }
-
         if (BuildConfig.APPLICATION_ID == "os.real11" || BuildConfig.APPLICATION_ID == "os.cashfantasy") {
-            if (matchType == LIVE && match_status == "NOT STARTED") {
-                if (joined_team_list[holder.adapterPosition].substitute_status.equals("0")) {
+            if (matchType == LIVE && match_status.equals("Not Started", ignoreCase = true)) {
+                if (joined_team_list[holder.adapterPosition].user_id.equals(Prefs(mContext).userdata!!.user_id)
+                    && joined_team_list[holder.adapterPosition].substitute_status.equals("0")
+                ) {
                     holder.itemView.ll_substitute.visibility = View.VISIBLE
                     holder.itemView.ll_Ranking.visibility = View.GONE
+                    holder.itemView.img_rank.visibility = View.GONE
                     holder.itemView.replace_with_substitute.setOnClickListener {
                         onClickRecyclerView.onClickItem("substitute", position)
                     }
                 } else holder.itemView.ll_substitute.visibility = View.GONE
             } else holder.itemView.ll_substitute.visibility = View.GONE
         } else holder.itemView.ll_substitute.visibility = View.GONE
+        }
+
+
+        override fun getItemCount(): Int {
+            return joined_team_list.size
+        }
+
+        inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+
+        }
+
+
     }
-
-
-    override fun getItemCount(): Int {
-        return joined_team_list.size
-    }
-
-    inner class AppliedCouponCodeHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-
-    }
-
-
-}

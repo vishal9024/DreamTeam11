@@ -58,11 +58,14 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
         verifyOtpRequest.language = FantasyApplication.getInstance().getLanguage()
         verifyOtpRequest.device_type = Tags.device_type
         verifyOtpRequest.user_id = user_id
+        verifyOtpRequest.is_signup = isSignUp
         callVarifyOtpApi(verifyOtpRequest)
     }
+
     var otp = ""
     var user_id = ""
     var phone = ""
+    var isSignUp = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
@@ -70,10 +73,9 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
     }
 
     override fun otpReceived(smsText: String) {
-        //Do whatever you want to do with the text
-//        Toast.makeText(this, "Got $smsText", Toast.LENGTH_LONG).show()
         otp_view.setText(smsText)
     }
+
     var from = false
     private fun initViews() {
         setSupportActionBar(toolbar)
@@ -81,6 +83,7 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         from = intent.getBooleanExtra(IntentConstant.TYPE, false)
+        isSignUp = intent.getBooleanExtra(IntentConstant.ISSIGNUP, false)
         toolbarTitleTv.setText(R.string.enter_otp)
         btn_Submit.setOnClickListener(this)
         otp = intent.getStringExtra(IntentConstant.OTP)
@@ -115,11 +118,11 @@ class OTPActivity : BaseActivity(), View.OnClickListener, OTPListener {
                     AppDelegate.showToast(this@OTPActivity, response.response!!.message)
                     pref!!.userdata = response.response!!.data
                     pref!!.isLogin = true
-                    if (from){
+                    if (from) {
                         val intent = Intent()
-                        setResult(Activity.RESULT_OK,intent)
+                        setResult(Activity.RESULT_OK, intent)
                         finish()
-                    }else {
+                    } else {
                         startActivity(
                             Intent(
                                 this@OTPActivity,

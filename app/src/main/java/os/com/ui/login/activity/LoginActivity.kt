@@ -144,13 +144,16 @@ class LoginActivity : BaseActivity(), View.OnClickListener, GoogleApiClient.OnCo
                                 .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
                                 .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
                                 .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
+                                .putExtra(IntentConstant.ISSIGNUP, false)
                                 .putExtra(IntentConstant.TYPE, true), AppRequestCodes.SIGNUP
+
                         )
                     } else
                         startActivity(
                             Intent(this@LoginActivity, OTPActivity::class.java)
                                 .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
                                 .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                .putExtra(IntentConstant.ISSIGNUP, false)
                                 .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                         )
 

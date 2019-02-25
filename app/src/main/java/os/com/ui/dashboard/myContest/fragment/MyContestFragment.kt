@@ -27,6 +27,7 @@ import os.com.ui.dashboard.myContest.adapter.MyContestCompletedAdapter
 import os.com.ui.dashboard.myContest.adapter.MyContestFixturesAdapter
 import os.com.ui.dashboard.myContest.adapter.MyContestLiveAdapter
 import os.com.utils.AppDelegate
+import os.com.utils.AppDelegate.getTimeStampFromDateServer
 import os.com.utils.networkUtils.NetworkUtils
 import java.util.HashMap
 import kotlin.collections.ArrayList
@@ -200,6 +201,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
                             swipeToRefresh.isRefreshing = false
                             if (response.response!!.status) {
 //                    AppDelegate.showToast(activity, response.response!!.message)
+                                FantasyApplication.getInstance().server_time=getTimeStampFromDateServer(response.response!!.data!!.server_time!!)!!
                                 fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
                                 liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
                                 completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>

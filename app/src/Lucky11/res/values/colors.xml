@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#027143</color>
-    <color name="colorPrimaryDark">#027143</color>
-    <color name="colorAccent">#2a2a2a</color>
+    <color name="colorPrimary">#ef4024</color>
+    <color name="colorPrimaryDark">#ef4024</color>
+    <color name="colorAccent">#ef4024</color>
 
-    <color name="tabColor">#027143</color>
-    <color name="colorASPrimary">#027143</color>
+    <color name="tabColor">#ef4024</color>
+    <color name="colorASPrimary">#ef4024</color>
     <!--TextColor-->
     <color name="textColorWelcome">#ffffff</color>
     <color name="textColorBlack">#020202</color>
     <color name="textColorLightBlack">#3c3c3c</color>
     <color name="textColorGray">#7f7f7f</color>
     <color name="textColorOffWhite">#f5fdf9</color>
-    <color name="textColorPrimaryDark">#025232</color>
-    <color name="textColorPrimarylight">#529277</color>
-    <color name="textColorName">#144869</color>
+    <color name="textColorPrimaryDark">#ef4024</color>
+    <color name="textColorPrimarylight">#f5715b</color>
+    <color name="textColorName">#ef4024</color>
     <color name="textColorWhite">#ffffff</color>
     <!--UI color-->
     <color name="GrayColor">#bbbbbb</color>
     <color name="GrayColorOTP">#d9d9d9</color>
-    <color name="colorSecondary">#d7aa10</color>
+    <color name="colorSecondary">#f39c1b</color>
     <color name="colorRed">#df2826</color>
     <color name="colorPitchImageCaption">#12496a</color>
     <color name="colorPitchImageCircle">#21834d</color>
-    <color name="colorSecondaryLight">#e8f3e5</color>
+    <color name="colorSecondaryLight">#f4e0c3</color>
     <color name="colorGreen">#03a763</color>
-    <color name="colorButton">#fb0619</color>
-    <color name="colorLoginDarkGray">#373536</color>
+    <color name="colorButton">#ef4024</color>
+    <color name="colorLoginDarkGray">#ef4024</color>
     <!--PlayerDetailColor-->
     <color name="colorBackground">#f1f1f1</color>
     <color name="colorBackgroundGray">#e8e8e8</color>
@@ -56,5 +56,5 @@
     <color name="colorChooseViceCaptain">#d7aa10</color>
     <color name="whiteTab">#ffffff</color>
 
-    <color name="profile_bg_color">#99027143</color>
+    <color name="profile_bg_color">#99ef4024</color>
 </resources>

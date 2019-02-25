@@ -16,14 +16,14 @@ object ApiConstant {
 //    const val realBashBaseURL = "https://72.octallabs.com/realBash/WebServices/"
 
 
-    val cashFantasyBaseURL = "https://72.octallabs.com/cashfantasy/"
+    val cashFantasyBaseURL = "http://18.188.192.24/"
     const val CricsetBaseURL = "http://192.168.1.67/real_11/"
     const val fSLBaseURL = "http://fansuperleague.com/"
-    const val playing11BaseURL = "http://3.17.90.89/"
+    const val playing11BaseURL = "http://playing11app.com/"
     // const  val real11BaseURL = "http://192.168.1.67/real_11/WebServices/"
     const val real11BaseURL = "http://real11.com/"
-    const val lucky11BaseURL = "http://18.224.67.198/"
-    const val realBashBaseURL = "http://3.17.175.199/"
+    const val lucky11BaseURL = "http://binoba11.com/"
+    const val realBashBaseURL = "http://realbash.com/"
     fun getBaseUrl(): String {
         when {
             BuildConfig.APPLICATION_ID == "os.cashfantasy" -> return cashFantasyBaseURL + "WebServices/"

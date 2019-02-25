@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.sub_itemcvc.view.*
+import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.interfaces.OnClickCVC
@@ -51,6 +52,11 @@ class ChooseC_VC_Adapter(
 //            holder.itemView.txt_Country.text = playerList[position].player_record!!.country
 //          holder.itemView. txt_Avg.text=playerList!![position].player_record!!
         }
+        if (BuildConfig.APPLICATION_ID == "os.real11")
+            holder.itemView.txt_Avg.text=playerList[position].selected_by
+        else
+            holder.itemView.txt_Avg.text=playerList[position].player_points+" "+ mContext.getString(R.string.points)
+
         holder.itemView.img_captain.isSelected = playerList[position].isCaptain
         holder.itemView.img_vc.isSelected = playerList[position].isViceCaptain
 

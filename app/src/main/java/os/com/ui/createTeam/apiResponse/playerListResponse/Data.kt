@@ -16,6 +16,8 @@ class Data() : Parcelable {
     var t20: String = ""
     var test: String = ""
     var player_record: PlayerRecord? = null
+    var player_points=""
+    var selected_by=""
     var isSubstitute = false
     var isSelected = false
     var isCaptain = false
@@ -35,6 +37,8 @@ class Data() : Parcelable {
         t20 = parcel.readString()
         test = parcel.readString()
         player_record = parcel.readParcelable(PlayerRecord::class.java.classLoader)
+        player_points = parcel.readString()
+        selected_by = parcel.readString()
         isSubstitute = parcel.readByte() != 0.toByte()
         isSelected = parcel.readByte() != 0.toByte()
         isCaptain = parcel.readByte() != 0.toByte()
@@ -54,6 +58,8 @@ class Data() : Parcelable {
         parcel.writeString(if (t20 == null) "" else t20 )
         parcel.writeString(if (test == null) "" else test )
         parcel.writeParcelable(player_record, flags)
+        parcel.writeString(if (player_points == null) "" else player_points )
+        parcel.writeString(if (selected_by == null) "" else selected_by )
         parcel.writeByte(if (isSubstitute) 1 else 0)
         parcel.writeByte(if (isSelected) 1 else 0)
         parcel.writeByte(if (isCaptain) 1 else 0)

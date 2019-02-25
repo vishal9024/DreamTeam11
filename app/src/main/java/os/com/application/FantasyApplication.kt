@@ -30,7 +30,7 @@ class FantasyApplication : MultiDexApplication() {
     var teamCount = 0
     var joinedCount = 0
     var filterModel:FilterModel=FilterModel()
-    //    var createOrjoin=false
+    var server_time=System.currentTimeMillis()
     companion object {
         lateinit var fantasyApplication: FantasyApplication
         fun getInstance(): FantasyApplication {

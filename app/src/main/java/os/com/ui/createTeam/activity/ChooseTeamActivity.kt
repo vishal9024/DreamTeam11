@@ -12,13 +12,10 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.ViewTarget
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_choose_team.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_choose_team.*
@@ -88,6 +85,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (total_credit > 100) {
                         exeedCredit = true
                         rv_Player.adapter!!.notifyDataSetChanged()
+                        showSnackBarView(toolbar,"You do not have enough credits to select this player.")
                         return
                     }
 
@@ -161,6 +159,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
+                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -245,6 +244,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
+                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -332,6 +332,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
+                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
                                 return
                             }
 
@@ -444,13 +445,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     }
 
     fun showSnackBar(view: View, msg: String) {
-        val snack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
-        val view = snack.getView()
-        view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
-        val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        view.setLayoutParams(params)
-        snack.show()
+//        val snack = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+//        val view = snack.getView()
+//        view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+//        val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+//        params.gravity = Gravity.TOP
+//        view.setLayoutParams(params)
+//        snack.show()
+        showSnackBarView(view,msg)
     }
 
     fun gotoNext() {
@@ -1148,13 +1150,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     startActivity(intent)
                 } else {
                     val viewf = findViewById<View>(R.id.menu_guru)
-                    val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
-                    val view = snack.getView()
-                    view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
-                    val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
-                    params.gravity = Gravity.TOP
-                    view.setLayoutParams(params)
-                    snack.show()
+//                    val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
+//                    val view = snack.getView()
+//                    view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+//                    val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+//                    params.gravity = Gravity.TOP
+//                    view.setLayoutParams(params)
+//                    snack.show()
+                    showSnackBar(viewf,"Guru advice for this round is coming soon!")
                     return true
                 }
             }

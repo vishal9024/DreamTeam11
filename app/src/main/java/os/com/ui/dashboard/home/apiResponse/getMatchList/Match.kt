@@ -17,7 +17,7 @@ class Match() : Parcelable {
     var star_time = ""
     var total_contest = ""
     var guru_url = ""
-
+    var server_time: String? = null
     constructor(parcel: Parcel) : this() {
         series_id = parcel.readString()
         match_id = parcel.readString()
@@ -32,6 +32,7 @@ class Match() : Parcelable {
         star_time = parcel.readString()
         total_contest = parcel.readString()
         guru_url = parcel.readString()
+        server_time = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -48,6 +49,7 @@ class Match() : Parcelable {
         parcel.writeString(star_time)
         parcel.writeString(total_contest)
         parcel.writeString(guru_url)
+        parcel.writeString(if (server_time == null) "" else server_time)
     }
 
     override fun describeContents(): Int {

@@ -66,21 +66,22 @@
                         android:textColor="@color/textColorBlack"
                         android:text="India"
                         android:layout_height="wrap_content"/>
-                <!--<View-->
-                <!--android:layout_marginEnd="@dimen/_3sdp"-->
-                <!--android:layout_marginStart="@dimen/_3sdp"-->
-                <!--android:layout_gravity="center_vertical" android:layout_width="0.5dp"-->
-                <!--android:background="@color/GrayColor" android:layout_height="@dimen/_15sdp"-->
-                <!--/>-->
-                <!--<androidx.appcompat.widget.AppCompatTextView-->
-                <!--android:id="@+id/txt_Avg"-->
-                <!--style="@style/TextStyleMedium"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:textSize="@dimen/_9sdp"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:textColor="@color/textColorGray"-->
-                <!--android:text="Avg.: 48.52"-->
-                <!--android:layout_height="wrap_content"/>-->
+                <View
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        android:layout_marginStart="@dimen/_3sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="0.5dp"
+                        android:background="@color/GrayColor"
+                        android:layout_height="@dimen/_15sdp"
+                />
+                <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txt_Avg"
+                        style="@style/TextStyleMedium"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/_9sdp"
+                        android:layout_width="wrap_content"
+                        android:textColor="@color/textColorGray"
+                        android:layout_height="wrap_content"/>
             </LinearLayout>
             <androidx.appcompat.widget.AppCompatTextView
                     android:visibility="gone"

@@ -118,6 +118,21 @@
                         android:text="Top Players"
                         android:layout_height="wrap_content"/>
             </LinearLayout>
+            <androidx.appcompat.widget.AppCompatTextView
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/txt_NotFoundData"
+                    style="@style/TextStyleMedium"
+                    android:gravity="end"
+                    android:visibility="gone"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/textColorLightBlack"
+                    android:text="@string/player_not_fount"
+                    android:layout_height="wrap_content"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.core.widget.NestedScrollView

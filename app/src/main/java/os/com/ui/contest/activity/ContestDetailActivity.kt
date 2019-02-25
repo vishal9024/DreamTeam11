@@ -3,22 +3,17 @@ package os.com.ui.contest.activity
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Rect
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.WindowManager
-import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.activity_megacontest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_megacontest.*
-import kotlinx.android.synthetic.main.dialogue_fairplay.view.*
+import kotlinx.android.synthetic.main.dialogue_fairplay.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
@@ -269,7 +264,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
         txt_Join.setOnClickListener(this)
         txt_switch_team.setOnClickListener(this)
         btn_InviteFriends.setOnClickListener(this)
-        initFairPlayPopUp()
+
     }
 
     private fun setdata(data: Data) {
@@ -323,9 +318,13 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                 AppDelegate.hideProgressDialog(this@ContestDetailActivity)
                 if (response.response!!.status) {
                     scrollView.visibility = View.VISIBLE
+                    FantasyApplication.getInstance().server_time =
+                            AppDelegate.getTimeStampFromDateServer(response.response!!.data!!.server_time!!)!!
+
                     data = response.response!!.data!!
                     setdata(data!!)
                     UpdateView(data!!)
+                    initFairPlayPopUp()
                 } else {
                     logoutIfDeactivate(response.response!!.message!!)
                 }
@@ -474,7 +473,7 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
                             .putParcelableArrayListExtra(
                                 IntentConstant.SELECT_PLAYER,
                                 response.response!!.data!![0].player_details
-                            )  .putExtra(IntentConstant.MATCH, match)
+                            ).putExtra(IntentConstant.MATCH, match)
                             .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                             .putExtra("teamName", teamName)
                     )
@@ -490,40 +489,12 @@ class ContestDetailActivity : BaseActivity(), View.OnClickListener, OnClickRecyc
     private fun initFairPlayPopUp() {
         try {
             GlobalScope.launch(Dispatchers.Main) {
-                delay(1000)
-                var walletPopupWindow = PopupWindow(this@ContestDetailActivity)
-                var popupWindowView = layoutInflater.inflate(R.layout.dialogue_fairplay, null) as View
-                walletPopupWindow.contentView = popupWindowView
-
-                popupWindowView.ll_ok.setOnClickListener { view ->
-                    walletPopupWindow.dismiss()
-                }
-                walletPopupWindow.isOutsideTouchable = true
-                walletPopupWindow.isFocusable = true
-
-                var background = ColorDrawable(Color.BLACK)
-                background.alpha = 10
-                walletPopupWindow.setBackgroundDrawable(background);
-                val rectangle = Rect()
-                val window = window
-                window.decorView.getWindowVisibleDisplayFrame(rectangle)
-                walletPopupWindow.height = WindowManager.LayoutParams.WRAP_CONTENT
-                walletPopupWindow.width = WindowManager.LayoutParams.MATCH_PARENT
-                walletPopupWindow.isOutsideTouchable = true
-                walletPopupWindow.isFocusable = true
-
-
-                background.alpha = 10
-                walletPopupWindow.setBackgroundDrawable(background);
-                window.decorView.getWindowVisibleDisplayFrame(rectangle)
-                walletPopupWindow.showAsDropDown(cl/*, Gravity.BOTTOM, 0*/)
-
-
+                fairplay.visibility = VISIBLE
+                ll_ok.setOnClickListener { fairplay.visibility = GONE }
+                delay(6000)
+                fairplay.visibility = GONE
             }
             /* set view for filter popup window*/
-
-
-
             /* show popup window*/
         } catch (e: Exception) {
             e.printStackTrace()

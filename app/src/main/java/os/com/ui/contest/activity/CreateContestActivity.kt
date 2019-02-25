@@ -8,17 +8,14 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.Gravity
 import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import io.github.douglasjunior.androidSimpleTooltip.SimpleTooltip
+import kotlinx.android.synthetic.main.activity_create_contest.*
 import kotlinx.android.synthetic.main.app_toolbar.*
 import kotlinx.android.synthetic.main.content_create_contest.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
@@ -71,7 +68,17 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                             )
                         }
                     } else {
-                        callWinningBreakUpApi()
+                        if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() < 2L) {
+                            showToolbar("Contest size should not less than 2")
+                            resetData()
+                        } else if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() >= 100L) {
+                            showToolbar("Contest size should not more than 100")
+                            resetData()
+                        } else if (et_winning_amount.text.toString().toLong() > 10000L) {
+                            showToolbar("Winning amount should not more than 10000 Rs.")
+                            resetData()
+                        } else
+                            callWinningBreakUpApi()
                     }
                 }
             }
@@ -97,7 +104,8 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                 AppDelegate.LogT("Response=>" + response);
                 AppDelegate.hideProgressDialog(this@CreateContestActivity)
                 if (response.response!!.status) {
-                    sendIntent(response.response!!.data)
+                    if (!contestSize.isEmpty() && !winningAmount.isEmpty())
+                        sendIntent(response.response!!.data)
                 } else {
                     logoutIfDeactivate(response.response!!.message!!)
                 }
@@ -108,13 +116,12 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun sendIntent(data: ArrayList<Data>?) {
-
         startActivityForResult(
             Intent(this, SelectWinnersContestActivity::class.java)
                 .putExtra(IntentConstant.MATCH, match)
                 .putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                .putExtra(IntentConstant.CONTEST_SIZE, et_contest_size.text.toString())
-                .putExtra(IntentConstant.WINNING_AMOUNT, et_winning_amount.text.toString())
+                .putExtra(IntentConstant.CONTEST_SIZE, contestSize)
+                .putExtra(IntentConstant.WINNING_AMOUNT, winningAmount)
                 .putExtra(IntentConstant.ALLOW_MULTIPLE_TEAMS, switch_multipleTeam.isChecked)
                 .putExtra(IntentConstant.TEAM_NAME, et_contestName.text.toString())
                 .putExtra(IntentConstant.ENTRY_FEE, entryFee)
@@ -145,7 +152,6 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
             e.printStackTrace()
         }
     }
-
     //    var countTimer: CountTimer? = CountTimer()
     var match: Match? = null
     var matchType = IntentConstant.FIXTURE
@@ -193,30 +199,36 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         })
     }
 
+    var contestSize = ""
+    var winningAmount = ""
     private fun checkCall() {
         btn_CreateContest.text = getString(R.string.create_contest)
         if (!et_winning_amount.text.toString().isEmpty() && !et_contest_size.text.toString().isEmpty()) {
-            if (et_winning_amount.text.toString().toLong() == 0L && et_contest_size.text.toString().toLong() >= 2L) {
+            if (et_winning_amount.text.toString().toLong() == 0L && et_winning_amount.text.toString().toLong() <= 10000L && et_contest_size.text.toString().toLong() >= 2L && et_contest_size.text.toString().toLong() <= 100L) {
                 txt_EntryFeeAmount.text = getString(R.string.Rs) + " " +
                         String.format("%.2f", 0.00)
                 entryFee = String.format("%.2f", 0.00)
                 btn_CreateContest.isEnabled = true
-            } else if (et_contest_size.text.toString().toLong() >= 2L) {
+            } else if (et_winning_amount.text.toString().toLong() <= 10000L && et_contest_size.text.toString().toLong() >= 2L && et_contest_size.text.toString().toLong() <= 100L) {
                 GlobalScope.launch(Dispatchers.Main) {
-                    delay(700)
+                    delay(1000)
                     callEntryFeeApi()
                 }
             } else {
-                if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() < 2L)
+                if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() < 2L) {
                     showToolbar("Contest size should not less than 2")
-                entryFee = ""
-                txt_EntryFeeAmount.text = "-"
-                btn_CreateContest.isEnabled = false
+                    resetData()
+                } else if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() >= 100L) {
+                    showToolbar("Contest size should not more than 100")
+                    resetData()
+                } else if (et_winning_amount.text.toString().toLong() > 10000L) {
+                    showToolbar("Winning amount should not more than 10000 Rs.")
+                    resetData()
+                }
+
             }
         } else {
-            entryFee = ""
-            txt_EntryFeeAmount.text = "-"
-            btn_CreateContest.isEnabled = false
+            resetData()
         }
     }
 
@@ -231,7 +243,7 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         loginRequest[Tags.winning_amount] = et_winning_amount.text.toString()
 
         GlobalScope.launch(Dispatchers.Main) {
-            //            AppDelegate.showProgressDialogWithKeyBoardOpen(this@CreateContestActivity)
+            AppDelegate.showProgressDialogWithKeyBoardOpen(this@CreateContestActivity)
             try {
                 val request = ApiClient.client
                     .getRetrofitService()
@@ -245,30 +257,38 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
                             txt_EntryFeeAmount.text = getString(R.string.Rs) + " " +
                                     String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
                             entryFee = String.format("%.2f", response.response!!.data!!.entry_fee!!.toFloat())
+                            contestSize = et_contest_size.text.toString()
+                            winningAmount = et_winning_amount.text.toString()
                             btn_CreateContest.isEnabled = true
                             if (et_contest_size.text.toString().toLong() != 2L)
                                 btn_CreateContest.text = getString(R.string.choose_winning_breakup)
+
+                            if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() < 2L) {
+                                resetData()
+                                showToolbar("Contest size should not less than 2")
+                            } else if (!et_contest_size.text.toString().isEmpty() && et_contest_size.text.toString().toLong() >= 100L) {
+                                showToolbar("Contest size should not more than 100")
+                                resetData()
+                            } else if (et_winning_amount.text.toString().toLong() > 10000L) {
+                                resetData()
+                                showToolbar("Winning amount should not more than 10000 Rs.")
+                            }
+
                         } else {
-                            entryFee = ""
-                            txt_EntryFeeAmount.text = "-"
-                            btn_CreateContest.isEnabled = false
+                            resetData()
                             showToolbar(
                                 getString(R.string.entryFeeValidation)
                             )
                         }
                     } else {
-                        txt_EntryFeeAmount.text = "-"
-                        entryFee = ""
-                        btn_CreateContest.isEnabled = false
+                        resetData()
                         showToolbar(
                             getString(R.string.entryFeeValidation)
                         )
                     }
                 } else {
                     logoutIfDeactivate(response.response!!.message)
-                    txt_EntryFeeAmount.text = "-"
-                    entryFee = ""
-                    btn_CreateContest.isEnabled = false
+                    resetData()
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@CreateContestActivity)
@@ -276,14 +296,24 @@ class CreateContestActivity : BaseActivity(), View.OnClickListener {
         }
     }
 
+    fun resetData() {
+        txt_EntryFeeAmount.text = "-"
+        entryFee = ""
+        contestSize = ""
+        winningAmount = ""
+        btn_CreateContest.isEnabled = false
+    }
+
     fun showToolbar(msg: String) {
-        val snack = Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG)
-        val view = snack.getView()
-        view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
-        val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        view.setLayoutParams(params)
-        snack.show()
+//        val snack = Snackbar.make(toolbar, msg, Snackbar.LENGTH_LONG)
+//        val view = snack.getView()
+//        view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
+//        val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
+//        params.gravity = Gravity.TOP
+//        view.setLayoutParams(params)
+//        snack.show()
+        showSnackBarView(toolbarLayout, msg)
+
     }
 
     var team_id = ""

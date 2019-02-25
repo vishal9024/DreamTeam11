@@ -9,7 +9,7 @@
     <ScrollView android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fillViewport="true"
-    android:layout_marginBottom="@dimen/_10sdp">
+    android:layout_marginBottom="@dimen/_8sdp">
         <androidx.cardview.widget.CardView
                 xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:layout_marginTop="@dimen/_5sdp"
@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_margin="@dimen/_15sdp"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/_10sdp"
+                card_view:contentPadding="@dimen/_8sdp"
                 android:backgroundTint="@color/colorContestItemBackground"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -30,15 +30,15 @@
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="match_parent"
                           android:orientation="vertical"
-                          android:padding="@dimen/_10sdp">
+                         >
                 <LinearLayout android:layout_width="match_parent"
                               android:layout_height="match_parent"
                               android:orientation="horizontal"
                               android:gravity="bottom"
                               android:padding="@dimen/_5sdp">
                     <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="@dimen/_30sdp"
-                            android:layout_height="@dimen/_30sdp"
+                            android:layout_width="@dimen/_27sdp"
+                            android:layout_height="@dimen/_27sdp"
                             android:layout_gravity="bottom"
                             android:src="@mipmap/pancardicon"
                     android:tint="@color/colorASPrimary"/>
@@ -46,8 +46,7 @@
                             android:layout_gravity="center_vertical"
                             style="@style/TextStyleNormal"
                             android:gravity="center_vertical"
-                            android:textSize="@dimen/_14sdp"
-                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginStart="@dimen/_8sdp"
                             android:layout_width="match_parent"
                             android:textColor="@color/textColorLightBlack"
                             android:text="@string/verify_your_pan"
@@ -55,7 +54,6 @@
                 </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatButton
-                        android:layout_marginBottom="@dimen/_10sdp"
                         android:id="@+id/btn_uploadPanCard"
                         style="@style/ButtonStyle"
                         android:text="@string/upload_pan_card_image"
@@ -70,7 +68,7 @@
                         android:id="@+id/til_email"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
                             style="@style/EditTextStyle"
@@ -87,8 +85,8 @@
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleNormal"
                         android:gravity="start|center"
-                        android:textSize="@dimen/_10sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_13sdp"
                         android:layout_width="match_parent"
                         android:textColor="@color/textColorGray"
                         android:text="@string/as_on_oan_card"
@@ -98,7 +96,7 @@
                         card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
@@ -117,8 +115,8 @@
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleNormal"
                         android:gravity="start|center"
-                        android:textSize="@dimen/_10sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_13sdp"
                         android:layout_width="match_parent"
                         android:textColor="@color/textColorGray"
                         android:text="@string/_10_digits_pan_no"
@@ -129,7 +127,7 @@
                         card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
@@ -148,8 +146,8 @@
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleNormal"
                         android:gravity="start|center"
-                        android:textSize="@dimen/_10sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:textSize="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_13sdp"
                         android:layout_width="match_parent"
                         android:textColor="@color/textColorGray"
                         android:text="@string/_12_digits_pan_no"
@@ -157,15 +155,20 @@
                 <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/_9sdp"
                         android:orientation="vertical">
                     <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/edtDateOfBirth"
                             android:layout_width="match_parent"
+                            style="@style/EditTextStyle"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/_15sdp"
+                            android:padding="@dimen/_3sdp"
+                            android:paddingStart="@dimen/_12sdp"
                             android:hint="@string/date_of_birth_star"
                             android:textSize="@dimen/_12sdp"/>
+
                     <View android:layout_width="match_parent"
                           android:layout_height="@dimen/_1sdp"
                           android:background="@color/textColorGray"/>
@@ -174,17 +177,23 @@
                 <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:id="@+id/spnStateName">
 
                 </androidx.appcompat.widget.AppCompatSpinner>
+                <View android:layout_width="match_parent"
+                      android:layout_marginTop="@dimen/_3sdp"
+                      android:layout_marginEnd="@dimen/_9sdp"
+                      android:layout_marginStart="@dimen/_5sdp"
+                      android:layout_height="@dimen/_1sdp"
+                      android:background="@color/textColorGray"/>
                 <androidx.appcompat.widget.AppCompatTextView
                         android:layout_gravity="center_vertical"
                         style="@style/TextStyleNormal"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:gravity="center"
                         android:textSize="@dimen/_11sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:textColor="@color/textColorLightBlack"
                         android:text="* All fields are mandatory"
@@ -196,15 +205,14 @@
                         android:gravity="center"
                         android:id="@+id/txtWhySubmitPANCard"
                         android:textSize="@dimen/_11sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginLeft="@dimen/_8sdp"
                         android:layout_width="match_parent"
                         android:textColor="@color/com_facebook_blue"
                         android:text="@string/why_should_i_submit_my_pan_card"
                         android:layout_height="wrap_content"/>
                 <androidx.appcompat.widget.AppCompatButton
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:layout_marginBottom="@dimen/_30sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:id="@+id/btnSubmitForVerifyPAN"
                         style="@style/ButtonStyle"
                         android:text="@string/submit_for_verification"
@@ -221,7 +229,7 @@
             android:layout_width="match_parent"
             android:layout_margin="@dimen/_15sdp"
             android:layout_height="wrap_content"
-            android:padding="@dimen/_10sdp"
+            android:padding="@dimen/_8sdp"
             android:visibility="gone"
             android:backgroundTint="@color/colorContestItemBackground"
             app:layout_constraintStart_toStartOf="parent"
@@ -234,13 +242,13 @@
         <LinearLayout android:layout_width="match_parent"
                       android:layout_height="match_parent"
                       android:orientation="vertical"
-                      android:padding="@dimen/_10sdp">
+                      android:padding="@dimen/_8sdp">
             <androidx.appcompat.widget.AppCompatTextView
                     android:layout_gravity="center_vertical"
                     style="@style/TextStyleNormal"
                     android:gravity="center"
                     android:textSize="@dimen/_16sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_marginTop="@dimen/_15sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/vicecaptainColor"
@@ -252,7 +260,7 @@
                     style="@style/TextStyleNormal"
                     android:gravity="center"
                     android:textSize="@dimen/_12sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorGray"
                     android:text="@string/your_pan_details_have_been_submitted_please_submit_your_bank_details_to_begin_kyc_verification"
@@ -261,8 +269,8 @@
             <!--<androidx.appcompat.widget.AppCompatButton android:layout_width="match_parent"
                                                        android:layout_height="wrap_content"
                                                        android:textColor="@color/white"
-                                                       android:layout_marginTop="@dimen/_10sdp"
-                                                       android:layout_marginBottom="@dimen/_10sdp"
+                                                       android:layout_marginTop="@dimen/_8sdp"
+                                                       android:layout_marginBottom="@dimen/_8sdp"
                                                        android:background="@drawable/button_rounded_background_pan_grey"
                                                        android:text="@string/pan_card_added"/>
 
@@ -288,8 +296,8 @@
                     android:layout_gravity="center_vertical"
                     style="@style/TextStyleNormal"
                     android:gravity="start|center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorGray"
                     android:text="@string/as_on_oan_card"
@@ -300,7 +308,7 @@
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:theme="@style/EditTextLabel">
                 <com.google.android.material.textfield.TextInputEditText
                         style="@style/EditTextStyle"
@@ -317,8 +325,8 @@
                     android:layout_gravity="center_vertical"
                     style="@style/TextStyleNormal"
                     android:gravity="start|center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorGray"
                     android:text="@string/_10_digits_pan_no"
@@ -329,7 +337,7 @@
                     android:layout_marginEnd="@dimen/_7sdp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:theme="@style/EditTextLabel">
                 <com.google.android.material.textfield.TextInputEditText
                         style="@style/EditTextStyle"
@@ -346,8 +354,8 @@
                     android:layout_gravity="center_vertical"
                     style="@style/TextStyleNormal"
                     android:gravity="start|center"
-                    android:textSize="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:textSize="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorGray"
                     android:text="@string/_12_digits_pan_no"
@@ -377,8 +385,8 @@
                     style="@style/TextStyleNormal"
                     android:gravity="center"
                     android:textSize="@dimen/_11sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/textColorGray"
                     android:text="* All fields are mandatory"
@@ -389,9 +397,9 @@
                     style="@style/TextStyleNormal"
                     android:gravity="center"
                     android:textSize="@dimen/_14sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:layout_width="match_parent"
                     android:textColor="@color/com_facebook_blue"
                     android:text="@string/why_should_i_submit_my_pan_card"
@@ -410,7 +418,7 @@
                 android:layout_height="wrap_content"
                 android:text="Your Pan  is Verified"
                 android:textSize="@dimen/_16ssp"
-                android:layout_marginBottom="@dimen/_10sdp"/>
+                android:layout_marginBottom="@dimen/_8sdp"/>
 
         <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="match_parent"

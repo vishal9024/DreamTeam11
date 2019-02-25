@@ -55,43 +55,49 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
                         playerListfinal!!.filter { it.player_record!!.playing_role.contains("Bowler", true) }
                 filteredPlayersList[position].player_record!!.playing_role.contains("Batsman", true) -> filteredList =
                         playerListfinal!!.filter { it.player_record!!.playing_role.contains("Batsman", true) }
-                filteredPlayersList[position].player_record!!.playing_role.contains("Allrounder", true) -> filteredList =
+                filteredPlayersList[position].player_record!!.playing_role.contains(
+                    "Allrounder",
+                    true
+                ) -> filteredList =
                         playerListfinal!!.filter { it.player_record!!.playing_role.contains("Allrounder", true) }
             }
             when {
                 filteredPlayersList[position].player_record!!.playing_role.contains("Bowler", true) -> {
                     if (!filteredList.isEmpty() && filteredList.size < 5) {
-                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
-                        if (totalCredit>100){
+                        val totalCredit =
+                            calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit > 100) {
                             AppDelegate.showToast(this, "You do not have enough credit to select this player.")
-                        }else{
-                            update(position,isSelected)
+                        } else {
+                            update(position, isSelected)
                         }
-                    }else{
+                    } else {
                         AppDelegate.showToast(this, "You can not select more than five Bowlers.")
                     }
                 }
                 filteredPlayersList[position].player_record!!.playing_role.contains("Batsman", true) -> {
                     if (!filteredList.isEmpty() && filteredList.size < 5) {
-                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
-                        if (totalCredit>100){
+                        val totalCredit =
+                            calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit > 100) {
                             AppDelegate.showToast(this, "You do not have enough credit to select this player.")
-                        }else{
-                            update(position,isSelected)
+                        } else {
+                            update(position, isSelected)
                         }
-                    }else{
+                    } else {
                         AppDelegate.showToast(this, "You can not select more than five Batsmen.")
                     }
                 }
                 filteredPlayersList[position].player_record!!.playing_role.contains("Allrounder", true) -> {
                     if (!filteredList.isEmpty() && filteredList.size < 3) {
-                        val totalCredit=calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
-                        if (totalCredit>100){
+                        val totalCredit =
+                            calculateTotalCredit(filteredPlayersList[position].player_record!!.player_credit)
+                        if (totalCredit > 100) {
                             AppDelegate.showToast(this, "You do not have enough credit to select this player.")
-                        }else{
-                            update(position,isSelected)
+                        } else {
+                            update(position, isSelected)
                         }
-                    }else{
+                    } else {
                         AppDelegate.showToast(this, "You can not select more than three All-Rounder.")
                     }
                 }
@@ -99,23 +105,23 @@ class ReplaceWithSubstituteActivity : BaseActivity(), View.OnClickListener, Sele
         }
     }
 
-fun update( position: Int, isSelected: Boolean){
-    for (i in filteredPlayersList.indices)
-        filteredPlayersList[i].isSelected = false
-    filteredPlayersList[position].isSelected = isSelected
-    if (isSelected) {
-        replacedPlayerId = playerListfinal!![position].player_id
-        btn_replaceSubstitute.isEnabled = true
-    } else {
-        replacedPlayerId = ""
-        btn_replaceSubstitute.isEnabled = false
+    fun update(position: Int, isSelected: Boolean) {
+        for (i in filteredPlayersList.indices)
+            filteredPlayersList[i].isSelected = false
+        filteredPlayersList[position].isSelected = isSelected
+        if (isSelected) {
+            replacedPlayerId = playerListfinal!![position].player_id
+            btn_replaceSubstitute.isEnabled = true
+        } else {
+            replacedPlayerId = ""
+            btn_replaceSubstitute.isEnabled = false
+        }
+        rv_players.adapter!!.notifyDataSetChanged()
     }
-    rv_players.adapter!!.notifyDataSetChanged()
-}
 
-    fun calculateTotalCredit(playerCredit:String) :Float{
-      var  totalCredit=totalCredit-playerCredit.toFloat()+substituteDetail!!.credits.toFloat()
-return totalCredit
+    fun calculateTotalCredit(playerCredit: String): Float {
+        val totalCredit = totalCredit - playerCredit.toFloat() + substituteDetail!!.credits.toFloat()
+        return totalCredit
     }
 
     override fun onClickItem(tag: String, position: Int) {
@@ -309,13 +315,10 @@ return totalCredit
 //            substituteDetail!!.role.contains("Allrounder", true) -> filteredPlayerList =
 //                    playerListfinal!!.filter { it.player_record!!.playing_role.contains("Allrounder", true) }
 
-
         }
-
         filteredPlayersList = filteredPlayerList.filter {
-            !it.player_record!!.player_id.equals(captain_id) || !it.player_record!!.player_id.equals(vice_captain_id)
+            !it.player_record!!.player_id.equals(captain_id) && !it.player_record!!.player_id.equals(vice_captain_id)
         }
-
         setAdapter(filteredPlayersList as MutableList<Data>)
     }
 

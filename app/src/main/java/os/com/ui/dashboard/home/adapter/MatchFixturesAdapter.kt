@@ -33,7 +33,8 @@ class MatchFixturesAdapter(
     private var lstHolders: MutableList<AppliedCouponCodeHolder>? = null
     private val updateRemainingTimeRunnable = Runnable {
         synchronized(lstHolders!!) {
-            val currentTime = System.currentTimeMillis()
+            var diff= System.currentTimeMillis()- FantasyApplication.getInstance().server_time
+            val currentTime = System.currentTimeMillis()+diff
             for (holder in lstHolders!!) {
                 holder.updateTimeRemaining(currentTime)
             }

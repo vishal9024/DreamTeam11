@@ -4,9 +4,12 @@ import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.Rect
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -21,8 +24,10 @@ import kotlinx.android.synthetic.main.action_bar_notification_icon.view.*
 import kotlinx.android.synthetic.main.dialogue_join_contest.*
 import kotlinx.android.synthetic.main.dialogue_tooltip.view.*
 import kotlinx.android.synthetic.main.dialogue_wallet.view.*
+import kotlinx.android.synthetic.main.snackbar_layout.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import os.com.R
 import os.com.application.FantasyApplication
@@ -717,6 +722,53 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(intent)
         finish()
     }
+
+
+
+
+
+
+    private var snackBarPopUpWindow: PopupWindow? = null
+    private lateinit var snackBarPopUpWindowView: View
+    private fun initSnackBar() {
+        try {
+            /* set view for filter popup window*/
+            snackBarPopUpWindow = PopupWindow(this)
+            snackBarPopUpWindowView = layoutInflater.inflate(R.layout.snackbar_layout, null) as View
+            snackBarPopUpWindow!!.contentView = snackBarPopUpWindowView
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    public fun showSnackBarView(view: View, msg: String) {
+        if (snackBarPopUpWindow == null)
+            initSnackBar()
+        snackBarPopUpWindowView.txt_message.text = msg
+        snackBarPopUpWindow!!.height = WindowManager.LayoutParams.WRAP_CONTENT
+        snackBarPopUpWindow!!.width = WindowManager.LayoutParams.MATCH_PARENT
+        snackBarPopUpWindow!!.setBackgroundDrawable(
+            BitmapDrawable(
+                resources,
+                Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
+            )
+        )
+        val rectangle = Rect()
+        val window = window
+        window.decorView.getWindowVisibleDisplayFrame(rectangle)
+        if (snackBarPopUpWindow != null && snackBarPopUpWindow!!.isShowing)
+            snackBarPopUpWindow!!.dismiss()
+        snackBarPopUpWindow!!.showAsDropDown(view)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            snackBarPopUpWindow!!.setOverlapAnchor(true)
+        }
+        GlobalScope.launch(Dispatchers.Main) {
+            delay(2000)
+            if (snackBarPopUpWindow != null && snackBarPopUpWindow!!.isShowing)
+                snackBarPopUpWindow!!.dismiss()
+        }
+    }
+
 }
 
 

@@ -19,7 +19,7 @@ class Data() : Parcelable {
     var joined_team_list: ArrayList<Team>? = null
     var breakup_detail: ArrayList<PriceBreakUp>? = null
     var match_status: String = ""
-
+    var server_time: String? = null
     constructor(parcel: Parcel) : this() {
         total_point = parcel.readString()
         prize_money = parcel.readString()
@@ -31,6 +31,7 @@ class Data() : Parcelable {
         total_winners = parcel.readString()
         teams_joined = parcel.readString()
         is_joined = parcel.readByte() != 0.toByte()
+        server_time = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -44,6 +45,7 @@ class Data() : Parcelable {
         parcel.writeString(total_winners)
         parcel.writeString(teams_joined)
         parcel.writeByte(if (is_joined) 1 else 0)
+        parcel.writeString(if (server_time == null) "" else server_time)
     }
 
     override fun describeContents(): Int {

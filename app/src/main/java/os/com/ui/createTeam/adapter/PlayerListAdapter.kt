@@ -65,6 +65,11 @@ class PlayerListAdapter(
         } catch (e: Exception) {
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
+
+        if (BuildConfig.APPLICATION_ID == "os.real11")
+            holder.itemView.txt_Avg.text=playerList!![position].selected_by
+        else
+            holder.itemView.txt_Avg.text=playerList!![position].player_points+" "+ mContext.getString(R.string.points)
         if (playerList!![position].player_record != null) {
             if (BuildConfig.APPLICATION_ID == "os.cashfantasy") {
                 holder.itemView.img_player.visibility = View.VISIBLE

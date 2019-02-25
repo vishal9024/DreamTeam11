@@ -377,8 +377,11 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, CFClientInterface 
                 min_amount = data!!.min_amount.toDouble()
             if (!data!!.max_discount.isEmpty())
                 max_discount = data!!.max_discount.toDouble()
-            tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
-                    " is required to avail this offer"
+            if (max_discount > 0)
+                tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
+                        " is required to avail this offer"
+            else
+                max_discount = 100000.0
             et_addCash.setText(min_amount.roundToLong().toString())
             applyOffer(max_discount)
         } else if (AddTYPE.equals(IntentConstant.OFFER_BANNER)) {
@@ -386,8 +389,12 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, CFClientInterface 
                 min_amount = data_OFFER!!.min_amount.toDouble()
             if (!data_OFFER!!.max_discount.isEmpty())
                 max_discount = data_OFFER!!.max_discount.toDouble()
-            tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
-                    " is required to avail this offer"
+            if (max_discount > 0)
+                tv_offerLabel.text = "Minimum " + getString(R.string.Rs) + " " + min_amount +
+                        " is required to avail this offer"
+            else
+                max_discount = 100000.0
+
             et_addCash.setText(min_amount.roundToLong().toString())
             applyOffer(max_discount)
         }
@@ -573,7 +580,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, CFClientInterface 
     }
 
     override fun onFailure(map: Map<String, String>) {
-        AppDelegate.LogE("onFailure"+map)
+        AppDelegate.LogE("onFailure" + map)
     }
 
     override fun onNavigateBack() {

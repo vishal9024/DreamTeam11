@@ -221,6 +221,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                                     .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
                                     .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
                                     .putExtra(IntentConstant.TYPE, true)
+                                    .putExtra(IntentConstant.ISSIGNUP, true)
                                     .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id),
                                 AppRequestCodes.SIGNUP
                             )
@@ -229,6 +230,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                                 Intent(this@SignUpActivity, OTPActivity::class.java)
                                     .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
                                     .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.ISSIGNUP, true)
                                     .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                             )
                     } else {
@@ -270,6 +272,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                                 Intent(this@SignUpActivity, OTPActivity::class.java)
                                     .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
                                     .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
+                                    .putExtra(IntentConstant.ISSIGNUP, true)
                                     .putExtra(IntentConstant.TYPE, true)
                                     .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id),
                                 AppRequestCodes.SIGNUP
@@ -278,6 +281,7 @@ class SignUpActivity : BaseActivity(), View.OnClickListener {
                             startActivity(
                                 Intent(this@SignUpActivity, OTPActivity::class.java)
                                     .putExtra(IntentConstant.OTP, response.response!!.data!!.otp)
+                                    .putExtra(IntentConstant.ISSIGNUP, true)
                                     .putExtra(IntentConstant.MOBILE, response.response!!.data!!.phone)
                                     .putExtra(IntentConstant.USER_ID, response.response!!.data!!.user_id)
                             )

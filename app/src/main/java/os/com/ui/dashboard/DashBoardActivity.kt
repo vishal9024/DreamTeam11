@@ -223,19 +223,6 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
         }
     }
 
-    //    private fun setFragment(fragment: Fragment) {
-//        val backStateName = fragment.javaClass.name
-//
-//        val manager = supportFragmentManager
-//        val fragmentPopped = manager.popBackStackImmediate(backStateName, 0)
-//
-//        if (!fragmentPopped) { //fragment not in back stack, create it.
-//            val ft = manager.beginTransaction()
-//            ft.replace(R.id.container, fragment)
-//            ft.addToBackStack(backStateName)
-//            ft.commitAllowingStateLoss()
-//        }
-//    }
     private fun setFragment(fragment: Fragment, container: Int) {
         val fragmentManager = supportFragmentManager
         fragmentManager

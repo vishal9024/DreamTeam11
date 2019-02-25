@@ -210,7 +210,7 @@ interface ApiInterface {
     @POST(ApiConstant.friend_referal_detail)
     fun friend_referal_detail(@Body request: Map<String, String>): Deferred<InviteFreindDetailResponse>
 
-//    rajkumar sir
+//  rajkumar sir
     @Multipart
     @POST(ApiConstant.verify_pan_detail)
     fun verify_pan_detail(@Part("data") requestBody: RequestBody, @Part file: MultipartBody.Part?): Deferred<VerifyPanResponse>

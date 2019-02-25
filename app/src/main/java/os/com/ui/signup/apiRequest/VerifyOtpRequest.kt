@@ -9,6 +9,7 @@ class VerifyOtpRequest() : Parcelable {
     var device_type: String = ""
     var language: String = ""
     var user_id: String = ""
+    var is_signup: Boolean = false
 
     constructor(parcel: Parcel) : this() {
         otp = parcel.readString()
@@ -16,6 +17,7 @@ class VerifyOtpRequest() : Parcelable {
         device_type = parcel.readString()
         language = parcel.readString()
         user_id = parcel.readString()
+        is_signup = parcel.readByte() != 0.toByte()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -24,6 +26,7 @@ class VerifyOtpRequest() : Parcelable {
         parcel.writeString(device_type)
         parcel.writeString(language)
         parcel.writeString(user_id)
+        parcel.writeByte(if (is_signup) 1 else 0)
     }
 
     override fun describeContents(): Int {

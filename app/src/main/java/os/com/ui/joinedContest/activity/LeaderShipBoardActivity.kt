@@ -2,6 +2,7 @@ package os.com.ui.joinedContest.activity
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.DownloadManager
 import android.content.Context
 import android.content.Intent
@@ -332,6 +333,8 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 swipeToRefresh.isRefreshing = false
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
+                    FantasyApplication.getInstance().server_time =
+                            AppDelegate.getTimeStampFromDateServer(response.response!!.data!!.server_time!!)!!
                     scrollView.visibility = VISIBLE
                     data = response.response!!.data!!
                     setdata(data!!)
@@ -487,10 +490,10 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
                 if (response.response!!.status) {
 //                    AppDelegate.showToast(this@LeaderShipBoardActivity, response.response!!.message!!)
-                    if (response.response!!.data!=null){
+                    if (response.response!!.data != null) {
 
-                    }else{
-                        AppDelegate.showToast(this@LeaderShipBoardActivity,getString(R.string.no_dream_team_found))
+                    } else {
+                        AppDelegate.showToast(this@LeaderShipBoardActivity, getString(R.string.no_dream_team_found))
                     }
                     startActivity(
                         Intent(this@LeaderShipBoardActivity, TeamPreviewActivity::class.java).putExtra(
@@ -512,6 +515,12 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == AppRequestCodes.EDIT && resultCode == Activity.RESULT_OK)
+            callContestDetailApi(VISIBLE)
     }
 
     private fun callGetTeamListApi(tag: String, user_id: String, teamNo: String, team_name: String) {
@@ -544,7 +553,7 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                             ).putExtra(IntentConstant.DATA, response.response!!.data!![0]).putParcelableArrayListExtra(
                                 IntentConstant.SELECT_PLAYER,
                                 response.response!!.data!![0].player_details
-                            ) .putExtra(IntentConstant.MATCH, match)
+                            ).putExtra(IntentConstant.MATCH, match)
                                 .putExtra("substitute", response.response!!.data!![0].substitute_detail)
                                 .putExtra("teamName", teamName)
                                 .putExtra("points", true)
@@ -562,7 +571,10 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                                 .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
                                 .putExtra(IntentConstant.CONTEST_ID, contest_id)
                                 .putExtra(IntentConstant.CAPTAIN_ID, response.response!!.data!![0].captain_player_id)
-                                .putExtra(IntentConstant.VICE_CAPTAIN_ID,  response.response!!.data!![0].vice_captain_player_id)
+                                .putExtra(
+                                    IntentConstant.VICE_CAPTAIN_ID,
+                                    response.response!!.data!![0].vice_captain_player_id
+                                )
                                 .putExtra(IntentConstant.TEAM_ID, teamNo)
                             ,
                             AppRequestCodes.EDIT

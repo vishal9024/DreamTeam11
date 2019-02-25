@@ -53,7 +53,7 @@ android {
         Lucky11 {
             versionCode 1
             versionName '1.0'
-            resValue "string", "app_name", "Lucky11"
+            resValue "string", "app_name", "Binoba11"
             applicationId = "os.lucky11"
         }
         RealBash {

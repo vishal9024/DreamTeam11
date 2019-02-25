@@ -78,4 +78,9 @@
         <item name="sv_titleTextAppearance">@style/TextStyleShowcaseTitle</item>
         <item name="sv_detailTextAppearance">@style/TextStyleShowcaseDescription</item>
     </style>
+
+
+    <!--<style name="popup_window_animation_phone">-->
+        <!--<item name="android:windowEnterAnimation">@android:anim/fade_in_animation</item>-->
+    <!--</style>-->
 </resources>
