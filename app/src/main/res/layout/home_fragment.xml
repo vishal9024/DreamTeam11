@@ -188,11 +188,9 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:id="@+id/swipeToRefresh"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
-
                 android:id="@+id/constraint_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -249,6 +247,53 @@
                         android:visibility="gone"
                         tools:listitem="@layout/item_match"
                 />
+                <RelativeLayout
+                        android:visibility="gone"
+                        android:id="@+id/ll_nodata_available"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                    <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/img_logo"
+                            android:src="@mipmap/ic_launcher"
+                            android:layout_centerHorizontal="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_below="@+id/img_logo"
+                            android:id="@+id/txt_no_data"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            style="@style/TextStyleSemiBold"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_width="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@color/textColorBlack"
+                            android:text="@string/no_contest_available"
+                            android:layout_height="wrap_content"
+                    />
+                    <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/txt_join"
+                            style="@style/ButtonStyle"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:gravity="center"
+                            android:layout_centerHorizontal="true"
+                            android:paddingStart="@dimen/_35sdp"
+                            android:paddingEnd="@dimen/_35sdp"
+                            android:paddingTop="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:background="@drawable/button_rounded_background_white_green"
+                            android:layout_below="@+id/txt_no_data"
+                            android:textSize="@dimen/_11sdp"
+                            android:layout_width="wrap_content"
+                            android:textColor="@color/textColorLightBlack"
+                            android:text="@string/join_contest"
+                            android:layout_height="wrap_content"
+                    />
+                </RelativeLayout>
+
+
             </RelativeLayout>
 
             <androidx.appcompat.widget.AppCompatTextView

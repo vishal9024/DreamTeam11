@@ -30,6 +30,8 @@ import os.com.ui.invite.activity.InviteFriendsActivity
 import os.com.ui.joinedContest.activity.CompletedJoinedContestActivity
 import os.com.ui.notification.activity.NotificationActivity
 
+
+
 /**
  * Created by heenas on 3/12/2018.
  */
@@ -222,7 +224,16 @@ class DashBoardActivity : BaseActivity(), View.OnClickListener,
             super.onBackPressed()
         }
     }
-
+    public fun setFragment(fragment: Fragment) {
+        val view = bottomNavigationView.findViewById<View>(R.id.navigation_home)
+        view.performClick()
+//        fragmentManager
+//            .beginTransaction()
+////            .setCustomAnimations(R.anim.bottom_in, R.anim.bottom_out)
+//            .replace(R.id.container, fragment)
+////            .addToBackStack(null)
+//            .commitAllowingStateLoss()
+    }
     private fun setFragment(fragment: Fragment, container: Int) {
         val fragmentManager = supportFragmentManager
         fragmentManager

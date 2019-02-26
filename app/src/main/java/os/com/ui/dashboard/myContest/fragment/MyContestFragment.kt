@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +23,9 @@ import os.com.application.FantasyApplication
 import os.com.constant.Tags
 import os.com.interfaces.OnClickRecyclerView
 import os.com.networkCall.ApiClient
+import os.com.ui.dashboard.DashBoardActivity
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
+import os.com.ui.dashboard.home.fragment.HomeFragment
 import os.com.ui.dashboard.myContest.adapter.MyContestCompletedAdapter
 import os.com.ui.dashboard.myContest.adapter.MyContestFixturesAdapter
 import os.com.ui.dashboard.myContest.adapter.MyContestLiveAdapter
@@ -37,13 +40,14 @@ import kotlin.collections.set
 /**
  * Created by heenas on 3/5/2018.
  */
-class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecyclerView {
+class MyContestFragment : BaseFragment(), View.OnClickListener, OnClickRecyclerView {
     override fun onClickItem(tag: String, position: Int) {
         if (!isAdded)
             return
         fixturesMatchList.removeAt(position)
         fixturesAdapter!!.notifyDataSetChanged()
     }
+
     override fun onClick(view: View?) {
         when (view!!.id) {
             R.id.txt_Fixtures -> matchSelector(FIXTURES)
@@ -82,8 +86,14 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
     }
 
     private fun initViews() {
+
         viewPager_Banner.visibility = GONE
         matchSelector(FIXTURES)
+        txt_join.setOnClickListener {
+            (activity as DashBoardActivity).setFragment(HomeFragment())
+            (activity as DashBoardActivity).setTitleVisibility(false, true)
+            (activity as DashBoardActivity)
+        }
 //        setHomeBannerAdapter()
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
@@ -105,10 +115,8 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
                 tabLayout.visibility = GONE
             }
 
-        setFixturesAdapter()
-        setCompletedAdapter()
-        setLiveAdapter()
         if (NetworkUtils.isConnected()) {
+            ll_nodata_available.visibility = GONE
             callGetMatchListApi(View.VISIBLE)
         } else
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
@@ -136,6 +144,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
     private var RESULTS = 3
 
     fun matchSelector(value: Int) {
+        ll_nodata_available.visibility = GONE
         txt_Fixtures.isSelected = false
         txt_Live.isSelected = false
         txt_Results.isSelected = false
@@ -152,6 +161,7 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
                 view2.visibility = View.GONE
                 recyclerView_liveMatch.visibility = View.VISIBLE
                 setLiveAdapter()
+
             }
             FIXTURES -> {
                 txt_title.visibility = GONE
@@ -184,78 +194,109 @@ class MyContestFragment : BaseFragment(), View.OnClickListener,  OnClickRecycler
         if (pref!!.isLogin)
             loginRequest[Tags.user_id] = pref!!.userdata!!.user_id
         else
-            loginRequest[Tags.user_id]= ""
+            loginRequest[Tags.user_id] = ""
         loginRequest[Tags.language] = FantasyApplication.getInstance().getLanguage()
         GlobalScope.launch(Dispatchers.Main) {
             if (!isAdded)
                 return@launch
             if (visibility == View.VISIBLE)
                 AppDelegate.showProgressDialog(activity!!)
-                        try {
-                            val request = ApiClient.client
-                                .getRetrofitService()
-                                .joined_contest_matches(loginRequest)
-                            val response = request.await()
-                            AppDelegate.LogT("Response=>" + response);
-                            AppDelegate.hideProgressDialog(activity)
-                            swipeToRefresh.isRefreshing = false
-                            if (response.response!!.status) {
+            try {
+                val request = ApiClient.client
+                    .getRetrofitService()
+                    .joined_contest_matches(loginRequest)
+                val response = request.await()
+                AppDelegate.LogT("Response=>" + response);
+                AppDelegate.hideProgressDialog(activity)
+                swipeToRefresh.isRefreshing = false
+                if (response.response!!.status) {
 //                    AppDelegate.showToast(activity, response.response!!.message)
-                                FantasyApplication.getInstance().server_time=getTimeStampFromDateServer(response.response!!.data!!.server_time!!)!!
-                                fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
-                                liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
-                                completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
-                                setFixturesAdapter()
-                                setCompletedAdapter()
-                                setLiveAdapter()
-                                recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
-                                recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
-                                recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
-                            } else {
-                                (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
+                    FantasyApplication.getInstance().server_time =
+                            getTimeStampFromDateServer(response.response!!.data!!.server_time!!)!!
+                    fixturesMatchList = response.response!!.data!!.upcoming_match as MutableList<Match>
+                    liveMatchList = response.response!!.data!!.live_match as MutableList<Match>
+                    completedMatchList = response.response!!.data!!.completed_match as MutableList<Match>
+                    setFixturesAdapter()
+//                    setCompletedAdapter()
+//                    setLiveAdapter()
+//                    recyclerView_fixMatch!!.adapter!!.notifyDataSetChanged()
+//                    recyclerView_liveMatch!!.adapter!!.notifyDataSetChanged()
+//                    recyclerView_CompleteMatch!!.adapter!!.notifyDataSetChanged()
+                } else {
+                    (activity as BaseActivity).logoutIfDeactivate(response.response!!.message)
+                    ll_nodata_available.visibility = VISIBLE
 //                    AppDelegate.showToast(activity, response.response!!.message)
-                            }
-                        } catch (exception: Exception) {
-                            if (!isAdded)
-                                return@launch
-                            swipeToRefresh.isRefreshing = false
-                            AppDelegate.hideProgressDialog(activity)
-                        }
+                }
+            } catch (exception: Exception) {
+                if (!isAdded)
+                    return@launch
+                swipeToRefresh.isRefreshing = false
+                AppDelegate.hideProgressDialog(activity)
+                ll_nodata_available.visibility = VISIBLE
+            }
         }
     }
 
     @SuppressLint("WrongConstant")
     private fun setFixturesAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_fixMatch!!.layoutManager = llm
-        recyclerView_fixMatch!!.setHasFixedSize(true)
-        fixturesAdapter = MyContestFixturesAdapter(context!!, fixturesMatchList,this)
-        recyclerView_fixMatch!!.adapter = fixturesAdapter
+        if (!fixturesMatchList.isEmpty()) {
+            ll_nodata_available.visibility = GONE
+            recyclerView_fixMatch!!.visibility = VISIBLE
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_fixMatch!!.layoutManager = llm
+            recyclerView_fixMatch!!.setHasFixedSize(true)
+            fixturesAdapter = MyContestFixturesAdapter(context!!, fixturesMatchList, this)
+            recyclerView_fixMatch!!.adapter = fixturesAdapter
+        } else {
+            ll_nodata_available.visibility = VISIBLE
+            recyclerView_fixMatch!!.visibility = GONE
+        }
+
+
     }
 
     @SuppressLint("WrongConstant")
     private fun setLiveAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_liveMatch!!.layoutManager = llm
-        recyclerView_liveMatch!!.setHasFixedSize(true)
-        liveAdapter = MyContestLiveAdapter(context!!, liveMatchList)
-        recyclerView_liveMatch!!.adapter = liveAdapter
+        if (!liveMatchList.isEmpty()) {
+            ll_nodata_available.visibility = GONE
+            recyclerView_liveMatch.visibility= VISIBLE
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_liveMatch!!.layoutManager = llm
+            recyclerView_liveMatch!!.setHasFixedSize(true)
+            liveAdapter = MyContestLiveAdapter(context!!, liveMatchList)
+            recyclerView_liveMatch!!.adapter = liveAdapter
+        } else {
+            recyclerView_liveMatch.visibility= GONE
+            ll_nodata_available.visibility = VISIBLE
+        }
+
+
     }
 
     @SuppressLint("WrongConstant")
     private fun setCompletedAdapter() {
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-        recyclerView_CompleteMatch!!.layoutManager = llm
-        recyclerView_CompleteMatch!!.setHasFixedSize(true)
-        completedAdapter = MyContestCompletedAdapter(context!!, completedMatchList)
-        recyclerView_CompleteMatch!!.adapter = completedAdapter
+        if (!completedMatchList.isEmpty()) {
+            ll_nodata_available.visibility = GONE
+            recyclerView_CompleteMatch!!.visibility = VISIBLE
+            val llm = LinearLayoutManager(context)
+            llm.orientation = LinearLayoutManager.VERTICAL
+            recyclerView_CompleteMatch!!.layoutManager = llm
+            recyclerView_CompleteMatch!!.setHasFixedSize(true)
+            completedAdapter = MyContestCompletedAdapter(context!!, completedMatchList)
+            recyclerView_CompleteMatch!!.adapter = completedAdapter
+        } else {
+            ll_nodata_available.visibility = VISIBLE
+            recyclerView_CompleteMatch!!.visibility = GONE
+        }
+
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        fixturesAdapter!!.stopUpdateTimer()
+        if (fixturesAdapter != null)
+            fixturesAdapter!!.stopUpdateTimer()
     }
 }

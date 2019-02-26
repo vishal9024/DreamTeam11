@@ -616,4 +616,5 @@
         substitute.
     </string>
     <string name="match_not_found">No Match Found</string>
+    <string name="no_contest_available">No contest available</string>
 </resources>
