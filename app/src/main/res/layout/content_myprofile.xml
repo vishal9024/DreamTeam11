@@ -202,39 +202,45 @@
                             android:layout_width="@dimen/_80sdp"
                             android:layout_height="@dimen/_50sdp"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
                             android:src="@mipmap/cashbonus"
                             android:layout_centerHorizontal="true"
                             />
-                    <RelativeLayout android:layout_width="@dimen/_75sdp"
+                    <RelativeLayout android:layout_width="@dimen/_70sdp"
                                     android:gravity="center"
                                     android:background="@mipmap/cashbonusbg"
                                     android:visibility="visible"
                                     android:layout_marginTop="@dimen/_5sdp"
+                                    android:paddingLeft="@dimen/_5sdp"
                                     android:layout_height="@dimen/_35sdp">
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/txt_bonusRupees"
                                 android:layout_gravity="center_horizontal"
                                 style="@style/TextStyleSemiBold"
-                                android:paddingStart="@dimen/_5sdp"
+                                android:layout_marginLeft="@dimen/_8sdp"
                                 android:gravity="center_vertical"
                                 android:textSize="@dimen/_12sdp"
                                 android:layout_width="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:text="@string/Rs10_cash"
+
                                 android:textColor="@color/white"
                                 android:layout_height="wrap_content"/>
                         <ImageView
                                 android:src="@mipmap/lockiconcopy"
                                 android:layout_width="@dimen/_22sdp"
                                 android:layout_height="@dimen/_22sdp"
-                        android:layout_alignParentRight="true"/>
+                                android:layout_alignParentRight="true"
+
+                        />
+
                         <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_marginTop="@dimen/_3sdp"
                                 android:layout_below="@+id/txt_bonusRupees"
                                 android:layout_gravity="center_horizontal"
+                                android:layout_alignParentLeft="true"
                                 style="@style/TextStyleNormal"
                                 android:gravity="center_vertical"
-                                android:textSize="@dimen/_10sdp"
+                                android:textSize="@dimen/_8sdp"
                                 android:layout_width="wrap_content"
                                 android:text="@string/cash_bonus"
                                 android:textColor="@color/white"

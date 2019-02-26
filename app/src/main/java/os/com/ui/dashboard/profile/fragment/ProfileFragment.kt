@@ -533,15 +533,18 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                 if (mData!!.contest_finished != null && mData!!.contest_finished != "")
                     txtContest.setText("" + mData!!.contest_finished)
 
+
+
                 if (mData!!.paid_contest_count != null) {
                     try {
                         if (BuildConfig.APPLICATION_ID == "os.realbash") {
-                            cimg_user.setImageResource(R.mipmap.cashbonus25)
-                            var contest = mData!!.paid_contest_count.toLong() % 25
-                            tvRemianContest.setText("" + (25 - contest))
+                            if (mData!!.reward_amount!= null)
+                                txt_bonusRupees.setText(getString(R.string.Rs)+" "+mData!!.reward_amount)
+                            var contest = mData!!.paid_contest_count.toLong() % mData!!.no_of_contest.toInt()
+                            tvRemianContest.setText("" + (mData!!.no_of_contest.toInt() - contest))
                             try {
                                 crs_Progress.setMinValue(0f)
-                                crs_Progress.setMaxValue(25f)
+                                crs_Progress.setMaxValue(contest.toFloat())
                                 crs_Progress.setMinStartValue(0f)
                                 crs_Progress.setMaxStartValue(contest.toFloat())
                                 crs_Progress.apply()
@@ -549,7 +552,8 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
                                 e.printStackTrace()
                             }
                         } else {
-                            cimg_user.setImageResource(R.mipmap.cashbonus)
+//                            cimg_user.setImageResource(R.mipmap.cashbonus)
+                            txt_bonusRupees.setText(getString(R.string.Rs)+" 20")
                             var contest = mData!!.paid_contest_count.toLong() % 20
                             tvRemianContest.setText("" + (20 - contest))
                             try {
