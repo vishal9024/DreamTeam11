@@ -86,9 +86,13 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
 
     override fun onResume() {
         super.onResume()
-        if (pref!!.isLogin)
+        if (pref!!.isLogin) {
+            Handler().postDelayed(Runnable {
+                if (bannerFragment.isEmpty())
+                    callBannerApi()
+            }, 100)
             viewPager_Banner.visibility = VISIBLE
-        else
+        } else
             viewPager_Banner.visibility = GONE
     }
 
@@ -132,10 +136,7 @@ class HomeFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOffset
         } else
             Toast.makeText(activity, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
-        Handler().postDelayed(Runnable {
-            if (pref!!.isLogin)
-                callBannerApi()
-        }, 100)
+
         txt_Fixtures.setOnClickListener(this)
         txt_Live.setOnClickListener(this)
         txt_Results.setOnClickListener(this)

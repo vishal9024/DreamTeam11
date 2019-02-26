@@ -124,6 +124,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/account_number"
                             android:inputType="number"
+                            android:maxLength="18"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -151,6 +152,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/retype_account_number"
                             android:inputType="number"
+                            android:maxLength="18"
                             android:imeOptions="actionNext"
                             android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>
@@ -178,11 +180,14 @@
                         card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:layout_width="match_parent"
+                        android:editable="false"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
                             style="@style/EditTextStyle"
+                            android:enabled="false"
                             android:id="@+id/edtBankname"
+                            android:editable="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/bank_name"
@@ -196,15 +201,18 @@
                         card_view:layout_constraintEnd_toStartOf="@id/txt_ApplyCode"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:layout_width="match_parent"
+                        android:editable="false"
                         android:layout_height="wrap_content"
                         android:theme="@style/EditTextLabel">
                     <com.google.android.material.textfield.TextInputEditText
                             style="@style/EditTextStyle"
                             android:id="@+id/edtBankbranch"
+                            android:enabled="false"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/bank_branch"
                             android:inputType="text"
+                            android:editable="false"
                             android:imeOptions="actionDone"
                             android:textSize="@dimen/_11sdp"/>
                 </com.google.android.material.textfield.TextInputLayout>

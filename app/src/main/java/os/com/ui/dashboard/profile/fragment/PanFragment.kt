@@ -51,13 +51,18 @@ class PanFragment : BaseFragment(), View.OnClickListener {
 
     internal var fromDate: DatePickerDialog.OnDateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            // TODO Auto-generated method stub
             dobCalendar.set(Calendar.YEAR, year)
             dobCalendar.set(Calendar.MONTH, monthOfYear)
             dobCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            edtDateOfBirth.setText("" + dayOfMonth + "-" + monthOfYear + 1 + "-" + year)
-//            dob = state.toString() + "-" + Util.setZeroBeforeNine(monthOfYear + 1) + "-" +
-//                    Util.setZeroBeforeNine(dayOfMonth)
+            var date = dayOfMonth.toString()
+            var month = (monthOfYear + 1).toString()
+            if (monthOfYear < 10)
+                month = "0" + month
+            if (dayOfMonth < 10)
+                date = "0" + dayOfMonth
+            edtDateOfBirth.setText("" + date + "-" + month + "-" + year)
+//          dob = state.toString() + "-" + Util.setZeroBeforeNine(monthOfYear + 1) + "-" +
+//           Util.setZeroBeforeNine(dayOfMonth)
         }
 
     override fun onClick(p0: View?) {
@@ -130,6 +135,7 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                                 )
                             } else
                                 Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
+
                         }
                     }
                 }

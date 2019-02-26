@@ -86,5 +86,6 @@ object AppRequestCodes {
 
     const val PAYTM = 25
     const val CASHFREE = 26
+    const val ADD_REMOVE_PLAYER=27
 
 }

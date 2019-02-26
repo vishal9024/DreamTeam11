@@ -36,6 +36,7 @@ import os.com.networkCall.ApiClient
 import os.com.ui.contest.apiResponse.getContestDetail.Data
 import os.com.ui.contest.apiResponse.getContestDetail.Team
 import os.com.ui.createTeam.activity.TeamPreviewActivity
+import os.com.ui.createTeam.apiResponse.myTeamListResponse.GetTeamListResponse
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.joinedContest.adapter.LeaderShipTeamsAdapter
 import os.com.utils.AppDelegate
@@ -560,25 +561,22 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                                 .putExtra("pointsShow", 1)
                         )
                     } else if (tag.equals("substitute")) {
-                        startActivityForResult(
-                            Intent(
-                                this@LeaderShipBoardActivity,
-                                ReplaceWithSubstituteActivity::class.java
-                            ).putParcelableArrayListExtra(
-                                IntentConstant.SELECT_PLAYER,
-                                response.response!!.data!![0].player_details
-                            ).putExtra("substitute", response.response!!.data!![0].substitute_detail)
-                                .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
-                                .putExtra(IntentConstant.CONTEST_ID, contest_id)
-                                .putExtra(IntentConstant.CAPTAIN_ID, response.response!!.data!![0].captain_player_id)
-                                .putExtra(
-                                    IntentConstant.VICE_CAPTAIN_ID,
-                                    response.response!!.data!![0].vice_captain_player_id
+                        if (response.response!!.data!![0].substitute_detail!!.role.contains("Wicketkeeper", true)) {
+                            if (response.response!!.data!![0].vice_captain_player_id.equals(response.response!!.data!![0].substitute_detail!!.player_id)
+                                || response.response!!.data!![0].captain_player_id.equals(response.response!!.data!![0].substitute_detail!!.player_id)
+                            )
+                                AppDelegate.showSnackBar(
+                                    toolbar,
+                                    this@LeaderShipBoardActivity,
+                                    getString(R.string.substitute_wicketKeeper_validation)
                                 )
-                                .putExtra(IntentConstant.TEAM_ID, teamNo)
-                            ,
-                            AppRequestCodes.EDIT
-                        )
+                            else
+                                data(response, teamNo)
+                        } else {
+                            data(response, teamNo)
+                        }
+
+
                     }
                 } else {
                     logoutIfDeactivate(response.response!!.message)
@@ -587,5 +585,27 @@ class LeaderShipBoardActivity : BaseActivity(), View.OnClickListener, OnClickRec
                 AppDelegate.hideProgressDialog(this@LeaderShipBoardActivity)
             }
         }
+    }
+
+    fun data(response: GetTeamListResponse, teamNo: String) {
+        startActivityForResult(
+            Intent(
+                this@LeaderShipBoardActivity,
+                ReplaceWithSubstituteActivity::class.java
+            ).putParcelableArrayListExtra(
+                IntentConstant.SELECT_PLAYER,
+                response.response!!.data!![0].player_details
+            ).putExtra("substitute", response.response!!.data!![0].substitute_detail)
+                .putExtra(IntentConstant.MATCH, match).putExtra(IntentConstant.CONTEST_TYPE, matchType)
+                .putExtra(IntentConstant.CONTEST_ID, contest_id)
+                .putExtra(IntentConstant.CAPTAIN_ID, response.response!!.data!![0].captain_player_id)
+                .putExtra(
+                    IntentConstant.VICE_CAPTAIN_ID,
+                    response.response!!.data!![0].vice_captain_player_id
+                )
+                .putExtra(IntentConstant.TEAM_ID, teamNo)
+            ,
+            AppRequestCodes.EDIT
+        )
     }
 }

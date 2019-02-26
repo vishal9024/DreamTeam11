@@ -99,6 +99,36 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, CFClientInterface 
         }
     }
 
+    private fun my_account_call() {
+        try {
+            GlobalScope.launch(Dispatchers.Main) {
+                AppDelegate.showProgressDialog(this@AddCashActivity)
+                try {
+                    var map = java.util.HashMap<String, String>()
+                    map[Tags.user_id] = pref!!.userdata!!.user_id
+                    map[Tags.language] = FantasyApplication.getInstance().getLanguage()
+                    val request = ApiClient.client
+                        .getRetrofitService()
+                        .user_account_datail(map)
+                    val response = request.await()
+                    AppDelegate.LogT("Response=>" + response)
+                    AppDelegate.hideProgressDialog(this@AddCashActivity)
+                    if (response.response!!.isStatus) {
+
+                        txt_amount.setText(getString(R.string.Rs) + " " + response.response!!.data.total_balance)
+                    } else {
+                        logoutIfDeactivate(response.response!!.message)
+                        AppDelegate.showToast(this@AddCashActivity, response.response!!.message)
+                    }
+                } catch (exception: Exception) {
+                    AppDelegate.hideProgressDialog(this@AddCashActivity)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun showPaymentOption(
     ) {
         val dialogue = Dialog(this)
@@ -367,6 +397,7 @@ class AddCashActivity : BaseActivity(), View.OnClickListener, CFClientInterface 
             } else
                 et_addCash.setText("100")
         }
+        my_account_call()
     }
 
     private fun AddTextChangeListener() {

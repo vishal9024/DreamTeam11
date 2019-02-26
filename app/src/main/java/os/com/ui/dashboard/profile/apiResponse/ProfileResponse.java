@@ -110,6 +110,8 @@ public class ProfileResponse implements Serializable {
             public String gender;
             public String account_verified;
             public String referal_bonus;
+            public String reward_amount;
+            public String no_of_contest;
             public List<ReferedToFriendBean> refered_to_friend;
             public List<RewardsBean> rewards;
             public List<SeriesRanksBean> series_ranks;
@@ -240,6 +242,22 @@ public class ProfileResponse implements Serializable {
 
             public void setReferal_bonus(String referal_bonus) {
                 this.referal_bonus = referal_bonus;
+            }
+
+            public String getReward_amount() {
+                return reward_amount;
+            }
+
+            public void setReward_amount(String reward_amount) {
+                this.reward_amount = reward_amount;
+            }
+
+            public String getNo_of_contest() {
+                return no_of_contest;
+            }
+
+            public void setNo_of_contest(String no_of_contest) {
+                this.no_of_contest = no_of_contest;
             }
 
             public List<ReferedToFriendBean> getRefered_to_friend() {

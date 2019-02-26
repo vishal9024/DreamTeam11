@@ -1,7 +1,6 @@
 package os.com.ui.createTeam.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,7 @@ import os.com.BuildConfig
 import os.com.R
 import os.com.application.FantasyApplication
 import os.com.interfaces.SelectPlayerInterface
-import os.com.ui.createTeam.activity.ChooseTeamActivity
-import os.com.ui.createTeam.activity.PlayerDetailActivity
+import os.com.ui.createTeam.activity.ChooseTeamActivity.Companion.exeedCredit
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
 
@@ -66,10 +64,11 @@ class PlayerListAdapter(
             holder.itemView.ll_main.setBackgroundColor(mContext.resources.getColor(R.color.colorContestItemBackground))
         }
 
-        if (BuildConfig.APPLICATION_ID == "os.real11")
-            holder.itemView.txt_Avg.text=playerList!![position].selected_by
-        else
-            holder.itemView.txt_Avg.text=playerList!![position].player_points+" "+ mContext.getString(R.string.points)
+//        if (BuildConfig.APPLICATION_ID == "os.real11")
+//            holder.itemView.txt_Avg.text = playerList!![position].selected_by
+//        else
+            holder.itemView.txt_Avg.text = playerList!![position].player_points + " " +
+                    mContext.getString(R.string.points)
         if (playerList!![position].player_record != null) {
             if (BuildConfig.APPLICATION_ID == "os.cashfantasy") {
                 holder.itemView.img_player.visibility = View.VISIBLE
@@ -98,12 +97,12 @@ class PlayerListAdapter(
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
         holder.itemView.img_add.isSelected = playerList!![position]!!.isSelected
-            holder.itemView.ll_main.setOnClickListener {
-                if (playerList!![position].isSelected)
-                    onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)
-                else
-                    onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
-            }
+        holder.itemView.ll_main.setOnClickListener {
+            if (playerList!![position].isSelected)
+                onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)
+            else
+                onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
+        }
         holder.itemView.img_add.setOnClickListener {
             if (playerList!![position].isSelected)
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, false)
@@ -111,9 +110,7 @@ class PlayerListAdapter(
                 onClickRecyclerView.onClickItem(type, holder.adapterPosition, true)
         }
         holder.itemView.cimg_player.setOnClickListener {
-                        mContext.startActivity(Intent(mContext, PlayerDetailActivity::class.java)
-                            .putExtra("player_id",playerList!![position].player_id)
-                            .putExtra("series_id",playerList!![position].series_id))
+            onClickRecyclerView.onClickItem(type.toString(), holder.adapterPosition)
         }
         holder.itemView.ll_main.alpha = 1.0f
         if (playerList!![position].team_id.equals(local_team_id)) {
@@ -148,7 +145,7 @@ class PlayerListAdapter(
                     holder.itemView.ll_main.alpha = 0.5f
                 else
                     holder.itemView.ll_main.alpha = 1.0f
-            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+            } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
                 if (!playerList!![position].isSelected)
                     holder.itemView.ll_main.alpha = 0.5f
                 else
@@ -165,7 +162,7 @@ class PlayerListAdapter(
                     holder.itemView.ll_main.alpha = 0.5f
                 else
                     holder.itemView.ll_main.alpha = 1.0f
-            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+            } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
                 if (!playerList!![position].isSelected)
                     holder.itemView.ll_main.alpha = 0.5f
                 else
@@ -182,7 +179,7 @@ class PlayerListAdapter(
                     holder.itemView.ll_main.alpha = 0.5f
                 else
                     holder.itemView.ll_main.alpha = 1.0f
-            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+            } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
                 if (!playerList!![position].isSelected)
                     holder.itemView.ll_main.alpha = 0.5f
                 else
@@ -199,7 +196,7 @@ class PlayerListAdapter(
                     holder.itemView.ll_main.alpha = 0.5f
                 else
                     holder.itemView.ll_main.alpha = 1.0f
-            } else if ((mContext as ChooseTeamActivity).exeedCredit) {
+            } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
                 if (!playerList!![position].isSelected)
                     holder.itemView.ll_main.alpha = 0.5f
                 else

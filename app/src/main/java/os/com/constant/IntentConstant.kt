@@ -4,6 +4,8 @@ package os.com.constant
  * Created by heenas on 2/21/2018.
  */
 object IntentConstant {
+    const val is_in_team="is_in_team"
+    const val ADD_REMOVE_PLAYER="ADD_REMOVE_PLAYER"
     const val ISSIGNUP="ISSIGNUP"
     const val PAYMENT_GATEWAY="CAPTAIN_ID"
     const val CAPTAIN_ID="CAPTAIN_ID"

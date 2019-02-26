@@ -82,9 +82,9 @@ class ReplaceSubstituteAdapter(
             holder.itemView.txt_Country.text = playerList!![position].player_record!!.country
             holder.itemView.txt_Credits.text = playerList!![position].player_record!!.player_credit
         }
-        if (BuildConfig.APPLICATION_ID == "os.real11")
-            holder.itemView.txt_Avg.text=playerList!![position].selected_by
-        else
+//        if (BuildConfig.APPLICATION_ID == "os.real11")
+//            holder.itemView.txt_Avg.text=playerList!![position].selected_by
+//        else
             holder.itemView.txt_Avg.text=playerList!![position].player_points+" "+ mContext.getString(R.string.points)
 
         holder.itemView.img_add.isSelected = playerList!![position].isSelected
