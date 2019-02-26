@@ -141,9 +141,9 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
         txt_MyTeams.text = FantasyApplication.getInstance().teamCount.toString()
         setMenu(false, true, true, false, false)
         if (!pref!!.isLogin)
-            ll_ContestType.visibility=GONE
+            ll_ContestType.visibility = GONE
         else
-            ll_ContestType.visibility= VISIBLE
+            ll_ContestType.visibility = VISIBLE
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -212,6 +212,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
                     when (newState) {
                     }
                 }
+
                 override fun onSlide(bottomSheet: View, slideOffset: Float) {}
             })
             filterBootomSheet()
@@ -314,21 +315,39 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
                         contests!!.addAll(contest.contests!!)
                         txt_AllContestCount.text = contests!!.size.toString() + " " + getString(R.string.contest)
                     }
-                    if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, false)) {
-                        pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, true)
-                        callIntroductionScreen(
-                            R.id.ll_totalWinnings,
-                            getString(R.string.winnings),
-                            "Total amount to be won",
-                            ShowcaseView.BELOW_SHOWCASE
-                        )
-                    }
+//                    instruction()
                 } else {
                     logoutIfDeactivate(response.response!!.message)
                 }
             } catch (exception: Exception) {
                 AppDelegate.hideProgressDialog(this@ContestActivity)
             }
+        }
+    }
+
+     fun instruction() {
+        if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, false)) {
+            pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, true)
+            callIntroductionScreen(
+                R.id.ll_totalWinnings,
+                getString(R.string.winnings),
+                "Total amount to be won",
+                ShowcaseView.BELOW_SHOWCASE
+            )
+        }
+    }
+
+     fun instructionSkip() {
+        counterValue = 2
+        if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, false)) {
+            pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CONTEST_INSTRUCTION, true)
+            callIntroductionScreen(
+                R.id.ll_entry,
+                getString(R.string.entry),
+                "Amount to pay to join this contest"
+                ,
+                ShowcaseView.BELOW_SHOWCASE
+            )
         }
     }
 
@@ -376,6 +395,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
     override fun onShowcaseViewTouchBlocked(motionEvent: MotionEvent?) {
     }
 
+    var position = 0
     var scv: ShowcaseView.Builder? = null
     var buil: ShowcaseView? = null
     fun callIntroductionScreen(
@@ -390,6 +410,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
 //                .setTarget(ViewTarget(target, this@ContestActivity))
                 .setContentTitle(title)
                 .setContentText(description)
+                .hideOnTouchOutside()
                 .setStyle(R.style.CustomShowcaseTheme)
                 .setShowcaseEventListener(this@ContestActivity)
             counterValue = counterValue + 1
@@ -405,7 +426,7 @@ class ContestActivity : BaseActivity(), View.OnClickListener, OnShowcaseEventLis
 
     override fun onDestroy() {
         super.onDestroy()
-        FantasyApplication.getInstance().filterModel= FilterModel()
+        FantasyApplication.getInstance().filterModel = FilterModel()
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
     }

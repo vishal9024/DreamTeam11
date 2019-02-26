@@ -354,6 +354,7 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
                     .setContentTitle(title)
                     .setContentText(description)
                     .setStyle(R.style.CustomShowcaseTheme)
+                    .hideOnTouchOutside()
                     .setShowcaseEventListener(this@Choose_C_VC_Activity)
 
                 counterValue = counterValue + 1

@@ -612,4 +612,8 @@
     <string name="matchwise_fantasy_status">Matchwise Fantasy Stats</string>
     <string name="player_not_fount">No player found</string>
     <string name="account_number_do_not_match">Account number does not match</string>
+    <string name="substitute_wicketKeeper_validation">None of your team\'s player is eligible to be replaced with your
+        substitute.
+    </string>
+    <string name="match_not_found">No Match Found</string>
 </resources>

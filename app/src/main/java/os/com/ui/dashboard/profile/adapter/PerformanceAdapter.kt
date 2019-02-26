@@ -74,8 +74,8 @@ class PerformanceAdapter(
                 holder.itemView.tvTeamCountRight.text = "Team " + recent_performance[position].friend_team
             if (recent_performance[position].my_points != null && !recent_performance[position].my_points.equals("")
                 && recent_performance[position].friend_points!= null && !recent_performance[position].friend_points.equals("")){
-                var myPoints= recent_performance[position].my_points.toLong()
-                var friendPoints =recent_performance[position].friend_points.toLong()
+                var myPoints= recent_performance[position].my_points.toDouble()
+                var friendPoints =recent_performance[position].friend_points.toDouble()
                 if (myPoints<friendPoints) {
                     holder.itemView.imvTrophyLeft.visibility = View.GONE
                     holder.itemView.imvTrophyRight.visibility = View.VISIBLE

@@ -27,7 +27,7 @@ import os.com.utils.networkUtils.NetworkUtils
 
 
 class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<ContestAdapter.AppliedCouponCodeHolder>() {
-        var contest: List<Contest> = ArrayList()
+    var contest: List<Contest> = ArrayList()
     var match: Match? = null
     var matchType: Int = IntentConstant.FIXTURE
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppliedCouponCodeHolder {
@@ -39,9 +39,11 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         if (!contest.get(holder.adapterPosition).entry_fee.isEmpty() && contest.get(holder.adapterPosition).entry_fee.toFloat() > 0) {
             holder.itemView.ll_scoreBoard.visibility = VISIBLE
             holder.itemView.ll_practice.visibility = GONE
+            mContext.instruction()
         } else {
             holder.itemView.ll_scoreBoard.visibility = GONE
             holder.itemView.ll_practice.visibility = VISIBLE
+            mContext.instructionSkip()
         }
         holder.itemView.txt_TotalWinnings.text = mContext.getString(R.string.Rs) + " " +
                 contest.get(holder.adapterPosition).prize_money
@@ -71,7 +73,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                 ).putExtra(IntentConstant.CONTEST_TYPE, matchType).putExtra(
                     IntentConstant.DATA,
                     contest[holder.adapterPosition]
-                ) , UPDATE_ACTIVITY
+                ), UPDATE_ACTIVITY
             )
         }
 
@@ -84,16 +86,16 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                 )
         }
         holder.itemView.ll_totalWinnings.setOnClickListener {
-//            mContext.callApi = true
+            //            mContext.callApi = true
             mContext.startActivityForResult(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                     IntentConstant.CONTEST_TYPE, matchType
                 ).putExtra(IntentConstant.DATA, contest[holder.adapterPosition])
-                    , UPDATE_ACTIVITY
+                , UPDATE_ACTIVITY
             )
         }
         holder.itemView.ll_practice.setOnClickListener {
-//            mContext.callApi = true
+            //            mContext.callApi = true
             mContext.startActivityForResult(
                 Intent(mContext, ContestDetailActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
                     IntentConstant.CONTEST_TYPE, matchType
@@ -130,7 +132,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
 
         holder.itemView.txt_Join.setOnClickListener {
             if (!contest.get(holder.adapterPosition).is_joined!!) {
-                if (FantasyApplication.getInstance().teamCount==0 ) {
+                if (FantasyApplication.getInstance().teamCount == 0) {
 //                    mContext.callApi = true
                     mContext.startActivityForResult(
                         Intent(mContext, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
@@ -174,15 +176,18 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
             } else {
                 if (holder.itemView.txt_Join.text.toString().equals(mContext.getString(R.string.join_new))) {
 //                    mContext.callApi = true
-                    if(contest[position].my_team_ids.size==FantasyApplication.getInstance().teamCount){
+                    if (contest[position].my_team_ids.size == FantasyApplication.getInstance().teamCount) {
                         mContext.startActivityForResult(
-                            Intent(mContext, ChooseTeamActivity::class.java).putExtra(IntentConstant.MATCH, match).putExtra(
+                            Intent(mContext, ChooseTeamActivity::class.java).putExtra(
+                                IntentConstant.MATCH,
+                                match
+                            ).putExtra(
                                 IntentConstant.CONTEST_TYPE,
                                 matchType
                             ).putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id)
                                 .putExtra(IntentConstant.CREATE_OR_JOIN, AppRequestCodes.JOIN), UPDATE_ACTIVITY
                         )
-                    }else{
+                    } else {
                         mContext.startActivityForResult(
                             Intent(mContext, MyTeamSelectActivity::class.java).putExtra(
                                 IntentConstant.MATCH,
@@ -190,7 +195,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
                             ).putExtra(
                                 IntentConstant.CONTEST_TYPE,
                                 matchType
-                            ) .putExtra(IntentConstant.TEAM_ID, contest[position].my_team_ids)
+                            ).putExtra(IntentConstant.TEAM_ID, contest[position].my_team_ids)
                                 .putExtra(IntentConstant.CONTEST_ID, contest[position].contest_id).putExtra(
                                     IntentConstant.FOR,
                                     AppRequestCodes.JOIN_PLUS
@@ -211,7 +216,7 @@ class ContestAdapter(val mContext: ContestActivity) : RecyclerView.Adapter<Conte
         val sharingIntent = Intent(android.content.Intent.ACTION_SEND)
 //            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "https://56.octallabs.com/drewel/product_details/" + productId)
 //            sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(MediaStore.Images.Media.insertImage(contentResolver, shareImagePath, "https://56.octallabs.com/drewel/product_details/"  + productId, "https://56.octallabs.com/drewel/product_details/"  + productId)))
-        sharingIntent.putExtra(Intent.EXTRA_TEXT,  shareCode)
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, shareCode)
         sharingIntent.type = "text/plain";
         mContext.startActivity(Intent.createChooser(sharingIntent, "Invite"))
     }

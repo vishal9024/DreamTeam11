@@ -39,6 +39,7 @@ import os.com.ui.createTeam.adapter.PlayerListAdapter
 import os.com.ui.createTeam.apiResponse.SelectPlayer
 import os.com.ui.createTeam.apiResponse.myTeamListResponse.Substitute
 import os.com.ui.createTeam.apiResponse.playerListResponse.Data
+import os.com.ui.createTeam.apiResponse.playerListResponse.PlayerRecord
 import os.com.ui.dashboard.home.apiResponse.getMatchList.Match
 import os.com.ui.dashboard.more.activity.WebViewActivity
 import os.com.utils.AppDelegate
@@ -50,14 +51,12 @@ import kotlin.collections.set
 
 class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInterface, OnShowcaseEventListener {
 
-    var exeedCredit = false
-
     companion object {
         var chooseTeamActivity: ChooseTeamActivity? = null
+        var exeedCredit = false
     }
 
     override fun onClickItem(tag: Int, position: Int, isSelected: Boolean) {
-
         if (tag == WK) {
             var player_credit = 0.0
             if (isSelected) {
@@ -85,7 +84,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     if (total_credit > 100) {
                         exeedCredit = true
                         rv_Player.adapter!!.notifyDataSetChanged()
-                        showSnackBarView(toolbar,"You do not have enough credits to select this player.")
+                        showSnackBarView(toolbar, "You do not have enough credits to select this player.")
                         return
                     }
 
@@ -159,7 +158,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
-                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
+                                showSnackBarView(toolbar, "You do not have enough credits to select this player.")
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -244,7 +243,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
-                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
+                                showSnackBarView(toolbar, "You do not have enough credits to select this player.")
                                 return
                             }
                             var localTeamplayerCount = selectPlayer!!.localTeamplayerCount
@@ -332,7 +331,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             if (total_credit > 100) {
                                 exeedCredit = true
                                 rv_Player.adapter!!.notifyDataSetChanged()
-                                showSnackBarView(toolbar,"You do not have enough credits to select this player.")
+                                showSnackBarView(toolbar, "You do not have enough credits to select this player.")
                                 return
                             }
 
@@ -401,6 +400,44 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     }
 
     override fun onClickItem(tag: String, position: Int) {
+        var is_in_team = false
+        var playerList: MutableList<Data>? = ArrayList()
+        var team_id = ""
+        var player_credit = ""
+        if (tag.equals(WK.toString())) {
+            is_in_team = wkList!!.get(position).isSelected
+            playerList = wkList
+            team_id = wkList!!.get(position).team_id
+            player_credit = wkList!!.get(position).player_record!!.player_credit
+        } else if (tag.equals(BAT.toString())) {
+            is_in_team = batsmenList!!.get(position).isSelected
+            playerList = batsmenList
+            team_id = batsmenList!!.get(position).team_id
+            player_credit = batsmenList!!.get(position).player_record!!.player_credit
+        } else if (tag.equals(BOWLER.toString())) {
+            is_in_team = bowlerList!!.get(position).isSelected
+            playerList = bowlerList
+            team_id = bowlerList!!.get(position).team_id
+            player_credit = bowlerList!!.get(position).player_record!!.player_credit
+        } else if (tag.equals(AR.toString())) {
+            is_in_team = arList!!.get(position).isSelected
+            playerList = arList
+            team_id = arList!!.get(position).team_id
+            player_credit = arList!!.get(position).player_record!!.player_credit
+        }
+        startActivityForResult(
+            Intent(this, PlayerDetailActivity::class.java)
+                .putExtra("player_id", playerList!![position].player_id)
+                .putExtra("series_id", playerList[position].series_id)
+                .putExtra(IntentConstant.ADD_REMOVE_PLAYER, true)
+                .putExtra(IntentConstant.TYPE, tag)
+                .putExtra(IntentConstant.is_in_team, is_in_team)
+                .putExtra(IntentConstant.MATCH, match)
+                .putExtra(IntentConstant.TEAM_ID, team_id)
+                .putExtra("position", position)
+                .putExtra("player_credit", player_credit.toDouble())
+                .putExtra(IntentConstant.SELECT_PLAYER, selectPlayer), AppRequestCodes.ADD_REMOVE_PLAYER
+        )
     }
 
     var substituteDetail: Substitute? = null
@@ -408,6 +445,16 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     var team_id = ""
     override fun onClick(view: View?) {
         when (view!!.id) {
+            R.id.ll_player -> {
+                sortBySelector(Players)
+            }
+            R.id.ll_points -> {
+                sortBySelector(Points)
+            }
+            R.id.ll_credits -> {
+                sortBySelector(Credits)
+            }
+
             R.id.img_wk -> {
                 playerTypeSelector(WK, wkList)
             }
@@ -452,7 +499,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 //        params.gravity = Gravity.TOP
 //        view.setLayoutParams(params)
 //        snack.show()
-        showSnackBarView(view,msg)
+        showSnackBarView(view, msg)
     }
 
     fun gotoNext() {
@@ -535,6 +582,38 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     updateUi()
                 }
             }
+        } else if (requestCode == AppRequestCodes.ADD_REMOVE_PLAYER && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                val position = data.getIntExtra("position", 0)
+                val type = data.getStringExtra(IntentConstant.TYPE)
+                selectPlayer = data.getParcelableExtra(IntentConstant.SELECT_PLAYER)
+                val is_in_team = data.getBooleanExtra(IntentConstant.is_in_team, false)
+                if (type.equals(WK.toString())) {
+                    wkList!!.get(position).isSelected = !is_in_team
+                } else if (type.equals(BAT.toString())) {
+                    batsmenList!!.get(position).isSelected = !is_in_team
+                } else if (type.equals(BOWLER.toString())) {
+                    bowlerList!!.get(position).isSelected = !is_in_team
+                } else if (type.equals(AR.toString())) {
+                    arList!!.get(position).isSelected = !is_in_team
+                }
+
+                updateTeamData(
+                    selectPlayer!!.extra_player,
+                    selectPlayer!!.wk_selected,
+                    selectPlayer!!.bat_selected,
+                    selectPlayer!!.ar_selected,
+                    selectPlayer!!.bowl_selected,
+                    selectPlayer!!.selectedPlayer,
+                    selectPlayer!!.localTeamplayerCount,
+                    selectPlayer!!.visitorTeamPlayerCount,
+                    selectPlayer!!.total_credit
+                )
+                selectPlayer!!.substitute = false
+                selectPlayer!!.substitute_id = ""
+                txt_substitute.setText("Substitute")
+                rv_Player.adapter!!.notifyDataSetChanged()
+            }
         } else if (requestCode == AppRequestCodes.CREATE_CONTEST && resultCode == Activity.RESULT_OK) {
             val intent = Intent()
             intent.putExtra(IntentConstant.TEAM_ID, data!!.getStringExtra(IntentConstant.TEAM_ID))
@@ -557,6 +636,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
     override fun onDestroy() {
         super.onDestroy()
+        exeedCredit = false
         chooseTeamActivity = null
         if (countTimer != null)
             countTimer!!.stopUpdateTimer()
@@ -583,6 +663,10 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         } else
             Toast.makeText(this, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
 
+
+        ll_player.setOnClickListener(this)
+        ll_points.setOnClickListener(this)
+        ll_credits.setOnClickListener(this)
 
         img_wk.setOnClickListener(this)
         img_ar.setOnClickListener(this)
@@ -653,6 +737,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                 .setContentTitle(title)
                 .setContentText(description)
                 .setStyle(R.style.CustomShowcaseTheme)
+                .hideOnTouchOutside()
                 .setShowcaseEventListener(this@ChooseTeamActivity)
 
             counterValue = counterValue + 1
@@ -706,6 +791,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         }
         createTeamData()
     }
+
 
     var bowlerList: MutableList<Data>? = ArrayList()
     var arList: MutableList<Data>? = ArrayList()
@@ -770,9 +856,13 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                             arList!!.add(playerList!![i])
                         }
                     }
+
+
                     if (from == AppRequestCodes.CLONE || from == AppRequestCodes.EDIT)
                         updateData()
                     else playerTypeSelector(WK, wkList)
+
+                    sortBySelector(Credits)
 
                     if (!pref!!.getBooleanValuefromTemp(PrefConstant.SKIP_CREATETEAM_INSTRUCTION, false)) {
                         pref!!.putBooleanValueinTemp(PrefConstant.SKIP_CREATETEAM_INSTRUCTION, true)
@@ -996,6 +1086,12 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         updateUi()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (rv_Player.adapter != null)
+            rv_Player.adapter!!.notifyDataSetChanged()
+    }
+
     fun updateTeamData(
         extra_player: Int,
         wk_selected: Int,
@@ -1007,6 +1103,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         visitorTeamPlayerCount: Int,
         total_credit: Double
     ) {
+
         exeedCredit = false
         selectPlayer!!.extra_player = extra_player
         selectPlayer!!.wk_selected = wk_selected
@@ -1040,7 +1137,14 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 //            btn_Next.isActivated = selectPlayer!!.selectedPlayer == 11
         }
         txt_player.text = selectPlayer!!.selectedPlayer.toString() + "/11"
-        txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"
+
+        val creditReamining = 100 - selectPlayer!!.total_credit
+        if (isInteger(creditReamining)) {
+            txt_credits.text = ((100 - selectPlayer!!.total_credit).toInt() ).toString()+ "/100"
+        } else {
+            txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"
+        }
+//        txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"
         txt_local.text = match!!.local_team_name
         txt_local_count.text = selectPlayer!!.localTeamplayerCount.toString()
         txt_visitor_count.text = selectPlayer!!.visitorTeamPlayerCount.toString()
@@ -1048,6 +1152,9 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
         updateCircle()
     }
 
+    fun isInteger(number: Double): Boolean {
+        return Math.ceil(number) == Math.floor(number)
+    }
     private fun updateCircle() {
         txt_WKCount.isSelected = selectPlayer!!.wk_selected == selectPlayer!!.wk_count
         AppDelegate.LogT("Select Player==>+" + selectPlayer)
@@ -1150,18 +1257,72 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
                     startActivity(intent)
                 } else {
                     val viewf = findViewById<View>(R.id.menu_guru)
-//                    val snack = Snackbar.make(viewf, "Guru advice for this round is coming soon!", Snackbar.LENGTH_LONG)
-//                    val view = snack.getView()
-//                    view.setBackgroundColor(ContextCompat.getColor(this, R.color.vicecaptainColor));
-//                    val params = view.getLayoutParams() as CoordinatorLayout.LayoutParams
-//                    params.gravity = Gravity.TOP
-//                    view.setLayoutParams(params)
-//                    snack.show()
-                    showSnackBar(viewf,"Guru advice for this round is coming soon!")
+                    showSnackBar(viewf, "Guru advice for this round is coming soon!")
                     return true
                 }
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    fun selectorCredits(p: PlayerRecord): Double = p.player_credit.toDouble()
+    fun selectorPlayers(p: PlayerRecord): String = p.player_name
+    //  fun selectorSelectedBy(p: Data): Float = (p.selection_percent).replace("%", "").toFloat()
+    fun selectorPoints(p: Data): Double = p.player_points.toDouble()
+
+    private var Players = 1
+    private var Points = 2
+    private var Credits = 3
+    fun sortBySelector(value: Int) {
+        txt_Player.isSelected = false
+        txt_Points.isSelected = false
+        txt_Credits.isSelected = false
+
+//        txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//        txt_Points.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+//        txt_Credits.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
+        when (value) {
+            Players -> {
+                txt_Player.isSelected = true
+                if (!wkList!!.isEmpty())
+                    wkList!!.sortByDescending { selectorPlayers(it.player_record!!) }
+                if (!bowlerList!!.isEmpty())
+                    bowlerList!!.sortByDescending { selectorPlayers(it.player_record!!) }
+                if (!batsmenList!!.isEmpty())
+                    batsmenList!!.sortByDescending { selectorPlayers(it.player_record!!) }
+                if (!arList!!.isEmpty())
+                    arList!!.sortByDescending { selectorCredits(it.player_record!!) }
+//                txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+
+            }
+            Credits -> {
+                txt_Credits.isSelected = true
+                if (!wkList!!.isEmpty())
+                    wkList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                if (!bowlerList!!.isEmpty())
+                    bowlerList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                if (!batsmenList!!.isEmpty())
+                    batsmenList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                if (!arList!!.isEmpty())
+                    arList!!.sortByDescending { selectorCredits(it.player_record!!) }
+//                txt_Credits.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+
+            }
+            Points -> {
+                txt_Points.isSelected = true
+                if (!wkList!!.isEmpty())
+                    wkList!!.sortByDescending { selectorPoints(it) }
+                if (!bowlerList!!.isEmpty())
+                    bowlerList!!.sortByDescending { selectorPoints(it) }
+                if (!batsmenList!!.isEmpty())
+                    batsmenList!!.sortByDescending { selectorPoints(it) }
+                if (!arList!!.isEmpty())
+                    arList!!.sortByDescending { selectorPoints(it) }
+//                txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+            }
+        }
+        rv_Player.adapter!!.notifyDataSetChanged()
+    }
+
+
 }

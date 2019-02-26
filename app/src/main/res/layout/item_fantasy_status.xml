@@ -54,6 +54,7 @@
                 android:id="@+id/txtSelectedBy"
                 style="@style/TextStyleMedium"
                 android:gravity="right|center"
+                android:paddingRight="@dimen/_5sdp"
                 android:textSize="@dimen/_11sdp"
                 android:layout_weight="0.4"
                 android:layout_width="0dp"
