@@ -115,8 +115,6 @@ class OtherUserProfileActivity : BaseActivity(), View.OnClickListener {
             if (data.contest_level != null)
                 tvsubtitle.text = "Level "+data.contest_level
 
-
-
             if (data.image != null && !data.image.equals(""))
                 ImageLoader.getInstance().displayImage(
                     data.image,

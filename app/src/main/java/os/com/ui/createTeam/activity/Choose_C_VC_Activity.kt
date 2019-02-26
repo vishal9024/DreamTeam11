@@ -469,14 +469,17 @@ class Choose_C_VC_Activity : BaseActivity(), View.OnClickListener, OnClickCVC, O
                                 finish()
                             }
                         } else {
+
+
+
                             val intent = Intent()
                             intent.putExtra(IntentConstant.TEAM_ID, response.response!!.data!!.team_id)
                             setResult(Activity.RESULT_OK, intent)
                             finish()
                         }
                     } else {
-                        logoutIfDeactivate(response.response!!.message)
                         AppDelegate.showToast(this@Choose_C_VC_Activity, response.response!!.message)
+                        logoutIfDeactivate(response.response!!.message)
                     }
                 } catch (exception: Exception) {
                     AppDelegate.hideProgressDialog(this@Choose_C_VC_Activity)

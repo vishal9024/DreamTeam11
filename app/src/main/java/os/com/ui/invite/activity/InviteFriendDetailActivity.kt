@@ -87,9 +87,9 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
                     }
                 }
                 try {
-                    var result = (to_be_earnd * total_fields) / total_earnd
+                    var result = ((to_be_earnd+total_earnd) * total_fields) / total_earnd
                     crs_Progress.setMinValue(0f)
-                    crs_Progress.setMaxValue(to_be_earnd)
+                    crs_Progress.setMaxValue(to_be_earnd+total_earnd)
                     crs_Progress.setMinStartValue(0f)
                     crs_Progress.setMaxStartValue(to_be_earnd / result)
                     crs_Progress.apply()
@@ -97,10 +97,12 @@ class InviteFriendDetailActivity : BaseActivity(), View.OnClickListener {
                     e.printStackTrace()
                 }
 
-                if (data.total_earnd != null)
+                if (data.total_earnd != null) {
                     txtReceivedAmount.text = "₹ " + data.total_earnd
-                if (data.to_be_earnd != null)
-                    txtEarnAmount.text = "₹ " + (data.to_be_earnd.toFloat() * data.total_fields.toFloat())
+                }
+                if (data.to_be_earnd != null) {
+                    txtEarnAmount.text = "₹ " + ((to_be_earnd+total_earnd) * total_fields)
+                }
                 if (data.friend_detail != null && data.friend_detail.size > 0)
                     setAdapter(data.friend_detail)
             }

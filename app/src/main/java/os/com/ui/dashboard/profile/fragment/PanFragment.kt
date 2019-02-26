@@ -130,7 +130,6 @@ class PanFragment : BaseFragment(), View.OnClickListener {
                                 )
                             } else
                                 Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
-
                         }
                     }
                 }

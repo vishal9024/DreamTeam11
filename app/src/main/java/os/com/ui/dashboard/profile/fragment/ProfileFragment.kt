@@ -195,7 +195,10 @@ class ProfileFragment : BaseFragment(), View.OnClickListener, AppBarLayout.OnOff
         try {
             if (requestCode == 100) {
                 et_email.setText("")
-                getProfileData()
+                if (NetworkUtils.isConnected()) {
+                    getProfileData()
+                } else
+                    Toast.makeText(activity!!, getString(R.string.error_network_connection), Toast.LENGTH_LONG).show()
             }
         } catch (e: Exception) {
             e.printStackTrace()
