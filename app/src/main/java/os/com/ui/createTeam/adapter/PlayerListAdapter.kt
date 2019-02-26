@@ -146,10 +146,12 @@ class PlayerListAdapter(
                 else
                     holder.itemView.ll_main.alpha = 1.0f
             } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
-                if (!playerList!![position].isSelected)
-                    holder.itemView.ll_main.alpha = 0.5f
+                if (playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha =1.0f
+                else if (100-selectPlayer!!.total_credit>=playerList!![position].player_record!!.player_credit.toDouble())
+                    holder.itemView.ll_main.alpha =1.0f
                 else
-                    holder.itemView.ll_main.alpha = 1.0f
+                    holder.itemView.ll_main.alpha =0.5f
             }
         } else if (type == AR) {
             if (selectPlayer!!.ar_selected == selectPlayer!!.ar_maxcount) {
@@ -163,10 +165,12 @@ class PlayerListAdapter(
                 else
                     holder.itemView.ll_main.alpha = 1.0f
             } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
-                if (!playerList!![position].isSelected)
-                    holder.itemView.ll_main.alpha = 0.5f
+                if (playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha =1.0f
+                else if (100-selectPlayer!!.total_credit>=playerList!![position].player_record!!.player_credit.toDouble())
+                    holder.itemView.ll_main.alpha =1.0f
                 else
-                    holder.itemView.ll_main.alpha = 1.0f
+                    holder.itemView.ll_main.alpha =0.5f
             }
         } else if (type == BAT) {
             if (selectPlayer!!.bat_selected == selectPlayer!!.bat_maxcount) {
@@ -180,10 +184,12 @@ class PlayerListAdapter(
                 else
                     holder.itemView.ll_main.alpha = 1.0f
             } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
-                if (!playerList!![position].isSelected)
-                    holder.itemView.ll_main.alpha = 0.5f
+                if (playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha =1.0f
+                else if (100-selectPlayer!!.total_credit>=playerList!![position].player_record!!.player_credit.toDouble())
+                    holder.itemView.ll_main.alpha =1.0f
                 else
-                    holder.itemView.ll_main.alpha = 1.0f
+                    holder.itemView.ll_main.alpha =0.5f
             }
         } else if (type == BOWLER) {
             if (selectPlayer!!.bowl_selected == selectPlayer!!.bowl_maxcount) {
@@ -197,10 +203,12 @@ class PlayerListAdapter(
                 else
                     holder.itemView.ll_main.alpha = 1.0f
             } else if (/*(mContext as ChooseTeamActivity).*/exeedCredit) {
-                if (!playerList!![position].isSelected)
-                    holder.itemView.ll_main.alpha = 0.5f
+                if (playerList!![position].isSelected)
+                    holder.itemView.ll_main.alpha =1.0f
+                else if (100-selectPlayer!!.total_credit>=playerList!![position].player_record!!.player_credit.toDouble())
+                    holder.itemView.ll_main.alpha =1.0f
                 else
-                    holder.itemView.ll_main.alpha = 1.0f
+                    holder.itemView.ll_main.alpha =0.5f
             }
         }
     }

@@ -48,7 +48,7 @@
     </LinearLayout>
     <com.amar.library.ui.StickyScrollView
             android:id="@+id/scrollView"
-            android:visibility="invisible"
+            android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintTop_toBottomOf="@+id/ll_match"
@@ -579,8 +579,7 @@
                         android:paddingEnd="@dimen/_5sdp"
                         android:textColor="@color/textColorLightBlack"
                         android:textSize="@dimen/_10sdp"
-
-                        android:background="@drawable/button_background_white_black"
+                        android:background="@drawable/button_background_white_gray"
                         android:layout_height="wrap_content"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 

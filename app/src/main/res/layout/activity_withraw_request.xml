@@ -50,7 +50,6 @@
                             android:layout_marginRight="@dimen/_10sdp"
                             android:layout_width="wrap_content"
                             android:textColor="@color/textColorLightBlack"
-                            android:text="@string/Rs10_cash"
                             android:layout_height="wrap_content"/>
                 </RelativeLayout>
 

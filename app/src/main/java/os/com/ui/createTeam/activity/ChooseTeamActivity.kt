@@ -1140,7 +1140,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
 
         val creditReamining = 100 - selectPlayer!!.total_credit
         if (isInteger(creditReamining)) {
-            txt_credits.text = ((100 - selectPlayer!!.total_credit).toInt() ).toString()+ "/100"
+            txt_credits.text = ((100 - selectPlayer!!.total_credit).toInt()).toString() + "/100"
         } else {
             txt_credits.text = String.format("%.2f", 100 - selectPlayer!!.total_credit) + "/100"
         }
@@ -1155,6 +1155,7 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     fun isInteger(number: Double): Boolean {
         return Math.ceil(number) == Math.floor(number)
     }
+
     private fun updateCircle() {
         txt_WKCount.isSelected = selectPlayer!!.wk_selected == selectPlayer!!.wk_count
         AppDelegate.LogT("Select Player==>+" + selectPlayer)
@@ -1273,52 +1274,96 @@ class ChooseTeamActivity : BaseActivity(), View.OnClickListener, SelectPlayerInt
     private var Players = 1
     private var Points = 2
     private var Credits = 3
+    var isAsc = false
     fun sortBySelector(value: Int) {
         txt_Player.isSelected = false
         txt_Points.isSelected = false
         txt_Credits.isSelected = false
-
 //        txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 //        txt_Points.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 //        txt_Credits.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         when (value) {
             Players -> {
                 txt_Player.isSelected = true
-                if (!wkList!!.isEmpty())
-                    wkList!!.sortByDescending { selectorPlayers(it.player_record!!) }
-                if (!bowlerList!!.isEmpty())
-                    bowlerList!!.sortByDescending { selectorPlayers(it.player_record!!) }
-                if (!batsmenList!!.isEmpty())
-                    batsmenList!!.sortByDescending { selectorPlayers(it.player_record!!) }
-                if (!arList!!.isEmpty())
-                    arList!!.sortByDescending { selectorCredits(it.player_record!!) }
-//                txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                if (isAsc) {
+                    isAsc = false
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortBy { selectorPlayers(it.player_record!!) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortBy { selectorPlayers(it.player_record!!) }
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortBy { selectorPlayers(it.player_record!!) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortBy { selectorCredits(it.player_record!!) }
+                } else {
+                    isAsc = true
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortByDescending { selectorPlayers(it.player_record!!) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortByDescending { selectorPlayers(it.player_record!!) }
 
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortByDescending { selectorPlayers(it.player_record!!) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                }
             }
             Credits -> {
                 txt_Credits.isSelected = true
-                if (!wkList!!.isEmpty())
-                    wkList!!.sortByDescending { selectorCredits(it.player_record!!) }
-                if (!bowlerList!!.isEmpty())
-                    bowlerList!!.sortByDescending { selectorCredits(it.player_record!!) }
-                if (!batsmenList!!.isEmpty())
-                    batsmenList!!.sortByDescending { selectorCredits(it.player_record!!) }
-                if (!arList!!.isEmpty())
-                    arList!!.sortByDescending { selectorCredits(it.player_record!!) }
-//                txt_Credits.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                if (isAsc) {
+                    isAsc = false
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortBy { selectorCredits(it.player_record!!) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortBy { selectorCredits(it.player_record!!) }
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortBy { selectorCredits(it.player_record!!) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortBy { selectorCredits(it.player_record!!) }
+                } else {
+                    isAsc = true
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortByDescending { selectorCredits(it.player_record!!) }
+
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortByDescending { selectorCredits(it.player_record!!) }
+                }
 
             }
             Points -> {
                 txt_Points.isSelected = true
-                if (!wkList!!.isEmpty())
-                    wkList!!.sortByDescending { selectorPoints(it) }
-                if (!bowlerList!!.isEmpty())
-                    bowlerList!!.sortByDescending { selectorPoints(it) }
-                if (!batsmenList!!.isEmpty())
-                    batsmenList!!.sortByDescending { selectorPoints(it) }
-                if (!arList!!.isEmpty())
-                    arList!!.sortByDescending { selectorPoints(it) }
-//                txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                if (isAsc) {
+                    isAsc = false
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowup, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortBy { selectorPoints(it) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortBy { selectorPoints(it) }
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortBy { selectorPoints(it) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortBy { selectorPoints(it) }
+                } else {
+                    isAsc = true
+                    txt_Player.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.mipmap.arrowdown, 0);
+                    if (!wkList!!.isEmpty())
+                        wkList!!.sortByDescending { selectorPoints(it) }
+                    if (!bowlerList!!.isEmpty())
+                        bowlerList!!.sortByDescending { selectorPoints(it) }
+
+                    if (!batsmenList!!.isEmpty())
+                        batsmenList!!.sortByDescending { selectorPoints(it) }
+                    if (!arList!!.isEmpty())
+                        arList!!.sortByDescending { selectorPoints(it) }
+                }
             }
         }
         rv_Player.adapter!!.notifyDataSetChanged()
